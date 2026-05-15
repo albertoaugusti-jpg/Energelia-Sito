@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-67D2BL58Y9');
+    </script>
+    <meta charset="utf-8">
+    <title>ItalBandi News - Il Portale Nazionale delle Notizie su Bandi e Incentivi</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="ItalBandi News: il portale italiano di riferimento per notizie su bandi, incentivi e finanziamenti pubblici.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <style>
+    :root {
+        --italia-verde: #009246;
+        --italia-bianco: #ffffff;
+        --italia-rosso: #ce2b37;
+        --italia-verde-scuro: #006837;
+        --italia-rosso-scuro: #a31d26;
+        --grigio-scuro: #1a1a2e;
+        --grigio-medio: #4a4a68;
+        --grigio-chiaro: #f0f2f5;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .italbandi-page {
+        font-family: 'Inter', sans-serif;
+        background: var(--grigio-chiaro);
+        overflow-x: hidden;
+    }
+
+    .hero-italbandi {
+        min-height: 100vh;
+        background: linear-gradient(135deg, var(--grigio-scuro) 0%, #16213e 50%, var(--grigio-scuro) 100%);
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 140px 0 100px;
+        overflow: hidden;
+    }
+
+    .hero-bg-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            radial-gradient(circle at 20% 80%, rgba(0,146,70,0.08) 0%, transparent 40%),
+            radial-gradient(circle at 80% 20%, rgba(206,43,55,0.08) 0%, transparent 40%);
+        pointer-events: none;
+    }
+
+    .hero-decoration {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .deco-circle {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.1;
+    }
+
+    .deco-circle-1 {
+        width: 600px;
+        height: 600px;
+        background: var(--italia-verde);
+        top: -200px;
+        left: -200px;
+        animation: float 20s ease-in-out infinite;
+    }
+
+    .deco-circle-2 {
+        width: 400px;
+        height: 400px;
+        background: var(--italia-rosso);
+        bottom: -100px;
+        right: -100px;
+        animation: float 25s ease-in-out infinite reverse;
+    }
+
+    .deco-circle-3 {
+        width: 200px;
+        height: 200px;
+        background: #fff;
+        top: 50%;
+        left: 50%;
+        animation: float 15s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(20px, -20px) rotate(5deg); }
+        50% { transform: translate(-10px, 20px) rotate(-5deg); }
+        75% { transform: translate(15px, 10px) rotate(3deg); }
+    }
+
+    .tricolore-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        display: flex;
+    }
+
+    .tricolore-bar span {
+        flex: 1;
+    }
+
+    .tricolore-bar span:nth-child(1) { background: var(--italia-verde); }
+    .tricolore-bar span:nth-child(2) { background: var(--italia-bianco); }
+    .tricolore-bar span:nth-child(3) { background: var(--italia-rosso); }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: linear-gradient(135deg, rgba(0,146,70,0.15), rgba(206,43,55,0.15));
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 14px 28px;
+        border-radius: 100px;
+        margin-bottom: 35px;
+        backdrop-filter: blur(10px);
+    }
+
+    .hero-badge .badge-icon {
+        width: 36px;
+        height: 24px;
+        background: linear-gradient(90deg, var(--italia-verde) 33.33%, #fff 33.33%, #fff 66.66%, var(--italia-rosso) 66.66%);
+        border-radius: 3px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .hero-badge span {
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 5rem;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.05;
+        margin-bottom: 30px;
+    }
+
+    .hero-title .ital {
+        color: var(--italia-verde);
+    }
+
+    .hero-title .bandi {
+        color: #fff;
+    }
+
+    .hero-title .news {
+        background: linear-gradient(135deg, var(--italia-rosso), #e74c3c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-style: italic;
+    }
+
+    .hero-subtitle {
+        font-size: 1.35rem;
+        color: rgba(255,255,255,0.75);
+        line-height: 1.9;
+        max-width: 580px;
+        margin-bottom: 45px;
+        font-weight: 400;
+    }
+
+    .hero-cta-group {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 60px;
+    }
+
+    .btn-italia-primary {
+        background: linear-gradient(135deg, var(--italia-verde), var(--italia-verde-scuro));
+        color: #fff;
+        padding: 20px 40px;
+        border-radius: 14px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: none;
+        box-shadow: 0 10px 40px rgba(0,146,70,0.35);
+    }
+
+    .btn-italia-primary:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 20px 50px rgba(0,146,70,0.45);
+        color: #fff;
+    }
+
+    .btn-italia-secondary {
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+        padding: 20px 40px;
+        border-radius: 14px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        border: 2px solid rgba(255,255,255,0.2);
+        transition: all 0.3s;
+        backdrop-filter: blur(10px);
+    }
+
+    .btn-italia-secondary:hover {
+        background: rgba(255,255,255,0.15);
+        border-color: rgba(255,255,255,0.4);
+        color: #fff;
+    }
+
+    .hero-stats {
+        display: flex;
+        gap: 50px;
+        padding-top: 40px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero-stat {
+        text-align: left;
+    }
+
+    .hero-stat-number {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 2.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #fff, rgba(255,255,255,0.7));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: 8px;
+    }
+
+    .hero-stat-label {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,0.5);
+        font-weight: 500;
+    }
+
+    .hero-visual {
+        position: relative;
+    }
+
+    .newspaper-mockup {
+        background: #fff;
+        border-radius: 20px;
+        padding: 35px;
+        box-shadow: 
+            0 50px 100px rgba(0,0,0,0.4),
+            0 0 0 1px rgba(255,255,255,0.1);
+        transform: perspective(1000px) rotateY(-8deg) rotateX(2deg);
+        transition: transform 0.5s;
+        position: relative;
+    }
+
+    .newspaper-mockup:hover {
+        transform: perspective(1000px) rotateY(-3deg) rotateX(1deg);
+    }
+
+    .newspaper-mockup::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, var(--italia-verde) 33.33%, #fff 33.33%, #fff 66.66%, var(--italia-rosso) 66.66%);
+        border-radius: 20px 20px 0 0;
+    }
+
+    .newspaper-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #eee;
+        margin-bottom: 25px;
+    }
+
+    .newspaper-logo {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--grigio-scuro);
+    }
+
+    .newspaper-logo span {
+        color: var(--italia-rosso);
+    }
+
+    .newspaper-date {
+        font-size: 0.85rem;
+        color: #999;
+    }
+
+    .newspaper-headline {
+        background: linear-gradient(135deg, var(--italia-verde), var(--italia-verde-scuro));
+        color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    .newspaper-headline h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .newspaper-headline p {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .newspaper-articles {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .newspaper-article {
+        background: var(--grigio-chiaro);
+        padding: 15px;
+        border-radius: 10px;
+        border-left: 4px solid var(--italia-verde);
+    }
+
+    .newspaper-article:nth-child(2) {
+        border-left-color: var(--italia-rosso);
+    }
+
+    .newspaper-article h4 {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--grigio-scuro);
+        margin-bottom: 5px;
+    }
+
+    .newspaper-article p {
+        font-size: 0.75rem;
+        color: #777;
+        margin: 0;
+    }
+
+    .section-italbandi {
+        padding: 120px 0;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 80px;
+    }
+
+    .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, rgba(0,146,70,0.1), rgba(206,43,55,0.1));
+        color: var(--italia-verde);
+        padding: 12px 28px;
+        border-radius: 100px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 25px;
+        border: 1px solid rgba(0,146,70,0.2);
+    }
+
+    .section-header h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: var(--grigio-scuro);
+        margin-bottom: 25px;
+        line-height: 1.2;
+    }
+
+    .section-header p {
+        font-size: 1.25rem;
+        color: var(--grigio-medio);
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.8;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .feature-card {
+        background: #fff;
+        border-radius: 24px;
+        padding: 45px 35px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--italia-verde), var(--italia-rosso));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+    }
+
+    .feature-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--grigio-scuro), #2d3748);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #fff;
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .feature-icon::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        right: -5px;
+        width: 20px;
+        height: 20px;
+        background: var(--italia-verde);
+        border-radius: 6px;
+    }
+
+    .feature-card:nth-child(2) .feature-icon::after { background: var(--italia-rosso); }
+    .feature-card:nth-child(3) .feature-icon::after { background: var(--italia-verde); }
+    .feature-card:nth-child(4) .feature-icon::after { background: var(--italia-rosso); }
+    .feature-card:nth-child(5) .feature-icon::after { background: var(--italia-verde); }
+    .feature-card:nth-child(6) .feature-icon::after { background: var(--italia-rosso); }
+
+    .feature-card h4 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--grigio-scuro);
+        margin-bottom: 15px;
+    }
+
+    .feature-card p {
+        font-size: 1.05rem;
+        color: var(--grigio-medio);
+        line-height: 1.8;
+    }
+
+    .how-section {
+        background: linear-gradient(135deg, var(--grigio-scuro), #16213e);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .how-section .tricolore-bar {
+        position: absolute;
+        top: 0;
+    }
+
+    .how-section .section-label {
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        border-color: rgba(255,255,255,0.2);
+    }
+
+    .how-section h2 {
+        color: #fff;
+    }
+
+    .how-section p {
+        color: rgba(255,255,255,0.7);
+    }
+
+    .steps-container {
+        display: flex;
+        justify-content: center;
+        gap: 80px;
+        position: relative;
+    }
+
+    .steps-container::before {
+        content: '';
+        position: absolute;
+        top: 60px;
+        left: 20%;
+        right: 20%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--italia-verde), #fff, var(--italia-rosso));
+        border-radius: 2px;
+    }
+
+    .step-item {
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        flex: 1;
+        max-width: 280px;
+    }
+
+    .step-number {
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, var(--italia-verde), var(--italia-verde-scuro));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        font-weight: 800;
+        color: #fff;
+        margin: 0 auto 30px;
+        box-shadow: 0 20px 50px rgba(0,146,70,0.4);
+        border: 5px solid rgba(255,255,255,0.2);
+    }
+
+    .step-item:nth-child(2) .step-number {
+        background: linear-gradient(135deg, #fff, #f0f0f0);
+        color: var(--grigio-scuro);
+        box-shadow: 0 20px 50px rgba(255,255,255,0.2);
+    }
+
+    .step-item:nth-child(3) .step-number {
+        background: linear-gradient(135deg, var(--italia-rosso), var(--italia-rosso-scuro));
+        box-shadow: 0 20px 50px rgba(206,43,55,0.4);
+    }
+
+    .step-item h4 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 15px;
+    }
+
+    .step-item p {
+        color: rgba(255,255,255,0.7);
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+
+    .categories-section {
+        background: #fff;
+    }
+
+    .categories-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .category-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: var(--grigio-chiaro);
+        padding: 18px 30px;
+        border-radius: 100px;
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--grigio-scuro);
+        text-decoration: none;
+        border: 2px solid transparent;
+        transition: all 0.3s;
+    }
+
+    .category-pill:hover {
+        background: #fff;
+        border-color: var(--italia-verde);
+        color: var(--italia-verde);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0,146,70,0.15);
+    }
+
+    .category-pill i {
+        font-size: 1.2rem;
+    }
+
+    .cta-section {
+        background: var(--grigio-chiaro);
+    }
+
+    .cta-card {
+        background: linear-gradient(135deg, var(--grigio-scuro), #16213e);
+        border-radius: 32px;
+        padding: 80px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-card .tricolore-bar {
+        position: absolute;
+        top: 0;
+        border-radius: 32px 32px 0 0;
+        overflow: hidden;
+    }
+
+    .cta-card h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        color: #fff;
+        margin-bottom: 25px;
+    }
+
+    .cta-card p {
+        font-size: 1.3rem;
+        color: rgba(255,255,255,0.7);
+        max-width: 600px;
+        margin: 0 auto 40px;
+        line-height: 1.8;
+    }
+
+    .cta-benefits {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 50px;
+    }
+
+    .cta-benefit {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: rgba(255,255,255,0.9);
+        font-weight: 500;
+    }
+
+    .cta-benefit i {
+        color: var(--italia-verde);
+        font-size: 1.3rem;
+    }
+
+    @media (max-width: 1199px) {
+        .hero-title { font-size: 4rem; }
+        .features-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 991px) {
+        .hero-title { font-size: 3rem; }
+        .hero-visual { margin-top: 60px; }
+        .newspaper-mockup { transform: none; }
+        .section-header h2 { font-size: 2.5rem; }
+        .steps-container { flex-direction: column; gap: 40px; }
+        .steps-container::before { display: none; }
+        .features-grid { grid-template-columns: 1fr; }
+        .cta-card { padding: 50px 30px; }
+        .cta-benefits { flex-direction: column; gap: 20px; }
+    }
+
+    @media (max-width: 767px) {
+        .hero-title { font-size: 2.5rem; }
+        .hero-stats { flex-wrap: wrap; gap: 30px; }
+        .hero-cta-group { flex-direction: column; }
+    }
+    </style>
+</head>
+
+<body class="italbandi-page">
+    {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+    <section class="hero-italbandi">
+        <div class="tricolore-bar">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="hero-bg-pattern"></div>
+        <div class="hero-decoration">
+            <div class="deco-circle deco-circle-1"></div>
+            <div class="deco-circle deco-circle-2"></div>
+            <div class="deco-circle deco-circle-3"></div>
+        </div>
+
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-badge">
+                        <div class="badge-icon"></div>
+                        <span>Il Portale Nazionale della Finanza Agevolata</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        <span class="ital">Ital</span><span class="bandi">Bandi</span> <span class="news">News</span>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        La fonte autorevole e affidabile per restare aggiornati su bandi, incentivi 
+                        e opportunità di finanziamento. Ogni giorno, le notizie che contano per la tua impresa.
+                    </p>
+
+                    <div class="hero-cta-group">
+                        <a href="/contact" class="btn-italia-primary">
+                            <i class="fas fa-bell"></i>Attiva gli Alert
+                        </a>
+                        <a href="#come-funziona" class="btn-italia-secondary">
+                            <i class="fas fa-play-circle"></i>Come Funziona
+                        </a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <div class="hero-stat-number">2.500+</div>
+                            <div class="hero-stat-label">Bandi Monitorati</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-number">20</div>
+                            <div class="hero-stat-label">Regioni Coperte</div>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="hero-stat-number">24/7</div>
+                            <div class="hero-stat-label">Aggiornamenti</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 hero-visual">
+                    <div class="newspaper-mockup">
+                        <div class="newspaper-header">
+                            <div class="newspaper-logo">ItalBandi<span>News</span></div>
+                            <div class="newspaper-date">12 Gennaio 2026</div>
+                        </div>
+                        <div class="newspaper-headline">
+                            <h3><i class="fas fa-fire me-2"></i>Transizione 5.0: Nuovi Incentivi fino al 45%</h3>
+                            <p>Il MIMIT pubblica le nuove linee guida per l'accesso ai contributi</p>
+                        </div>
+                        <div class="newspaper-articles">
+                            <div class="newspaper-article">
+                                <h4>PNRR 2026</h4>
+                                <p>Nuove risorse per PMI innovative</p>
+                            </div>
+                            <div class="newspaper-article">
+                                <h4>Bandi Regionali</h4>
+                                <p>Lombardia: fondi per digitalizzazione</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-italbandi">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label"><i class="fas fa-star"></i> Cosa Offriamo</span>
+                <h2>Tutto per la Finanza Agevolata</h2>
+                <p>
+                    ItalBandi News seleziona, verifica e presenta le opportunità di finanziamento 
+                    più rilevanti per il tuo business, ogni giorno.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-radar"></i></div>
+                    <h4>Monitoraggio Completo</h4>
+                    <p>Scansioniamo ogni giorno tutte le fonti ufficiali: Ministeri, Regioni, MISE, Invitalia e la Commissione Europea.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-filter"></i></div>
+                    <h4>Selezione Intelligente</h4>
+                    <p>Non tutte le notizie sono uguali. Filtriamo e valorizziamo le opportunità con maggiore impatto.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h4>Alert Tempestivi</h4>
+                    <p>Ricevi notifiche immediate quando si aprono bandi nel tuo settore. Mai più scadenze perse.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-microscope"></i></div>
+                    <h4>Analisi Approfondite</h4>
+                    <p>Ogni bando viene analizzato: requisiti, importi, tempistiche e suggerimenti strategici.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <h4>Copertura Nazionale</h4>
+                    <p>Bandi nazionali, regionali, provinciali e comunali su tutte le 20 regioni italiane.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-globe-europe"></i></div>
+                    <h4>Focus Fondi Europei</h4>
+                    <p>Horizon Europe, PNRR, fondi strutturali: tutte le opportunità europee per le imprese italiane.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-italbandi how-section" id="come-funziona">
+        <div class="tricolore-bar">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label"><i class="fas fa-cogs"></i> Come Funziona</span>
+                <h2>Tre Semplici Passi</h2>
+                <p>Iniziare è facile. Attiva gli alert e lascia che le opportunità vengano da te.</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h4>Definisci il Profilo</h4>
+                    <p>Indica settore, dimensione aziendale, regione e tipologie di investimento.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h4>Attiva gli Alert</h4>
+                    <p>Scegli come ricevere le notifiche: email giornaliera, settimanale o istantanee.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h4>Ricevi le News</h4>
+                    <p>Ogni volta che si apre un bando adatto a te, ricevi tutte le informazioni.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-italbandi categories-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label"><i class="fas fa-tags"></i> Aree Tematiche</span>
+                <h2>Le Categorie che Monitoriamo</h2>
+                <p>Una copertura completa su tutti i principali ambiti di finanziamento pubblico.</p>
+            </div>
+
+            <div class="categories-cloud">
+                <a href="#" class="category-pill"><i class="fas fa-industry"></i> Transizione 5.0</a>
+                <a href="#" class="category-pill"><i class="fas fa-leaf"></i> Green Economy</a>
+                <a href="#" class="category-pill"><i class="fas fa-microchip"></i> Digitalizzazione</a>
+                <a href="#" class="category-pill"><i class="fas fa-rocket"></i> Startup</a>
+                <a href="#" class="category-pill"><i class="fas fa-flask"></i> Ricerca & Sviluppo</a>
+                <a href="#" class="category-pill"><i class="fas fa-globe"></i> Internazionalizzazione</a>
+                <a href="#" class="category-pill"><i class="fas fa-female"></i> Imprenditoria Femminile</a>
+                <a href="#" class="category-pill"><i class="fas fa-users"></i> Occupazione</a>
+                <a href="#" class="category-pill"><i class="fas fa-university"></i> Credito d'Imposta</a>
+                <a href="#" class="category-pill"><i class="fas fa-gift"></i> Fondo Perduto</a>
+                <a href="#" class="category-pill"><i class="fas fa-handshake"></i> Garanzie</a>
+                <a href="#" class="category-pill"><i class="fas fa-graduation-cap"></i> Formazione</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-italbandi cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="tricolore-bar">
+                    <span></span><span></span><span></span>
+                </div>
+                <h2>Non Perdere Nessuna Opportunità</h2>
+                <p>
+                    Attiva gli alert personalizzati e ricevi le notizie sui bandi 
+                    più adatti alla tua impresa, direttamente nella tua casella email.
+                </p>
+                <a href="/contact" class="btn-italia-primary">
+                    <i class="fas fa-bell"></i>Attiva Alert Gratuiti
+                </a>
+                <div class="cta-benefits">
+                    <div class="cta-benefit"><i class="fas fa-check-circle"></i> 100% Gratuito</div>
+                    <div class="cta-benefit"><i class="fas fa-check-circle"></i> Fonti Ufficiali</div>
+                    <div class="cta-benefit"><i class="fas fa-check-circle"></i> Niente Spam</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'life-insurance-website-template/partials/footer.html' %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

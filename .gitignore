@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.Python
+*.so
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Environment variables (NEVER committarli su GitHub!)
+.env
+.env.local
+.env.production
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Replit (non servono su Render)
+.replit
+replit.nix
+.config/
+.upm/
+.cache/
+.pythonlibs/
+.local/
+.agents/
+replit.md
+
+# Cache locali
+cache/
+
+# Backup / split files
+energelia-parte*.zip*
+energelia-sito.zip
+
+# Logs
+*.log
+
+# Skills / agenti
+log-sessione-claude.md
+briefing-claude.md

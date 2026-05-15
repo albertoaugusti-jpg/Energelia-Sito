@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VL6MKDTQXH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VL6MKDTQXH');
+    </script>
+    <!-- Google Ads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17893109593"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17893109593');
+    </script>
+  
+    <meta charset="utf-8">
+    <title>Report Resto al Sud 2.0 - Energelia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Resto al Sud 2.0, finanziamento giovani imprenditori Sud Italia" name="keywords">
+    <meta content="Scopri Resto al Sud 2.0: finanziamento e fondo perduto per giovani 18-35 anni che vogliono avviare un'impresa nel Sud Italia." name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+}
+
+.report-header {
+    background: linear-gradient(135deg, #0a1530 0%, #1a365d 100%);
+    padding: 40px 0;
+    color: white;
+}
+
+.report-header .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #d4af37;
+    text-decoration: none;
+}
+
+.report-hero {
+    background: linear-gradient(135deg, #0a1530 0%, #1a365d 100%);
+    padding: 60px 0 80px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.report-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/static/img/smartestart.png') center center / cover no-repeat;
+    opacity: 0.15;
+}
+
+.report-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.report-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(180deg, transparent, #f8fafc);
+}
+
+.pre-header-istituzionale {
+  background: linear-gradient(90deg, #0a1530 0%, #1a365d 100%);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.8rem;
+  padding: 8px 0;
+}
+.pre-header-istituzionale .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.portale-label {
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+.badge-verificato {
+  background: rgba(255,255,255,0.15);
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}
+.barra-tricolore {
+  height: 4px;
+  background: linear-gradient(90deg, 
+      hsl(145, 45%, 35%) 0%, 
+      hsl(145, 45%, 35%) 33.33%, 
+      #f5f5f0 33.33%, 
+      #f5f5f0 66.66%, 
+      hsl(0, 70%, 45%) 66.66%, 
+      hsl(0, 70%, 45%) 100%
+  );
+}
+
+:root {
+  --navy-dark: hsl(215, 80%, 12%);
+  --navy-primary: hsl(215, 75%, 18%);
+}
+
+.badge-status {
+    display: inline-block;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.report-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.report-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 700px;
+}
+
+.report-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    padding: 40px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 10;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.info-box {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 15px 18px;
+    border-left: 4px solid #d4af37;
+}
+
+.info-box-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.info-box-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0a1530;
+    line-height: 1.2;
+}
+
+.info-box-value.gold {
+    color: #d4af37;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0a1530;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.beneficiari-list, .spese-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.beneficiari-list li, .spese-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.beneficiari-list li:last-child, .spese-list li:last-child {
+    border-bottom: none;
+}
+
+.beneficiari-list li i, .spese-list li i {
+    color: #d4af37;
+    margin-top: 4px;
+}
+
+.cta-section {
+    background: linear-gradient(135deg, #0a1530 0%, #1a365d 100%);
+    padding: 60px;
+    border-radius: 16px;
+    text-align: center;
+    margin-top: 40px;
+    color: white;
+}
+
+.cta-section h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+.btn-download-report {
+    display: inline-block;
+    background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
+    color: #0a1530;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+}
+
+.btn-download-report:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+    color: #0a1530;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.back-link:hover {
+    opacity: 1;
+    color: white;
+}
+
+.regioni-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.regione-item {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    color: #0a1530;
+    font-size: 0.9rem;
+}
+
+/* Popup Styles */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 21, 48, 0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.popup-content {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 450px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+    animation: popupSlideIn 0.3s ease;
+}
+
+@keyframes popupSlideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #94a3b8;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s;
+}
+
+.popup-close:hover {
+    color: #0a1530;
+}
+
+.popup-form h2 {
+    color: #0a1530;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.popup-form p {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.popup-form input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+}
+
+.popup-form input:focus {
+    outline: none;
+    border-color: #d4af37;
+}
+
+.popup-form button {
+    width: 100%;
+    background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
+    color: #0a1530;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.popup-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+}
+
+.popup-success {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.popup-success i {
+    font-size: 4rem;
+    color: #22c55e;
+    margin-bottom: 20px;
+}
+
+.popup-success h3 {
+    color: #0a1530;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.popup-success p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .report-title { font-size: 2rem; }
+    .report-card { padding: 25px; margin-top: -30px; }
+    .cta-section { padding: 40px 25px; }
+    .info-box-value { font-size: 1.4rem; }
+}
+</style>
+</head>
+
+<body>
+<!-- Popup Form -->
+<div class="popup-overlay" id="downloadPopup">
+    <div class="popup-content">
+        <button class="popup-close" onclick="closeDownloadPopup()">&times;</button>
+        <div class="popup-form" id="downloadForm">
+            <h2><i class="fas fa-file-pdf me-2" style="color:#d4af37;"></i>Scarica il Report Completo</h2>
+            <p>Inserisci i tuoi dati per ricevere il report PDF con tutti i dettagli del bando.</p>
+            <form id="leadForm">
+                <input type="email" id="leadEmail" placeholder="La tua email" required>
+                <input type="tel" id="leadPhone" placeholder="Il tuo telefono" required>
+                <button type="submit">
+                    <i class="fas fa-download me-2"></i>Scarica Report PDF
+                </button>
+            </form>
+        </div>
+        <div class="popup-success" id="downloadSuccess">
+            <i class="fas fa-check-circle"></i>
+            <h3>Grazie!</h3>
+            <p>Il download del report inizierà automaticamente.</p>
+        </div>
+    </div>
+</div>
+
+{% include 'life-insurance-website-template/partials/navbar.html' %}
+
+<!-- Back Button -->
+<div class="container py-3">
+    <a href="/" style="display: inline-flex; align-items: center; color: #0a1530; text-decoration: none; font-weight: 500; transition: all 0.2s;">
+        <i class="fas fa-arrow-left me-2"></i>Torna alla Home
+    </a>
+</div>
+
+<!-- Hero Section -->
+<div class="report-hero">
+    <div class="container">
+        <span class="badge-status"><i class="fas fa-check-circle me-2"></i>APERTO</span>
+        <h1 class="report-title">Resto al Sud 2.0</h1>
+        <p class="report-subtitle">Finanziamento e contributo a fondo perduto per giovani 18-35 anni che vogliono avviare un'attività imprenditoriale nel Sud Italia.</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container" style="padding-bottom: 80px;">
+    <div class="report-card">
+        <!-- Key Info Grid -->
+        <div class="info-grid">
+            <div class="info-box">
+                <div class="info-box-title">Età Richiesta</div>
+                <div class="info-box-value gold">18-35 anni</div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">Tipo di Agevolazione</div>
+                <div class="info-box-value">Fondo Perduto</div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">Copertura Spese</div>
+                <div class="info-box-value">Fino al 100%</div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">Requisito</div>
+                <div class="info-box-value">Nuova Impresa</div>
+            </div>
+        </div>
+
+        <!-- Descrizione Report -->
+        <div style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 16px; padding: 40px; margin-bottom: 30px; border-left: 4px solid #d4af37;">
+            <h3 style="color: #0a1530; font-size: 1.4rem; font-weight: 700; margin-bottom: 15px;">
+                <i class="fas fa-file-alt me-2" style="color: #d4af37;"></i>Cosa trovi nel Report Gratuito
+            </h3>
+            <p style="color: #475569; font-size: 1.1rem; line-height: 1.7; margin: 0;">
+                Il report contiene tutte le informazioni per capire se puoi accedere al bando: 
+                <strong>requisiti di età e residenza</strong>, <strong>regioni ammesse</strong>, <strong>settori finanziabili</strong>, 
+                <strong>importi e percentuali</strong> e <strong>come presentare domanda</strong>. Scopri se hai i requisiti 
+                e come possiamo aiutarti ad ottenere il finanziamento per la tua nuova impresa.
+            </p>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h3><i class="fas fa-file-pdf me-2"></i>Vuoi tutti i dettagli?</h3>
+            <p>Scarica il report completo con requisiti, scadenze e istruzioni per la domanda.</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <button class="btn-download-report" onclick="openDownloadPopup()">
+                    <i class="fas fa-download me-2"></i>Scarica Report Gratuito
+                </button>
+                <a href="tel:+390108078800" class="btn-download-report" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); text-decoration: none; display: inline-flex; align-items: center;">
+                    <i class="fas fa-phone me-2"></i>Chiama Ora: 010 8078800
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function openDownloadPopup() {
+    document.getElementById('downloadPopup').style.display = 'flex';
+    document.getElementById('downloadForm').style.display = 'block';
+    document.getElementById('downloadSuccess').style.display = 'none';
+}
+
+function closeDownloadPopup() {
+    document.getElementById('downloadPopup').style.display = 'none';
+}
+
+document.getElementById('leadForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('leadEmail').value.trim();
+    const phone = document.getElementById('leadPhone').value.trim();
+    const bando = 'resto_sud';
+    const submitBtn = this.querySelector('button');
+    
+    // Validazione email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Inserisci un indirizzo email valido.');
+        return;
+    }
+    
+    // Validazione telefono (solo cifre, spazi e +, minimo 8 caratteri)
+    const phoneDigits = phone.replace(/[\s\+\-]/g, '');
+    if (!/^\d{8,15}$/.test(phoneDigits)) {
+        alert('Inserisci un numero di telefono valido (8-15 cifre).');
+        return;
+    }
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Invio in corso...';
+    
+    try {
+        const response = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, phone: phone, bando: bando })
+        });
+        
+        if (response.ok) {
+            document.getElementById('downloadForm').style.display = 'none';
+            document.getElementById('downloadSuccess').style.display = 'block';
+            
+            // Trigger download after 1 second
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = '/static/reports/report_resto_sud_2025.pdf';
+                link.download = 'Report_Resto_al_Sud_2.0_Energelia.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Close popup after download
+                setTimeout(closeDownloadPopup, 2000);
+            }, 1000);
+        } else {
+            throw new Error('Errore durante l\'invio');
+        }
+    } catch (error) {
+        alert('Si è verificato un errore. Riprova più tardi.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-download me-2"></i>Scarica Report PDF';
+    }
+});
+
+// Close popup on overlay click
+document.getElementById('downloadPopup').addEventListener('click', function(e) {
+    if (e.target === this) closeDownloadPopup();
+});
+</script>
+
+{% include 'life-insurance-website-template/partials/footer.html' %}
+</body>
+</html>

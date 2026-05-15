@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VL6MKDTQXH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VL6MKDTQXH');
+    </script>
+    <!-- Google Ads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17893109593"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17893109593');
+    </script>
+  
+    <meta charset="utf-8">
+    <title>Bando Botteghe dell'Entroterra 2026 - Energelia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Bando Botteghe Entroterra 2026, contributi fondo perduto Liguria, FILSE, commercio entroterra" name="keywords">
+    <meta content="Bando FILSE 2026 per attività commerciali nell'entroterra ligure: contributi a fondo perduto fino al 55% per ristrutturazioni, arredi e attrezzature." name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+}
+
+.report-hero {
+    background: linear-gradient(135deg, #1a4731 0%, #2d5a3f 100%);
+    padding: 60px 0 80px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.report-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/img/botteghe-entroterra.jpg') center center / cover no-repeat;
+    opacity: 0.15;
+}
+
+.report-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.report-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(180deg, transparent, #f8fafc);
+}
+
+.badge-status {
+    display: inline-block;
+    background: linear-gradient(135deg, #d4af37, #b8960c);
+    color: #0a1530;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.report-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.report-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 700px;
+}
+
+.report-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    padding: 40px;
+    margin-top: -40px;
+    position: relative;
+    z-index: 10;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.info-box {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 15px 18px;
+    border-left: 4px solid #2d5a3f;
+}
+
+.info-box-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+.info-box-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0a1530;
+    line-height: 1.2;
+}
+
+.info-box-value.gold {
+    color: #2d5a3f;
+}
+
+.section-block {
+    background: white;
+    border-radius: 0;
+    padding: 35px 0;
+    margin-bottom: 0;
+    border-left: none;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.section-block:last-of-type {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0a1530;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-title i {
+    color: #2d5a3f;
+}
+
+.highlight-box {
+    background: linear-gradient(135deg, #1a4731 0%, #2d5a3f 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.highlight-box .big-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #d4af37;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.highlight-box .label {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.process-step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #1a4731 0%, #2d5a3f 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.step-content h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0a1530;
+    margin-bottom: 5px;
+}
+
+.step-content p {
+    color: #475569;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.step-badge {
+    display: inline-block;
+    background: #22c55e;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-left: 10px;
+}
+
+.step-badge.paid {
+    background: #f59e0b;
+}
+
+.cta-section {
+    background: linear-gradient(135deg, #1a4731 0%, #2d5a3f 100%);
+    padding: 50px;
+    border-radius: 16px;
+    text-align: center;
+    margin-top: 30px;
+    color: white;
+}
+
+.cta-section h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
+
+.btn-download-report {
+    display: inline-block;
+    background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
+    color: #0a1530;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+}
+
+.btn-download-report:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(212,175,55,0.5);
+    color: #0a1530;
+}
+
+.btn-call {
+    display: inline-block;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(34,197,94,0.4);
+}
+
+.btn-call:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(34,197,94,0.5);
+    color: white;
+}
+
+/* Popup Styles */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 21, 48, 0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.popup-content {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 450px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+    animation: popupSlideIn 0.3s ease;
+}
+
+@keyframes popupSlideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #94a3b8;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s;
+}
+
+.popup-close:hover {
+    color: #0a1530;
+}
+
+.popup-form h2 {
+    color: #0a1530;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.popup-form p {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.popup-form input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+}
+
+.popup-form input:focus {
+    outline: none;
+    border-color: #2d5a3f;
+}
+
+.popup-form button {
+    width: 100%;
+    background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
+    color: #0a1530;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.popup-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+}
+
+.popup-success {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.popup-success i {
+    font-size: 4rem;
+    color: #22c55e;
+    margin-bottom: 20px;
+}
+
+.popup-success h3 {
+    color: #0a1530;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.popup-success p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .report-title { font-size: 1.8rem; }
+    .report-card { padding: 20px; margin-top: -30px; }
+    .cta-section { padding: 30px 15px; }
+    .info-box-value { font-size: 1.1rem; }
+    .section-block { padding: 25px 20px !important; margin-bottom: 20px !important; }
+    .process-step { flex-direction: column; gap: 10px; }
+    .step-number { width: 40px; height: 40px; font-size: 1rem; }
+    .highlight-box .big-number { font-size: 2rem; }
+    .info-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .info-box { padding: 15px 10px; }
+    .info-box-title { font-size: 0.7rem; }
+}
+
+@media (max-width: 480px) {
+    .report-title { font-size: 1.5rem; }
+    .report-subtitle { font-size: 1rem; }
+    .report-card { padding: 15px; }
+    .info-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .info-box { padding: 12px 8px; }
+    .info-box-title { font-size: 0.65rem; }
+    .info-box-value { font-size: 1rem; }
+    .section-block { padding: 20px 15px !important; border-radius: 12px !important; }
+    .section-title { font-size: 1.1rem; }
+    .cta-section { padding: 25px 15px; }
+    .cta-section h3 { font-size: 1.3rem; }
+}
+</style>
+</head>
+
+<body>
+<!-- Popup Form -->
+<div class="popup-overlay" id="downloadPopup">
+    <div class="popup-content">
+        <button class="popup-close" onclick="closeDownloadPopup()">&times;</button>
+        <div class="popup-form" id="downloadForm">
+            <h2><i class="fas fa-file-pdf me-2" style="color:#2d5a3f;"></i>Scarica il Report Completo</h2>
+            <p>Inserisci i tuoi dati per ricevere il report PDF con tutti i dettagli del bando.</p>
+            <form id="leadForm">
+                <input type="email" id="leadEmail" placeholder="La tua email" required>
+                <input type="tel" id="leadPhone" placeholder="Il tuo telefono" required>
+                <button type="submit">
+                    <i class="fas fa-download me-2"></i>Scarica Report PDF
+                </button>
+            </form>
+        </div>
+        <div class="popup-success" id="downloadSuccess">
+            <i class="fas fa-check-circle"></i>
+            <h3>Grazie!</h3>
+            <p>Il download del report inizierà automaticamente.</p>
+        </div>
+    </div>
+</div>
+
+{% include 'life-insurance-website-template/partials/navbar.html' %}
+
+<!-- Back Button -->
+<div class="container py-3">
+    <a href="/" style="display: inline-flex; align-items: center; color: #0a1530; text-decoration: none; font-weight: 500; transition: all 0.2s;">
+        <i class="fas fa-arrow-left me-2"></i>Torna alla Home
+    </a>
+</div>
+
+<!-- Hero Section -->
+<div class="report-hero">
+    <div class="container">
+        <span class="badge-status"><i class="fas fa-star me-2"></i>BANDO FILSE 2026</span>
+        <h1 class="report-title">Botteghe dell'Entroterra 2026</h1>
+        <p class="report-subtitle">Contributi a fondo perduto per le attività commerciali nei comuni dell'entroterra ligure. Un'opportunità unica per rilanciare la tua bottega.</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container" style="padding-bottom: 80px;">
+    <div class="report-card">
+        <!-- Key Info Grid -->
+        <div class="info-grid">
+            <div class="info-box">
+                <div class="info-box-title">Contributo Massimo</div>
+                <div class="info-box-value gold">Fino a €11.000</div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">Tipo di Agevolazione</div>
+                <div class="info-box-value">Fondo Perduto</div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">Copertura Spese</div>
+                <div class="info-box-value">40-55%</div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">Dotazione Regionale</div>
+                <div class="info-box-value">€912.060</div>
+            </div>
+        </div>
+
+        <!-- Mini CTA Top -->
+        <div style="text-align: center; margin: 25px 0 10px 0; padding: 12px 15px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px;">
+            <span style="font-size: 0.9rem; color: #475569;">
+                <i class="fas fa-file-pdf me-1" style="color: #2d5a3f;"></i> Vuoi tutti i dettagli? 
+            </span>
+            <button onclick="openDownloadPopup()" style="background: #1a4731; color: white; border: none; padding: 8px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.85rem;">
+                <i class="fas fa-download me-1"></i> Scarica Report
+            </button>
+        </div>
+
+        <!-- SEZIONE 1: Chi Può Accedere -->
+        <div class="section-block" style="background: linear-gradient(135deg, #f0fdf4 0%, #f5fff8 100%); border-radius: 16px; border: none; padding: 25px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0a1530; margin-bottom: 15px; text-align: center;">
+                <i class="fas fa-store me-2" style="color: #22c55e;"></i>
+                Sei tra i <span style="color: #22c55e;">Beneficiari</span>?
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 15px;">
+                <div style="background: white; padding: 10px 12px; border-radius: 8px; border-left: 3px solid #22c55e; font-size: 0.85rem;">
+                    <i class="fas fa-shopping-basket" style="color: #22c55e; margin-right: 5px;"></i>
+                    <strong>Negozi al dettaglio</strong>
+                </div>
+                <div style="background: white; padding: 10px 12px; border-radius: 8px; border-left: 3px solid #22c55e; font-size: 0.85rem;">
+                    <i class="fas fa-utensils" style="color: #22c55e; margin-right: 5px;"></i>
+                    <strong>Bar e ristoranti</strong>
+                </div>
+                <div style="background: white; padding: 10px 12px; border-radius: 8px; border-left: 3px solid #22c55e; font-size: 0.85rem;">
+                    <i class="fas fa-smoking" style="color: #22c55e; margin-right: 5px;"></i>
+                    <strong>Tabaccherie, edicole</strong>
+                </div>
+                <div style="background: white; padding: 10px 12px; border-radius: 8px; border-left: 3px solid #22c55e; font-size: 0.85rem;">
+                    <i class="fas fa-pills" style="color: #22c55e; margin-right: 5px;"></i>
+                    <strong>Farmacie</strong>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding: 12px; background: linear-gradient(135deg, #1a4731 0%, #2d5a3f 100%); border-radius: 8px;">
+                <p style="font-size: 0.95rem; color: white; font-weight: 600; margin: 0;">
+                    <i class="fas fa-map-marker-alt me-2" style="color: #d4af37;"></i>
+                    Nei <span style="color: #d4af37;">comuni non costieri</span> della Liguria
+                </p>
+            </div>
+        </div>
+
+        <!-- SEZIONE 2: La Soluzione -->
+        <div class="section-block" style="background: linear-gradient(135deg, #f0fdf4 0%, #f5fff8 100%); border-radius: 16px; border: none; padding: 25px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0a1530; margin-bottom: 15px; text-align: center;">
+                <i class="fas fa-lightbulb me-2" style="color: #22c55e;"></i>
+                Bando <span style="color: #22c55e;">Botteghe dell'Entroterra</span>
+            </h3>
+            
+            <p style="font-size: 0.95rem; color: #1e293b; line-height: 1.7; margin-bottom: 15px; text-align: center;">
+                <strong>Ristruttura</strong>, cambia <strong>arredi e attrezzature</strong>. 
+                Contributo fino al <strong style="color: #22c55e;">55%</strong>, max <strong style="color: #d4af37;">€11.000</strong> a fondo perduto.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                <div style="background: white; padding: 12px; border-radius: 8px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+                    <div style="font-size: 1.5rem; font-weight: 800; color: #2d5a3f;">40%</div>
+                    <div style="font-size: 0.75rem; color: #64748b;">Base</div>
+                </div>
+                <div style="background: white; padding: 12px; border-radius: 8px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+                    <div style="font-size: 1.5rem; font-weight: 800; color: #16a34a;">+10%</div>
+                    <div style="font-size: 0.75rem; color: #64748b;">&lt;1000 ab.</div>
+                </div>
+                <div style="background: white; padding: 12px; border-radius: 8px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+                    <div style="font-size: 1.5rem; font-weight: 800; color: #0ea5e9;">+15%</div>
+                    <div style="font-size: 0.75rem; color: #64748b;">Under 35</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEZIONE 3: Cosa Facciamo -->
+        <div class="section-block" style="background: linear-gradient(135deg, #eff6ff 0%, #f5f8ff 100%); border-radius: 16px; border: none; padding: 25px;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #0a1530; margin-bottom: 15px; text-align: center;">
+                <i class="fas fa-handshake me-2" style="color: #0ea5e9;"></i>
+                Cosa <span style="color: #0ea5e9;">Facciamo per Te</span>
+            </h3>
+
+            <div style="background: white; border-radius: 10px; padding: 15px;">
+                <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    <div style="background: #22c55e; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;">1</div>
+                    <div><strong>Verifica ammissibilità</strong> <span style="color: #22c55e; font-size: 0.8rem;">(gratuita)</span></div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    <div style="background: #1a4731; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;">2</div>
+                    <div><strong>Raccolta documenti</strong> e preventivi</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #e2e8f0;">
+                    <div style="background: #1a4731; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;">3</div>
+                    <div><strong>Invio domanda</strong> su Bandi Online FILSE</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; padding: 10px 0;">
+                    <div style="background: #d4af37; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;">4</div>
+                    <div><strong>Rendicontazione</strong> fino all'incasso <span style="color: #22c55e; font-size: 0.8rem;">(inclusa)</span></div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 15px; padding: 12px; background: white; border-radius: 8px; border-left: 3px solid #dc2626; text-align: center;">
+                <i class="fas fa-calendar-alt me-2" style="color: #dc2626;"></i>
+                Domande: <strong>10 febbraio - 30 aprile 2026</strong>
+            </div>
+        </div>
+
+        <!-- OFFERTA SPECIALE -->
+        <div class="section-block" style="background: linear-gradient(135deg, #fefce8 0%, #fefdf5 100%); border-radius: 16px; border: 2px solid #d4af37; padding: 25px;">
+            <div style="text-align: center;">
+                <div style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%); color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-bottom: 15px;">
+                    <i class="fas fa-clock me-1"></i> OFFERTA VALIDA FINO ALL'8 FEBBRAIO
+                </div>
+                
+                <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 10px;">
+                    <span style="font-size: 1.2rem; color: #dc2626; text-decoration: line-through;">€1.500</span>
+                    <span style="font-size: 2.2rem; font-weight: 800; color: #0a1530;">€887</span>
+                </div>
+                
+                <p style="font-size: 0.9rem; color: #1e293b; margin-bottom: 10px;">
+                    Servizio completo: dalla verifica all'incasso del contributo
+                </p>
+                
+                <p style="font-size: 0.95rem; color: #22c55e; font-weight: 700; margin-bottom: 15px;">
+                    <i class="fas fa-credit-card me-2"></i>Pagabile in 3 comode rate
+                </p>
+                
+                <div style="background: white; padding: 12px; border-radius: 8px; border: 1px dashed #d4af37;">
+                    <p style="font-size: 0.85rem; color: #b91c1c; font-weight: 600; margin: 0;">
+                        <i class="fas fa-pen-fancy me-2"></i>Firma il contratto entro l'8 febbraio. <strong>Affrettati!</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- GARANZIA GRATUITÀ - Box in evidenza -->
+        <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #d4af37; border-radius: 16px; padding: 35px 30px; margin: 30px 0; text-align: center; box-shadow: 0 8px 25px rgba(212,175,55,0.2);">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px;">
+                <i class="fas fa-shield-alt" style="font-size: 2.2rem; color: #b8960c;"></i>
+                <h3 style="font-size: 1.6rem; font-weight: 800; color: #0a1530; margin: 0;">La Nostra Garanzia</h3>
+            </div>
+            <p style="font-size: 1.15rem; color: #1a1a1a; line-height: 1.8; margin: 0; font-weight: 500;">
+                <strong style="color: #b8960c;">Paghi solo quando sappiamo che puoi fare il bando e decidi di procedere.</strong><br>
+                Analisi di pre-fattibilità senza limiti, finché non abbiamo la certezza che tu possa accedere al bando.<br><br>
+                <strong style="color: #b8960c;">Non paghi nessuna consulenza.</strong> Nessuna consulenza oraria, contatto continuo fino a che non decidi di fare il bando: <strong style="color: #22c55e;">tutto gratuitamente</strong>.
+            </p>
+            <div style="margin-top: 30px;">
+                <p style="font-size: 1.05rem; color: #1a1a1a; margin-bottom: 15px; font-weight: 600;">
+                    <i class="fas fa-arrow-right" style="color: #b8960c; margin-right: 8px;"></i>Contattaci a questo numero:
+                </p>
+                <a href="tel:0108078800" style="display: inline-flex; align-items: center; gap: 10px; background: #1a4731; color: white; padding: 16px 32px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 1.1rem; box-shadow: 0 6px 20px rgba(26,71,49,0.3);">
+                    <i class="fas fa-phone-alt"></i> 010 8078800
+                </a>
+                <p style="font-size: 1.05rem; color: #1a1a1a; margin: 25px 0 15px 0; font-weight: 600;">
+                    <i class="fas fa-arrow-right" style="color: #b8960c; margin-right: 8px;"></i>Oppure scarica il tuo report gratuito e ti ricontatteremo noi prima possibile:
+                </p>
+                <button onclick="openDownloadPopup()" style="display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%); color: #0a1530; padding: 16px 32px; border-radius: 50px; font-weight: 700; border: none; cursor: pointer; font-size: 1.1rem; box-shadow: 0 6px 20px rgba(212,175,55,0.3);">
+                    <i class="fas fa-download"></i> Scarica Report Gratuito
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sezione Recensioni/Progetti Approvati -->
+<section style="padding: 60px 0 80px; background: linear-gradient(180deg, #0a1628 0%, #0d1d35 50%, #0a1628 100%);">
+    
+    <div style="text-align: center; margin-bottom: 40px; padding: 0 20px;">
+        <div style="display: inline-flex; align-items: center; gap: 12px; background: rgba(212,175,55,0.1); padding: 10px 24px; border-radius: 50px; border: 1px solid rgba(212,175,55,0.25); margin-bottom: 20px;">
+            <i class="fas fa-trophy" style="color: #d4af37; font-size: 1rem;"></i>
+            <span style="color: #d4af37; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Progetti Approvati</span>
+        </div>
+        <h2 style="font-size: 2rem; font-weight: 800; color: white; margin: 0 0 15px 0; line-height: 1.2;">
+            I nostri clienti hanno ottenuto 
+            <span style="background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">risultati concreti</span>
+        </h2>
+        <p style="color: rgba(255,255,255,0.6); font-size: 1rem; max-width: 600px; margin: 0 auto;">
+            Aziende che si sono affidate a noi e hanno ricevuto finanziamenti a fondo perduto
+        </p>
+    </div>
+    
+    <div style="position: relative; overflow-x: auto; overflow-y: hidden; padding: 20px 0; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;">
+        <style>.botteghe-scroll::-webkit-scrollbar { display: none; }</style>
+        <div class="botteghe-scroll" style="display: flex; gap: 20px; width: max-content; padding: 0 20px;">
+            
+            <!-- Peraria Srl - INAIL -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 25px 20px; text-align: center; border: 1px solid rgba(255,255,255,0.06); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="background: white; border-radius: 12px; padding: 15px; display: inline-block; margin-bottom: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                    <img src="/img/loghi-clienti/peraria.png" alt="Peraria" style="height: 45px; width: auto; max-width: 110px; object-fit: contain;">
+                </div>
+                <div style="color: white; font-size: 1.05rem; font-weight: 700; margin-bottom: 5px;">Peraria Srl</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 15px;">Gonfiabili e strutture</div>
+                <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 6px 14px; display: inline-block; margin-bottom: 12px; border: 1px solid rgba(212,175,55,0.2);">
+                    <span style="font-size: 0.7rem; color: #d4af37; font-weight: 700;">ISI INAIL</span>
+                </div>
+                <div style="color: #22c55e; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">€130.000</div>
+                <div style="color: #22c55e; font-size: 0.75rem; font-weight: 600;">A fondo perduto</div>
+            </div>
+            
+            <!-- Erica - Filiera Tessile -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 25px 20px; text-align: center; border: 1px solid rgba(255,255,255,0.06); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="background: #1a1a1a; border-radius: 12px; padding: 15px; display: inline-block; margin-bottom: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                    <img src="/img/loghi-clienti/erica.png" alt="Erica" style="height: 45px; width: auto; max-width: 100px; object-fit: contain;">
+                </div>
+                <div style="color: white; font-size: 1.05rem; font-weight: 700; margin-bottom: 5px;">Erica Industria Tessile</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 15px;">Industria tessile</div>
+                <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 6px 14px; display: inline-block; margin-bottom: 12px; border: 1px solid rgba(212,175,55,0.2);">
+                    <span style="font-size: 0.7rem; color: #d4af37; font-weight: 700;">FILIERA TESSILE</span>
+                </div>
+                <div style="color: #22c55e; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">€209.000</div>
+                <div style="color: #22c55e; font-size: 0.75rem; font-weight: 600;">Approvato da graduatoria</div>
+            </div>
+            
+            <!-- Nuova Stamet -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 25px 20px; text-align: center; border: 1px solid rgba(255,255,255,0.06); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="background: white; border-radius: 12px; padding: 15px; display: inline-block; margin-bottom: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                    <img src="/img/loghi-clienti/stamet.png" alt="Nuova Stamet" style="height: 45px; width: auto; max-width: 130px; object-fit: contain;">
+                </div>
+                <div style="color: white; font-size: 1.05rem; font-weight: 700; margin-bottom: 5px;">Nuova Stamet</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 15px;">Carpenteria metallica</div>
+                <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 6px 14px; display: inline-block; margin-bottom: 12px; border: 1px solid rgba(212,175,55,0.2);">
+                    <span style="font-size: 0.7rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                </div>
+                <div style="color: #22c55e; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">€291.000</div>
+                <div style="color: #22c55e; font-size: 0.75rem; font-weight: 600;">Approvato da graduatoria</div>
+            </div>
+            
+            <!-- Idroclima Quinzanini -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 25px 20px; text-align: center; border: 1px solid rgba(255,255,255,0.06); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="background: white; border-radius: 12px; padding: 15px; display: inline-block; margin-bottom: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                    <img src="/img/loghi-clienti/quinzanini.png" alt="Quinzanini" style="height: 45px; width: auto; max-width: 130px; object-fit: contain;">
+                </div>
+                <div style="color: white; font-size: 1.05rem; font-weight: 700; margin-bottom: 5px;">Idroclima Quinzanini</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 15px;">Impianti termoidraulici</div>
+                <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 6px 14px; display: inline-block; margin-bottom: 12px; border: 1px solid rgba(212,175,55,0.2);">
+                    <span style="font-size: 0.7rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                </div>
+                <div style="color: #22c55e; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">€120.000</div>
+                <div style="color: #22c55e; font-size: 0.75rem; font-weight: 600;">Approvato da graduatoria</div>
+            </div>
+            
+            <!-- E molte altre -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(212,175,55,0.05); border-radius: 16px; padding: 35px 20px; text-align: center; border: 1px dashed rgba(212,175,55,0.3); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="width: 60px; height: 60px; background: rgba(212,175,55,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                    <i class="fas fa-building" style="color: #d4af37; font-size: 1.5rem;"></i>
+                </div>
+                <div style="font-size: 1.2rem; font-weight: 800; color: #d4af37; margin-bottom: 10px;">E molte altre imprese</div>
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem; line-height: 1.5;">
+                    Numerose aziende italiane hanno ottenuto finanziamenti grazie alla nostra consulenza specializzata
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function openDownloadPopup() {
+    document.getElementById('downloadPopup').style.display = 'flex';
+    document.getElementById('downloadForm').style.display = 'block';
+    document.getElementById('downloadSuccess').style.display = 'none';
+}
+
+function closeDownloadPopup() {
+    document.getElementById('downloadPopup').style.display = 'none';
+}
+
+document.getElementById('leadForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('leadEmail').value.trim();
+    const phone = document.getElementById('leadPhone').value.trim();
+    const bando = 'botteghe_entroterra';
+    const submitBtn = this.querySelector('button');
+    
+    // Validazione email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Inserisci un indirizzo email valido.');
+        return;
+    }
+    
+    // Validazione telefono (solo cifre, spazi e +, minimo 8 caratteri)
+    const phoneDigits = phone.replace(/[\s\+\-]/g, '');
+    if (!/^\d{8,15}$/.test(phoneDigits)) {
+        alert('Inserisci un numero di telefono valido (8-15 cifre).');
+        return;
+    }
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Invio in corso...';
+    
+    try {
+        const response = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, phone: phone, bando: bando })
+        });
+        
+        if (response.ok) {
+            document.getElementById('downloadForm').style.display = 'none';
+            document.getElementById('downloadSuccess').style.display = 'block';
+            
+            // Trigger download after 1 second
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = '/static/reports/report_botteghe_entroterra.pdf';
+                link.download = 'Report_Botteghe_Entroterra_2026_Energelia.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Close popup after download
+                setTimeout(closeDownloadPopup, 2000);
+            }, 1000);
+        } else {
+            throw new Error('Errore durante l\'invio');
+        }
+    } catch (error) {
+        alert('Si è verificato un errore. Riprova più tardi.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-download me-2"></i>Scarica Report PDF';
+    }
+});
+
+// Close popup on overlay click
+document.getElementById('downloadPopup').addEventListener('click', function(e) {
+    if (e.target === this) closeDownloadPopup();
+});
+</script>
+
+{% include 'life-insurance-website-template/partials/footer.html' %}
+</body>
+</html>

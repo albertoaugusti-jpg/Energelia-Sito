@@ -1,0 +1,1925 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>  
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-VL6MKDTQXH"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-VL6MKDTQXH');
+        </script>
+        <!-- Google Ads -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17893109593"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-17893109593');
+        </script>
+      
+        <meta charset="utf-8">
+        <title> Energelia </title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts - Stile Istituzionale -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+        <link href="{{ url_for('static', filename='lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    </head>
+
+<style>
+  @media (max-width: 575.98px) {
+    .nav-bar {
+      padding-top: 0.25rem !important;
+      padding-bottom: 0.25rem !important;
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+    }
+    .nav-bar .navbar-nav .nav-link {
+      padding: 0.25rem 0.5rem !important;
+      font-size: 0.9rem;
+    }
+    .nav-bar .navbar-brand .navbar-logo {
+      height: 50px !important;
+    }
+  }
+
+ 
+
+  @media (max-width: 575.98px) {
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
+      z-index: 999;
+    }
+    .nav-bar.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    .nav-bar.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @media (max-width: 767px) {
+    .counters-grid {
+      justify-content: center !important;  /* centra gli item invece di space-between */
+      flex-wrap: wrap;                      /* permette il wrap se lo schermo è stretto */
+      gap: 12px;                            /* spazio leggermente ridotto */
+    }
+    .counter-item {
+      flex: 0 1 auto;                      /* dimensione automatica al contenuto */
+      margin: 0;                            /* rimuove margini esterni */
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    /* 1) In cima: navbar statica e spinge il banner */
+    .nav-bar.at-top {
+      position: static !important;
+      background-color: rgba(255,255,255,0.85);
+    }
+    /* 2) Dopo scroll: fixed con hide/show */
+    .nav-bar:not(.at-top) {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
+    }
+    .nav-bar.hidden { transform: translateY(-100%); opacity: 0; }
+    .nav-bar.visible { transform: translateY(0);    opacity: 1; }
+  }
+
+  @media (max-width: 575.98px) {
+    /* Niente transizioni quando sei in cima */
+    .nav-bar.at-top {
+      transition: none !important;
+    }
+  }
+
+
+  @media (max-width: 575.98px) {
+    /* In cima: navbar statica e senza transizioni */
+    .nav-bar.at-top {
+      position: static !important;
+      transition: none !important;
+    }
+
+    /* Oltre la soglia: fixed con le tue transizioni */
+    .nav-bar:not(.at-top) {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
+    }
+
+    .nav-bar.hidden { transform: translateY(-100%); opacity: 0; }
+    .nav-bar.visible { transform: translateY(0);    opacity: 1; }
+  }
+
+
+
+
+  /* === Popup Overlay & Content === */
+  .popup-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: none;             /* start hidden */
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
+    padding: 1rem;
+  }
+
+  .popup-content {
+    background: #fff;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    animation: popup-zoom-in 0.6s ease-out forwards;
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 0.5rem; right: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+  }
+
+  /* Form elements */
+  #popup-form input[type="email"] {
+    width: calc(100% - 20px);
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  #popup-form button {
+    background: #0050b5;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  #popup-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,80,181,0.3);
+  }
+
+  /* Responsiveness */
+  @media (max-width: 480px) {
+    .popup-content {
+      padding: 1.5rem 1rem;
+    }
+    .popup-close {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* === Animazione di ingresso === */
+  @keyframes popup-zoom-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* === Schermata di successo === */
+  .popup-success-wrap {
+    text-align: center;
+    animation: popup-zoom-in 0.6s ease-out forwards;
+  }
+  .popup-success-wrap h2 {
+    font-size: 1.8rem;
+    color: #0050b5;
+    margin-bottom: 0.5rem;
+  }
+  .popup-success-wrap p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  .popup-close-success {
+    background: #00aaff;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .popup-close-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,170,255,0.3);
+  }
+
+
+  </style>
+    <body>
+      <div id="lead-popup" class="popup-overlay" style="display:none;">
+        <div class="popup-content">
+          <button class="popup-close" onclick="closeLeadPopup()">&times;</button>
+
+          <div class="popup-form-wrap" id="lead-form-wrap">
+            <h2 id="popup-bando-title">Scarica il Report Gratuito</h2>
+            <p>Inserisci la tua email per ricevere il report completo con tutte le informazioni sul bando.</p>
+            <form id="lead-form" onsubmit="submitLead(event)">
+              <input type="email" id="lead-email" placeholder="La tua email aziendale" required>
+              <input type="hidden" id="lead-bando-id" value="">
+              <button type="submit" id="lead-submit-btn">
+                <i class="fas fa-download me-2"></i>Scarica Report
+              </button>
+            </form>
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">I tuoi dati non verranno condivisi con terzi.</p>
+          </div>
+
+          <div class="popup-success-wrap" id="lead-success" style="display:none;">
+            <h2>Report in arrivo!</h2>
+            <p>Il download partirà automaticamente.<br>Controlla la tua email per altri aggiornamenti.</p>
+            <button class="popup-close-success" onclick="closeLeadPopup()">Chiudi</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POPUP CONSULENZA GRATUITA -->
+      <div id="consultation-popup" class="popup-overlay" style="display:none;">
+        <div class="popup-content">
+          <button class="popup-close" onclick="closeConsultationPopup()">&times;</button>
+
+          <div class="popup-form-wrap" id="consultation-form-wrap">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                <i class="fas fa-calendar-check" style="color: white; font-size: 1.5rem;"></i>
+              </div>
+              <h2 style="color:#0a1530; margin: 0 0 8px 0; font-size: 1.6rem; font-weight: 700;">Prenota Consulenza Gratuita</h2>
+              <p style="color:#666; margin: 0; font-size: 0.95rem;">Un nostro consulente ti contatterà <strong>entro 48 ore</strong></p>
+            </div>
+            
+            <div style="background: #f8f9fa; border-radius: 10px; padding: 16px; margin-bottom: 20px; border-left: 3px solid #d4af37;">
+              <p style="color: #0a1530; font-weight: 600; margin: 0 0 12px 0; font-size: 0.9rem;">
+                <i class="fas fa-gift me-2" style="color: #d4af37;"></i>Cosa otterrai:
+              </p>
+              <ul style="margin: 0; padding: 0; list-style: none;">
+                <li style="color: #444; font-size: 0.85rem; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px;">
+                  <i class="fas fa-check-circle" style="color: #22c55e; margin-top: 3px; flex-shrink: 0;"></i>
+                  <span>Analisi gratuita dei preventivi per verificare la fattibilità di un bando</span>
+                </li>
+                <li style="color: #444; font-size: 0.85rem; display: flex; align-items: flex-start; gap: 8px;">
+                  <i class="fas fa-check-circle" style="color: #22c55e; margin-top: 3px; flex-shrink: 0;"></i>
+                  <span>Report ufficiale Energelia dei bandi di tuo interesse</span>
+                </li>
+              </ul>
+            </div>
+            
+            <form id="consultation-form" onsubmit="submitConsultation(event)">
+              <input type="email" id="consultation-email" placeholder="La tua email aziendale" required style="margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; padding: 14px 16px; font-size: 0.95rem;">
+              <input type="tel" id="consultation-phone" placeholder="Numero di telefono" required style="margin-bottom: 16px; border: 1px solid #ddd; border-radius: 8px; padding: 14px 16px; font-size: 0.95rem;">
+              <button type="submit" id="consultation-submit-btn" style="background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%); color: #0a1530; font-weight: 600; padding: 14px 24px; border-radius: 8px; font-size: 1rem; width: 100%; border: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                <i class="fas fa-paper-plane me-2"></i>Richiedi Consulenza Gratuita
+              </button>
+            </form>
+            <p style="font-size: 0.75rem; color: #999; margin-top: 14px; text-align: center;">
+              <i class="fas fa-lock me-1"></i>I tuoi dati sono al sicuro. Non condividiamo nulla con terzi.
+            </p>
+          </div>
+
+          <div class="popup-success-wrap" id="consultation-success" style="display:none;">
+            <h2 style="color:#0a1530;"><i class="fas fa-check-circle me-2" style="color:#28a745;"></i>Richiesta Inviata!</h2>
+            <p style="color:#555;">Un nostro consulente ti contatterà <strong>entro 48 ore</strong>.<br>Grazie per averci scelto!</p>
+            <button class="popup-close-success" onclick="closeConsultationPopup()" style="background: #d4af37; color: #0a1530;">Chiudi</button>
+          </div>
+        </div>
+      </div>
+
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        
+
+      
+{% include 'life-insurance-website-template/partials/navbar.html' %}
+
+<style>
+  /* Logo ingrandito */
+
+
+  .nav-bar {
+    background-color: rgba(255,255,255,0.97) !important;
+    box-shadow: 0 4px 16px 0 rgba(34,97,170,0.06); /* effetto elegante, cambia pure il colore se vuoi */
+    transition: background-color 0.2s, box-shadow 0.2s;
+  }
+
+  
+  .navbar-logo {
+    height: 120px !important;
+    width: auto;
+  }
+
+  /* Area Clienti button */
+  .btn-area-clienti {
+    background-color: #0050b5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .btn-area-clienti:hover {
+    background-color: #00397f;
+    transform: translateY(-2px);
+  }
+</style>
+
+
+<style>
+
+  
+  /* Area Clienti button */
+  .btn-area-clienti {
+    background-color: #0050b5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .btn-area-clienti:hover {
+    background-color: #00397f;
+    transform: translateY(-2px);
+  }
+
+  /* Adjust spacing for call icon area */
+  .nav-bar .btn-light {
+    padding: 0.5rem;
+  }
+</style>
+
+
+        <style>
+  .navbar-logo {
+    height: 80px !important;
+    width: auto;
+  }
+</style>
+
+
+        <style>
+.navbar-nav .nav-link {
+  position: relative;
+  font-weight: 500;
+  color: #222 !important;
+  padding: 8px 10px;
+  transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 0%;
+  height: 2px;
+  background-color: #0050b5;
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  width: 100%;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #0050b5 !important;
+}
+
+.navbar {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+}
+
+.dropdown-menu {
+  border: none;
+  padding: 0.5rem;
+  background-color: #fff;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f6ff;
+  color: #0050b5;
+}
+
+.nav-bar {
+  z-index: 999;
+}
+
+/* MOBILE RESPONSIVE - 576px e sotto */
+@media (max-width: 576px) {
+  /* Hero carousel */
+  .header-carousel-item {
+    min-height: 75vh;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+  }
+  .header-carousel-item .carousel-caption {
+    padding: 90px 15px 50px !important;
+    position: relative;
+  }
+  .header-carousel-item h1.display-1 {
+    font-size: 1.4rem !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 1.2rem !important;
+  }
+  .header-carousel-item p {
+    font-size: 0.9rem !important;
+    margin-bottom: 1.5rem !important;
+    padding: 0 5px;
+  }
+  /* CTA Buttons mobile */
+  .header-carousel-item .hero-cta-btn {
+    width: 100%;
+    padding: 14px 20px !important;
+    font-size: 0.85rem !important;
+  }
+  .header-carousel-item .d-flex.gap-3 {
+    gap: 10px !important;
+    padding: 0 5px;
+  }
+  /* Vantaggi section mobile spacing */
+  .vantaggi-section {
+    margin-top: 0 !important;
+    padding-top: 60px !important;
+  }
+  .vantaggi-header {
+    margin-bottom: 40px !important;
+  }
+  .vantaggi-badge {
+    font-size: 0.7rem !important;
+    padding: 10px 20px !important;
+    letter-spacing: 2px !important;
+  }
+}
+
+/* Tablet responsive */
+@media (max-width: 768px) and (min-width: 577px) {
+  .header-carousel-item h1.display-1 {
+    font-size: 2rem !important;
+  }
+  .header-carousel-item .hero-cta-btn {
+    padding: 12px 20px !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+</style>
+
+        <!-- Modal Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center bg-primary">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="btn bg-light border nput-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Search End -->
+
+
+        <!-- Shield Logo che deborda navbar → hero -->
+<style>
+  #shield-logo-wrap { position: relative; z-index: 1100; height: 0; overflow: visible; }
+  #shield-logo-link { position: absolute; top: -78px; left: 24px; display: block; z-index: 1100; text-decoration: none; }
+  #shield-logo-img  { width: 170px; height: 170px; object-fit: contain; background-color: #0c1e4a; border-radius: 12px; border: 4px solid #ffffff; box-shadow: 0 0 0 7px rgba(255,255,255,0.18), 0 18px 55px rgba(0,0,0,0.75); display: block; transition: transform 0.3s ease; }
+  @media (max-width: 575.98px) {
+    #shield-logo-link { top: -52px; left: 12px; }
+    #shield-logo-img  { width: 90px; height: 90px; border-radius: 8px; border-width: 3px; }
+  }
+</style>
+<div id="shield-logo-wrap">
+  <a id="shield-logo-link" href="/">
+    <img id="shield-logo-img" src="img/logo-hq.png" alt="Logo Energelia"
+      onmouseover="this.style.transform='scale(1.05)'"
+      onmouseout="this.style.transform='scale(1)'"
+    >
+  </a>
+</div>
+
+        <!-- Carousel Start -->
+<div class="header-carousel owl-carousel"
+     style="
+       /* QUI REGOLI TUTTO */
+       --bg-img: url('img/hero-quadro.png');
+       --overlay: rgba(0, 0, 0, 0.28);
+       --h4-color: #ffffff;
+       --h4-size: 1rem;
+       --h1-color: #ffffff;
+       --h1-size: 1.85rem;
+       --p-color: #dddddd;
+       --p-size: 1.05rem;
+       --btn1-bg: #ffffff;
+       --btn1-color: #333333;
+       --btn2-bg: #002244;
+       --btn2-color: #ffffff;
+       --padding-vertical: 30px;
+       --padding-top-extra: 110px;
+     ">
+  <div class="header-carousel-item" style="
+      background: 
+        linear-gradient(var(--overlay), var(--overlay)),
+        var(--bg-img) center/cover no-repeat;
+    ">
+    <div class="carousel-caption" style="padding: calc(var(--padding-vertical) + var(--padding-top-extra, 0px)) 0 var(--padding-vertical) 0;">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-12 animated fadeInUp">
+            <div class="text-center">
+              <h1 class="display-1 mb-4 text-uppercase"
+                  style="
+                    color: var(--h1-color);
+                    font-size: var(--h1-size);
+                    text-shadow: 0 3px 6px rgba(0,0,0,0.6);
+                    line-height: 1.15;
+                    letter-spacing: 2px;
+                  ">
+                TROVARE UN BANDO NON CONCLUDE IL NOSTRO LAVORO,<br><span style="color: #d4af37;">FARLO DIVENTARE FINANZA PER I CLIENTI È IL NOSTRO APPRODO</span>
+              </h1>
+              <p class="mb-5 mx-auto"
+                 style="
+                   color: var(--p-color);
+                   font-size: var(--p-size);
+                   line-height: 1.6;
+                   max-width: 700px;
+                   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+                 ">
+                Energelia Srl supporta le imprese a trovare finanza agevolata, bandi e incentivi.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Carousel End -->
+
+<!-- ============================================== -->
+<!-- SEZIONE VANTAGGI - 10 MOTIVI CON FOTO OGNI 3 -->
+<!-- ============================================== -->
+<section class="vantaggi-section">
+  <div class="container">
+    <div class="vantaggi-header text-center">
+      <span class="vantaggi-badge">PERCHÉ SCEGLIERE ENERGELIA</span>
+      <h2 class="vantaggi-main-title">I nostri clienti ci hanno scelto per 10 <span style="color: #d4af37;">MOTIVI</span></h2>
+      <p class="vantaggi-subtitle">Trasformiamo la complessità dei bandi in risultati concreti per la tua azienda</p>
+    </div>
+
+    <!-- BLOCCO 1: Motivi 01-03 + Foto -->
+    <div class="motivi-block">
+      <div class="motivi-list">
+        <div class="motivo-item">
+          <span class="motivo-number">01</span>
+          <h3 class="motivo-title">Zero stress, <span class="gold-text">pensiamo a tutto noi</span></h3>
+          <p class="motivo-desc">La burocrazia dei bandi è <strong>complessa e stressante</strong>. Noi gestiamo tutto: <span class="gold-text">dalla ricerca del bando perfetto fino all'erogazione</span>. Tu ci dai <strong>dati, preventivi e obiettivo</strong>. Fine.</p>
+        </div>
+        <div class="motivo-item">
+          <span class="motivo-number">02</span>
+          <h3 class="motivo-title">Verifichiamo <span class="gold-text">PRIMA</span> di partire</h3>
+          <p class="motivo-desc">Facciamo un <span class="gold-text">controllo di ammissibilità approfondito</span> PRIMA di iniziare. Se il bando non è adatto a te, <strong>non partiamo nemmeno</strong>.</p>
+        </div>
+        <div class="motivo-item">
+          <span class="motivo-number">03</span>
+          <h3 class="motivo-title">Seguiamo fino <span class="gold-text">all'erogazione</span></h3>
+          <p class="motivo-desc">Gestiamo l'intera istruttoria, rispondiamo alle richieste di integrazione e prepariamo la rendicontazione. <span class="gold-text">Il nostro lavoro finisce quando il contributo arriva sul tuo conto</span>.</p>
+        </div>
+      </div>
+      <div class="motivi-image">
+        <img src="{{ url_for('static', filename='img/ingegnere.png') }}" alt="Consulenza finanziamenti">
+      </div>
+    </div>
+
+    <!-- BLOCCO 2: Motivi 04-06 + Foto -->
+    <div class="motivi-block motivi-block-reverse">
+      <div class="motivi-list">
+        <div class="motivo-item">
+          <span class="motivo-number">04</span>
+          <h3 class="motivo-title">I nostri <span class="gold-text">interessi coincidono</span> con i tuoi</h3>
+          <p class="motivo-desc">Guadagniamo <span class="gold-text">solo quando tu ottieni risultati</span>. Il nostro successo è legato al tuo: siamo partner, non semplici fornitori.</p>
+        </div>
+        <div class="motivo-item">
+          <span class="motivo-number">05</span>
+          <h3 class="motivo-title">Comunicazione <span class="gold-text">chiara</span>, sempre</h3>
+          <p class="motivo-desc">Ti teniamo <strong>aggiornato ad ogni passo</strong> con comunicazioni <span class="gold-text">chiare e tempestive</span>. Sai sempre a che punto siamo.</p>
+        </div>
+        <div class="motivo-item">
+          <span class="motivo-number">06</span>
+          <h3 class="motivo-title"><span class="gold-text">+1 milione €</span> ottenuti nel 2025</h3>
+          <p class="motivo-desc">Non promettiamo, <strong>dimostriamo</strong>. Nel solo 2025 abbiamo fatto ottenere ai nostri clienti <span class="gold-text">oltre 1.000.000€ in finanziamenti</span>.</p>
+        </div>
+      </div>
+      <div class="motivi-image">
+        <img src="{{ url_for('static', filename='img/imprenditrice.png') }}" alt="Documenti bandi">
+      </div>
+    </div>
+
+    <!-- BLOCCO 3: Motivi 07-10 + Foto -->
+    <div class="motivi-block">
+      <div class="motivi-list">
+        <div class="motivo-item">
+          <span class="motivo-number">07</span>
+          <h3 class="motivo-title">Esperienza su <span class="gold-text">ogni livello</span></h3>
+          <p class="motivo-desc">Bandi regionali, nazionali ed europei: <strong>li conosciamo tutti</strong>. Sappiamo quali funzionano e <span class="gold-text">quali evitare</span>.</p>
+        </div>
+        <div class="motivo-item">
+          <span class="motivo-number">08</span>
+          <h3 class="motivo-title">Team <span class="gold-text">multidisciplinare</span></h3>
+          <p class="motivo-desc">Tecnici, commercialisti, esperti legali: <strong>un team completo</strong> per coprire ogni aspetto della tua domanda. <span class="gold-text">Nessuna sorpresa</span>.</p>
+        </div>
+        <div class="motivo-item">
+          <span class="motivo-number">09</span>
+          <h3 class="motivo-title">Monitoraggio <span class="gold-text">costante</span></h3>
+          <p class="motivo-desc">Monitoriamo continuamente i nuovi bandi. <strong>Quando esce un'opportunità</strong> adatta a te, <span class="gold-text">ti avvisiamo subito</span>.</p>
+        </div>
+        <div class="motivo-item">
+          <span class="motivo-number">10</span>
+          <h3 class="motivo-title">Nessun anticipo, <span class="gold-text">rischi minimi</span></h3>
+          <p class="motivo-desc">Non chiediamo anticipi onerosi. <strong>Partiamo con costi minimi</strong> e il grosso della fee arriva <span class="gold-text">solo a risultato ottenuto</span>. Zero rischi per te.</p>
+        </div>
+      </div>
+      <div class="motivi-image">
+        <img src="{{ url_for('static', filename='img/donna-negozio.png') }}" alt="Team esperti">
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.vantaggi-section {
+  background: linear-gradient(180deg, #050a15 0%, #0a1530 50%, #050a15 100%);
+  padding: 100px 0 120px;
+  position: relative;
+}
+.vantaggi-header {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 70px;
+}
+.vantaggi-badge {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.12);
+  color: #d4af37;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  margin-bottom: 25px;
+}
+.vantaggi-main-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+}
+.vantaggi-subtitle {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* NUOVO LAYOUT: BLOCCHI CON 3 MOTIVI + FOTO */
+.motivi-block {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 80px;
+}
+.motivi-block:last-child {
+  margin-bottom: 0;
+}
+.motivi-block-reverse {
+  flex-direction: row-reverse;
+}
+.motivi-list {
+  flex: 1;
+}
+.motivo-item {
+  margin-bottom: 35px;
+  padding-bottom: 35px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.motivo-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.motivi-image {
+  width: 380px;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+.motivi-image-small {
+  height: 280px;
+}
+.motivi-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: transform 0.5s ease;
+}
+.motivi-image:hover img {
+  transform: scale(1.05);
+}
+.motivo-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: rgba(212, 175, 55, 0.25);
+  line-height: 1;
+  margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+}
+.motivo-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.motivo-desc {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin: 0;
+}
+.motivo-desc strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+.gold-text {
+  color: #d4af37;
+}
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+  .vantaggi-section { padding: 80px 0; }
+  .vantaggi-main-title { font-size: 2.4rem; }
+  .motivi-block {
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+  .motivi-block-reverse {
+    flex-direction: column;
+  }
+  .motivi-image {
+    width: 100%;
+    height: 280px;
+  }
+  .motivi-image-small {
+    height: 220px;
+  }
+  .motivo-number { font-size: 2rem; }
+  .motivo-title { font-size: 1.3rem; }
+}
+@media (max-width: 576px) {
+  .vantaggi-section { padding: 60px 0; }
+  .vantaggi-main-title { font-size: 1.9rem; }
+  .vantaggi-subtitle { font-size: 1rem; }
+  .vantaggi-header { margin-bottom: 50px; }
+  .motivi-block { margin-bottom: 50px; gap: 30px; }
+  .motivi-image {
+    width: 100%;
+    height: 220px;
+  }
+  .motivi-image-small {
+    height: 180px;
+  }
+  .motivo-item { margin-bottom: 25px; padding-bottom: 25px; }
+  .motivo-number { font-size: 1.8rem; }
+  .motivo-title { font-size: 1.2rem; }
+  .motivo-desc { font-size: 0.95rem; }
+}
+</style>
+
+
+<!-- ============================================== -->
+<!-- SEZIONE BANDI IN EVIDENZA -->
+<!-- ============================================== -->
+<section class="bandi-evidenza-section" id="bandi-evidenza">
+  <div class="container">
+    <div class="bandi-header text-center mb-5">
+      <span class="bandi-badge">BANDI IN EVIDENZA</span>
+      <h2 class="bandi-title">Le ultime opportunità per la tua azienda</h2>
+      <p class="bandi-subtitle">Scopri i bandi più richiesti e scarica il report gratuito</p>
+    </div>
+
+    <div class="bandi-carousel-wrapper">
+      <button class="bandi-arrow bandi-arrow-prev" onclick="bandiScroll(-1)" aria-label="Precedente">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="bandi-carousel-track" id="bandiTrack">
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/fotovoltaico.png') }}" alt="Bando ISI INAIL">
+              <span class="bando-novita-badge"><i class="fas fa-building me-1"></i>INAIL</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Bando ISI INAIL 2025</h4>
+              <p class="bando-card-desc-new">Contributi a fondo perduto per la tua azienda. Requisiti, importi, scadenze e strategia per massimizzare le possibilità di successo.</p>
+              <a href="/report-inail" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-file-download me-2"></i>Scarica Report Gratuito
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/business_funding_bg.jpg') }}" alt="Distretti del Commercio Lombardia 2026">
+              <span class="bando-novita-badge"><i class="fas fa-map-marker-alt me-1"></i>Regione Lombardia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Distretti del Commercio 2026</h4>
+              <p class="bando-card-desc-new">Fino a €520.000 per Comuni e Distretti del Commercio lombardi. Rigenerazione urbana e attrattività territoriale. Scadenza 31 luglio 2026.</p>
+              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/botteghe-entroterra.jpg') }}" alt="DUC Torino Compra Vicino">
+              <span class="bando-novita-badge"><i class="fas fa-store me-1"></i>Città di Torino</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Torino Compra Vicino — DUC</h4>
+              <p class="bando-card-desc-new">Fino all'80% a fondo perduto (max €15.000) per negozi e locali nel perimetro DUC di Torino. Vetrine, digitalizzazione, sicurezza. Scadenza 31 luglio 2026.</p>
+              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/agriturismi.png') }}" alt="OCM Vino Lombardia 2026">
+              <span class="bando-novita-badge"><i class="fas fa-wine-bottle me-1"></i>Regione Lombardia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">OCM Vino — Investimenti Lombardia</h4>
+              <p class="bando-card-desc-new">Fino al 40% a fondo perduto per PMI vitivinicole lombarde. Cantina, attrezzature, punti vendita ed e-commerce. Dotazione ~€2 mln. Scadenza 14 maggio 2026.</p>
+              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new bando-card-featured-new">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/professional_italian_6adfd241.jpg') }}" alt="Vita e Opportunità 2026">
+              <span class="bando-novita-badge bando-novita-hot"><i class="fas fa-hands-helping me-1"></i>PCM / Invitalia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Vita &amp; Opportunità — Disabilità</h4>
+              <p class="bando-card-desc-new">€386 milioni per ETS. Fino al 95% di contributo per inclusione, lavoro e autonomia di persone con disabilità. Sportello aperto.</p>
+              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/entrepreneur.jpg') }}" alt="OCM Vino Piemonte 2026">
+              <span class="bando-novita-badge"><i class="fas fa-wine-glass-alt me-1"></i>Regione Piemonte</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">OCM Vino — Punti Vendita Piemonte</h4>
+              <p class="bando-card-desc-new">Fino al 40% per cantine e aziende vitivinicole piemontesi. Punti vendita, sale degustazione, digitalizzazione. Dotazione €6,76 mln. Scadenza 15 maggio 2026.</p>
+              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/italian_business_wom_eae50a53.jpg') }}" alt="Terzo Settore Piemonte 2026">
+              <span class="bando-novita-badge"><i class="fas fa-hands-helping me-1"></i>Regione Piemonte</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Terzo Settore — Piemonte 2026</h4>
+              <p class="bando-card-desc-new">Fino al 100% a fondo perduto per ODV, APS e Fondazioni piemontesi. Contributi tra €20.000 e €50.000 per progetti di rilevanza locale. Scadenza 7 luglio 2026.</p>
+              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <button class="bandi-arrow bandi-arrow-next" onclick="bandiScroll(1)" aria-label="Successivo">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.bandi-evidenza-section {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 100px 0;
+}
+.bandi-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #1a5276, #0a1530);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+.bandi-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #0a1530;
+  margin-bottom: 15px;
+}
+.bandi-subtitle {
+  font-size: 1.15rem;
+  color: #6c757d;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.bando-card-new {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 100%;
+  box-shadow: 0 10px 40px rgba(10, 21, 48, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.bando-card-new:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px rgba(10, 21, 48, 0.15);
+}
+.bando-card-featured-new {
+  border: 2px solid #d4af37;
+}
+.bando-card-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+.bando-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.bando-card-new:hover .bando-card-image img {
+  transform: scale(1.08);
+}
+.bando-novita-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: linear-gradient(135deg, #1a5276, #0a1530);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.bando-novita-hot {
+  background: linear-gradient(135deg, #d4af37, #b8960c);
+  color: #0a1530;
+}
+.bando-card-body {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.bando-card-title-new {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0a1530;
+  margin-bottom: 12px;
+}
+.bando-card-desc-new {
+  font-size: 0.95rem;
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+.bando-card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #adb5bd;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+.bando-card-meta span i {
+  color: #1a5276;
+}
+.btn-scarica-report-new {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #d4af37, #b8960c);
+  color: #0a1530;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 14px 24px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
+  width: 100%;
+}
+.btn-scarica-report-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+}
+.btn-vedi-tutti {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #0a1530, #1a2a4a);
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 16px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(10, 21, 48, 0.2);
+}
+.btn-vedi-tutti:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(10, 21, 48, 0.3);
+  color: #ffffff;
+}
+/* --- Carousel --- */
+.bandi-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.bandi-carousel-track {
+  display: flex;
+  gap: 24px;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  padding: 12px 4px 20px;
+  flex: 1;
+}
+.bandi-carousel-item {
+  flex: 0 0 calc(33.333% - 16px);
+  min-width: 0;
+}
+.bandi-arrow {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #0a1530;
+  background: #ffffff;
+  color: #0a1530;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(10,21,48,0.12);
+  z-index: 2;
+}
+.bandi-arrow:hover {
+  background: #0a1530;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(10,21,48,0.25);
+}
+.bandi-arrow-prev { margin-right: 16px; }
+.bandi-arrow-next { margin-left: 16px; }
+@media (max-width: 991px) {
+  .bandi-evidenza-section { padding: 60px 0; }
+  .bandi-title { font-size: 2.2rem; }
+  .bandi-carousel-item { flex: 0 0 calc(50% - 12px); }
+}
+@media (max-width: 767px) {
+  .bandi-title { font-size: 1.8rem; }
+  .bando-card-image { height: 180px; }
+  .bandi-carousel-item { flex: 0 0 85%; }
+  .bandi-arrow { width: 38px; height: 38px; font-size: 0.85rem; }
+  .bandi-arrow-prev { margin-right: 8px; }
+  .bandi-arrow-next { margin-left: 8px; }
+}
+</style>
+<script>
+(function() {
+  var cardWidth = 0;
+  var gap = 24;
+  function getVisibleCount() {
+    if (window.innerWidth < 768) return 1;
+    if (window.innerWidth < 992) return 2;
+    return 3;
+  }
+  window.bandiScroll = function(dir) {
+    var track = document.getElementById('bandiTrack');
+    if (!track) return;
+    var item = track.querySelector('.bandi-carousel-item');
+    if (!item) return;
+    var step = (item.offsetWidth + gap) * getVisibleCount();
+    track.scrollLeft += dir * step;
+  };
+})();
+</script>
+
+
+<!-- ============================================== -->
+<!-- SEZIONE TESTIMONIANZE - Storie di Successo -->
+<!-- ============================================== -->
+<section class="testimonials-premium" style="padding: 80px 0 100px; position: relative; overflow: visible; background: linear-gradient(180deg, #0a1628 0%, #0d1d35 50%, #0a1628 100%);">
+    
+    <div style="text-align: center; margin-bottom: 50px; padding: 0 20px;">
+        <div style="display: inline-flex; align-items: center; gap: 12px; background: rgba(212,175,55,0.1); padding: 10px 24px; border-radius: 50px; border: 1px solid rgba(212,175,55,0.25); margin-bottom: 25px;">
+            <i class="fas fa-trophy" style="color: #d4af37; font-size: 1rem;"></i>
+            <span style="color: #d4af37; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Progetti Approvati</span>
+        </div>
+        <h2 style="font-size: 2.5rem; font-weight: 800; color: white; margin: 0 0 15px 0; line-height: 1.2;">
+            I nostri clienti hanno ottenuto 
+            <span style="background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">risultati concreti</span>
+        </h2>
+        <p style="color: rgba(255,255,255,0.6); font-size: 1.05rem; max-width: 600px; margin: 0 auto;">
+            Aziende che si sono affidate a noi e hanno ricevuto finanziamenti a fondo perduto
+        </p>
+    </div>
+    
+    <div class="testimonials-scroll-wrapper" style="position: relative; overflow-x: auto; overflow-y: hidden; padding: 20px 0; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;">
+            
+            <div class="testimonials-track" id="testimonialsTrack" style="display: flex; gap: 20px; width: max-content; padding: 0 20px;">
+                
+                <!-- Peraria Srl - INAIL -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/peraria.png" alt="Peraria" style="height: 55px; width: auto; max-width: 130px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Peraria Srl</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Gonfiabili e strutture</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">ISI INAIL</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€130.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">A fondo perduto</div>
+                </div>
+                
+                <!-- Peraria Srl - Filiere Tessili -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/peraria.png" alt="Peraria" style="height: 55px; width: auto; max-width: 130px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Peraria Srl</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Gonfiabili e strutture</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FILIERA TESSILE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€125.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Erica - Filiera Tessile Inv Italia -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: #1a1a1a; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/erica.png" alt="Erica" style="height: 50px; width: auto; max-width: 110px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Erica Industria Tessile</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Industria tessile</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FILIERA TESSILE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€209.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Erica - FER Autoproduzione -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: #1a1a1a; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/erica.png" alt="Erica" style="height: 50px; width: auto; max-width: 110px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Erica Industria Tessile</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Industria tessile</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€107.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Stamet -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/stamet.png" alt="Nuova Stamet" style="height: 55px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Nuova Stamet</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Carpenteria metallica</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€291.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Quinzanini -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/quinzanini.png" alt="Quinzanini" style="height: 50px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Idroclima Quinzanini</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Impianti termoidraulici</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€120.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Card "E molte altre" -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(212,175,55,0.05); border-radius: 16px; padding: 40px 25px; text-align: center; border: 1px dashed rgba(212,175,55,0.3);">
+                    <div style="width: 70px; height: 70px; background: rgba(212,175,55,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-building" style="color: #d4af37; font-size: 1.8rem;"></i>
+                    </div>
+                    <div style="font-size: 1.3rem; font-weight: 800; color: #d4af37; margin-bottom: 10px;">E molte altre imprese</div>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">
+                        Numerose aziende italiane hanno ottenuto finanziamenti grazie alla nostra consulenza specializzata
+                    </div>
+                </div>
+                
+                <!-- DUPLICATI PER SCROLL INFINITO -->
+                
+                <!-- Peraria INAIL (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/peraria.png" alt="Peraria" style="height: 55px; width: auto; max-width: 130px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Peraria Srl</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Gonfiabili e strutture</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">ISI INAIL</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€130.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">A fondo perduto</div>
+                </div>
+                
+                <!-- Erica Filiera (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="background: #1a1a1a; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/erica.png" alt="Erica" style="height: 50px; width: auto; max-width: 110px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Erica Industria Tessile</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Industria tessile</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FILIERA TESSILE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€209.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Stamet (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/stamet.png" alt="Nuova Stamet" style="height: 55px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Nuova Stamet</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Carpenteria metallica</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€291.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Quinzanini (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/quinzanini.png" alt="Quinzanini" style="height: 50px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Idroclima Quinzanini</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Impianti termoidraulici</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€120.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- E molte altre (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(212,175,55,0.05); border-radius: 16px; padding: 40px 25px; text-align: center; border: 1px dashed rgba(212,175,55,0.3);">
+                    <div style="width: 70px; height: 70px; background: rgba(212,175,55,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-building" style="color: #d4af37; font-size: 1.8rem;"></i>
+                    </div>
+                    <div style="font-size: 1.3rem; font-weight: 800; color: #d4af37; margin-bottom: 10px;">E molte altre imprese</div>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">
+                        Numerose aziende italiane hanno ottenuto finanziamenti grazie alla nostra consulenza specializzata
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 60px;">
+            <a href="tel:0108078800" style="display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%); color: #0a1530; padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.1rem; text-decoration: none; box-shadow: 0 10px 40px rgba(212,175,55,0.3); transition: all 0.3s ease;">
+                <i class="fas fa-phone-alt"></i>
+                Chiamaci: 010 8078800
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+@-webkit-keyframes scrollTestimonials {
+    0% { -webkit-transform: translateX(0); transform: translateX(0); }
+    100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+}
+
+@keyframes scrollTestimonials {
+    0% { -webkit-transform: translateX(0); transform: translateX(0); }
+    100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+}
+
+.testimonials-track {
+    -webkit-animation: scrollTestimonials 50s linear infinite;
+    animation: scrollTestimonials 50s linear infinite;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.testimonials-track:hover {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+.testimonial-premium-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -webkit-transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-premium-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+}
+
+.testimonials-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.testimonial-premium-card {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .testimonials-premium {
+        padding: 60px 0 80px !important;
+    }
+    
+    .testimonials-premium h2 {
+        font-size: 2rem !important;
+    }
+    
+    .testimonial-premium-card {
+        min-width: 280px !important;
+        max-width: 280px !important;
+    }
+    
+    .testimonials-scroll-wrapper > div:first-child,
+    .testimonials-scroll-wrapper > div:nth-child(2) {
+        width: 40px !important;
+    }
+}
+</style>
+
+
+<!-- SEZIONE PRENOTA CONSULENZA -->
+<!-- ============================================== -->
+<section class="prenota-consulenza-section">
+  <div class="container">
+    <div class="prenota-grid">
+
+      <!-- FOTO TEAM -->
+      <div class="prenota-photo-col">
+        <img src="{{ url_for('static', filename='img/ufficio-team.png') }}"
+             alt="Il team Energelia in consulenza"
+             class="prenota-team-photo">
+      </div>
+
+      <!-- TESTO + CTA -->
+      <div class="prenota-content">
+        <div class="prenota-icon-box">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <h2 class="prenota-title">Prenota la tua consulenza gratuita</h2>
+        <p class="prenota-subtitle">Scopri se ci sono bandi adatti alla tua azienda. Senza impegno.</p>
+        <div class="prenota-features">
+          <div class="prenota-feature">
+            <i class="fas fa-clock"></i>
+            <span>Risposta in 24h</span>
+          </div>
+          <div class="prenota-feature">
+            <i class="fas fa-file-alt"></i>
+            <span>Analisi personalizzata</span>
+          </div>
+          <div class="prenota-feature">
+            <i class="fas fa-hand-holding-usd"></i>
+            <span>Zero costi iniziali</span>
+          </div>
+        </div>
+        <div class="prenota-cta-buttons">
+          <button onclick="openConsultationPopup()" class="btn-prenota-primary" style="border: none; cursor: pointer;">
+            <i class="fas fa-paper-plane me-2"></i>Richiedi Consulenza Gratuita
+          </button>
+          <a href="tel:+390108078800" class="btn-prenota-phone">
+            <i class="fas fa-phone-alt me-2"></i>010 8078800
+          </a>
+        </div>
+        <p class="prenota-trust-note">
+          <i class="fas fa-shield-alt me-2"></i>I tuoi dati sono al sicuro. Nessuna newsletter non richiesta.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+@keyframes floatParticle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+.prenota-consulenza-section {
+  background: #0a1530;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+.prenota-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.prenota-photo-col {
+  position: relative;
+}
+.prenota-team-photo {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 16px;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+  display: block;
+}
+.prenota-content {
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 991.98px) {
+  .prenota-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .prenota-team-photo {
+    height: 320px;
+  }
+}
+.prenota-icon-box {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, #d4af37, #b8960c);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+}
+.prenota-icon-box i {
+  font-size: 2.2rem;
+  color: #0a1530;
+}
+.prenota-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+.prenota-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 35px;
+}
+.prenota-features {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.prenota-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.prenota-feature i {
+  color: #d4af37;
+  font-size: 1.2rem;
+}
+.prenota-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.btn-prenota-primary {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+  color: #0a1530;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 18px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.btn-prenota-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  color: #0a1530;
+}
+.btn-prenota-phone {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 18px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+.btn-prenota-phone:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+.prenota-trust-note {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.prenota-trust-note i {
+  color: #27ae60;
+}
+@media (max-width: 991px) {
+  .prenota-consulenza-section { padding: 60px 0; }
+  .prenota-title { font-size: 2.2rem; }
+  .prenota-features { gap: 25px; }
+}
+@media (max-width: 767px) {
+  .prenota-title { font-size: 1.8rem; }
+  .prenota-subtitle { font-size: 1.1rem; }
+  .prenota-feature { font-size: 0.9rem; }
+  .btn-prenota-primary, .btn-prenota-phone { padding: 15px 30px; font-size: 1rem; }
+}
+</style>
+
+
+{% include 'life-insurance-website-template/partials/footer.html' %}
+        
+        
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+        
+
+        <!-- Template Javascript -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+        <!-- Lead Capture Popup Script -->
+        <script>
+          let currentBandoId = '';
+          let currentBandoName = '';
+
+          function openLeadPopup(bandoId, bandoName) {
+            currentBandoId = bandoId;
+            currentBandoName = bandoName;
+            document.getElementById('popup-bando-title').textContent = 'Scarica Report: ' + bandoName;
+            document.getElementById('lead-bando-id').value = bandoId;
+            document.getElementById('lead-form-wrap').style.display = 'block';
+            document.getElementById('lead-success').style.display = 'none';
+            document.getElementById('lead-popup').style.display = 'flex';
+          }
+
+          function closeLeadPopup() {
+            document.getElementById('lead-popup').style.display = 'none';
+          }
+
+          async function submitLead(event) {
+            event.preventDefault();
+            const email = document.getElementById('lead-email').value;
+            const bandoId = document.getElementById('lead-bando-id').value;
+            const submitBtn = document.getElementById('lead-submit-btn');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Invio...';
+
+            try {
+              const response = await fetch('/api/lead', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, bando: bandoId })
+              });
+
+              const data = await response.json();
+              
+              if (data.success) {
+                document.getElementById('lead-form-wrap').style.display = 'none';
+                document.getElementById('lead-success').style.display = 'block';
+                window.location.href = '/download-report/' + bandoId;
+              } else {
+                alert('Errore: ' + (data.error || 'Riprova più tardi'));
+              }
+            } catch (error) {
+              alert('Errore di connessione. Riprova.');
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-download me-2"></i>Scarica Report';
+          }
+
+          document.getElementById('lead-popup').addEventListener('click', function(e) {
+            if (e.target === this) closeLeadPopup();
+          });
+
+          // Consultation Popup Functions
+          function openConsultationPopup() {
+            document.getElementById('consultation-form-wrap').style.display = 'block';
+            document.getElementById('consultation-success').style.display = 'none';
+            document.getElementById('consultation-popup').style.display = 'flex';
+          }
+
+          function closeConsultationPopup() {
+            document.getElementById('consultation-popup').style.display = 'none';
+          }
+
+          async function submitConsultation(event) {
+            event.preventDefault();
+            const email = document.getElementById('consultation-email').value;
+            const phone = document.getElementById('consultation-phone').value;
+            const submitBtn = document.getElementById('consultation-submit-btn');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Invio...';
+
+            try {
+              const response = await fetch('/api/consultation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, phone: phone })
+              });
+
+              const data = await response.json();
+              
+              if (data.success) {
+                document.getElementById('consultation-form-wrap').style.display = 'none';
+                document.getElementById('consultation-success').style.display = 'block';
+              } else {
+                alert('Errore: ' + (data.error || 'Riprova più tardi'));
+              }
+            } catch (error) {
+              alert('Errore di connessione. Riprova.');
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Richiedi Consulenza';
+          }
+
+          document.getElementById('consultation-popup').addEventListener('click', function(e) {
+            if (e.target === this) closeConsultationPopup();
+          });
+        </script>
+        
+            </body>
+
+</html>
+
+<script>
+function filterCategory(category) {
+  const cards = document.querySelectorAll('.bandocard');
+  const buttons = document.querySelectorAll('.btn-group .btn');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    if (category === 'tutti' || card.classList.contains(category)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function filterBandi() {
+  const input = document.getElementById('searchBando').value.toLowerCase();
+  const cards = document.querySelectorAll('.bandocard');
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? 'block' : 'none';
+  });
+}
+
+
+
+  
+</script>
+<script>
+  if (window.matchMedia("(max-width: 575.98px)").matches) {
+    const navbar = document.querySelector('.nav-bar');
+    let lastY = window.scrollY;
+
+    // Stato iniziale
+    if (lastY === 0) {
+      navbar.classList.add('at-top', 'visible');
+    } else {
+      navbar.classList.add('visible');
+    }
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+
+      if (y === 0) {
+        // In cima: navbar statica, SENZA visible/hidden per evitare transizioni
+        navbar.classList.add('at-top');
+        navbar.classList.remove('visible','hidden');
+      } else {
+        // dopo i primi scroll: fixed + hide/show come prima
+        navbar.classList.remove('at-top');
+        if (y > lastY + 5) {
+          navbar.classList.add('hidden');
+          navbar.classList.remove('visible');
+        } else if (y < lastY - 5) {
+          navbar.classList.add('visible');
+          navbar.classList.remove('hidden');
+        }
+      }
+
+      lastY = y;
+    });
+  }
+
+  
+</script>
+
+
+

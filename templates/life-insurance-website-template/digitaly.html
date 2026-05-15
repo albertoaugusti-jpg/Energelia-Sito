@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-67D2BL58Y9');
+    </script>
+    <meta charset="utf-8">
+    <title>Digitaly - Siti Web che Convertono | Sviluppo Web Professionale</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="Creiamo siti web straordinari che trasformano visitatori in clienti. Design moderno, performance eccellenti e risultati misurabili.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <style>
+    :root {
+        --italia-verde: #009246;
+        --italia-bianco: #f8f9fa;
+        --italia-rosso: #ce2b37;
+        --digitaly-dark: #0f172a;
+        --digitaly-gray: #64748b;
+        --digitaly-light: #f1f5f9;
+    }
+
+    .digitaly-page {
+        font-family: 'Inter', sans-serif;
+        overflow-x: hidden;
+    }
+
+    .hero-digitaly-new {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fdf9 50%, #fff8f8 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        padding-top: 100px;
+    }
+
+    .hero-digitaly-new::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 8px;
+        background: linear-gradient(90deg, var(--italia-verde) 33.33%, #ffffff 33.33%, #ffffff 66.66%, var(--italia-rosso) 66.66%);
+    }
+
+    .hero-digitaly-new::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 200px;
+        background: linear-gradient(180deg, transparent 0%, rgba(0,146,70,0.03) 100%);
+        pointer-events: none;
+    }
+
+    .badge-digitaly {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 24px;
+        background: linear-gradient(90deg, rgba(0,146,70,0.15), rgba(206,43,55,0.15));
+        border: 2px solid var(--italia-verde);
+        border-radius: 50px;
+        color: var(--italia-verde);
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+
+    .badge-digitaly i {
+        color: var(--italia-rosso);
+        margin-right: 10px;
+    }
+
+    .hero-title-digitaly {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: #1a1a1a;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-title-digitaly .highlight-verde {
+        color: var(--italia-verde);
+    }
+
+    .hero-title-digitaly .highlight-rosso {
+        color: var(--italia-rosso);
+    }
+
+    .hero-subtitle-digitaly {
+        font-size: 1.2rem;
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        max-width: 520px;
+    }
+
+    .feature-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 2.5rem;
+    }
+
+    .feature-pill {
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        background: #fff;
+        border: 2px solid #e8e8e8;
+        border-radius: 50px;
+        color: #333;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .feature-pill:hover {
+        border-color: var(--italia-verde);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,146,70,0.15);
+    }
+
+    .feature-pill i {
+        color: var(--italia-verde);
+        margin-right: 10px;
+        font-size: 1.1rem;
+    }
+
+    .feature-pill:nth-child(2) i { color: var(--italia-rosso); }
+    .feature-pill:nth-child(4) i { color: var(--italia-rosso); }
+
+    .btn-digitaly-primary {
+        display: inline-flex;
+        align-items: center;
+        padding: 16px 36px;
+        background: linear-gradient(135deg, var(--italia-verde) 0%, #00a651 100%);
+        color: #fff;
+        font-weight: 600;
+        font-size: 1rem;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0,146,70,0.3);
+        border: none;
+    }
+
+    .btn-digitaly-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0,146,70,0.4);
+        color: #fff;
+    }
+
+    .btn-digitaly-outline {
+        display: inline-flex;
+        align-items: center;
+        padding: 16px 36px;
+        background: transparent;
+        color: var(--italia-rosso);
+        font-weight: 600;
+        font-size: 1rem;
+        border: 2px solid var(--italia-rosso);
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-digitaly-outline:hover {
+        background: var(--italia-rosso);
+        color: #fff;
+    }
+
+    .hero-visual {
+        position: relative;
+        z-index: 1;
+    }
+
+    .browser-mockup {
+        background: #fff;
+        border-radius: 20px;
+        padding: 15px;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+        max-width: 480px;
+        margin: 0 auto;
+        border: 3px solid #e8e8e8;
+    }
+
+    .browser-header {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+
+    .browser-dots {
+        display: flex;
+        gap: 8px;
+    }
+
+    .browser-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    .browser-dot.red { background: var(--italia-rosso); }
+    .browser-dot.yellow { background: #fbbf24; }
+    .browser-dot.green { background: var(--italia-verde); }
+
+    .browser-url {
+        flex: 1;
+        margin-left: 15px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 8px 15px;
+        color: #666;
+        font-size: 0.85rem;
+        border: 1px solid #e0e0e0;
+    }
+
+    .browser-content {
+        background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+        border-radius: 8px;
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .browser-content-header {
+        height: 50px;
+        background: linear-gradient(90deg, var(--italia-verde) 33.33%, #fff 33.33%, #fff 66.66%, var(--italia-rosso) 66.66%);
+    }
+
+    .browser-content-body {
+        padding: 20px;
+    }
+
+    .content-line {
+        height: 12px;
+        background: #cbd5e1;
+        border-radius: 6px;
+        margin-bottom: 12px;
+    }
+
+    .content-line.short { width: 60%; }
+    .content-line.medium { width: 80%; }
+
+    .content-box {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .content-card {
+        flex: 1;
+        height: 100px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .section-digitaly {
+        padding: 100px 0;
+    }
+
+    .section-title-wrapper {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .section-label {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 20px;
+        background: linear-gradient(90deg, rgba(0,146,70,0.1), rgba(206,43,55,0.1));
+        border-radius: 50px;
+        color: var(--italia-verde);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 1rem;
+    }
+
+    .section-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: var(--digitaly-dark);
+        margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+        color: var(--digitaly-gray);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.7;
+    }
+
+    .value-card {
+        background: #fff;
+        border-radius: 20px;
+        padding: 40px 30px;
+        height: 100%;
+        transition: all 0.4s ease;
+        border: 1px solid #e2e8f0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .value-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--italia-verde), var(--italia-rosso));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .value-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+    }
+
+    .value-card:hover::before {
+        opacity: 1;
+    }
+
+    .value-icon {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, var(--italia-verde) 0%, #00a651 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        color: #fff;
+        margin-bottom: 25px;
+    }
+
+    .value-card:nth-child(2) .value-icon {
+        background: linear-gradient(135deg, var(--italia-rosso) 0%, #e53e3e 100%);
+    }
+
+    .value-card:nth-child(3) .value-icon {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .value-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--digitaly-dark);
+        margin-bottom: 15px;
+    }
+
+    .value-text {
+        color: var(--digitaly-gray);
+        line-height: 1.7;
+    }
+
+    .bg-light-digitaly {
+        background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+    }
+
+    .service-card-new {
+        background: #fff;
+        border-radius: 24px;
+        padding: 50px 40px;
+        height: 100%;
+        border: 1px solid #e2e8f0;
+        transition: all 0.4s ease;
+        position: relative;
+    }
+
+    .service-card-new:hover {
+        border-color: var(--italia-verde);
+        box-shadow: 0 30px 60px rgba(0,146,70,0.15);
+    }
+
+    .service-badge {
+        display: inline-block;
+        padding: 6px 16px;
+        background: rgba(0,146,70,0.1);
+        color: var(--italia-verde);
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .service-title-new {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--digitaly-dark);
+        margin-bottom: 15px;
+    }
+
+    .service-desc {
+        color: var(--digitaly-gray);
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+    .service-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 30px 0;
+    }
+
+    .service-features li {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        color: var(--digitaly-dark);
+        font-weight: 500;
+    }
+
+    .service-features li i {
+        width: 24px;
+        height: 24px;
+        background: var(--italia-verde);
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        margin-right: 12px;
+    }
+
+    .service-price {
+        display: flex;
+        align-items: baseline;
+        margin-bottom: 25px;
+        padding-top: 25px;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .price-label {
+        color: var(--digitaly-gray);
+        font-size: 0.9rem;
+        margin-right: 10px;
+    }
+
+    .price-value {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--italia-verde);
+    }
+
+    .process-section {
+        background: var(--digitaly-dark);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .process-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--italia-verde) 33.33%, var(--italia-bianco) 33.33%, var(--italia-bianco) 66.66%, var(--italia-rosso) 66.66%);
+    }
+
+    .process-step {
+        text-align: center;
+        position: relative;
+    }
+
+    .step-number-new {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--italia-verde) 0%, #00a651 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #fff;
+        margin: 0 auto 25px;
+        box-shadow: 0 15px 40px rgba(0,146,70,0.4);
+    }
+
+    .step-title-new {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .step-desc {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.95rem;
+    }
+
+    .cta-section-digitaly {
+        background: linear-gradient(135deg, var(--italia-verde) 0%, #00a651 50%, var(--italia-verde) 100%);
+        padding: 100px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-section-digitaly::before,
+    .cta-section-digitaly::after {
+        content: '';
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+    }
+
+    .cta-section-digitaly::before {
+        top: -100px;
+        left: -100px;
+    }
+
+    .cta-section-digitaly::after {
+        bottom: -100px;
+        right: -100px;
+    }
+
+    .cta-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+
+    .cta-text {
+        font-size: 1.2rem;
+        color: rgba(255,255,255,0.9);
+        margin-bottom: 40px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .btn-cta-white {
+        display: inline-flex;
+        align-items: center;
+        padding: 18px 40px;
+        background: #fff;
+        color: var(--italia-verde);
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .btn-cta-white:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        color: var(--italia-verde);
+    }
+
+    .btn-cta-white i {
+        margin-right: 10px;
+    }
+
+    .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        padding: 40px 0;
+    }
+
+    .tech-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 30px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .tech-item:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-5px);
+    }
+
+    .tech-item i {
+        font-size: 2.5rem;
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    .tech-item span {
+        color: rgba(255,255,255,0.7);
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 991px) {
+        .hero-title-digitaly {
+            font-size: 2.8rem;
+        }
+        .hero-visual {
+            display: none;
+        }
+        .section-title {
+            font-size: 2.2rem;
+        }
+        .cta-title {
+            font-size: 2.2rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-title-digitaly {
+            font-size: 2.2rem;
+        }
+        .feature-pills {
+            flex-direction: column;
+        }
+        .service-card-new {
+            padding: 30px 25px;
+        }
+    }
+    </style>
+</head>
+
+<body class="digitaly-page">
+    {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+    <section class="hero-digitaly-new">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="badge-digitaly">
+                        <i class="fas fa-laptop-code"></i> Web Development Made in Italy
+                    </div>
+                    <div class="mb-4">
+                        <img src="{{ url_for('static', filename='img/digitaly-logo.png') }}" alt="Digitaly" class="digitaly-hero-logo" style="max-width: 350px; height: auto;">
+                    </div>
+                    <h1 class="hero-title-digitaly">
+                        Siti Web che <span class="highlight-verde">Convertono</span><br>
+                        Risultati <span class="highlight-rosso">Misurabili</span>
+                    </h1>
+                    <p class="hero-subtitle-digitaly">
+                        Creiamo siti web straordinari che trasformano visitatori in clienti. 
+                        Design moderno italiano, performance eccellenti e zero compromessi sulla qualità.
+                    </p>
+                    <div class="feature-pills">
+                        <div class="feature-pill">
+                            <i class="fas fa-bolt"></i> Consegna Rapida
+                        </div>
+                        <div class="feature-pill">
+                            <i class="fas fa-euro-sign"></i> Prezzo Trasparente
+                        </div>
+                        <div class="feature-pill">
+                            <i class="fas fa-chart-line"></i> Performance 100/100
+                        </div>
+                        <div class="feature-pill">
+                            <i class="fas fa-mobile-alt"></i> Mobile First
+                        </div>
+                    </div>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="/contact" class="btn-digitaly-primary">
+                            <i class="fas fa-paper-plane me-2"></i>Richiedi Preventivo
+                        </a>
+                        <a href="#servizi" class="btn-digitaly-outline">
+                            <i class="fas fa-eye me-2"></i>Scopri i Servizi
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="hero-visual">
+                        <div class="browser-mockup">
+                            <div class="browser-header">
+                                <div class="browser-dots">
+                                    <div class="browser-dot red"></div>
+                                    <div class="browser-dot yellow"></div>
+                                    <div class="browser-dot green"></div>
+                                </div>
+                                <div class="browser-url">digitaly.it/il-tuo-sito</div>
+                            </div>
+                            <div class="browser-content">
+                                <div class="browser-content-header"></div>
+                                <div class="browser-content-body">
+                                    <div class="content-line"></div>
+                                    <div class="content-line short"></div>
+                                    <div class="content-line medium"></div>
+                                    <div class="content-box">
+                                        <div class="content-card"></div>
+                                        <div class="content-card"></div>
+                                        <div class="content-card"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-digitaly bg-light-digitaly">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-label">Perché Sceglierci</span>
+                <h2 class="section-title">Il Valore Digitaly</h2>
+                <p class="section-subtitle">
+                    Siamo stanchi di vedere aziende italiane pagare cifre assurde per siti web mediocri. 
+                    Digitaly offre qualità reale a prezzi onesti.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="value-card" style="border-top: 4px solid var(--italia-verde);">
+                        <div class="value-icon" style="background: linear-gradient(135deg, var(--italia-verde) 0%, #00a651 100%);">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="value-title" style="color: var(--italia-verde);">Tempi Rapidissimi</h3>
+                        <p class="value-text">
+                            Il tuo sito web pronto in 2-3 settimane, non mesi. 
+                            Utilizziamo tecnologie moderne e processi ottimizzati per consegnare velocemente senza sacrificare la qualità.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card" style="border-top: 4px solid #1a1a1a;">
+                        <div class="value-icon" style="background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <h3 class="value-title" style="color: #1a1a1a;">Prezzo Giusto</h3>
+                        <p class="value-text">
+                            Niente intermediari, niente costi gonfiati. 
+                            Paghi solo il valore reale del lavoro. Preventivi chiari e trasparenti, senza sorprese.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card" style="border-top: 4px solid var(--italia-rosso);">
+                        <div class="value-icon" style="background: linear-gradient(135deg, var(--italia-rosso) 0%, #e53e3e 100%);">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3 class="value-title" style="color: var(--italia-rosso);">Qualità Premium</h3>
+                        <p class="value-text">
+                            Design moderno italiano, codice pulito, performance ottimizzate. 
+                            Ogni sito e ottimizzato per SEO e velocità, con punteggi 90+ su Google PageSpeed.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servizi" class="section-digitaly">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-label">I Nostri Servizi</span>
+                <h2 class="section-title">Cosa Realizziamo</h2>
+                <p class="section-subtitle">
+                    Soluzioni digitali complete per portare la tua azienda al livello successivo.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="service-card-new" style="border-left: 5px solid var(--italia-verde);">
+                        <span class="service-badge" style="background: rgba(0,146,70,0.15); color: var(--italia-verde);"><i class="fas fa-laptop-code me-2"></i>Siti Web</span>
+                        <h3 class="service-title-new">Siti Web Professionali</h3>
+                        <p class="service-desc">
+                            Siti vetrina, landing page, e-commerce, blog aziendali. 
+                            Design moderno e responsive, ottimizzati per conversioni e posizionamento su Google.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-palette" style="background: var(--italia-verde);"></i> Design personalizzato su misura</li>
+                            <li><i class="fas fa-mobile-alt" style="background: var(--italia-verde);"></i> Mobile-first responsive</li>
+                            <li><i class="fas fa-search" style="background: var(--italia-verde);"></i> SEO tecnico integrato</li>
+                            <li><i class="fas fa-tachometer-alt" style="background: var(--italia-verde);"></i> Performance 90+ PageSpeed</li>
+                            <li><i class="fas fa-edit" style="background: var(--italia-verde);"></i> CMS facile da gestire</li>
+                            <li><i class="fas fa-shield-alt" style="background: var(--italia-verde);"></i> SSL e sicurezza inclusi</li>
+                        </ul>
+                        <div class="service-price">
+                            <span class="price-label">A partire da</span>
+                            <span class="price-value" style="color: var(--italia-verde);">€300</span>
+                        </div>
+                        <a href="https://digitaly.website" target="_blank" class="btn-digitaly-primary w-100 justify-content-center">
+                            <i class="fas fa-external-link-alt me-2"></i>Scopri di più
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="service-card-new" style="border-left: 5px solid var(--italia-rosso);">
+                        <span class="service-badge" style="background: rgba(206,43,55,0.15); color: var(--italia-rosso);"><i class="fas fa-server me-2"></i>Gestionali</span>
+                        <h3 class="service-title-new">Gestionali Aziendali</h3>
+                        <p class="service-desc">
+                            Software su misura per automatizzare i tuoi processi aziendali. 
+                            CRM, ERP, gestione ordini, fatturazione, magazzino e molto altro.
+                        </p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-code" style="background: var(--italia-rosso);"></i> Sviluppo su misura</li>
+                            <li><i class="fas fa-plug" style="background: var(--italia-rosso);"></i> Integrazione sistemi esistenti</li>
+                            <li><i class="fas fa-cloud" style="background: var(--italia-rosso);"></i> Cloud o installazione locale</li>
+                            <li><i class="fas fa-user-graduate" style="background: var(--italia-rosso);"></i> Formazione personale inclusa</li>
+                            <li><i class="fas fa-headset" style="background: var(--italia-rosso);"></i> Assistenza tecnica dedicata</li>
+                            <li><i class="fas fa-sync-alt" style="background: var(--italia-rosso);"></i> Aggiornamenti e manutenzione</li>
+                        </ul>
+                        <div class="service-price">
+                            <span class="price-label">A partire da</span>
+                            <span class="price-value" style="color: var(--italia-rosso);">€764</span>
+                        </div>
+                        <a href="https://digitaly.website" target="_blank" class="btn-digitaly-primary w-100 justify-content-center" style="background: linear-gradient(135deg, var(--italia-rosso) 0%, #e53e3e 100%); box-shadow: 0 10px 30px rgba(206,43,55,0.3);">
+                            <i class="fas fa-external-link-alt me-2"></i>Scopri di più
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-digitaly process-section">
+        <div class="container">
+            <div class="section-title-wrapper">
+                <span class="section-label" style="background: rgba(255,255,255,0.1); color: #fff;">Il Nostro Metodo</span>
+                <h2 class="section-title" style="color: #fff;">Come Lavoriamo</h2>
+                <p class="section-subtitle" style="color: rgba(255,255,255,0.7);">
+                    Un processo chiaro e trasparente, dalla prima chiamata alla consegna finale.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="process-step">
+                        <div class="step-number-new">1</div>
+                        <h4 class="step-title-new">Briefing</h4>
+                        <p class="step-desc">Analizziamo le tue esigenze, obiettivi e target di riferimento.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="process-step">
+                        <div class="step-number-new">2</div>
+                        <h4 class="step-title-new">Proposta</h4>
+                        <p class="step-desc">Preventivo trasparente con tempi, costi e specifiche tecniche.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="process-step">
+                        <div class="step-number-new">3</div>
+                        <h4 class="step-title-new">Sviluppo</h4>
+                        <p class="step-desc">Realizziamo il progetto con aggiornamenti settimanali.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="process-step">
+                        <div class="step-number-new">4</div>
+                        <h4 class="step-title-new">Lancio</h4>
+                        <p class="step-desc">Consegna, formazione e supporto post-lancio garantito.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-stack mt-5 pt-4">
+                <div class="tech-item">
+                    <i class="fab fa-react"></i>
+                    <span>React</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-python"></i>
+                    <span>Python</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-node-js"></i>
+                    <span>Node.js</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-wordpress"></i>
+                    <span>WordPress</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fab fa-shopify"></i>
+                    <span>Shopify</span>
+                </div>
+                <div class="tech-item">
+                    <i class="fas fa-database"></i>
+                    <span>PostgreSQL</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section-digitaly">
+        <div class="container position-relative" style="z-index: 1;">
+            <h2 class="cta-title">Pronto a Digitalizzare<br>la Tua Azienda?</h2>
+            <p class="cta-text">
+                Richiedi un preventivo gratuito e senza impegno. 
+                Ti rispondiamo entro 24 ore con una proposta su misura.
+            </p>
+            <a href="/contact" class="btn-cta-white">
+                <i class="fas fa-rocket"></i>Inizia Ora
+            </a>
+        </div>
+    </section>
+
+    {% include 'life-insurance-website-template/partials/footer.html' %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

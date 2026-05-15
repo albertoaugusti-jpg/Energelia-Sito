@@ -1,0 +1,167 @@
+<!-- Footer Styles -->
+<style>
+  .footer {
+    background: linear-gradient(135deg, var(--navy-dark, hsl(215, 80%, 12%)) 0%, var(--navy-primary, hsl(215, 75%, 18%)) 100%);
+    color: rgba(224,230,241,0.9);
+    position: relative;
+  }
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        hsl(145, 45%, 35%) 0%, 
+        hsl(145, 45%, 35%) 33.33%, 
+        #f5f5f0 33.33%, 
+        #f5f5f0 66.66%, 
+        hsl(0, 70%, 45%) 66.66%, 
+        hsl(0, 70%, 45%) 100%
+    );
+  }
+  .footer h3, .footer h5 {
+    color: #fff;
+    font-family: var(--font-corpo, 'Inter', sans-serif);
+  }
+  .footer a {
+    color: rgba(224,230,241,0.85);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .footer a:hover {
+    color: var(--oro-chiaro, hsl(40, 70%, 65%));
+    transform: translateX(3px);
+  }
+  .footer ul {
+    list-style: none;
+    padding: 0;
+  }
+  .footer ul li {
+    margin-bottom: 0.6rem;
+  }
+  .footer .social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(224,230,241,0.1);
+    margin-right: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  .footer .social-icons a:hover {
+    background: linear-gradient(135deg, #d4af37, #f4d03f);
+    transform: translateY(-3px);
+  }
+  .footer .contact-info p {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.6rem;
+  }
+  .footer .contact-info i {
+    font-size: 1.1rem;
+    width: 1.5rem;
+    margin-right: 0.6rem;
+    color: #d4af37;
+  }
+  .footer .newsletter input {
+    background: rgba(224,230,241,0.1);
+    border: 1px solid rgba(224,230,241,0.2);
+    color: #fff;
+    border-radius: 8px 0 0 8px;
+  }
+  .footer .newsletter input::placeholder {
+    color: rgba(255,255,255,0.5);
+  }
+  .footer .newsletter .btn {
+    background: linear-gradient(135deg, #d4af37, #f4d03f);
+    border: none;
+    border-radius: 0 8px 8px 0;
+    color: #0a1530;
+    font-weight: 600;
+  }
+  .footer .newsletter .btn:hover {
+    background: linear-gradient(135deg, #f4d03f, #d4af37);
+  }
+  .footer .bottom-bar {
+    border-top: 1px solid rgba(224,230,241,0.15);
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+  .footer-brand-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 0.8rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .footer-brand-badge i {
+    margin-right: 0.5rem;
+  }
+  .footer-brand-badge.italbandi {
+    border-left: 3px solid #1a5276;
+  }
+  .footer-brand-badge.digitaly {
+    border-left: 3px solid #27ae60;
+  }
+</style>
+
+<!-- Footer Start -->
+<div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+  <div class="container">
+    <div class="row">
+      <!-- Colonna 1: Logo + Descrizione -->
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <a href="/" class="d-inline-block mb-3"><h3 class="mb-0"><i class="fas fa-rocket me-2" style="color: #d4af37;"></i>Energelia</h3></a>
+        <p style="font-size: 0.95rem; line-height: 1.7;">
+          Dal 2006 esperti in finanza agevolata. Accompagniamo le imprese italiane nella ricerca di bandi, nella gestione delle pratiche e nella rendicontazione dei finanziamenti.
+        </p>
+        <div class="social-icons mt-4">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <!-- Colonna 2: Servizi Principali -->
+      <div class="col-6 col-lg-4 mb-4 mb-lg-0">
+        <h5 class="mb-4">Finanza Agevolata</h5>
+        <ul>
+          <li><span><i class="fas fa-angle-right me-2" style="font-size: 0.8rem;"></i>Ricerca Bandi</span></li>
+          <li><span><i class="fas fa-angle-right me-2" style="font-size: 0.8rem;"></i>Gestione Pratiche</span></li>
+          <li><span><i class="fas fa-angle-right me-2" style="font-size: 0.8rem;"></i>Consulenza</span></li>
+          <li><span><i class="fas fa-angle-right me-2" style="font-size: 0.8rem;"></i>Rendicontazione</span></li>
+        </ul>
+      </div>
+
+      <!-- Colonna 3: Contatti -->
+      <div class="col-6 col-lg-4">
+        <h5 class="mb-4">Contatti</h5>
+        <div class="contact-info mb-4">
+          <p><i class="fas fa-map-marker-alt"></i> Via de Marini 1, 16149 Genova</p>
+          <p><i class="fas fa-envelope"></i> info@energelia.it</p>
+          <p><i class="fas fa-phone-alt"></i> 010 807 88 00</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="row bottom-bar">
+      <div class="col-12">
+        <p class="mb-0">
+          &copy; 2025 Energelia S.r.l. – Tutti i diritti riservati | P.IVA 01234567890 | 
+          <a href="#">Privacy Policy</a> | <a href="#">Cookie Policy</a> | <a href="#">Termini di Servizio</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer End -->

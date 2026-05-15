@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Energelia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background: #f5f7fa;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background: linear-gradient(180deg, #0a1530 0%, #1a2a4a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: fixed;
+            width: 260px;
+            left: 0;
+            top: 0;
+        }
+        .sidebar-logo {
+            color: #d4af37;
+            font-size: 1.4rem;
+            font-weight: 800;
+            padding: 15px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+        }
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            transition: all 0.2s;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: rgba(212,175,55,0.15);
+            color: #d4af37;
+        }
+        .main-content {
+            margin-left: 260px;
+            padding: 30px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+        .stat-card h3 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0a1530;
+            margin: 0;
+        }
+        .stat-card p {
+            color: #666;
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+        }
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+        .table-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            margin-top: 25px;
+        }
+        .table-card h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0a1530;
+            margin-bottom: 20px;
+        }
+        .leads-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .leads-table th {
+            text-align: left;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #666;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .leads-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        .leads-table tr:hover {
+            background: #fafbfc;
+        }
+        .badge-bando {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-isi_inail { background: #e3f2fd; color: #1565c0; }
+        .badge-parco_agrisolare { background: #e8f5e9; color: #2e7d32; }
+        .badge-botteghe_entroterra { background: #fff3e0; color: #e65100; }
+        .tag-select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-size: 0.85rem;
+            cursor: pointer;
+            min-width: 180px;
+            font-weight: 600;
+        }
+        .tag-select:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        .row-da_richiamare {
+            background: #fff3cd !important;
+        }
+        .row-da_richiamare td { color: #856404; }
+        .row-da_scrivere_whatsapp {
+            background: #d1f7e0 !important;
+        }
+        .row-da_scrivere_whatsapp td { color: #0d5c2e; }
+        .row-contattato {
+            background: #cce5ff !important;
+        }
+        .row-contattato td { color: #004085; }
+        .row-interessato {
+            background: #e0cffc !important;
+        }
+        .row-interessato td { color: #5a189a; }
+        .row-non_interessato {
+            background: #f8d7da !important;
+        }
+        .row-non_interessato td { color: #721c24; }
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-tab {
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .filter-tab:hover { background: #e0e0e0; }
+        .filter-tab.active {
+            background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
+            color: #0a1530;
+        }
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-whatsapp:hover { background: #1da851; }
+        .btn-whatsapp:disabled { opacity: 0.5; cursor: not-allowed; }
+        .checkbox-cell { width: 40px; text-align: center; }
+        .checkbox-cell input { width: 18px; height: 18px; cursor: pointer; }
+        .whatsapp-panel {
+            background: #e8f5e9;
+            border: 2px solid #25D366;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .whatsapp-panel.show { display: block; }
+        .whatsapp-panel textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 100px;
+        }
+        .selected-count {
+            background: #0a1530;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-left: 10px;
+        }
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .logout-btn:hover { background: rgba(255,255,255,0.15); color: white; }
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-bolt me-2"></i>Energelia
+        </div>
+        <div class="sidebar-menu">
+            <a href="#" class="active" data-section="leads"><i class="fas fa-users"></i> Lead Report</a>
+            <a href="#" data-section="consultations"><i class="fas fa-phone"></i> Consulenze</a>
+            <a href="#" data-section="autosender"><i class="fab fa-whatsapp"></i> Auto Sender</a>
+            <a href="#" data-section="csvlist"><i class="fas fa-file-csv"></i> Lista CSV</a>
+        </div>
+        <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt me-2"></i>Esci
+        </button>
+    </div>
+
+    <div class="main-content">
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h3 id="totalLeads">0</h3>
+                            <p>Lead Totali</p>
+                        </div>
+                        <div class="stat-icon" style="background: #e3f2fd; color: #1565c0;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h3 id="totalConsultations">0</h3>
+                            <p>Richieste Consulenza</p>
+                        </div>
+                        <div class="stat-icon" style="background: #e8f5e9; color: #2e7d32;">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h3 id="toCall">0</h3>
+                            <p>Da Richiamare</p>
+                        </div>
+                        <div class="stat-icon" style="background: #fff3e0; color: #e65100;">
+                            <i class="fas fa-phone-volume"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h3 id="toWhatsapp">0</h3>
+                            <p>Da Scrivere WhatsApp</p>
+                        </div>
+                        <div class="stat-icon" style="background: #e8f5e9; color: #25D366;">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-card" id="leadsSection">
+            <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
+                <h2><i class="fas fa-file-download me-2"></i>Lead da Report</h2>
+                <div>
+                    <button class="btn-whatsapp" id="whatsappBtn" onclick="toggleWhatsappPanel()" disabled>
+                        <i class="fab fa-whatsapp"></i> Invia WhatsApp
+                        <span class="selected-count" id="selectedCount">0</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="whatsapp-panel" id="whatsappPanel">
+                <h5 style="margin-bottom: 15px;"><i class="fab fa-whatsapp me-2"></i>Messaggio WhatsApp</h5>
+                <textarea id="whatsappMessage" placeholder="Scrivi il messaggio da inviare..."></textarea>
+                <div class="mt-3 d-flex gap-2">
+                    <button class="btn btn-success" onclick="sendWhatsappMessages()">
+                        <i class="fas fa-paper-plane me-2"></i>Invia a Selezionati
+                    </button>
+                    <button class="btn btn-secondary" onclick="toggleWhatsappPanel()">Annulla</button>
+                </div>
+                <p class="mt-2 text-muted" style="font-size: 0.85rem;">
+                    <i class="fas fa-info-circle me-1"></i>Verranno aperti link wa.me per ogni contatto selezionato
+                </p>
+            </div>
+
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">Tutti</button>
+                <button class="filter-tab" data-filter="isi_inail">ISI INAIL</button>
+                <button class="filter-tab" data-filter="parco_agrisolare">Parco Agrisolare</button>
+                <button class="filter-tab" data-filter="botteghe_entroterra">Botteghe</button>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="leads-table">
+                    <thead>
+                        <tr>
+                            <th class="checkbox-cell"><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
+                            <th>Email</th>
+                            <th>Telefono</th>
+                            <th>Bando</th>
+                            <th>Data</th>
+                            <th>Tag</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-card" id="consultationsSection" style="display: none;">
+            <h2><i class="fas fa-phone me-2"></i>Richieste Consulenza</h2>
+            <div style="overflow-x: auto;">
+                <table class="leads-table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Telefono</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody id="consultationsBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="table-card" id="autosenderSection" style="display: none;">
+            <h2><i class="fab fa-whatsapp me-2" style="color: #25D366;"></i>Auto Sender WhatsApp</h2>
+            <p style="color: #666; margin-bottom: 25px;">Seleziona i lead e invia messaggi WhatsApp automaticamente. Il sistema aprirà WhatsApp Web per ogni contatto.</p>
+            
+            <div class="row g-4 mb-4">
+                <div class="col-md-6">
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 20px;">
+                        <h5 style="margin-bottom: 15px;"><i class="fas fa-filter me-2"></i>Filtra Lead</h5>
+                        
+                        <div class="mb-3">
+                            <label style="font-weight: 600; margin-bottom: 8px; display: block;">Per Bando:</label>
+                            <select id="autoFilterBando" class="form-select" onchange="updateAutoSenderList()">
+                                <option value="all">Tutti i bandi</option>
+                                <option value="isi_inail">ISI INAIL</option>
+                                <option value="parco_agrisolare">Parco Agrisolare</option>
+                                <option value="botteghe_entroterra">Botteghe Entroterra</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label style="font-weight: 600; margin-bottom: 8px; display: block;">Per Tag:</label>
+                            <select id="autoFilterTag" class="form-select" onchange="updateAutoSenderList()">
+                                <option value="all">Tutti i tag</option>
+                                <option value="none">Senza tag</option>
+                                <option value="da_richiamare">Da richiamare</option>
+                                <option value="da_scrivere_whatsapp">Da scrivere WhatsApp</option>
+                                <option value="contattato">Contattato</option>
+                                <option value="interessato">Interessato</option>
+                                <option value="non_interessato">Non interessato</option>
+                            </select>
+                        </div>
+                        
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 8px; text-align: center;">
+                            <span style="font-size: 2rem; font-weight: 800; color: #25D366;" id="autoLeadCount">0</span>
+                            <p style="margin: 0; color: #2e7d32; font-weight: 600;">Lead con telefono</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 20px;">
+                        <h5 style="margin-bottom: 15px;"><i class="fas fa-comment me-2"></i>Messaggio</h5>
+                        
+                        <div class="mb-3">
+                            <label style="font-weight: 600; margin-bottom: 8px; display: block;">Template Messaggio:</label>
+                            <select id="autoMessageTemplate" class="form-select" onchange="loadMessageTemplate()">
+                                <option value="">Seleziona template...</option>
+                                <option value="inail">ISI INAIL - Info Bando</option>
+                                <option value="agrisolare">Parco Agrisolare - Info Bando</option>
+                                <option value="botteghe">Botteghe Entroterra - Info Bando</option>
+                                <option value="followup">Follow-up Generico</option>
+                                <option value="custom">Messaggio Personalizzato</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label style="font-weight: 600; margin-bottom: 8px; display: block;">Testo Messaggio:</label>
+                            <textarea id="autoMessageText" class="form-control" rows="5" placeholder="Scrivi il tuo messaggio qui..."></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label style="font-weight: 600; margin-bottom: 8px; display: block;">Intervallo tra messaggi:</label>
+                            <select id="autoInterval" class="form-select">
+                                <option value="2000">2 secondi</option>
+                                <option value="3000" selected>3 secondi</option>
+                                <option value="5000">5 secondi</option>
+                                <option value="10000">10 secondi</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; border-radius: 12px; padding: 25px; text-align: center;">
+                <button id="startAutoSender" onclick="startAutoSender()" style="background: white; color: #25D366; border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: 700; cursor: pointer;" disabled>
+                    <i class="fab fa-whatsapp me-2"></i>Avvia Invio Automatico
+                </button>
+                <div style="margin-top: 20px; background: rgba(0,0,0,0.15); border-radius: 10px; padding: 15px;">
+                    <p style="margin: 0 0 10px; font-weight: 600;"><i class="fas fa-qrcode me-2"></i>Prima volta?</p>
+                    <p style="margin: 0; opacity: 0.95; font-size: 0.9rem;">
+                        Si aprirà WhatsApp Web in una finestra dedicata.<br>
+                        La prima volta dovrai scansionare il QR code dal tuo telefono.<br>
+                        <strong>La sessione rimarrà attiva</strong> per tutti i messaggi successivi.
+                    </p>
+                </div>
+                <p style="margin: 15px 0 0; opacity: 0.8; font-size: 0.85rem;">
+                    <i class="fas fa-hand-pointer me-1"></i> Dopo ogni messaggio, clicca INVIO nella finestra WhatsApp per inviare
+                </p>
+            </div>
+            
+            <div id="autoSenderProgress" style="display: none; margin-top: 20px; background: #f8f9fa; border-radius: 12px; padding: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h5 style="margin: 0;"><i class="fas fa-spinner fa-spin me-2"></i>Invio in corso...</h5>
+                    <button onclick="stopAutoSender()" style="background: #dc3545; color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer;">
+                        <i class="fas fa-stop me-1"></i>Ferma
+                    </button>
+                </div>
+                <div style="background: #e0e0e0; border-radius: 10px; height: 20px; overflow: hidden;">
+                    <div id="autoProgressBar" style="background: #25D366; height: 100%; width: 0%; transition: width 0.3s;"></div>
+                </div>
+                <p style="margin: 10px 0 0; text-align: center;" id="autoProgressText">0 / 0 messaggi inviati</p>
+            </div>
+        </div>
+
+        <!-- SEZIONE CSV LIST -->
+        <div class="table-card" id="csvlistSection" style="display: none;">
+            <h2><i class="fas fa-file-csv me-2" style="color: #0ea5e9;"></i>Lista CSV Numeri di Telefono</h2>
+            <p style="color: #666; margin-bottom: 25px;">Carica un file CSV con numeri di telefono e invia messaggi WhatsApp con un template unico.</p>
+            
+            <div class="row">
+                <div class="col-lg-5">
+                    <div style="background: linear-gradient(135deg, #e3f2fd 0%, #f5f5f5 100%); border-radius: 12px; padding: 25px; margin-bottom: 20px;">
+                        <h5 style="margin-bottom: 15px;"><i class="fas fa-upload me-2"></i>Carica CSV</h5>
+                        <input type="file" id="csvFileInput" accept=".csv,.txt" style="display: none;" onchange="handleCsvUpload(event)">
+                        <button onclick="document.getElementById('csvFileInput').click()" style="background: #0a1530; color: white; border: none; padding: 12px 25px; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                            <i class="fas fa-folder-open me-2"></i>Seleziona File
+                        </button>
+                        <p style="margin: 15px 0 0; font-size: 0.85rem; color: #666;">
+                            <i class="fas fa-info-circle me-1"></i>Il file deve contenere numeri di telefono, uno per riga
+                        </p>
+                        <div id="csvFileName" style="margin-top: 10px; font-weight: 600; color: #0a1530;"></div>
+                    </div>
+                    
+                    <div style="background: #fafafa; border-radius: 12px; padding: 20px;">
+                        <h5 style="margin-bottom: 15px;"><i class="fas fa-edit me-2"></i>Template Messaggio</h5>
+                        <textarea id="csvMessageTemplate" rows="6" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-size: 0.95rem; resize: vertical;" placeholder="Scrivi qui il messaggio da inviare a tutti i numeri...">Buongiorno! Sono di Energelia, società di consulenza per la finanza agevolata.
+
+La contatto per informarla delle opportunità di finanziamento attualmente disponibili per la sua azienda.
+
+Può chiamarci al 010 8078800 o rispondere a questo messaggio per una consulenza gratuita.</textarea>
+                    </div>
+                </div>
+                
+                <div class="col-lg-7">
+                    <div style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 20px;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 style="margin: 0;"><i class="fas fa-list me-2"></i>Numeri Caricati <span id="csvPhoneCount" class="badge bg-primary ms-2">0</span></h5>
+                            <div>
+                                <button onclick="selectAllCsvPhones()" class="btn btn-outline-secondary btn-sm me-1">
+                                    <i class="fas fa-check-double me-1"></i>Tutti
+                                </button>
+                                <button onclick="deselectAllCsvPhones()" class="btn btn-outline-secondary btn-sm me-1">
+                                    <i class="fas fa-times me-1"></i>Nessuno
+                                </button>
+                                <button onclick="clearCsvList()" class="btn btn-outline-danger btn-sm">
+                                    <i class="fas fa-trash me-1"></i>Svuota
+                                </button>
+                            </div>
+                        </div>
+                        <div id="csvPhoneList" style="max-height: 350px; overflow-y: auto; border: 1px solid #eee; border-radius: 8px;">
+                            <p style="padding: 40px; text-align: center; color: #999; margin: 0;">
+                                <i class="fas fa-file-csv" style="font-size: 2rem; display: block; margin-bottom: 10px;"></i>
+                                Carica un file CSV per visualizzare i numeri
+                            </p>
+                        </div>
+                        <div class="mt-3 d-flex justify-content-between align-items-center">
+                            <span id="csvSelectedCount" style="font-weight: 600; color: #666;">0 selezionati</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); color: white; border-radius: 12px; padding: 25px; margin-top: 25px;">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                    <div>
+                        <h5 style="margin: 0 0 5px;"><i class="fab fa-whatsapp me-2"></i>Invia a selezionati</h5>
+                        <p style="margin: 0; opacity: 0.9; font-size: 0.9rem;">Aprirà WhatsApp Web per ogni numero selezionato</p>
+                    </div>
+                    <button id="csvSendBtn" onclick="sendCsvWhatsapp()" disabled style="background: white; color: #25D366; border: none; padding: 15px 35px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem;">
+                        <i class="fab fa-whatsapp me-2"></i>Avvia Invio
+                    </button>
+                </div>
+                <div id="csvSenderProgress" style="display: none; margin-top: 20px; background: rgba(255,255,255,0.15); border-radius: 10px; padding: 15px;">
+                    <div style="background: rgba(255,255,255,0.3); border-radius: 10px; height: 15px; overflow: hidden;">
+                        <div id="csvProgressBar" style="background: white; height: 100%; width: 0%; transition: width 0.3s;"></div>
+                    </div>
+                    <p style="margin: 10px 0 0; text-align: center; font-size: 0.9rem;" id="csvProgressText">0 / 0 messaggi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allLeads = [];
+        let allConsultations = [];
+        let selectedLeads = new Set();
+        let currentFilter = 'all';
+        
+        // CSV List variables
+        let csvPhoneNumbers = [];
+        let selectedCsvPhones = new Set();
+
+        function getToken() {
+            return localStorage.getItem('adminToken');
+        }
+
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = '/forzasamp';
+        }
+
+        async function loadData() {
+            const token = getToken();
+            if (!token) {
+                window.location.href = '/forzasamp';
+                return;
+            }
+
+            try {
+                const [leadsRes, consultationsRes, statsRes] = await Promise.all([
+                    fetch('/api/admin/leads', { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch('/api/admin/consultations', { headers: { 'Authorization': `Bearer ${token}` } }),
+                    fetch('/api/admin/stats', { headers: { 'Authorization': `Bearer ${token}` } })
+                ]);
+
+                if (!leadsRes.ok || !consultationsRes.ok) {
+                    logout();
+                    return;
+                }
+
+                const leadsData = await leadsRes.json();
+                const consultationsData = await consultationsRes.json();
+                const statsData = await statsRes.json();
+
+                allLeads = leadsData.leads || [];
+                allConsultations = consultationsData.consultations || [];
+
+                if (statsData.success) {
+                    document.getElementById('totalLeads').textContent = statsData.stats.total_leads;
+                    document.getElementById('totalConsultations').textContent = statsData.stats.total_consultations;
+                    document.getElementById('toCall').textContent = statsData.stats.by_tag?.da_richiamare || 0;
+                    document.getElementById('toWhatsapp').textContent = statsData.stats.by_tag?.da_scrivere_whatsapp || 0;
+                }
+
+                renderLeads();
+                renderConsultations();
+            } catch (err) {
+                console.error('Error loading data:', err);
+            }
+        }
+
+        function renderLeads() {
+            const tbody = document.getElementById('leadsBody');
+            const filtered = currentFilter === 'all' 
+                ? allLeads 
+                : allLeads.filter(l => l.bando === currentFilter);
+
+            tbody.innerHTML = filtered.map(lead => `
+                <tr class="${lead.tag ? 'row-' + lead.tag : ''}">
+                    <td class="checkbox-cell">
+                        <input type="checkbox" 
+                            data-id="${lead.id}" 
+                            data-phone="${lead.phone || ''}"
+                            data-bando="${lead.bando}"
+                            ${selectedLeads.has(lead.id) ? 'checked' : ''}
+                            onchange="toggleSelect(${lead.id}, this)">
+                    </td>
+                    <td>${lead.email}</td>
+                    <td>${lead.phone || '-'}</td>
+                    <td><span class="badge-bando badge-${lead.bando}">${formatBando(lead.bando)}</span></td>
+                    <td>${formatDate(lead.created_at)}</td>
+                    <td>
+                        <select class="tag-select" onchange="updateTag(${lead.id}, this.value)">
+                            <option value="" ${!lead.tag ? 'selected' : ''}>Nessun tag</option>
+                            <option value="da_richiamare" ${lead.tag === 'da_richiamare' ? 'selected' : ''}>Da richiamare</option>
+                            <option value="da_scrivere_whatsapp" ${lead.tag === 'da_scrivere_whatsapp' ? 'selected' : ''}>Da scrivere WhatsApp</option>
+                            <option value="contattato" ${lead.tag === 'contattato' ? 'selected' : ''}>Contattato</option>
+                            <option value="interessato" ${lead.tag === 'interessato' ? 'selected' : ''}>Interessato</option>
+                            <option value="non_interessato" ${lead.tag === 'non_interessato' ? 'selected' : ''}>Non interessato</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+
+            updateSelectedCount();
+        }
+
+        function renderConsultations() {
+            const tbody = document.getElementById('consultationsBody');
+            tbody.innerHTML = allConsultations.map(c => `
+                <tr>
+                    <td>${c.email}</td>
+                    <td><a href="tel:${c.phone}">${c.phone}</a></td>
+                    <td>${formatDate(c.created_at)}</td>
+                </tr>
+            `).join('');
+        }
+
+        function formatBando(bando) {
+            const names = {
+                'isi_inail': 'ISI INAIL',
+                'parco_agrisolare': 'Parco Agrisolare',
+                'botteghe_entroterra': 'Botteghe'
+            };
+            return names[bando] || bando;
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '-';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        async function updateTag(leadId, tag) {
+            const token = getToken();
+            try {
+                await fetch(`/api/admin/lead/${leadId}/tag`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ tag })
+                });
+                loadData();
+            } catch (err) {
+                console.error('Error updating tag:', err);
+            }
+        }
+
+        function toggleSelect(id, checkbox) {
+            if (checkbox.checked) {
+                selectedLeads.add(id);
+            } else {
+                selectedLeads.delete(id);
+            }
+            updateSelectedCount();
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll').checked;
+            const checkboxes = document.querySelectorAll('#leadsBody input[type="checkbox"]');
+            
+            checkboxes.forEach(cb => {
+                const id = parseInt(cb.dataset.id);
+                cb.checked = selectAll;
+                if (selectAll) {
+                    selectedLeads.add(id);
+                } else {
+                    selectedLeads.delete(id);
+                }
+            });
+            updateSelectedCount();
+        }
+
+        function updateSelectedCount() {
+            const count = selectedLeads.size;
+            document.getElementById('selectedCount').textContent = count;
+            document.getElementById('whatsappBtn').disabled = count === 0;
+        }
+
+        function toggleWhatsappPanel() {
+            document.getElementById('whatsappPanel').classList.toggle('show');
+        }
+
+        function sendWhatsappMessages() {
+            const message = document.getElementById('whatsappMessage').value.trim();
+            if (!message) {
+                alert('Inserisci un messaggio');
+                return;
+            }
+
+            const checkboxes = document.querySelectorAll('#leadsBody input[type="checkbox"]:checked');
+            const phones = [];
+            
+            checkboxes.forEach(cb => {
+                const phone = cb.dataset.phone;
+                if (phone && phone !== '') {
+                    phones.push(phone);
+                }
+            });
+
+            if (phones.length === 0) {
+                alert('Nessun lead selezionato ha un numero di telefono');
+                return;
+            }
+
+            const encodedMessage = encodeURIComponent(message);
+            phones.forEach((phone, index) => {
+                const cleanPhone = phone.replace(/\D/g, '');
+                const italianPhone = cleanPhone.startsWith('39') ? cleanPhone : '39' + cleanPhone;
+                
+                setTimeout(() => {
+                    window.open(`https://wa.me/${italianPhone}?text=${encodedMessage}`, '_blank');
+                }, index * 500);
+            });
+        }
+
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                selectedLeads.clear();
+                renderLeads();
+            });
+        });
+
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                const section = this.dataset.section;
+                document.getElementById('leadsSection').style.display = section === 'leads' ? 'block' : 'none';
+                document.getElementById('consultationsSection').style.display = section === 'consultations' ? 'block' : 'none';
+                document.getElementById('autosenderSection').style.display = section === 'autosender' ? 'block' : 'none';
+                document.getElementById('csvlistSection').style.display = section === 'csvlist' ? 'block' : 'none';
+                if (section === 'autosender') updateAutoSenderList();
+            });
+        });
+        
+        // CSV List Functions
+        function handleCsvUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            document.getElementById('csvFileName').textContent = file.name;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                const lines = content.split(/[\r\n]+/).filter(line => line.trim());
+                
+                csvPhoneNumbers = [];
+                selectedCsvPhones.clear();
+                
+                lines.forEach((line, index) => {
+                    // Estrai numeri di telefono (rimuovi virgole, punti e virgole, ecc.)
+                    const parts = line.split(/[,;|\t]/);
+                    parts.forEach(part => {
+                        const cleaned = part.replace(/[^\d+]/g, '').trim();
+                        if (cleaned && cleaned.length >= 8) {
+                            csvPhoneNumbers.push({
+                                id: csvPhoneNumbers.length,
+                                phone: cleaned,
+                                original: part.trim()
+                            });
+                        }
+                    });
+                });
+                
+                renderCsvPhoneList();
+                selectAllCsvPhones();
+            };
+            reader.readAsText(file);
+        }
+        
+        function renderCsvPhoneList() {
+            const container = document.getElementById('csvPhoneList');
+            document.getElementById('csvPhoneCount').textContent = csvPhoneNumbers.length;
+            
+            if (csvPhoneNumbers.length === 0) {
+                container.innerHTML = `
+                    <p style="padding: 40px; text-align: center; color: #999; margin: 0;">
+                        <i class="fas fa-file-csv" style="font-size: 2rem; display: block; margin-bottom: 10px;"></i>
+                        Carica un file CSV per visualizzare i numeri
+                    </p>
+                `;
+                updateCsvSelectedCount();
+                return;
+            }
+            
+            container.innerHTML = csvPhoneNumbers.map(item => `
+                <div style="display: flex; align-items: center; padding: 10px 15px; border-bottom: 1px solid #eee; ${selectedCsvPhones.has(item.id) ? 'background: #e8f5e9;' : ''}">
+                    <input type="checkbox" 
+                        data-csvid="${item.id}"
+                        ${selectedCsvPhones.has(item.id) ? 'checked' : ''}
+                        onchange="toggleCsvPhone(${item.id}, this)"
+                        style="width: 18px; height: 18px; margin-right: 12px; cursor: pointer;">
+                    <span style="font-family: monospace; font-size: 0.95rem;">${item.phone}</span>
+                    ${item.original !== item.phone ? `<span style="color: #999; font-size: 0.8rem; margin-left: 8px;">(${item.original})</span>` : ''}
+                </div>
+            `).join('');
+            
+            updateCsvSelectedCount();
+        }
+        
+        function toggleCsvPhone(id, checkbox) {
+            if (checkbox.checked) {
+                selectedCsvPhones.add(id);
+            } else {
+                selectedCsvPhones.delete(id);
+            }
+            updateCsvSelectedCount();
+        }
+        
+        function selectAllCsvPhones() {
+            csvPhoneNumbers.forEach(item => selectedCsvPhones.add(item.id));
+            renderCsvPhoneList();
+        }
+        
+        function deselectAllCsvPhones() {
+            selectedCsvPhones.clear();
+            renderCsvPhoneList();
+        }
+        
+        function clearCsvList() {
+            csvPhoneNumbers = [];
+            selectedCsvPhones.clear();
+            document.getElementById('csvFileName').textContent = '';
+            document.getElementById('csvFileInput').value = '';
+            renderCsvPhoneList();
+        }
+        
+        function updateCsvSelectedCount() {
+            document.getElementById('csvSelectedCount').textContent = selectedCsvPhones.size + ' selezionati';
+            document.getElementById('csvSendBtn').disabled = selectedCsvPhones.size === 0;
+        }
+        
+        let csvSenderWindow = null;
+        let csvSenderIndex = 0;
+        let csvSenderRunning = false;
+        
+        function sendCsvWhatsapp() {
+            const message = document.getElementById('csvMessageTemplate').value.trim();
+            if (!message) {
+                alert('Inserisci un messaggio');
+                return;
+            }
+            
+            if (selectedCsvPhones.size === 0) {
+                alert('Nessun numero selezionato');
+                return;
+            }
+            
+            const phonesToSend = csvPhoneNumbers.filter(item => selectedCsvPhones.has(item.id));
+            csvSenderIndex = 0;
+            csvSenderRunning = true;
+            
+            document.getElementById('csvSenderProgress').style.display = 'block';
+            document.getElementById('csvSendBtn').disabled = true;
+            
+            sendNextCsvMessage(phonesToSend, message);
+        }
+        
+        function sendNextCsvMessage(phones, message) {
+            if (!csvSenderRunning || csvSenderIndex >= phones.length) {
+                csvSenderRunning = false;
+                document.getElementById('csvSendBtn').disabled = false;
+                document.getElementById('csvProgressText').textContent = `Completato! ${phones.length} messaggi`;
+                setTimeout(() => {
+                    document.getElementById('csvSenderProgress').style.display = 'none';
+                    document.getElementById('csvProgressBar').style.width = '0%';
+                }, 3000);
+                return;
+            }
+            
+            const item = phones[csvSenderIndex];
+            const phone = item.phone.replace(/\D/g, '');
+            const italianPhone = phone.startsWith('39') ? phone : '39' + phone;
+            const encodedMessage = encodeURIComponent(message);
+            const waUrl = `https://web.whatsapp.com/send?phone=${italianPhone}&text=${encodedMessage}`;
+            
+            if (!csvSenderWindow || csvSenderWindow.closed) {
+                csvSenderWindow = window.open(waUrl, 'csv_whatsapp_sender', 'width=1200,height=800');
+            } else {
+                csvSenderWindow.location.href = waUrl;
+                csvSenderWindow.focus();
+            }
+            
+            csvSenderIndex++;
+            
+            const progress = (csvSenderIndex / phones.length) * 100;
+            document.getElementById('csvProgressBar').style.width = progress + '%';
+            document.getElementById('csvProgressText').textContent = `${csvSenderIndex} / ${phones.length} - Clicca INVIO in WhatsApp`;
+            
+            if (csvSenderIndex < phones.length) {
+                setTimeout(() => sendNextCsvMessage(phones, message), 8000);
+            } else {
+                setTimeout(() => {
+                    csvSenderRunning = false;
+                    document.getElementById('csvSendBtn').disabled = false;
+                    document.getElementById('csvProgressText').textContent = `Completato! ${phones.length} messaggi`;
+                }, 1000);
+            }
+        }
+
+        let autoSenderRunning = false;
+        let autoSenderIndex = 0;
+        let filteredAutoLeads = [];
+        let whatsappWindow = null;
+
+        const messageTemplates = {
+            inail: `Buongiorno! Sono di Energelia, società di consulenza per la finanza agevolata.
+
+Ho visto che ha scaricato il nostro report sul Bando ISI INAIL 2025. Questo bando offre contributi a fondo perduto fino al 65% per investimenti in sicurezza sul lavoro.
+
+Le interesserebbe una consulenza gratuita per verificare se la sua azienda può accedere? 
+
+Può chiamarci al 010 8078800 o rispondere a questo messaggio.`,
+            agrisolare: `Buongiorno! Sono di Energelia, società di consulenza per la finanza agevolata.
+
+Ho visto che ha scaricato il nostro report sul Parco Agrisolare. Questo bando offre contributi fino all'80% per impianti fotovoltaici nel settore agricolo.
+
+Le interesserebbe una consulenza gratuita per verificare se può accedere?
+
+Può chiamarci al 010 8078800 o rispondere a questo messaggio.`,
+            botteghe: `Buongiorno! Sono di Energelia, società di consulenza per la finanza agevolata.
+
+Ho visto che ha scaricato il nostro report su Botteghe dell'Entroterra 2026. Questo bando offre contributi fino a €30.000 per attività commerciali nei comuni montani.
+
+Le interesserebbe una consulenza gratuita per verificare se può accedere?
+
+Può chiamarci al 010 8078800 o rispondere a questo messaggio.`,
+            followup: `Buongiorno! Sono di Energelia.
+
+La contatto per sapere se ha avuto modo di valutare le opportunità di finanziamento che le abbiamo inviato.
+
+Siamo disponibili per una consulenza gratuita per analizzare la sua situazione specifica.
+
+Può chiamarci al 010 8078800 o rispondere a questo messaggio.`,
+            custom: ''
+        };
+
+        function loadMessageTemplate() {
+            const template = document.getElementById('autoMessageTemplate').value;
+            if (template && messageTemplates[template] !== undefined) {
+                document.getElementById('autoMessageText').value = messageTemplates[template];
+            }
+            checkAutoSenderReady();
+        }
+
+        function updateAutoSenderList() {
+            const bandoFilter = document.getElementById('autoFilterBando').value;
+            const tagFilter = document.getElementById('autoFilterTag').value;
+
+            filteredAutoLeads = allLeads.filter(lead => {
+                if (!lead.phone || lead.phone.trim() === '') return false;
+                
+                if (bandoFilter !== 'all' && lead.bando !== bandoFilter) return false;
+                
+                if (tagFilter === 'none' && lead.tag) return false;
+                if (tagFilter !== 'all' && tagFilter !== 'none' && lead.tag !== tagFilter) return false;
+                
+                return true;
+            });
+
+            document.getElementById('autoLeadCount').textContent = filteredAutoLeads.length;
+            checkAutoSenderReady();
+        }
+
+        function checkAutoSenderReady() {
+            const message = document.getElementById('autoMessageText').value.trim();
+            const hasLeads = filteredAutoLeads.length > 0;
+            const hasMessage = message.length > 0;
+            
+            document.getElementById('startAutoSender').disabled = !(hasLeads && hasMessage);
+        }
+
+        document.getElementById('autoMessageText').addEventListener('input', checkAutoSenderReady);
+
+        function startAutoSender() {
+            if (autoSenderRunning) return;
+            if (filteredAutoLeads.length === 0) {
+                alert('Nessun lead selezionato con numero di telefono');
+                return;
+            }
+
+            const message = document.getElementById('autoMessageText').value.trim();
+            if (!message) {
+                alert('Inserisci un messaggio');
+                return;
+            }
+
+            autoSenderRunning = true;
+            autoSenderIndex = 0;
+            
+            document.getElementById('autoSenderProgress').style.display = 'block';
+            document.getElementById('startAutoSender').disabled = true;
+            
+            sendNextMessage(message);
+        }
+
+        function sendNextMessage(message) {
+            if (!autoSenderRunning || autoSenderIndex >= filteredAutoLeads.length) {
+                stopAutoSender();
+                return;
+            }
+
+            const lead = filteredAutoLeads[autoSenderIndex];
+            const phone = lead.phone.replace(/\D/g, '');
+            const italianPhone = phone.startsWith('39') ? phone : '39' + phone;
+            const encodedMessage = encodeURIComponent(message);
+            const waUrl = `https://web.whatsapp.com/send?phone=${italianPhone}&text=${encodedMessage}`;
+            
+            if (!whatsappWindow || whatsappWindow.closed) {
+                whatsappWindow = window.open(waUrl, 'whatsapp_sender', 'width=1200,height=800');
+            } else {
+                whatsappWindow.location.href = waUrl;
+                whatsappWindow.focus();
+            }
+            
+            autoSenderIndex++;
+            
+            const progress = (autoSenderIndex / filteredAutoLeads.length) * 100;
+            document.getElementById('autoProgressBar').style.width = progress + '%';
+            document.getElementById('autoProgressText').textContent = `${autoSenderIndex} / ${filteredAutoLeads.length} messaggi inviati - CLICCA INVIO nella finestra WhatsApp`;
+            
+            if (autoSenderIndex < filteredAutoLeads.length) {
+                const interval = parseInt(document.getElementById('autoInterval').value);
+                setTimeout(() => sendNextMessage(message), interval);
+            } else {
+                setTimeout(stopAutoSender, 1000);
+            }
+        }
+
+        function stopAutoSender() {
+            autoSenderRunning = false;
+            document.getElementById('startAutoSender').disabled = false;
+            
+            if (autoSenderIndex >= filteredAutoLeads.length) {
+                document.getElementById('autoProgressText').textContent = `Completato! ${autoSenderIndex} messaggi inviati`;
+                setTimeout(() => {
+                    document.getElementById('autoSenderProgress').style.display = 'none';
+                    document.getElementById('autoProgressBar').style.width = '0%';
+                }, 3000);
+            } else {
+                document.getElementById('autoProgressText').textContent = `Fermato a ${autoSenderIndex} / ${filteredAutoLeads.length}`;
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

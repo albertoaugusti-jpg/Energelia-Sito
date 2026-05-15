@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-67D2BL58Y9');
+        </script>
+        <meta charset="utf-8">
+        <title> Energelia</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts - Stile Istituzionale -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+        <link href="{{ url_for('static', filename='lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    </head>
+       <style>
+
+      @media (max-width: 575.98px) {
+          .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
+            z-index: 999;
+          }
+          .nav-bar.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+          }
+          .nav-bar.visible {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      </style>
+
+  
+
+    <body>
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+        <style>
+
+          @media (max-width: 991.98px) {
+            .navbar-collapse {
+              background: #fff;
+              box-shadow: 0 8px 36px 0 rgba(22,91,133,0.10);
+              border-radius: 0 0 22px 22px;
+              margin-top: 8px;
+              padding: 18px 0 12px 0;
+              z-index: 1000;
+            }
+            .main-navbar-desktop {
+              flex-direction: column !important;
+              align-items: stretch !important;
+              gap: 0 !important;
+            }
+            .main-navbar-desktop .nav-link {
+              color: #155f8d !important;
+              font-size: 1.16rem !important;
+              font-weight: 500 !important;
+              padding: 16px 18px 14px 24px !important;
+              border-radius: 0 !important;
+              margin: 0 !important;
+              border-bottom: 1px solid #e8f1fa;
+              background: none;
+              box-shadow: none;
+              position: relative;
+              transition: background 0.15s, color 0.18s;
+            }
+            .main-navbar-desktop .nav-link:last-child {
+              border-bottom: none;
+            }
+            .main-navbar-desktop .nav-link.active,
+            .main-navbar-desktop .nav-link:focus {
+              color: #fff !important;
+              background: linear-gradient(90deg,#0072ce 0%,#2290e6 100%) !important;
+              font-weight: 700 !important;
+              border-radius: 12px !important;
+              box-shadow: 0 4px 16px rgba(0,80,181,0.09);
+            }
+            .main-navbar-desktop .nav-link:hover {
+              color: #0050b5 !important;
+              background: #f0f6ff !important;
+            }
+          }
+
+
+
+          .nav-bar {
+            position: fixed !important;
+            top: 0; left: 0; width: 100vw;
+            z-index: 1050;
+            background: #fff !important;
+            box-shadow: 0 4px 16px 0 rgba(22,91,133,0.06);
+          }
+          .navbar-logo { height: 40px !important; width: auto; transition: height 0.3s; }
+          .btn-area-clienti { display: none !important; }
+          .cta-telefono-navbar {
+            border-radius: 16px !important;
+            box-shadow: 0 2px 18px rgba(29,98,174,0.10);
+            transition: border 0.2s;
+          }
+          .cta-telefono-navbar:hover {
+            border-color: #a8d2ef;
+            box-shadow: 0 6px 22px rgba(29,98,174,0.14);
+          }
+          .cta-phone-number:hover {
+            color: #0d4167 !important;
+            text-decoration: underline !important;
+          }
+          .hero-no-overlap { margin-top: 80px; }
+          @media (min-width: 992px) {
+            .nav-bar { padding-top: 10px !important; padding-bottom: 10px !important; }
+            .navbar-logo { height: 80px !important; }
+            .cta-telefono-navbar { min-width:220px; font-size:1.11rem; padding: 14px 32px !important;}
+            .hero-no-overlap { margin-top: 100px; }
+            .main-navbar-desktop {
+              gap: 22px !important;
+              font-size: 1.13rem;
+              font-weight: 500;
+              letter-spacing: 0.01em;
+            }
+            .main-navbar-desktop .nav-link {
+              padding: 10px 0 6px 0 !important;
+              color: #185b85 !important;
+              border-radius: 0 !important;
+              position: relative;
+              transition: background 0.17s, color 0.18s;
+              background: transparent;
+              font-size: 1.08rem;
+              box-shadow: none;
+            }
+            .main-navbar-desktop .nav-link.active,
+            .main-navbar-desktop .nav-link:focus {
+              color: #0050b5 !important;
+              font-weight: 700;
+              background: transparent;
+            }
+            .main-navbar-desktop .nav-link::after {
+              content: "";
+              display: block;
+              height: 2.5px;
+              width: 0%;
+              background: linear-gradient(90deg,#199af3 0%,#155f8d 100%);
+              border-radius: 2px;
+              position: absolute;
+              left: 0; bottom: 0;
+              transition: width 0.27s cubic-bezier(.4,.86,.6,1);
+            }
+            .main-navbar-desktop .nav-link.active::after,
+            .main-navbar-desktop .nav-link:hover::after {
+              width: 100%;
+            }
+            .main-navbar-desktop .nav-link:hover,
+            .main-navbar-desktop .nav-link:focus {
+              color: #00397f !important;
+              background: #f2f7fd;
+              box-shadow: 0 2px 8px rgba(22,91,133,0.06);
+              z-index:2;
+            }
+          }
+          @media (max-width: 991.98px) {
+            .main-navbar-desktop .nav-link::after { display:none; }
+            .main-navbar-desktop { gap: 0 !important; font-size:1rem;}
+            .navbar-logo { height: 40px !important; }
+            .cta-telefono-navbar { min-width:120px; font-size:.97rem;}
+            .hero-no-overlap { margin-top: 80px; }
+          }
+        </style>
+
+
+
+
+
+
+
+
+
+    <section class="sezione-domanda-epica py-5 position-relative overflow-hidden hero-no-overlap">
+      <div class="container-xl">
+        <div class="row g-5 align-items-center">
+          <!-- TESTO A SINISTRA -->
+          <div class="col-lg-6 position-relative z-2 pe-lg-5">
+            <span class="badge bg-gradient text-white px-3 py-2 mb-3">Parla con un Esperto Energelia</span>
+            <h2 class="fw-bold mb-4 display-5">Hai dubbi su un incentivo o vuoi scoprire a quali bandi puoi accedere?</h2>
+            <p class="lead text-muted mb-4">
+              Scrivici ciò che ti serve sapere: ti invieremo gratuitamente un <strong class="text-primary">report personalizzato</strong> con le opportunità più vantaggiose per la tua azienda. Niente moduli complicati, nessun impegno.  
+            </p>
+            <div class="row text-muted fs-6">
+              <div class="col-12 mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Risposta in meno di 24h da un consulente</div>
+              <div class="col-12 mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Analisi gratuita basata sul tuo settore</div>
+              <div class="col-12"><i class="fas fa-check-circle text-primary me-2"></i> Supporto reale, niente bot automatici</div>
+            </div>
+          </div>
+          <!-- FORM A DESTRA -->
+          <div class="col-lg-6 position-relative z-2">
+            <div class="box-form-domanda p-5 rounded-4 bg-white shadow-lg">
+              <h5 class="mb-3 text-primary fw-bold">Raccontaci la tua idea</h5>
+              <form id="domandaForm">
+                <div class="form-floating mb-3">
+                  <textarea class="form-control fs-6" placeholder="Scrivi la tua domanda..." id="textareaDomanda" style="height: 180px;" required></textarea>
+                  <label for="textareaDomanda">Scrivi qui la tua domanda o dubbio...</label>
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control fs-6" id="emailDomanda" placeholder="La tua email" required>
+                  <label for="emailDomanda">Inserisci la tua email (per ricevere il report)</label>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 fw-bold py-3 fs-5">
+                  Invia richiesta gratuita <i class="fas fa-paper-plane ms-2"></i>
+                </button>
+              </form>
+              <div class="mt-3 text-center text-muted small">
+                Nessun vincolo. Nessuna newsletter. Solo una risposta utile.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- FORME DECORATIVE -->
+      <div class="forma-bg forma-cerchio"></div>
+      <div class="forma-bg forma-dettaglio"></div>
+    </section>
+
+    <!-- MODALE SUCCESSO DOMANDA EPICA -->
+    <div id="domandaModal" class="custom-modal-overlay" tabindex="-1" style="display:none;">
+      <div class="custom-modal-dialog animate__animated animate__fadeInDown">
+        <button type="button" class="btn-close custom-modal-close" aria-label="Chiudi" onclick="closeDomandaModal()"></button>
+        <div class="text-center px-3 py-5">
+          <div class="mb-3">
+            <i class="fa fa-message-check fa-3x" style="color:#2595ff;"></i>
+          </div>
+          <h2 style="font-weight:800; color:#2595ff;" class="mb-2">Grazie per averci contattato!</h2>
+          <div class="fs-5 mb-1" style="color:#18477d;">
+            Un consulente Energelia risponderà alla tua richiesta il prima possibile.
+          </div>
+          <button class="btn btn-primary mt-4" onclick="closeDomandaModal()" style="min-width:150px;">Chiudi</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CSS MODALE -->
+    <style>
+    .custom-modal-overlay {
+      position: fixed;
+      top:0; left:0; width:100vw; height:100vh;
+      background: rgba(25,40,61,0.24);
+      z-index: 20000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeInModal 0.28s;
+    }
+    @keyframes fadeInModal { from { opacity:0; } to { opacity:1; } }
+    .custom-modal-dialog {
+      background: #fff;
+      border-radius: 26px;
+      box-shadow: 0 8px 40px rgba(16,38,78,0.19), 0 1.5px 4px rgba(0,0,0,0.07);
+      max-width: 390px;
+      width: 96vw;
+      position: relative;
+      overflow: visible;
+      animation: fadeInModal 0.22s;
+    }
+    .custom-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #f6fafd;
+      border-radius: 50%;
+      border: none;
+      font-size: 1.45rem;
+      opacity: 0.73;
+      z-index: 11;
+      transition: background 0.18s;
+    }
+    .custom-modal-close:hover { background: #e3eef7; opacity: 1;}
+    /* Pulsante animazione */
+    .custom-modal-dialog .btn-primary {
+      background: linear-gradient(90deg,#2595ff 60%,#1c50a7 100%);
+      border: none;
+    }
+    </style>
+
+    <!-- JS MODALE -->
+    <script>
+    document.getElementById('domandaForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      document.getElementById('domandaModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      this.reset();
+    });
+    function closeDomandaModal() {
+      document.getElementById('domandaModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e){
+      if(e.key==="Escape") closeDomandaModal();
+    });
+    document.getElementById('domandaModal').addEventListener('click', function(e){
+      if(e.target===this) closeDomandaModal();
+    });
+    </script>
+
+
+<style>
+.sezione-domanda-epica {
+  background: linear-gradient(120deg, #f8faff 0%, #ffffff 100%);
+  position: relative;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.sezione-domanda-epica .badge {
+  background: linear-gradient(90deg, #0050b5, #00aaff);
+  font-size: 0.85rem;
+  border-radius: 30px;
+}
+
+.sezione-domanda-epica h2 {
+  font-size: 2.2rem;
+  line-height: 1.4;
+}
+
+.box-form-domanda {
+  border-left: 6px solid #0050b5;
+  transition: box-shadow 0.3s ease;
+}
+
+.box-form-domanda:hover {
+  box-shadow: 0 12px 30px rgba(0, 80, 181, 0.15);
+}
+
+.sezione-domanda-epica .btn-primary {
+  background-color: #0050b5;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 80, 181, 0.25);
+  transition: all 0.3s ease-in-out;
+}
+
+.sezione-domanda-epica .btn-primary:hover {
+  background-color: #004199;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 80, 181, 0.35);
+}
+
+/* Decorative shapes */
+.forma-bg {
+  position: absolute;
+  z-index: 0;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.forma-cerchio {
+  width: 300px;
+  height: 300px;
+  background: #00aaff;
+  border-radius: 50%;
+  top: -100px;
+  right: -100px;
+}
+
+.forma-dettaglio {
+  width: 180px;
+  height: 180px;
+  background: linear-gradient(135deg, #0050b5, #00aaff);
+  transform: rotate(25deg);
+  bottom: -60px;
+  left: -60px;
+  border-radius: 12px;
+}
+</style>
+
+     <!-- Sezione CTA – Newsletter a sinistra (arancione) e Call a destra (blu) -->
+    <div class="container-fluid cta-section px-0">
+      <div class="row g-0">
+
+        
+        <!-- SEZIONE NEWSLETTER + MODALE COMPLETA -->
+        <div class="col-md-6 cta-left">
+          <h4>Resta sempre aggiornato</h4>
+          <h2>Newsletter Giornaliera</h2>
+          <p class="subheading">
+            Ricevi ogni mattina nella tua inbox i bandi più vantaggiosi: non perdere nessuna opportunità per la tua impresa.
+          </p>
+          <ul class="benefits-list">
+            <li><i class="fa fa-check-circle"></i> Selezione quotidiana di bandi</li>
+            <li><i class="fa fa-check-circle"></i> Alert su scadenze imminenti</li>
+            <li><i class="fa fa-check-circle"></i> Consigli pratici per la candidatura</li>
+          </ul>
+          <form id="newsletterForm" class="newsletter-form d-flex flex-column flex-sm-row justify-content-center align-items-center">
+            <input type="email" class="form-control" placeholder="La tua email" required>
+            <button type="submit" class="btn btn-newsletter ms-sm-3 mt-3 mt-sm-0">
+              Iscriviti Ora
+            </button>
+          </form>
+          <p class="fine-print">Nessun costo, nessun impegno. Annulla quando vuoi.</p>
+        </div>
+
+        <!-- MODALE NEWSLETTER -->
+        <div id="newsletterModal" class="custom-modal-overlay" tabindex="-1" style="display:none;">
+          <div class="custom-modal-dialog animate__animated animate__fadeInDown">
+            <button type="button" class="btn-close custom-modal-close" aria-label="Chiudi" onclick="closeNewsletterModal()"></button>
+            <div class="text-center px-3 py-5">
+              <div class="mb-3">
+                <i class="fa fa-envelope-open-text fa-3x" style="color:#ff9500;"></i>
+              </div>
+              <h2 style="font-weight:800; color:#ff9500;" class="mb-2">Sei iscritto!</h2>
+              <div class="fs-5 mb-1" style="color:#a36420;">Controlla la tua casella email per ricevere la nostra newsletter giornaliera.</div>
+              <button class="btn btn-secondary mt-4" onclick="closeNewsletterModal()" style="min-width:150px;">Chiudi</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CSS MODALE -->
+        <style>
+        .custom-modal-overlay {
+          position: fixed;
+          top:0; left:0; width:100vw; height:100vh;
+          background: rgba(25,40,61,0.28);
+          z-index: 20000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          animation: fadeInModal 0.28s;
+        }
+        @keyframes fadeInModal { from { opacity:0; } to { opacity:1; } }
+        .custom-modal-dialog {
+          background: #fff;
+          border-radius: 24px;
+          box-shadow: 0 8px 40px rgba(16,38,78,0.18), 0 1.5px 4px rgba(0,0,0,0.07);
+          max-width: 370px;
+          width: 94vw;
+          position: relative;
+          overflow: visible;
+          animation: fadeInModal 0.25s;
+        }
+        .custom-modal-close {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          background: #f5fafd;
+          border-radius: 50%;
+          border: none;
+          font-size: 1.4rem;
+          opacity: 0.73;
+          z-index: 11;
+          transition: background 0.18s;
+        }
+        .custom-modal-close:hover { background: #e3eef7; opacity: 1;}
+        </style>
+
+        <!-- JS MODALE -->
+        <script>
+        document.getElementById('newsletterForm').addEventListener('submit', function(e){
+          e.preventDefault();
+          document.getElementById('newsletterModal').style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+          this.reset();
+        });
+        function closeNewsletterModal() {
+          document.getElementById('newsletterModal').style.display = 'none';
+          document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e){
+          if(e.key==="Escape") closeNewsletterModal();
+        });
+        document.getElementById('newsletterModal').addEventListener('click', function(e){
+          if(e.target===this) closeNewsletterModal();
+        });
+        </script>
+
+
+
+        
+        <!-- DESTRA: Call conoscitiva (blu) -->
+            <div class="col-md-6 cta-right">
+              <h4>Parliamo del tuo progetto</h4>
+              <h2>Call Conoscitiva Gratuita</h2>
+              <p class="subheading">
+                Prenota una breve call con un nostro esperto: analizziamo insieme la tua idea e ti mostriamo come accedere ai bandi giusti.
+              </p>
+              <div class="d-flex justify-content-center">
+                <a href="#" class="btn btn-call"
+                   onclick="openCallModal();return false;">
+                   <i class="fa fa-phone-alt me-2"></i> Prenota la tua call
+                </a>
+
+              </div>
+              <p class="fine-print">Disponibile 9–18 dal lunedì al venerdì.</p>
+            </div>
+
+
+            <!-- MODALE FORM PRENOTAZIONE CALL -->
+            <div id="callModal" class="custom-modal-overlay" tabindex="-1" style="display:none;">
+              <div class="call-modal-dialog animate__animated animate__fadeInDown">
+                <button type="button" class="btn-close custom-modal-close" aria-label="Chiudi" onclick="closeCallModal()"></button>
+                
+                <!-- Header del Modal -->
+                <div class="call-modal-header">
+                  <div class="call-modal-badge">
+                    <i class="fas fa-award me-1"></i> ACCESSO ESCLUSIVO
+                  </div>
+                  <h2 class="call-modal-title">Prenota la tua Consulenza Gratuita</h2>
+                  <p class="call-modal-subtitle">I nostri esperti in finanza agevolata sono a tua disposizione per valutare la fattibilità del tuo progetto e guidarti verso il bando più adatto.</p>
+                  <div class="call-modal-features">
+                    <span><i class="fas fa-users me-1"></i> Solo 5 consulenze/settimana</span>
+                    <span><i class="fas fa-clock me-1"></i> Risposta entro 48h</span>
+                    <span><i class="fas fa-star me-1"></i> Consulenti Senior</span>
+                  </div>
+                </div>
+
+                <!-- Form Container -->
+                <div class="call-modal-body">
+                  <form id="callBookingForm">
+                    <!-- Sezione: Informazioni di Contatto -->
+                    <div class="form-section">
+                      <div class="form-section-header">
+                        <i class="fas fa-user me-2"></i> Informazioni di Contatto
+                      </div>
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <label class="form-label">Nome e Cognome *</label>
+                          <input type="text" class="form-control" id="callNome" placeholder="Mario Rossi" required>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">Email *</label>
+                          <input type="email" class="form-control" id="callEmail" placeholder="mario.rossi@azienda.it" required>
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">Telefono</label>
+                          <input type="tel" class="form-control" id="callTelefono" placeholder="+39 123 456 7890">
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">Ruolo in Azienda</label>
+                          <input type="text" class="form-control" id="callRuolo" placeholder="Es. Amministratore, CFO, Project Manager">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Sezione: Informazioni Aziendali -->
+                    <div class="form-section">
+                      <div class="form-section-header">
+                        <i class="fas fa-building me-2"></i> Informazioni Aziendali
+                      </div>
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <label class="form-label">Nome Azienda</label>
+                          <input type="text" class="form-control" id="callAzienda" placeholder="Azienda S.r.l.">
+                        </div>
+                        <div class="col-md-6">
+                          <label class="form-label">Dimensione Azienda</label>
+                          <select class="form-select" id="callDimensione">
+                            <option value="" selected>Seleziona dimensione</option>
+                            <option value="micro">Micro (1-9 dipendenti)</option>
+                            <option value="piccola">Piccola (10-49 dipendenti)</option>
+                            <option value="media">Media (50-249 dipendenti)</option>
+                            <option value="grande">Grande (250+ dipendenti)</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" id="callFinanziamenti">
+                        <label class="form-check-label" for="callFinanziamenti">
+                          <strong>Hai già ricevuto finanziamenti pubblici in passato?</strong>
+                          <br><small class="text-muted">Questa informazione ci aiuta a valutare meglio le opportunità disponibili.</small>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-call-submit w-100">
+                      <i class="fas fa-calendar-check me-2"></i> Prenota la tua consulenza gratuita
+                    </button>
+                    
+                    <p class="text-center text-muted small mt-3 mb-0">
+                      <i class="fas fa-shield-alt me-1"></i> I tuoi dati sono al sicuro. Non condividiamo le tue informazioni con terze parti.
+                    </p>
+                  </form>
+                </div>
+
+                <!-- Success Message (nascosto inizialmente) -->
+                <div id="callSuccessMessage" class="call-success-message" style="display:none;">
+                  <div class="text-center py-4">
+                    <div class="success-icon mb-3">
+                      <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Richiesta Inviata!</h3>
+                    <p>Ti contatteremo entro 48 ore lavorative per fissare la tua consulenza gratuita.</p>
+                    <button type="button" class="btn btn-outline-primary mt-3" onclick="closeCallModal()">
+                      Chiudi
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stili per il Modal della Call -->
+            <style>
+            .call-modal-dialog {
+              background: #fff;
+              border-radius: 16px;
+              box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+              max-width: 600px;
+              width: 95vw;
+              max-height: 90vh;
+              overflow-y: auto;
+              position: relative;
+            }
+
+            .call-modal-header {
+              background: linear-gradient(135deg, #0a1930 0%, #1a3a5c 100%);
+              color: #fff;
+              padding: 2rem 2rem 1.5rem;
+              border-radius: 16px 16px 0 0;
+            }
+
+            .call-modal-badge {
+              display: inline-block;
+              background: rgba(255,193,7,0.9);
+              color: #0a1930;
+              padding: 0.3rem 0.8rem;
+              border-radius: 20px;
+              font-size: 0.75rem;
+              font-weight: 700;
+              letter-spacing: 1px;
+              margin-bottom: 1rem;
+            }
+
+            .call-modal-title {
+              font-size: 1.6rem;
+              font-weight: 700;
+              margin-bottom: 0.75rem;
+            }
+
+            .call-modal-subtitle {
+              font-size: 0.95rem;
+              opacity: 0.9;
+              margin-bottom: 1rem;
+              line-height: 1.5;
+            }
+
+            .call-modal-features {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 1rem;
+              font-size: 0.8rem;
+              opacity: 0.85;
+            }
+
+            .call-modal-features span {
+              display: flex;
+              align-items: center;
+            }
+
+            .call-modal-body {
+              padding: 1.5rem 2rem 2rem;
+            }
+
+            .form-section {
+              margin-bottom: 1.5rem;
+            }
+
+            .form-section-header {
+              font-weight: 600;
+              color: #1a3a5c;
+              margin-bottom: 1rem;
+              padding-bottom: 0.5rem;
+              border-bottom: 2px solid #e9ecef;
+              font-size: 0.95rem;
+            }
+
+            .call-modal-body .form-label {
+              font-weight: 500;
+              font-size: 0.85rem;
+              color: #495057;
+              margin-bottom: 0.3rem;
+            }
+
+            .call-modal-body .form-control,
+            .call-modal-body .form-select {
+              border: 2px solid #e9ecef;
+              border-radius: 8px;
+              padding: 0.65rem 1rem;
+              font-size: 0.95rem;
+              transition: border-color 0.2s, box-shadow 0.2s;
+            }
+
+            .call-modal-body .form-control:focus,
+            .call-modal-body .form-select:focus {
+              border-color: #0050b5;
+              box-shadow: 0 0 0 3px rgba(0,80,181,0.1);
+            }
+
+            .call-modal-body .form-control::placeholder {
+              color: #adb5bd;
+            }
+
+            .call-modal-body .form-check-input {
+              width: 1.2rem;
+              height: 1.2rem;
+              margin-top: 0.15rem;
+            }
+
+            .call-modal-body .form-check-input:checked {
+              background-color: #0050b5;
+              border-color: #0050b5;
+            }
+
+            .btn-call-submit {
+              background: linear-gradient(135deg, #0050b5 0%, #0072ce 100%);
+              color: #fff;
+              border: none;
+              padding: 1rem 2rem;
+              font-size: 1rem;
+              font-weight: 600;
+              border-radius: 10px;
+              transition: transform 0.2s, box-shadow 0.2s;
+            }
+
+            .btn-call-submit:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 8px 25px rgba(0,80,181,0.3);
+              color: #fff;
+            }
+
+            .call-success-message {
+              padding: 2rem;
+            }
+
+            .call-success-message .success-icon {
+              font-size: 4rem;
+              color: #28a745;
+            }
+
+            .call-success-message h3 {
+              color: #1a3a5c;
+              font-weight: 700;
+            }
+
+            .call-success-message p {
+              color: #6c757d;
+            }
+
+            @media (max-width: 576px) {
+              .call-modal-header {
+                padding: 1.5rem 1.25rem 1.25rem;
+              }
+              .call-modal-title {
+                font-size: 1.3rem;
+              }
+              .call-modal-features {
+                flex-direction: column;
+                gap: 0.5rem;
+              }
+              .call-modal-body {
+                padding: 1.25rem;
+              }
+            }
+            </style>
+
+            <!-- Script per gestire il form -->
+            <script>
+            document.getElementById('callBookingForm').addEventListener('submit', function(e) {
+              e.preventDefault();
+              
+              // Nascondi il form e mostra il messaggio di successo
+              document.querySelector('.call-modal-header').style.display = 'none';
+              document.querySelector('.call-modal-body').style.display = 'none';
+              document.getElementById('callSuccessMessage').style.display = 'block';
+              
+              // Reset del form
+              this.reset();
+            });
+
+            function openCallModal() {
+              document.getElementById('callModal').style.display = 'flex';
+              document.body.style.overflow = 'hidden';
+            }
+
+            function closeCallModal() {
+              document.getElementById('callModal').style.display = 'none';
+              document.body.style.overflow = '';
+              
+              // Ripristina la vista del form
+              setTimeout(function() {
+                document.querySelector('.call-modal-header').style.display = 'block';
+                document.querySelector('.call-modal-body').style.display = 'block';
+                document.getElementById('callSuccessMessage').style.display = 'none';
+              }, 300);
+            }
+
+            document.addEventListener('keydown', function(e){
+              if(e.key==="Escape") closeCallModal();
+            });
+
+            document.getElementById('callModal').addEventListener('click', function(e){
+              if(e.target===this) closeCallModal();
+            });
+            </script>
+
+        
+      
+
+
+          </div>
+        </div>
+
+
+
+
+        <style>
+
+          .custom-modal-overlay {
+            position: fixed;
+            top:0; left:0; width:100vw; height:100vh;
+            background: rgba(25,40,61,0.28);
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInModal 0.28s;
+          }
+          @keyframes fadeInModal { from { opacity:0; } to { opacity:1; } }
+          .custom-modal-dialog {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 8px 40px rgba(16,38,78,0.18), 0 1.5px 4px rgba(0,0,0,0.07);
+            max-width: 370px;
+            width: 94vw;
+            position: relative;
+            overflow: visible;
+          }
+          .custom-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f5fafd;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.4rem;
+            opacity: 0.73;
+            z-index: 11;
+            transition: background 0.18s;
+          }
+          .custom-modal-close:hover { background: #e3eef7; opacity: 1;}
+
+
+          
+
+          /* MODALE STILE FIGO */
+          .custom-modal-overlay {
+            position: fixed;
+            top:0; left:0; width:100vw; height:100vh;
+            background: rgba(25,40,61,0.28);
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInModal 0.28s;
+          }
+          @keyframes fadeInModal { from { opacity:0; } to { opacity:1; } }
+          .custom-modal-dialog {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 8px 40px rgba(16,38,78,0.18), 0 1.5px 4px rgba(0,0,0,0.07);
+            max-width: 370px;
+            width: 94vw;
+            position: relative;
+            overflow: visible;
+          }
+          .custom-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f5fafd;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.4rem;
+            opacity: 0.73;
+            z-index: 11;
+            transition: background 0.18s;
+          }
+          .custom-modal-close:hover { background: #e3eef7; opacity: 1;}
+          .phone-popup-link:hover, .phone-popup-link:focus {
+            background: #e9f7ff;
+            color: #0076b7;
+            border-color: #99d3f9;
+            text-decoration: none;
+            box-shadow: 0 4px 18px rgba(46,98,179,0.08);
+          }
+
+
+
+
+
+        .cta-section { /* dimensioni e padding invariati */ }
+        .cta-left, .cta-right {
+          color: #fff;
+          text-align: center;
+          padding: 3rem 2rem;
+        }
+        /* Arancione a sinistra */
+        .cta-left {
+          background: linear-gradient(135deg, #FFA500 0%, #FF3B3F 100%);
+        }
+        /* Blu a destra */
+        .cta-right {
+          background: #495c8b url('img/app-pattern.png') center/cover no-repeat;
+        }
+
+        /* Titoli e sottotitoli */
+        .cta-section h4 { font-weight:400; text-transform:uppercase; letter-spacing:2px; margin-bottom:.5rem; }
+        .cta-section h2 { font-size:2.5rem; margin-bottom:1rem; font-weight:700; }
+        .subheading { font-size:1rem; margin-bottom:1.5rem; color:rgba(255,255,255,0.9); }
+
+        /* Lista benefici */
+        .benefits-list { list-style:none; padding:0; margin-bottom:1.5rem; }
+        .benefits-list li { font-size:.95rem; margin:.5rem 0; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.95); }
+        .benefits-list i { color:#fff; margin-right:.5rem; font-size:1.2rem; }
+
+        /* Form newsletter */
+        .newsletter-form .form-control { max-width:300px; border:none; border-radius:50px; padding:.75rem 1.5rem; background:rgba(255,255,255,0.2); color:#fff; }
+        .btn-newsletter { background:#fff; color:#FF3B3F; border:none; border-radius:50px; padding:.75rem 2rem; font-weight:600; text-transform:uppercase; }
+        .btn-newsletter:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.1); }
+
+        /* Call button */
+        .btn-call { background:#FF3B3F; color:#fff; border:none; border-radius:50px; padding:.75rem 2rem; font-weight:600; text-transform:uppercase; }
+        .btn-call:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+
+        /* Fine print */
+        .fine-print { font-size:.85rem; margin-top:1rem; color:rgba(255,255,255,0.7); }
+
+        /* Responsive */
+        @media (max-width:767px) {
+          .cta-left, .cta-right { padding:2rem 1rem; }
+          .cta-section h2 { font-size:2rem; }
+          .newsletter-form { flex-direction:column; }
+          .newsletter-form .form-control { margin-bottom:1rem; max-width:100%; }
+          .newsletter-form .btn-newsletter { margin:0; }
+        }
+        </style>
+
+    <script>
+    document.getElementById('newsletterForm').addEventListener('submit', function(e){
+      e.preventDefault(); // Blocca invio classico
+      // Qui potresti aggiungere validazione personalizzata se vuoi (opzionale)
+      document.getElementById('newsletterModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.getElementById('newsletterForm').reset(); // Pulisci la mail (opzionale)
+    });
+    function closeNewsletterModal() {
+      document.getElementById('newsletterModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+    // Chiudi con ESC
+    document.addEventListener('keydown', function(e){
+      if(e.key==="Escape") closeNewsletterModal();
+    });
+    // Chiudi cliccando fuori dal box
+    document.getElementById('newsletterModal').addEventListener('click', function(e){
+      if(e.target===this) closeNewsletterModal();
+    });
+    </script>
+
+
+
+        <script>
+        function openCallModal() {
+          document.getElementById('callModal').style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+        function closeCallModal() {
+          document.getElementById('callModal').style.display = 'none';
+          document.body.style.overflow = '';
+        }
+        // Chiudi modale con ESC
+        document.addEventListener('keydown', function(e){
+          if(e.key==="Escape") closeCallModal();
+        });
+        // Chiudi modale cliccando sfondo
+        document.getElementById('callModal').addEventListener('click', function(e){
+          if(e.target===this) closeCallModal();
+        });
+        </script>
+    <style>
+      .banner-divider {
+        width: 100%;
+        height: 280px;               /* Altezza “stretta” tipo banner */
+        background: url('img/wtc.png') center center / cover no-repeat;
+      }
+    </style>
+
+
+
+{% include 'life-insurance-website-template/partials/footer.html' %}
+        
+        
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+        
+
+        <!-- Template Javascript -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    </body>
+
+</html>
+
+<script>
+function filterCategory(category) {
+  const cards = document.querySelectorAll('.bandocard');
+  const buttons = document.querySelectorAll('.btn-group .btn');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    if (category === 'tutti' || card.classList.contains(category)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function filterBandi() {
+  const input = document.getElementById('searchBando').value.toLowerCase();
+  const cards = document.querySelectorAll('.bandocard');
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? 'block' : 'none';
+  });
+}
+</script>
+
+    <script>
+      if (window.matchMedia("(max-width: 575.98px)").matches) {
+        let lastScroll = window.scrollY;
+        const navbar   = document.querySelector('.nav-bar');
+        navbar.classList.add('visible');
+
+        window.addEventListener('scroll', () => {
+          const current = window.scrollY;
+
+          // Se siamo vicini al top (< 10px), mostrala sempre
+          if (current <= 10) {
+            navbar.classList.remove('hidden');
+            navbar.classList.add('visible');
+          }
+          else if (current > lastScroll + 5) {
+            // scroll verso il basso
+            navbar.classList.remove('visible');
+            navbar.classList.add('hidden');
+          }
+          else if (current < lastScroll - 5) {
+            // scroll verso l'alto
+            navbar.classList.remove('hidden');
+            navbar.classList.add('visible');
+          }
+
+          lastScroll = current;
+        });
+      }
+    </script>
+

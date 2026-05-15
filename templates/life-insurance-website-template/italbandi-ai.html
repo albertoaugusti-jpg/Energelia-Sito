@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-67D2BL58Y9');
+    </script>
+    <meta charset="utf-8">
+    <title>ItalBandi AI - L'Assistente Intelligente per i Bandi | Coming Soon</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="ItalBandi AI: l'assistente virtuale che risponde alle tue domande sui bandi in tempo reale.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.0/css/all.css"/>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <style>
+    :root {
+        --italia-verde: #009246;
+        --italia-bianco: #ffffff;
+        --italia-rosso: #ce2b37;
+        --italia-verde-scuro: #006837;
+        --italia-rosso-scuro: #a31d26;
+        --grigio-scuro: #0f0f1a;
+        --grigio-medio: #1a1a2e;
+        --grigio-chiaro: #f8f9fa;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .ai-page {
+        font-family: 'Inter', sans-serif;
+        background: var(--grigio-scuro);
+        color: #fff;
+        overflow-x: hidden;
+    }
+
+    .hero-ai {
+        min-height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 140px 0 100px;
+        overflow: hidden;
+    }
+
+    .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(ellipse at 30% 20%, rgba(0,146,70,0.15) 0%, transparent 50%),
+            radial-gradient(ellipse at 70% 80%, rgba(206,43,55,0.12) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 70%);
+    }
+
+    .grid-pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+            linear-gradient(rgba(0,146,70,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0,146,70,0.05) 1px, transparent 1px);
+        background-size: 80px 80px;
+    }
+
+    .floating-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    .floating-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        animation: floatOrb 20s ease-in-out infinite;
+    }
+
+    .orb-1 {
+        width: 300px;
+        height: 300px;
+        background: var(--italia-verde);
+        opacity: 0.15;
+        top: 10%;
+        left: 5%;
+    }
+
+    .orb-2 {
+        width: 250px;
+        height: 250px;
+        background: var(--italia-rosso);
+        opacity: 0.12;
+        bottom: 20%;
+        right: 10%;
+        animation-delay: -7s;
+    }
+
+    .orb-3 {
+        width: 200px;
+        height: 200px;
+        background: #fff;
+        opacity: 0.05;
+        top: 50%;
+        left: 50%;
+        animation-delay: -14s;
+    }
+
+    @keyframes floatOrb {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(30px, -40px) scale(1.1); }
+        50% { transform: translate(-20px, 30px) scale(0.95); }
+        75% { transform: translate(40px, 20px) scale(1.05); }
+    }
+
+    .tricolore-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        display: flex;
+    }
+
+    .tricolore-top span {
+        flex: 1;
+    }
+
+    .tricolore-top span:nth-child(1) { background: var(--italia-verde); }
+    .tricolore-top span:nth-child(2) { background: var(--italia-bianco); }
+    .tricolore-top span:nth-child(3) { background: var(--italia-rosso); }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(0,146,70,0.15);
+        border: 1px solid rgba(0,146,70,0.3);
+        padding: 14px 28px;
+        border-radius: 100px;
+        margin-bottom: 30px;
+        backdrop-filter: blur(10px);
+    }
+
+    .pulse-dot {
+        width: 12px;
+        height: 12px;
+        background: var(--italia-verde);
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+        box-shadow: 0 0 20px var(--italia-verde);
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    .hero-badge span {
+        color: #fff;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+
+    .hero-title {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 5rem;
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 30px;
+    }
+
+    .hero-title .ital {
+        color: var(--italia-verde);
+    }
+
+    .hero-title .bandi {
+        color: #fff;
+    }
+
+    .hero-title .ai-text {
+        background: linear-gradient(135deg, var(--italia-rosso), #e74c3c, var(--italia-verde));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% 200%;
+        animation: gradientShift 5s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+
+    .hero-subtitle {
+        font-size: 1.35rem;
+        color: rgba(255,255,255,0.7);
+        line-height: 1.9;
+        max-width: 550px;
+        margin-bottom: 40px;
+    }
+
+    .countdown-container {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .countdown-box {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 25px 30px;
+        text-align: center;
+        min-width: 110px;
+        backdrop-filter: blur(10px);
+    }
+
+    .countdown-number {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--italia-verde), #00b359);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+    }
+
+    .countdown-label {
+        font-size: 0.8rem;
+        color: rgba(255,255,255,0.5);
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-top: 10px;
+    }
+
+    .btn-ai-primary {
+        background: linear-gradient(135deg, var(--italia-verde), var(--italia-verde-scuro));
+        color: #fff;
+        padding: 20px 45px;
+        border-radius: 16px;
+        font-weight: 700;
+        font-size: 1.15rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        transition: all 0.4s;
+        border: none;
+        box-shadow: 0 15px 50px rgba(0,146,70,0.4);
+    }
+
+    .btn-ai-primary:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 25px 60px rgba(0,146,70,0.5);
+        color: #fff;
+    }
+
+    .pc-mockup-container {
+        position: relative;
+        perspective: 1500px;
+    }
+
+    .pc-mockup {
+        position: relative;
+        transform: rotateY(-8deg) rotateX(3deg);
+        transition: transform 0.5s;
+    }
+
+    .pc-mockup:hover {
+        transform: rotateY(-3deg) rotateX(1deg);
+    }
+
+    .pc-screen {
+        background: linear-gradient(145deg, #1e1e2e, #2a2a3e);
+        border-radius: 20px;
+        padding: 15px;
+        box-shadow: 
+            0 50px 100px rgba(0,0,0,0.5),
+            0 0 0 2px rgba(255,255,255,0.1),
+            inset 0 0 50px rgba(0,0,0,0.3);
+        position: relative;
+    }
+
+    .pc-screen::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 8px;
+        background: linear-gradient(90deg, var(--italia-verde) 33.33%, #fff 33.33%, #fff 66.66%, var(--italia-rosso) 66.66%);
+        border-radius: 20px 20px 0 0;
+    }
+
+    .screen-bezel {
+        background: #0a0a12;
+        border-radius: 12px;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .screen-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .screen-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+
+    .screen-dot:nth-child(1) { background: var(--italia-rosso); }
+    .screen-dot:nth-child(2) { background: #ffc107; }
+    .screen-dot:nth-child(3) { background: var(--italia-verde); }
+
+    .screen-title {
+        margin-left: 15px;
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.6);
+    }
+
+    .chat-interface {
+        height: 380px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-header-bar {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        background: linear-gradient(135deg, rgba(0,146,70,0.2), rgba(206,43,55,0.15));
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    .chat-avatar {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--italia-verde), var(--italia-rosso));
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        box-shadow: 0 5px 20px rgba(0,146,70,0.4);
+    }
+
+    .chat-info h4 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+    }
+
+    .chat-info span {
+        font-size: 0.85rem;
+        color: var(--italia-verde);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .chat-info span::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        background: var(--italia-verde);
+        border-radius: 50%;
+        animation: pulse 1.5s infinite;
+    }
+
+    .chat-messages {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-right: 10px;
+    }
+
+    .message {
+        max-width: 85%;
+        padding: 14px 18px;
+        border-radius: 16px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: messageIn 0.5s forwards;
+    }
+
+    @keyframes messageIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .message-user {
+        align-self: flex-end;
+        background: linear-gradient(135deg, var(--italia-verde), var(--italia-verde-scuro));
+        border-bottom-right-radius: 4px;
+        margin-left: auto;
+    }
+
+    .message-ai {
+        align-self: flex-start;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-bottom-left-radius: 4px;
+    }
+
+    .typing-indicator {
+        display: flex;
+        gap: 5px;
+        padding: 14px 18px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 16px;
+        border-bottom-left-radius: 4px;
+        width: fit-content;
+    }
+
+    .typing-dot {
+        width: 8px;
+        height: 8px;
+        background: rgba(255,255,255,0.5);
+        border-radius: 50%;
+        animation: typingBounce 1.4s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBounce {
+        0%, 60%, 100% { transform: translateY(0); }
+        30% { transform: translateY(-8px); }
+    }
+
+    .scenario-tabs {
+        display: flex;
+        gap: 8px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    .scenario-tab {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        color: rgba(255,255,255,0.6);
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .scenario-tab.active {
+        background: linear-gradient(135deg, var(--italia-verde), var(--italia-rosso));
+        border-color: transparent;
+        color: #fff;
+    }
+
+    .scenario-tab:hover:not(.active) {
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+    }
+
+    .pc-stand {
+        width: 120px;
+        height: 80px;
+        background: linear-gradient(180deg, #3a3a4a, #2a2a3a);
+        margin: 0 auto;
+        border-radius: 0 0 10px 10px;
+        position: relative;
+    }
+
+    .pc-stand::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 15px;
+        background: linear-gradient(180deg, #3a3a4a, #2a2a3a);
+        border-radius: 10px;
+    }
+
+    .section-ai {
+        padding: 120px 0;
+        position: relative;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 80px;
+    }
+
+    .section-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, rgba(0,146,70,0.15), rgba(206,43,55,0.1));
+        color: var(--italia-verde);
+        padding: 12px 28px;
+        border-radius: 100px;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 25px;
+        border: 1px solid rgba(0,146,70,0.2);
+    }
+
+    .section-header h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .section-header p {
+        font-size: 1.25rem;
+        color: rgba(255,255,255,0.6);
+        max-width: 650px;
+        margin: 0 auto;
+        line-height: 1.8;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .feature-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 24px;
+        padding: 45px 35px;
+        transition: all 0.4s;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--italia-verde), var(--italia-rosso));
+        transform: scaleX(0);
+        transition: transform 0.4s;
+    }
+
+    .feature-card:hover {
+        background: rgba(255,255,255,0.06);
+        transform: translateY(-8px);
+        border-color: rgba(0,146,70,0.3);
+    }
+
+    .feature-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .feature-icon {
+        width: 75px;
+        height: 75px;
+        background: linear-gradient(135deg, var(--italia-verde), var(--italia-rosso));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+        box-shadow: 0 15px 40px rgba(0,146,70,0.3);
+    }
+
+    .feature-card h4 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .feature-card p {
+        color: rgba(255,255,255,0.6);
+        line-height: 1.8;
+        font-size: 1.05rem;
+    }
+
+    .use-cases-section {
+        background: linear-gradient(180deg, rgba(0,146,70,0.05), transparent);
+    }
+
+    .use-case-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 35px;
+        margin-bottom: 25px;
+        transition: all 0.3s;
+    }
+
+    .use-case-card:hover {
+        border-color: var(--italia-verde);
+        background: rgba(0,146,70,0.05);
+    }
+
+    .use-case-card h5 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .use-case-card h5 i {
+        color: var(--italia-verde);
+        font-size: 1.3rem;
+    }
+
+    .use-case-card p {
+        color: rgba(255,255,255,0.6);
+        margin-bottom: 18px;
+        line-height: 1.7;
+    }
+
+    .example-query-box {
+        background: linear-gradient(135deg, rgba(0,146,70,0.15), rgba(206,43,55,0.1));
+        border: 1px solid rgba(0,146,70,0.2);
+        padding: 16px 22px;
+        border-radius: 14px;
+        font-size: 0.95rem;
+        color: #fff;
+        font-style: italic;
+    }
+
+    .example-query-box::before {
+        content: '"';
+        font-size: 1.5rem;
+        color: var(--italia-verde);
+        margin-right: 5px;
+    }
+
+    .example-query-box::after {
+        content: '"';
+        font-size: 1.5rem;
+        color: var(--italia-verde);
+        margin-left: 5px;
+    }
+
+    .waitlist-section {
+        background: linear-gradient(135deg, var(--italia-verde), var(--italia-verde-scuro));
+        padding: 100px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .waitlist-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--italia-verde-scuro), #fff, var(--italia-rosso));
+    }
+
+    .waitlist-section h2 {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .waitlist-section > .container > p {
+        font-size: 1.25rem;
+        opacity: 0.9;
+        max-width: 600px;
+        margin: 0 auto 45px;
+        line-height: 1.7;
+    }
+
+    .waitlist-form {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 550px;
+        margin: 0 auto;
+    }
+
+    .waitlist-form input {
+        flex: 1;
+        min-width: 280px;
+        padding: 20px 28px;
+        border-radius: 16px;
+        border: 2px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.15);
+        color: #fff;
+        font-size: 1.1rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .waitlist-form input::placeholder {
+        color: rgba(255,255,255,0.6);
+    }
+
+    .waitlist-form input:focus {
+        outline: none;
+        border-color: #fff;
+        background: rgba(255,255,255,0.2);
+    }
+
+    .waitlist-form button {
+        background: #fff;
+        color: var(--italia-verde-scuro);
+        padding: 20px 40px;
+        border-radius: 16px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .waitlist-form button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    .waitlist-benefits {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 45px;
+        flex-wrap: wrap;
+    }
+
+    .waitlist-benefit {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+
+    .waitlist-benefit i {
+        font-size: 1.3rem;
+    }
+
+    @media (max-width: 1199px) {
+        .hero-title { font-size: 4rem; }
+        .features-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 991px) {
+        .hero-title { font-size: 3rem; }
+        .pc-mockup-container { margin-top: 60px; }
+        .pc-mockup { transform: none; }
+        .section-header h2 { font-size: 2.5rem; }
+        .features-grid { grid-template-columns: 1fr; }
+        .countdown-container { justify-content: center; }
+    }
+
+    @media (max-width: 767px) {
+        .hero-title { font-size: 2.5rem; }
+        .countdown-container { flex-wrap: wrap; }
+        .waitlist-benefits { flex-direction: column; gap: 20px; }
+    }
+    </style>
+</head>
+
+<body class="ai-page">
+    {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+    <section class="hero-ai">
+        <div class="tricolore-top">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="hero-bg"></div>
+        <div class="grid-pattern"></div>
+        <div class="floating-elements">
+            <div class="floating-orb orb-1"></div>
+            <div class="floating-orb orb-2"></div>
+            <div class="floating-orb orb-3"></div>
+        </div>
+
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                    <div class="hero-badge">
+                        <span class="pulse-dot"></span>
+                        <span>Coming Soon - Q2 2026</span>
+                    </div>
+
+                    <h1 class="hero-title">
+                        <span class="ital">Ital</span><span class="bandi">Bandi</span> <span class="ai-text">AI</span>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        L'assistente intelligente che risponde alle tue domande sui bandi in tempo reale. 
+                        Trova il finanziamento perfetto in pochi secondi.
+                    </p>
+
+                    <div class="countdown-container">
+                        <div class="countdown-box">
+                            <div class="countdown-number" id="days">---</div>
+                            <div class="countdown-label">Giorni</div>
+                        </div>
+                        <div class="countdown-box">
+                            <div class="countdown-number" id="hours">--</div>
+                            <div class="countdown-label">Ore</div>
+                        </div>
+                        <div class="countdown-box">
+                            <div class="countdown-number" id="minutes">--</div>
+                            <div class="countdown-label">Minuti</div>
+                        </div>
+                    </div>
+
+                    <a href="/contact" class="btn-ai-primary">
+                        <i class="fas fa-bell"></i>Avvisami al Lancio
+                    </a>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="pc-mockup-container">
+                        <div class="pc-mockup">
+                            <div class="pc-screen">
+                                <div class="screen-bezel">
+                                    <div class="screen-header">
+                                        <div class="screen-dot"></div>
+                                        <div class="screen-dot"></div>
+                                        <div class="screen-dot"></div>
+                                        <div class="screen-title">ItalBandi AI - Chat Assistant</div>
+                                    </div>
+
+                                    <div class="chat-interface">
+                                        <div class="chat-header-bar">
+                                            <div class="chat-avatar">
+                                                <i class="fas fa-robot"></i>
+                                            </div>
+                                            <div class="chat-info">
+                                                <h4>ItalBandi AI</h4>
+                                                <span>Online - Pronto ad aiutarti</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="chat-messages" id="chatMessages">
+                                        </div>
+                                    </div>
+
+                                    <div class="scenario-tabs">
+                                        <div class="scenario-tab active" data-scenario="0">Ricerca</div>
+                                        <div class="scenario-tab" data-scenario="1">Requisiti</div>
+                                        <div class="scenario-tab" data-scenario="2">Importi</div>
+                                        <div class="scenario-tab" data-scenario="3">Scadenze</div>
+                                        <div class="scenario-tab" data-scenario="4">Documenti</div>
+                                        <div class="scenario-tab" data-scenario="5">Confronto</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pc-stand"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-ai">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label"><i class="fas fa-magic"></i> Come Funziona</span>
+                <h2>Intelligenza Artificiale al Tuo Servizio</h2>
+                <p>
+                    Fai domande in linguaggio naturale e ottieni risposte precise, 
+                    estratte direttamente dai documenti ufficiali dei bandi.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-comments"></i></div>
+                    <h4>Linguaggio Naturale</h4>
+                    <p>Chiedi come faresti con un consulente esperto. L'AI capisce il contesto e le tue esigenze specifiche.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h4>Risposte Istantanee</h4>
+                    <p>Niente più ore di ricerca. Ottieni informazioni precise in pochi secondi, 24 ore su 24, 7 giorni su 7.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-database"></i></div>
+                    <h4>Database Completo</h4>
+                    <p>Accesso a oltre 2.500 bandi nazionali, regionali ed europei, sempre aggiornati in tempo reale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-ai use-cases-section">
+        <div class="container">
+            <div class="row align-items-start">
+                <div class="col-lg-5 mb-5 mb-lg-0">
+                    <span class="section-label"><i class="fas fa-lightbulb"></i> Scenari d'Uso</span>
+                    <h2 style="font-family: 'Space Grotesk', sans-serif; font-size: 2.8rem; font-weight: 700; margin-bottom: 25px;">Cosa Puoi Chiedere</h2>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 1.15rem; line-height: 1.9;">
+                        ItalBandi AI è progettato per rispondere a qualsiasi domanda sui finanziamenti pubblici. 
+                        Eccoti alcuni esempi pratici.
+                    </p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="use-case-card">
+                        <h5><i class="fas fa-search"></i> Ricerca Bandi</h5>
+                        <p>Trova opportunità per settore, regione o tipologia di investimento.</p>
+                        <div class="example-query-box">Quali incentivi ci sono per startup tecnologiche in Lombardia?</div>
+                    </div>
+                    <div class="use-case-card">
+                        <h5><i class="fas fa-clipboard-check"></i> Verifica Requisiti</h5>
+                        <p>Scopri se la tua azienda può accedere a un determinato bando.</p>
+                        <div class="example-query-box">Una SRL con 20 dipendenti può partecipare a Smart&Start?</div>
+                    </div>
+                    <div class="use-case-card">
+                        <h5><i class="fas fa-calculator"></i> Calcolo Importi</h5>
+                        <p>Stima quanto potresti ottenere da un finanziamento.</p>
+                        <div class="example-query-box">Qual è la percentuale di contributo per Transizione 5.0?</div>
+                    </div>
+                    <div class="use-case-card">
+                        <h5><i class="fas fa-calendar-alt"></i> Scadenze e Tempi</h5>
+                        <p>Tieni traccia delle deadline e pianifica le domande.</p>
+                        <div class="example-query-box">Quando scade il bando Nuova Sabatini Green?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="waitlist-section">
+        <div class="container">
+            <h2><i class="fas fa-rocket me-3"></i>Unisciti alla Lista d'Attesa</h2>
+            <p>
+                Sii tra i primi a provare ItalBandi AI. 
+                Iscriviti ora e ricevi accesso prioritario al lancio.
+            </p>
+            <form class="waitlist-form" onsubmit="event.preventDefault(); alert('Grazie! Ti contatteremo al lancio di ItalBandi AI.');">
+                <input type="email" placeholder="La tua email aziendale" required>
+                <button type="submit"><i class="fas fa-paper-plane"></i>Iscrivimi</button>
+            </form>
+            <div class="waitlist-benefits">
+                <div class="waitlist-benefit"><i class="fas fa-check-circle"></i> Accesso anticipato</div>
+                <div class="waitlist-benefit"><i class="fas fa-check-circle"></i> 3 mesi gratis</div>
+                <div class="waitlist-benefit"><i class="fas fa-check-circle"></i> Supporto prioritario</div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'life-insurance-website-template/partials/footer.html' %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+    const scenarios = [
+        {
+            user: "Quali bandi ci sono per PMI nel settore manifatturiero?",
+            ai: "Ho trovato 12 bandi attivi per il manifatturiero. I più rilevanti: <strong>Transizione 5.0</strong> (fino al 45%), <strong>Nuova Sabatini Green</strong>, e il <strong>Bando Innovazione Lombardia</strong>. Vuoi dettagli su uno specifico?"
+        },
+        {
+            user: "Una startup con 5 dipendenti può accedere a Smart&Start?",
+            ai: "Sì! <strong>Smart&Start Italia</strong> è perfetto per te. Requisiti: società costituita da max 60 mesi, sede in Italia. Agevolazione: fino a <strong>€1.500.000</strong> a tasso zero. Vuoi che ti mostri come presentare domanda?"
+        },
+        {
+            user: "Quanto posso ottenere con Transizione 5.0?",
+            ai: "Con <strong>Transizione 5.0</strong> puoi ottenere crediti d'imposta dal <strong>35% al 45%</strong> per investimenti in beni strumentali 4.0 che riducono i consumi energetici. Investimento minimo: €40.000. Posso calcolare l'importo per il tuo caso?"
+        },
+        {
+            user: "Quando scade il bando Resto al Sud?",
+            ai: "Il bando <strong>Resto al Sud</strong> è a sportello, quindi non ha una scadenza fissa! Puoi presentare domanda in qualsiasi momento fino ad esaurimento fondi. Contributo: fino a <strong>€200.000</strong> (50% fondo perduto). Ti interessa la procedura?"
+        },
+        {
+            user: "Quali documenti servono per la Nuova Sabatini?",
+            ai: "Per la <strong>Nuova Sabatini</strong> ti servono: 1) Visura camerale, 2) Bilanci ultimi 2 anni, 3) Business plan, 4) Preventivi dei beni, 5) DURC regolare. Posso generare una checklist completa per te!"
+        },
+        {
+            user: "Confronta Transizione 5.0 e Nuova Sabatini",
+            ai: "<strong>Transizione 5.0</strong>: credito d'imposta 35-45%, focus efficienza energetica. <strong>Nuova Sabatini</strong>: contributo interessi + fondo perduto, più flessibile sui beni. Per investimenti green consiglio Transizione 5.0, per macchinari tradizionali la Sabatini."
+        }
+    ];
+
+    let currentScenario = 0;
+    let isAnimating = false;
+
+    function showTyping() {
+        return `<div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>`;
+    }
+
+    async function playScenario(index) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        const chatMessages = document.getElementById('chatMessages');
+        const scenario = scenarios[index];
+
+        chatMessages.innerHTML = '';
+
+        await new Promise(r => setTimeout(r, 300));
+
+        const userMsg = document.createElement('div');
+        userMsg.className = 'message message-user';
+        userMsg.textContent = scenario.user;
+        chatMessages.appendChild(userMsg);
+
+        await new Promise(r => setTimeout(r, 800));
+
+        const typingEl = document.createElement('div');
+        typingEl.innerHTML = showTyping();
+        chatMessages.appendChild(typingEl);
+
+        await new Promise(r => setTimeout(r, 1500));
+
+        typingEl.remove();
+
+        const aiMsg = document.createElement('div');
+        aiMsg.className = 'message message-ai';
+        aiMsg.innerHTML = scenario.ai;
+        chatMessages.appendChild(aiMsg);
+
+        isAnimating = false;
+    }
+
+    document.querySelectorAll('.scenario-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.scenario-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            const scenarioIndex = parseInt(this.dataset.scenario);
+            currentScenario = scenarioIndex;
+            playScenario(scenarioIndex);
+        });
+    });
+
+    function autoPlayScenarios() {
+        setInterval(() => {
+            if (!isAnimating) {
+                currentScenario = (currentScenario + 1) % scenarios.length;
+                document.querySelectorAll('.scenario-tab').forEach((t, i) => {
+                    t.classList.toggle('active', i === currentScenario);
+                });
+                playScenario(currentScenario);
+            }
+        }, 8000);
+    }
+
+    playScenario(0);
+    setTimeout(autoPlayScenarios, 8000);
+
+    const launchDate = new Date('2026-04-01T00:00:00').getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = launchDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        document.getElementById('days').textContent = days.toString().padStart(3, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+    </script>
+</body>
+</html>

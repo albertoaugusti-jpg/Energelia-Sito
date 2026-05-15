@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-67D2BL58Y9');
+        </script>
+        <meta charset="utf-8">
+        <title> Energelia</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts - Stile Istituzionale -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+        <link href="{{ url_for('static', filename='lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+<style>
+
+
+  .nav-bar {
+    background-color: rgba(255,255,255,0.97) !important;
+    box-shadow: 0 4px 16px 0 rgba(34,97,170,0.06); /* effetto elegante, cambia pure il colore se vuoi */
+    transition: background-color 0.2s, box-shadow 0.2s;
+  }
+  /* Logo ingrandito */
+  .navbar-logo {
+    height: 120px !important;
+    width: auto;
+  }
+
+  /* Area Clienti button */
+  .btn-area-clienti {
+    background-color: var(--navy-primary, #0050b5);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .btn-area-clienti:hover {
+    background-color: #00397f;
+    transform: translateY(-2px);
+  }
+</style>
+
+
+<style>
+  /* Area Clienti button */
+  .btn-area-clienti {
+    background-color: var(--navy-primary, #0050b5);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .btn-area-clienti:hover {
+    background-color: #00397f;
+    transform: translateY(-2px);
+  }
+
+  /* Adjust spacing for call icon area */
+  .nav-bar .btn-light {
+    padding: 0.5rem;
+  }
+</style>
+       <style>
+
+      @media (max-width: 575.98px) {
+          .nav-bar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
+            z-index: 999;
+          }
+          .nav-bar.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+          }
+          .nav-bar.visible {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+      </style>
+
+        <style>
+  .navbar-logo {
+    height: 80px !important;
+    width: auto;
+  }
+</style>
+
+
+        <style>
+.navbar-nav .nav-link {
+  position: relative;
+  font-weight: 500;
+  color: #222 !important;
+  padding: 8px 10px;
+  transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 0%;
+  height: 2px;
+  background-color: var(--navy-primary, #0050b5);
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  width: 100%;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--navy-primary, #0050b5) !important;
+}
+
+.navbar {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+}
+
+.dropdown-menu {
+  border: none;
+  padding: 0.5rem;
+  background-color: #fff;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f6ff;
+  color: var(--navy-primary, #0050b5);
+}
+
+.nav-bar {
+  z-index: 999;
+}
+
+          @media (max-width: 767px) {
+            .indice-nav {
+              display: none;
+            }
+          }
+
+
+
+
+</style>
+
+        <!-- Modal Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center bg-primary">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="btn bg-light border nput-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Search End -->
+
+
+       <!-- Header Start -->
+<div class="container-fluid bg-breadcrumb" style="
+    background: url('img/finanza.png') center center / cover no-repeat;
+    position: relative;
+    ">
+  <!-- (Opzionale) Overlay scuro -->
+  <div style="
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    "></div>
+
+  <div class="container text-center py-5 position-relative" style="max-width: 900px; z-index: 2;">
+    <h4 class="text-white display-4 mb-4 wow fadeInDown" data-wow-delay="0.1s">FINANZA AGEVOLATA</h4>
+      
+  </div>
+</div>
+<!-- Header End -->
+
+
+<section class="contenuto-section-full">
+  <div class="contenuto-grid">
+
+    <!-- Indice laterale -->
+    <aside class="indice-nav">
+      <h4>Indice dei contenuti</h4>
+      <ol>
+        <li><a href="#fa">Cos'è la Finanza Agevolata?</a></li>
+        <li><a href="#utilita">A cosa serve alle aziende</a></li>
+        <li><a href="#chi">Chi può beneficiarne</a></li>
+        <li><a href="#perche">Perché è fondamentale</a></li>
+      </ol>
+    </aside>
+
+    <!-- Contenuto principale -->
+    <div class="testo-main">
+      <h2 id="fa" style="color: var(--navy-primary, #0050b5)">Cos'è la Finanza Agevolata?</h2>
+      <p>La <strong>Finanza Agevolata</strong> è l'insieme di strumenti finanziari, contributi e incentivi pubblici pensati per sostenere la crescita delle imprese. Attraverso bandi, crediti d'imposta e finanziamenti a condizioni vantaggiose, le aziende possono realizzare progetti di innovazione, sostenibilità e sviluppo competitivo.</p>
+
+      <p>Questo meccanismo, promosso da enti nazionali, regionali e comunitari, rappresenta una <strong>leva strategica</strong> per ridurre il costo del capitale e accelerare investimenti in tecnologie avanzate, digitalizzazione e processi green.</p>
+
+      <h2 id="utilita" style="color: var(--navy-primary, #0050b5)">A cosa serve alle aziende</h2>
+      <p>La <strong>Finanza Agevolata</strong> permette di:</p>
+      <ul class="list-style-check">
+        <li>Ottenere contributi a fondo perduto per acquisto macchinari o consulenze</li>
+        <li>Accedere a prestiti e finanziamenti a tasso agevolato</li>
+        <li>Ricevere crediti d'imposta per investimenti in ricerca e sviluppo</li>
+        <li>Sfruttare voucher digitali e green per la transizione ecologica</li>
+        <li>Beneficiare di misure specifiche del PNRR e dei bandi regionali</li>
+      </ul>
+      <p><strong>Un progetto strutturato con un'analisi accurata delle agevolazioni disponibili aumenta significativamente le probabilità di successo nella fase di valutazione e di erogazione dei fondi.</strong></p>
+
+      <h2 id="chi" style="color: var(--navy-primary, #0050b5)">Chi può beneficiarne</h2>
+      <p>Possono accedere agli strumenti di Finanza Agevolata:</p>
+      <ul class="list-style-check">
+        <li>PMI e grandi imprese di ogni settore industriale</li>
+        <li>Start-up innovative e imprese tecnologiche</li>
+        <li>Consorzi, reti di impresa e progetti collaborativi</li>
+        <li>Organizzazioni del terzo settore e società cooperative</li>
+      </ul>
+      <p>La partecipazione richiede la presentazione di un piano di investimento e di una documentazione tecnico-amministrativa conforme ai requisiti del bando, spesso con il supporto di consulenti specializzati.</p>
+
+      <h2 id="perche" style="color: var(--navy-primary, #0050b5)">Perché è fondamentale</h2>
+      <p>In un mercato competitivo globale, la Finanza Agevolata rappresenta un <strong>vantaggio competitivo</strong>, consentendo alle aziende di:</p>
+
+      <p><strong style="color:var(--navy-primary, #0050b5)">Agevolazioni = Riduzione dei costi + Accelerazione degli investimenti + Miglioramento del rating ESG</strong></p>
+
+      <p>Le imprese che sfruttano efficacemente questi strumenti:</p>
+      <ul class="list-style-check">
+        <li>Aumentano la liquidità per nuovi progetti</li>
+        <li>Dimostrano un impegno verso sostenibilità e innovazione</li>
+        <li>Potenziano la propria competitività sui mercati nazionali e internazionali</li>
+        <li>Rafforzano la fiducia di investitori e stakeholder</li>
+      </ul>
+
+      <p><strong>Energelia guida le aziende nell'intero percorso di Finanza Agevolata</strong>, dall'individuazione delle misure più adatte alla gestione delle pratiche e alla rendicontazione finale.</p>
+
+      <p>Contattaci per scoprire come integrare la Finanza Agevolata nel tuo piano di sviluppo e massimizzare i risultati economici e sostenibili della tua impresa.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+.testo-main .list-style-check {
+  list-style: none;
+  padding-left: 1rem;
+  margin-bottom: 2rem;
+}
+
+.testo-main .list-style-check li::before {
+  content: "\2713";
+  color: #00aaff;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+</style>
+
+<style>
+.contenuto-section-full {
+  width: 100%;
+  background: #fff;
+  padding: 60px 0;
+}
+
+.contenuto-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: -40px -40px;
+  align-items: flex-start;
+}
+
+.indice-nav {
+  position: sticky;
+  top: 100px;
+  background: #f5f7fa;
+  padding: 30px;
+  border-left: 1px solid var(--navy-primary, #0050b5);
+  border-bottom: 1px solid var(--navy-primary, #0050b5);
+  border-right: 1px solid var(--navy-primary, #0050b5);
+  border-top:1px solid var(--navy-primary, #0050b5);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  font-size: 0.95rem;
+  margin-left: 50px;
+  
+}
+
+.indice-nav h4 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--navy-primary, #0050b5);
+  margin-bottom: 1rem;
+}
+
+.indice-nav a {
+  color: var(--navy-primary, #0050b5);
+  text-decoration: none;
+}
+
+.indice-nav a:hover {
+  text-decoration: underline;
+}
+
+.testo-main {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  max-width: 100%;
+  color: #000;
+}
+
+.testo-main h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.testo-main h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--navy-primary, #0050b5);
+  margin-top: 40px;
+  margin-bottom: 16px;
+}
+
+.testo-main p {
+  margin-bottom: 30px;
+}
+</style>
+       
+       
+       
+       
+ 
+
+<!-- Banner Divider 2 Start -->
+<section class="banner-divider-2"></section>
+<!-- Banner Divider 2 End -->
+
+<style>
+  .banner-divider-2 {
+    width: 100%;
+    height: 400px;               /* Altezza “stretta” tipo banner */
+    background: url('img/blog-2.png') center center / cover no-repeat;
+  }
+</style>
+
+
+
+
+<!-- Processo Energelia – Timeline Professionale (Arricchito) -->
+<section class="timeline-section py-5 position-relative">
+  <div class="container">
+    
+    <!-- Intro sofisticata sopra la timeline -->
+    <div class="timeline-intro text-center mb-5">
+      <h5 class="text-secondary fw-semibold mb-2">Il Nostro Approccio Strutturato</h5>
+      <h2 class="section-title display-5 mb-3">Un percorso su misura per la tua impresa</h2>
+      <p class="intro-text mx-auto" style="max-width:700px; color:#495057;">
+        Energelia accompagna ogni cliente con un metodo collaudato e trasparente. Dalla selezione del bando ideale fino alla rendicontazione finale, ogni fase è curata da esperti per massimizzare le probabilit&agrave; di successo e la resa finanziaria.
+      </p>
+    </div>
+    
+    <!-- Timeline originale (non modificata) -->
+    <div class="timeline-grid">
+
+      <!-- Step 1 -->
+      <div class="timeline-item">
+        <div class="timeline-icon">1</div>
+        <h3>Ricerca Bando</h3>
+        <p>Analisi puntuale del settore e dei requisiti aziendali per individuare i bandi nazionali, regionali o europei più adatti ai tuoi obiettivi di crescita.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="timeline-item">
+        <div class="timeline-icon">2</div>
+        <h3>Raccolta Documentale</h3>
+        <p>Raccolta e organizzazione di tutta la documentazione tecnico‐amministrativa necessaria, dai bilanci alle dichiarazioni ambientali, con checklist per evitare ritardi.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="timeline-item">
+        <div class="timeline-icon">3</div>
+        <h3>Presentazione Pratica</h3>
+        <p>Redazione e invio della domanda di finanziamento: testi, modulistica e allegati controllati da consulenti senior per massimizzare il punteggio di valutazione.</p>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="timeline-item">
+        <div class="timeline-icon">4</div>
+        <h3>Rendicontazione</h3>
+        <p>Gestione completa della rendicontazione post‐erogazione, con monitoraggio delle spese e report periodici per garantire compliance e la corretta chiusura del progetto.</p>
+      </div>
+
+    </div>
+
+    <!-- Outro professionale sotto la timeline -->
+    <div class="timeline-outro text-center mt-5">
+      <p class="outro-text mx-auto mb-4" style="max-width:700px; color:#495057;">
+        Sei pronto a dare slancio al tuo progetto? Con Energelia hai un partner affidabile, trasparente e sempre a fianco.  
+        <strong>Contattaci oggi</strong> per una consulenza gratuita e scopri come ottenere il massimo dal tuo bando.
+      </p>
+      <a href="/contact" class="btn btn-primary btn-lg shadow-sm">Richiedi una consulenza</a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+/* -------------------- */
+/* INTRO E OUTRO STYLES */
+/* -------------------- */
+.timeline-intro h5 {
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+.timeline-intro .section-title {
+  font-weight: 700;
+  color: #212529;
+}
+.intro-text {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.timeline-outro .outro-text {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.timeline-outro .btn-primary {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 50px;
+  transition: background 0.3s, transform 0.3s;
+}
+.timeline-outro .btn-primary:hover {
+  background-color: #004199;
+  transform: translateY(-2px);
+}
+
+/* RICALCOLO TITOLO PER COERENZA */
+.timeline-section .section-title {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* INCLUDO STILI TIMELINE ORIGINALI */
+.timeline-section {
+  background-color: #f4f6f8;
+  font-family: 'Segoe UI', sans-serif;
+}
+.timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+}
+.timeline-item {
+  background: #fff;
+  border-left: 4px solid var(--navy-primary, #0050b5);
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.timeline-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+.timeline-icon {
+  width: 40px;
+  height: 40px;
+  background-color: var(--navy-primary, #0050b5);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  position: absolute;
+  top: 24px;
+  left: -20px;
+}
+.timeline-item h3 {
+  margin-left: 32px;
+  margin-top: 0;
+  font-size: 1.25rem;
+  color: #212529;
+  font-weight: 600;
+}
+.timeline-item p {
+  margin-left: 32px;
+  margin-top: 12px;
+  color: #495057;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+</style>
+
+
+<!-- Contenuto principale – Full‐Width senza margini laterali -->
+<section class="contenuto-section-full">
+  <div class="contenuto-grid">
+
+    <!-- Indice laterale -->
+    <aside class="indice-nav">
+      <h4>Indice dei contenuti</h4>
+      <ol>
+        <li><a href="#supporto">Supporto Strategico</a></li>
+        <li><a href="#analisi">Analisi delle Opportunità</a></li>
+        <li><a href="#gestione">Gestione Pratiche</a></li>
+        <li><a href="#monitoraggio">Monitoraggio e Resoconto</a></li>
+      </ol>
+    </aside>
+
+    <!-- Contenuto principale -->
+    <div class="testo-main">
+      <h2 id="supporto" style="color: var(--navy-primary, #0050b5)">Supporto Strategico</h2>
+      <p>Energelia affianca le imprese fin dal primo contatto, fornendo consulenza su misura per identificare gli obiettivi di crescita e definire la strategia di accesso a bandi e incentivi.</p>
+      <p>Il nostro team multispecialistico integra competenze finanziarie, normative e tecnologiche per garantire che ogni progetto segua un percorso strategico e coordinato.</p>
+
+      <h2 id="analisi" style="color: var(--navy-primary, #0050b5)">Analisi delle Opportunità</h2>
+      <p>Effettuiamo una <strong>ricerca approfondita</strong> sui bandi nazionali, regionali ed europei, valutando requisiti e scadenze per ogni misura compatibile con il profilo aziendale.</p>
+      <ul class="list-style-check">
+        <li>Screening continuo dei nuovi avvisi</li>
+        <li>Verifica di ammissibilità e scoring interno</li>
+        <li>Pianificazione delle milestone e del timing di presentazione</li>
+      </ul>
+
+      <h2 id="gestione" style="color: var(--navy-primary, #0050b5)">Gestione Pratiche</h2>
+      <p>Gestiamo la raccolta documentale e la redazione di tutta la modulistica, seguendo ogni passaggio:</p>
+      <ul class="list-style-check">
+        <li>Compilazione di dati tecnici e amministrativi</li>
+        <li>Correzione e revisione da parte di senior consultant</li>
+        <li>Invio telematico e verifica di protocollazione</li>
+      </ul>
+      <p><strong>Un processo chiavi in mano</strong>, che libera le risorse interne e minimizza il rischio di errori.</p>
+
+      <h2 id="monitoraggio" style="color: var(--navy-primary, #0050b5)">Monitoraggio e Resoconto</h2>
+      <p>Dopo l’ammissione al contributo, seguiamo la rendicontazione puntuale delle spese e prepariamo report periodici per:</p>
+      <ul class="list-style-check">
+        <li>Verifica di conformità alle linee guida del bando</li>
+        <li>Gestione dei pagamenti e giustificativi</li>
+        <li>Chiusura amministrativa e valutazione dei KPI di progetto</li>
+      </ul>
+      <p><strong>Massima trasparenza e controllo</strong> fino all’erogazione finale e oltre, con supporto su eventuali audit e verifiche post‐erogazione.</p>
+    </div>
+
+  </div>
+</section>
+
+<style>
+/* Full-width e padding orizzontale */
+.contenuto-section-full {
+  width: 100%;
+  background: #fff;
+  padding: 60px 0;
+  box-sizing: border-box;
+}
+
+/* Grid occupa tutta la larghezza interna con padding */
+.contenuto-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 60px;
+  width: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+/* Rimuove margin-left precedenti */
+.indice-nav {
+  position: sticky;
+  top: 100px;
+  background: #f5f7fa;
+  padding: 30px;
+  border: 1px solid var(--navy-primary, #0050b5);
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  font-size: 0.95rem;
+  margin-left: 0;
+}
+.indice-nav h4 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--navy-primary, #0050b5);
+  margin-bottom: 1rem;
+}
+.indice-nav a {
+  color: var(--navy-primary, #0050b5);
+  text-decoration: none;
+}
+.indice-nav a:hover {
+  text-decoration: underline;
+}
+
+.testo-main {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #000;
+}
+.testo-main h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+.testo-main p {
+  margin-bottom: 20px;
+}
+
+.list-style-check {
+  list-style: none;
+  padding-left: 1rem;
+  margin-bottom: 20px;
+}
+.list-style-check li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 10px;
+}
+.list-style-check li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #00aaff;
+  font-weight: bold;
+}
+</style>
+s
+
+
+
+
+<script>
+  // Filter by category
+  document.querySelectorAll('.faq-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.cat;
+      // update button styles
+      document.querySelectorAll('.faq-filters .btn').forEach(b => b.classList.replace('btn-primary','btn-light'));
+      btn.classList.remove('btn-light'); btn.classList.add('btn-primary');
+      // show/hide items
+      document.querySelectorAll('#accordionFAQ .accordion-item').forEach(item => {
+        item.style.display = (cat === 'all' || item.dataset.category === cat) ? '' : 'none';
+      });
+    });
+  });
+  
+  // Search functionality
+  document.getElementById('faqSearch').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#accordionFAQ .accordion-item').forEach(item => {
+      const txt = item.textContent.toLowerCase();
+      item.style.display = txt.includes(q) ? '' : 'none';
+    });
+  });
+</script>
+<!-- FAQs End -->
+
+
+       </style>
+
+
+
+
+<style>
+
+.finanza-agevolata-hero {
+    background: linear-gradient(135deg, #c300ff 0%, #3b48ff 120%);
+  min-height: 30vh;
+  box-shadow: inset 0 -1px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.hero-finanza h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hero-finanza .btn-outline-light {
+  border: 2px solid #2b2833;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.hero-finanza .btn-outline-light:hover {
+  background-color: #fff;
+  color: var(--navy-primary, #0050b5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 80, 181, 0.25);
+}
+</style>
+
+
+
+
+
+
+      <section class="sezione-domanda-epica py-5 position-relative overflow-hidden">
+        <div class="container-xl">
+          <div class="row g-5 align-items-center">
+            <!-- TESTO A SINISTRA -->
+            <div class="col-lg-6 position-relative z-2 pe-lg-5">
+              <span class="badge bg-gradient text-white px-3 py-2 mb-3">Parla con un Esperto Energelia</span>
+              <h2 class="fw-bold mb-4 display-5">Hai dubbi su un incentivo o vuoi scoprire a quali bandi puoi accedere?</h2>
+              <p class="lead text-muted mb-4">
+                Scrivici ciò che ti serve sapere: ti invieremo gratuitamente un <strong class="text-primary">report personalizzato</strong> con le opportunità più vantaggiose per la tua azienda. Niente moduli complicati, nessun impegno.  
+              </p>
+              <div class="row text-muted fs-6">
+                <div class="col-12 mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Risposta in meno di 24h da un consulente</div>
+                <div class="col-12 mb-2"><i class="fas fa-check-circle text-primary me-2"></i> Analisi gratuita basata sul tuo settore</div>
+                <div class="col-12"><i class="fas fa-check-circle text-primary me-2"></i> Supporto reale, niente bot automatici</div>
+              </div>
+            </div>
+            <!-- FORM A DESTRA -->
+            <div class="col-lg-6 position-relative z-2">
+              <div class="box-form-domanda p-5 rounded-4 bg-white shadow-lg">
+                <h5 class="mb-3 text-primary fw-bold">Raccontaci la tua idea</h5>
+                <form id="domandaForm">
+                  <div class="form-floating mb-3">
+                    <textarea class="form-control fs-6" placeholder="Scrivi la tua domanda..." id="textareaDomanda" style="height: 180px;" required></textarea>
+                    <label for="textareaDomanda">Scrivi qui la tua domanda o dubbio...</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input type="email" class="form-control fs-6" id="emailDomanda" placeholder="La tua email" required>
+                    <label for="emailDomanda">Inserisci la tua email (per ricevere il report)</label>
+                  </div>
+                  <button type="submit" class="btn btn-primary w-100 fw-bold py-3 fs-5">
+                    Invia richiesta gratuita <i class="fas fa-paper-plane ms-2"></i>
+                  </button>
+                </form>
+                <div class="mt-3 text-center text-muted small">
+                  Nessun vincolo. Nessuna newsletter. Solo una risposta utile.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- FORME DECORATIVE -->
+        <div class="forma-bg forma-cerchio"></div>
+        <div class="forma-bg forma-dettaglio"></div>
+      </section>
+
+      <!-- MODALE SUCCESSO DOMANDA EPICA -->
+      <div id="domandaModal" class="custom-modal-overlay" tabindex="-1" style="display:none;">
+        <div class="custom-modal-dialog animate__animated animate__fadeInDown">
+          <button type="button" class="btn-close custom-modal-close" aria-label="Chiudi" onclick="closeDomandaModal()"></button>
+          <div class="text-center px-3 py-5">
+            <div class="mb-3">
+              <i class="fa fa-message-check fa-3x" style="color:#2595ff;"></i>
+            </div>
+            <h2 style="font-weight:800; color:#2595ff;" class="mb-2">Grazie per averci contattato!</h2>
+            <div class="fs-5 mb-1" style="color:#18477d;">
+              Un consulente Energelia risponderà alla tua richiesta il prima possibile.
+            </div>
+            <button class="btn btn-primary mt-4" onclick="closeDomandaModal()" style="min-width:150px;">Chiudi</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSS MODALE -->
+      <style>
+      .custom-modal-overlay {
+        position: fixed;
+        top:0; left:0; width:100vw; height:100vh;
+        background: rgba(25,40,61,0.24);
+        z-index: 20000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeInModal 0.28s;
+      }
+      @keyframes fadeInModal { from { opacity:0; } to { opacity:1; } }
+      .custom-modal-dialog {
+        background: #fff;
+        border-radius: 26px;
+        box-shadow: 0 8px 40px rgba(16,38,78,0.19), 0 1.5px 4px rgba(0,0,0,0.07);
+        max-width: 390px;
+        width: 96vw;
+        position: relative;
+        overflow: visible;
+        animation: fadeInModal 0.22s;
+      }
+      .custom-modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #f6fafd;
+        border-radius: 50%;
+        border: none;
+        font-size: 1.45rem;
+        opacity: 0.73;
+        z-index: 11;
+        transition: background 0.18s;
+      }
+      .custom-modal-close:hover { background: #e3eef7; opacity: 1;}
+      /* Pulsante animazione */
+      .custom-modal-dialog .btn-primary {
+        background: linear-gradient(90deg,#2595ff 60%,#1c50a7 100%);
+        border: none;
+      }
+      </style>
+
+      <!-- JS MODALE -->
+      <script>
+      document.getElementById('domandaForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        document.getElementById('domandaModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        this.reset();
+      });
+      function closeDomandaModal() {
+        document.getElementById('domandaModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+      document.addEventListener('keydown', function(e){
+        if(e.key==="Escape") closeDomandaModal();
+      });
+      document.getElementById('domandaModal').addEventListener('click', function(e){
+        if(e.target===this) closeDomandaModal();
+      });
+      </script>
+
+
+      <style>
+      .sezione-domanda-epica {
+      background: linear-gradient(120deg, #f8faff 0%, #ffffff 100%);
+      position: relative;
+      padding-top: 100px;
+      padding-bottom: 100px;
+      }
+
+      .sezione-domanda-epica .badge {
+      background: linear-gradient(90deg, var(--navy-primary, #0050b5), #00aaff);
+      font-size: 0.85rem;
+      border-radius: 30px;
+      }
+
+      .sezione-domanda-epica h2 {
+      font-size: 2.2rem;
+      line-height: 1.4;
+      }
+
+      .box-form-domanda {
+      border-left: 6px solid var(--navy-primary, #0050b5);
+      transition: box-shadow 0.3s ease;
+      }
+
+      .box-form-domanda:hover {
+      box-shadow: 0 12px 30px rgba(0, 80, 181, 0.15);
+      }
+
+      .sezione-domanda-epica .btn-primary {
+      background-color: var(--navy-primary, #0050b5);
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 80, 181, 0.25);
+      transition: all 0.3s ease-in-out;
+      }
+
+      .sezione-domanda-epica .btn-primary:hover {
+      background-color: #004199;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 80, 181, 0.35);
+      }
+
+      /* Decorative shapes */
+      .forma-bg {
+      position: absolute;
+      z-index: 0;
+      opacity: 0.1;
+      pointer-events: none;
+      }
+
+      .forma-cerchio {
+      width: 300px;
+      height: 300px;
+      background: #00aaff;
+      border-radius: 50%;
+      top: -100px;
+      right: -100px;
+      }
+
+      .forma-dettaglio {
+      width: 180px;
+      height: 180px;
+      background: linear-gradient(135deg, var(--navy-primary, #0050b5), #00aaff);
+      transform: rotate(25deg);
+      bottom: -60px;
+      left: -60px;
+      border-radius: 12px;
+      }
+      </style>
+
+
+      <!-- Sezione CTA – Newsletter a sinistra (arancione) e Call a destra (blu) -->
+      <div class="container-fluid cta-section px-0">
+      <div class="row g-0">
+
+
+        <!-- SEZIONE NEWSLETTER + MODALE COMPLETA -->
+        <div class="col-md-6 cta-left">
+          <h4>Resta sempre aggiornato</h4>
+          <h2>Newsletter Giornaliera</h2>
+          <p class="subheading">
+            Ricevi ogni mattina nella tua inbox i bandi più vantaggiosi: non perdere nessuna opportunità per la tua impresa.
+          </p>
+          <ul class="benefits-list">
+            <li><i class="fa fa-check-circle"></i> Selezione quotidiana di bandi</li>
+            <li><i class="fa fa-check-circle"></i> Alert su scadenze imminenti</li>
+            <li><i class="fa fa-check-circle"></i> Consigli pratici per la candidatura</li>
+          </ul>
+          <form id="newsletterForm" class="newsletter-form d-flex flex-column flex-sm-row justify-content-center align-items-center">
+            <input type="email" class="form-control" placeholder="La tua email" required>
+            <button type="submit" class="btn btn-newsletter ms-sm-3 mt-3 mt-sm-0">
+              Iscriviti Ora
+            </button>
+          </form>
+          <p class="fine-print">Nessun costo, nessun impegno. Annulla quando vuoi.</p>
+        </div>
+
+        <!-- MODALE NEWSLETTER -->
+        <div id="newsletterModal" class="custom-modal-overlay" tabindex="-1" style="display:none;">
+          <div class="custom-modal-dialog animate__animated animate__fadeInDown">
+            <button type="button" class="btn-close custom-modal-close" aria-label="Chiudi" onclick="closeNewsletterModal()"></button>
+            <div class="text-center px-3 py-5">
+              <div class="mb-3">
+                <i class="fa fa-envelope-open-text fa-3x" style="color:#ff9500;"></i>
+              </div>
+              <h2 style="font-weight:800; color:#ff9500;" class="mb-2">Sei iscritto!</h2>
+              <div class="fs-5 mb-1" style="color:#a36420;">Controlla la tua casella email per ricevere la nostra newsletter giornaliera.</div>
+              <button class="btn btn-secondary mt-4" onclick="closeNewsletterModal()" style="min-width:150px;">Chiudi</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CSS MODALE -->
+        <style>
+        .custom-modal-overlay {
+          position: fixed;
+          top:0; left:0; width:100vw; height:100vh;
+          background: rgba(25,40,61,0.28);
+          z-index: 20000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          animation: fadeInModal 0.28s;
+        }
+        @keyframes fadeInModal { from { opacity:0; } to { opacity:1; } }
+        .custom-modal-dialog {
+          background: #fff;
+          border-radius: 24px;
+          box-shadow: 0 8px 40px rgba(16,38,78,0.18), 0 1.5px 4px rgba(0,0,0,0.07);
+          max-width: 370px;
+          width: 94vw;
+          position: relative;
+          overflow: visible;
+          animation: fadeInModal 0.25s;
+        }
+        .custom-modal-close {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          background: #f5fafd;
+          border-radius: 50%;
+          border: none;
+          font-size: 1.4rem;
+          opacity: 0.73;
+          z-index: 11;
+          transition: background 0.18s;
+        }
+        .custom-modal-close:hover { background: #e3eef7; opacity: 1;}
+        </style>
+
+        <!-- JS MODALE -->
+        <script>
+        document.getElementById('newsletterForm').addEventListener('submit', function(e){
+          e.preventDefault();
+          document.getElementById('newsletterModal').style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+          this.reset();
+        });
+        function closeNewsletterModal() {
+          document.getElementById('newsletterModal').style.display = 'none';
+          document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', function(e){
+          if(e.key==="Escape") closeNewsletterModal();
+        });
+        document.getElementById('newsletterModal').addEventListener('click', function(e){
+          if(e.target===this) closeNewsletterModal();
+        });
+        </script>
+
+
+
+
+        <!-- DESTRA: Call conoscitiva (blu) -->
+            <div class="col-md-6 cta-right">
+              <h4>Parliamo del tuo progetto</h4>
+              <h2>Call Conoscitiva Gratuita</h2>
+              <p class="subheading">
+                Prenota una breve call con un nostro esperto: analizziamo insieme la tua idea e ti mostriamo come accedere ai bandi giusti.
+              </p>
+              <div class="d-flex justify-content-center">
+                <a href="#" class="btn btn-call"
+                   onclick="openCallModal();return false;">
+                   <i class="fa fa-phone-alt me-2"></i> Prenota la tua call
+                </a>
+
+              </div>
+              <p class="fine-print">Disponibile 9–18 dal lunedì al venerdì.</p>
+            </div>
+
+
+            <!-- MODALE CUSTOM PER IL NUMERO -->
+            <div id="callModal" class="custom-modal-overlay" tabindex="-1" style="display:none;">
+              <div class="custom-modal-dialog animate__animated animate__fadeInDown">
+                <button type="button" class="btn-close custom-modal-close" aria-label="Chiudi" onclick="closeCallModal()"></button>
+                <div class="text-center px-3 py-4">
+                  <div class="mb-3">
+                    <i class="fa fa-phone-volume fa-3x text-primary"></i>
+                  </div>
+                  <h3 class="mb-2" style="font-weight:700; color:#144e75;">Parliamo Subito!</h3>
+                  <div class="fs-5 mb-1" style="color:#346594;">Il tuo esperto Energelia ti aspetta:</div>
+                  <a href="tel:+390108078800" class="phone-popup-link d-inline-block my-3 px-4 py-3 rounded-4 fw-bold shadow" style="background:#f5fafd; color:#175b85; font-size:2rem; letter-spacing:0.5px; border:2px solid #b3e0ff;">
+                    010 8078800
+                  </a>
+                  <div class="mt-2 small text-muted">Dal lunedì al venerdì • 9–18</div>
+                  <button class="btn btn-secondary mt-4" onclick="closeCallModal()" style="min-width:150px;">Chiudi</button>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+          </div>
+        </div>
+
+
+
+
+        <style>
+
+          .custom-modal-overlay {
+            position: fixed;
+            top:0; left:0; width:100vw; height:100vh;
+            background: rgba(25,40,61,0.28);
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInModal 0.28s;
+          }
+          @keyframes fadeInModal { from { opacity:0; } to { opacity:1; } }
+          .custom-modal-dialog {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 8px 40px rgba(16,38,78,0.18), 0 1.5px 4px rgba(0,0,0,0.07);
+            max-width: 370px;
+            width: 94vw;
+            position: relative;
+            overflow: visible;
+          }
+          .custom-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f5fafd;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.4rem;
+            opacity: 0.73;
+            z-index: 11;
+            transition: background 0.18s;
+          }
+          .custom-modal-close:hover { background: #e3eef7; opacity: 1;}
+
+
+
+
+          /* MODALE STILE FIGO */
+          .custom-modal-overlay {
+            position: fixed;
+            top:0; left:0; width:100vw; height:100vh;
+            background: rgba(25,40,61,0.28);
+            z-index: 20000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInModal 0.28s;
+          }
+          @keyframes fadeInModal { from { opacity:0; } to { opacity:1; } }
+          .custom-modal-dialog {
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 8px 40px rgba(16,38,78,0.18), 0 1.5px 4px rgba(0,0,0,0.07);
+            max-width: 370px;
+            width: 94vw;
+            position: relative;
+            overflow: visible;
+          }
+          .custom-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f5fafd;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.4rem;
+            opacity: 0.73;
+            z-index: 11;
+            transition: background 0.18s;
+          }
+          .custom-modal-close:hover { background: #e3eef7; opacity: 1;}
+          .phone-popup-link:hover, .phone-popup-link:focus {
+            background: #e9f7ff;
+            color: #0076b7;
+            border-color: #99d3f9;
+            text-decoration: none;
+            box-shadow: 0 4px 18px rgba(46,98,179,0.08);
+          }
+
+
+
+
+
+        .cta-section { /* dimensioni e padding invariati */ }
+        .cta-left, .cta-right {
+          color: #fff;
+          text-align: center;
+          padding: 3rem 2rem;
+        }
+        /* Arancione a sinistra */
+        .cta-left {
+          background: linear-gradient(135deg, #FFA500 0%, #FF3B3F 100%);
+        }
+        /* Blu a destra */
+        .cta-right {
+          background: #495c8b url('img/app-pattern.png') center/cover no-repeat;
+        }
+
+        /* Titoli e sottotitoli */
+        .cta-section h4 { font-weight:400; text-transform:uppercase; letter-spacing:2px; margin-bottom:.5rem; }
+        .cta-section h2 { font-size:2.5rem; margin-bottom:1rem; font-weight:700; }
+        .subheading { font-size:1rem; margin-bottom:1.5rem; color:rgba(255,255,255,0.9); }
+
+        /* Lista benefici */
+        .benefits-list { list-style:none; padding:0; margin-bottom:1.5rem; }
+        .benefits-list li { font-size:.95rem; margin:.5rem 0; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.95); }
+        .benefits-list i { color:#fff; margin-right:.5rem; font-size:1.2rem; }
+
+        /* Form newsletter */
+        .newsletter-form .form-control { max-width:300px; border:none; border-radius:50px; padding:.75rem 1.5rem; background:rgba(255,255,255,0.2); color:#fff; }
+        .btn-newsletter { background:#fff; color:#FF3B3F; border:none; border-radius:50px; padding:.75rem 2rem; font-weight:600; text-transform:uppercase; }
+        .btn-newsletter:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.1); }
+
+        /* Call button */
+        .btn-call { background:#FF3B3F; color:#fff; border:none; border-radius:50px; padding:.75rem 2rem; font-weight:600; text-transform:uppercase; }
+        .btn-call:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,0,0,0.2); }
+
+        /* Fine print */
+        .fine-print { font-size:.85rem; margin-top:1rem; color:rgba(255,255,255,0.7); }
+
+        /* Responsive */
+        @media (max-width:767px) {
+          .cta-left, .cta-right { padding:2rem 1rem; }
+          .cta-section h2 { font-size:2rem; }
+          .newsletter-form { flex-direction:column; }
+          .newsletter-form .form-control { margin-bottom:1rem; max-width:100%; }
+          .newsletter-form .btn-newsletter { margin:0; }
+        }
+        </style>
+
+      <script>
+      document.getElementById('newsletterForm').addEventListener('submit', function(e){
+      e.preventDefault(); // Blocca invio classico
+      // Qui potresti aggiungere validazione personalizzata se vuoi (opzionale)
+      document.getElementById('newsletterModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      document.getElementById('newsletterForm').reset(); // Pulisci la mail (opzionale)
+      });
+      function closeNewsletterModal() {
+      document.getElementById('newsletterModal').style.display = 'none';
+      document.body.style.overflow = '';
+      }
+      // Chiudi con ESC
+      document.addEventListener('keydown', function(e){
+      if(e.key==="Escape") closeNewsletterModal();
+      });
+      // Chiudi cliccando fuori dal box
+      document.getElementById('newsletterModal').addEventListener('click', function(e){
+      if(e.target===this) closeNewsletterModal();
+      });
+      </script>
+
+
+
+        <script>
+        function openCallModal() {
+          document.getElementById('callModal').style.display = 'flex';
+          document.body.style.overflow = 'hidden';
+        }
+        function closeCallModal() {
+          document.getElementById('callModal').style.display = 'none';
+          document.body.style.overflow = '';
+        }
+        // Chiudi modale con ESC
+        document.addEventListener('keydown', function(e){
+          if(e.key==="Escape") closeCallModal();
+        });
+        // Chiudi modale cliccando sfondo
+        document.getElementById('callModal').addEventListener('click', function(e){
+          if(e.target===this) closeCallModal();
+        });
+        </script>
+      <style>
+      .banner-divider {
+        width: 100%;
+        height: 280px;               /* Altezza “stretta” tipo banner */
+        background: url('img/wtc.png') center center / cover no-repeat;
+      }
+      </style>
+
+
+
+
+
+      <script>
+      function openCallModal() {
+        document.getElementById('callModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+      function closeCallModal() {
+        document.getElementById('callModal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+      // Chiudi modale con ESC
+      document.addEventListener('keydown', function(e){
+        if(e.key==="Escape") closeCallModal();
+      });
+      // Chiudi modale cliccando sfondo
+      document.getElementById('callModal').addEventListener('click', function(e){
+        if(e.target===this) closeCallModal();
+      });
+      </script>
+
+
+
+      <!-- Banner Divider Start -->
+      <section class="banner-divider"></section>
+      <!-- Banner Divider End -->
+
+      <style>
+        .banner-divider {
+          width: 100%;
+          height: 280px;               /* Altezza “stretta” tipo banner */
+          background: url('img/wtc.png') center center / cover no-repeat;
+        }
+      </style>
+
+
+
+
+{% include 'life-insurance-website-template/partials/footer.html' %}
+        
+        
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+        
+
+        <!-- Template Javascript -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    </body>
+
+</html>
+
+<script>
+function filterCategory(category) {
+  const cards = document.querySelectorAll('.bandocard');
+  const buttons = document.querySelectorAll('.btn-group .btn');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    if (category === 'tutti' || card.classList.contains(category)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function filterBandi() {
+  const input = document.getElementById('searchBando').value.toLowerCase();
+  const cards = document.querySelectorAll('.bandocard');
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? 'block' : 'none';
+  });
+}
+</script>
+
+<script>
+  if (window.matchMedia("(max-width: 575.98px)").matches) {
+    let lastScroll = window.scrollY;
+    const navbar   = document.querySelector('.nav-bar');
+    navbar.classList.add('visible');
+
+    window.addEventListener('scroll', () => {
+      const current = window.scrollY;
+
+      // Se siamo vicini al top (< 10px), mostrala sempre
+      if (current <= 10) {
+        navbar.classList.remove('hidden');
+        navbar.classList.add('visible');
+      }
+      else if (current > lastScroll + 5) {
+        // scroll verso il basso
+        navbar.classList.remove('visible');
+        navbar.classList.add('hidden');
+      }
+      else if (current < lastScroll - 5) {
+        // scroll verso l'alto
+        navbar.classList.remove('hidden');
+        navbar.classList.add('visible');
+      }
+
+      lastScroll = current;
+    });
+  }
+</script>
+

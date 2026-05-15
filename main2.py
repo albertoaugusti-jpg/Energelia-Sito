@@ -1,0 +1,342 @@
+import os
+import psycopg2
+from flask import Flask, render_template, abort, request, redirect, send_from_directory,jsonify
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+app = Flask(__name__,
+            template_folder='templates',
+            static_folder=os.path.join('templates', 'life-insurance-website-template'),
+            static_url_path='/static')
+
+# Riconosce HTTPS correttamente dietro proxy come Replit, Nginx, ecc.
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+# Genera URL con https:// invece di http:// nei template
+app.config['PREFERRED_URL_SCHEME'] = 'https'
+
+
+@app.before_request
+def enforce_https_in_production():
+    """Forza HTTPS se non siamo in debug e arriva una richiesta HTTP.
+    Escludi localhost per non bloccare il health check del deployment."""
+    if not request.is_secure and not app.debug:
+        # Salta il redirect per health check interni (localhost/127.0.0.1)
+        host = request.host.split(':')[0]
+        if host in ('localhost', '127.0.0.1', '0.0.0.0'):
+            return
+        url = request.url.replace("http://", "https://", 1)
+        return redirect(url, code=301)
+
+
+@app.route('/')
+def home():
+    return render_template('life-insurance-website-template/index.html')
+
+
+@app.route('/<page>')
+def render_page(page):
+    """
+    Cerca un file <page>.html (case-insensitive) in
+    templates/life-insurance-website-template e lo serve.
+    """
+    tpl_dir = os.path.join(app.template_folder,
+                           'life-insurance-website-template')
+    target = None
+
+    for fname in os.listdir(tpl_dir):
+        if fname.lower() == f"{page.lower()}.html":
+            target = fname
+            break
+
+    if not target:
+        abort(404)
+
+    return render_template(f"life-insurance-website-template/{target}")
+
+
+# ✅ Route per servire i file statici in modo trasparente
+@app.route('/<path:filename>')
+def static_files(filename):
+    static_dir = app.static_folder
+    file_path = os.path.join(static_dir, filename)
+    if os.path.isfile(file_path):
+        return send_from_directory(static_dir, filename)
+    abort(404)
+
+
+def get_db_connection():
+    return psycopg2.connect(os.environ.get('DATABASE_URL'))
+
+
+def init_db():
+    """Crea le tabelle se non esistono"""
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS leads (
+                id SERIAL PRIMARY KEY,
+                email VARCHAR(255) NOT NULL,
+                bando VARCHAR(100) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS consultations (
+                id SERIAL PRIMARY KEY,
+                email VARCHAR(255) NOT NULL,
+                phone VARCHAR(50) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        conn.commit()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"Errore init_db: {e}")
+
+
+init_db()
+
+
+VALID_BANDI = {'isi_inail', 'parco_agrisolare', 'botteghe_entroterra'}
+
+
+@app.route('/api/lead', methods=['POST'])
+def save_lead():
+    data = request.get_json(silent=True) or {}
+    email = data.get('email', '').strip()
+    phone = data.get('phone', '').strip()
+    bando = data.get('bando', '').strip()
+    
+    if not email or '@' not in email or len(email) > 255:
+        return jsonify({'success': False, 'error': 'Email non valida'}), 400
+    
+    if not bando or bando not in VALID_BANDI:
+        return jsonify({'success': False, 'error': 'Bando non valido'}), 400
+    
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS leads (
+                id SERIAL PRIMARY KEY,
+                email VARCHAR(255) NOT NULL,
+                phone VARCHAR(50),
+                bando VARCHAR(100) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        cur.execute(
+            "INSERT INTO leads (email, phone, bando) VALUES (%s, %s, %s)",
+            (email, phone, bando)
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Errore save_lead: {e}")
+        return jsonify({'success': False, 'error': f'Errore: {str(e)}'}), 500
+
+
+@app.route('/api/consultation', methods=['POST'])
+def save_consultation():
+    data = request.get_json(silent=True) or {}
+    email = data.get('email', '').strip()
+    phone = data.get('phone', '').strip()
+    
+    if not email or '@' not in email or len(email) > 255:
+        return jsonify({'success': False, 'error': 'Email non valida'}), 400
+    
+    if not phone or len(phone) < 6 or len(phone) > 50:
+        return jsonify({'success': False, 'error': 'Telefono non valido'}), 400
+    
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            CREATE TABLE IF NOT EXISTS consultations (
+                id SERIAL PRIMARY KEY,
+                email VARCHAR(255) NOT NULL,
+                phone VARCHAR(50) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        cur.execute(
+            "INSERT INTO consultations (email, phone) VALUES (%s, %s)",
+            (email, phone)
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({'success': True})
+    except Exception as e:
+        print(f"Errore save_consultation: {e}")
+        return jsonify({'success': False, 'error': f'Errore: {str(e)}'}), 500
+
+
+@app.route('/scarica-sito')
+def scarica_sito():
+    # File pesante (~73MB) escluso dal repo Git per restare sotto i limiti GitHub.
+    # Se serve riattivarlo: caricare 'energelia-sito.zip' nella root e rimuovere il 404.
+    zip_path = os.path.join(os.path.abspath('.'), 'energelia-sito.zip')
+    if not os.path.isfile(zip_path):
+        abort(404)
+    return send_from_directory(os.path.abspath('.'), 'energelia-sito.zip', as_attachment=True)
+
+@app.route('/download-report/<bando>')
+def download_report(bando):
+    reports = {
+        'isi_inail': 'report_inail_2025.pdf',
+        'parco_agrisolare': 'parco_agrisolare.pdf',
+        'resto_sud': 'resto_sud.pdf'
+    }
+    
+    if bando not in reports:
+        abort(404)
+    
+    reports_dir = os.path.join('static', 'reports')
+    return send_from_directory(reports_dir, reports[bando], as_attachment=True)
+
+
+# ==================== ADMIN PANEL ====================
+
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'energelia2026')
+
+@app.route('/forzasamp')
+def admin_login_page():
+    return render_template('admin/login.html')
+
+@app.route('/forzasamp/dashboard')
+def admin_dashboard():
+    return render_template('admin/dashboard.html')
+
+@app.route('/api/admin/login', methods=['POST'])
+def admin_login():
+    data = request.get_json(silent=True) or {}
+    password = data.get('password', '')
+    
+    if password == ADMIN_PASSWORD:
+        return jsonify({'success': True, 'token': 'admin_authenticated'})
+    return jsonify({'success': False, 'error': 'Password errata'}), 401
+
+@app.route('/api/admin/leads', methods=['GET'])
+def get_all_leads():
+    auth = request.headers.get('Authorization', '')
+    if auth != 'Bearer admin_authenticated':
+        return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
+    
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT id, email, phone, bando, tag, created_at 
+            FROM leads 
+            ORDER BY created_at DESC
+        """)
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        
+        leads = []
+        for row in rows:
+            leads.append({
+                'id': row[0],
+                'email': row[1],
+                'phone': row[2],
+                'bando': row[3],
+                'tag': row[4],
+                'created_at': row[5].isoformat() if row[5] else None
+            })
+        
+        return jsonify({'success': True, 'leads': leads})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/admin/consultations', methods=['GET'])
+def get_all_consultations():
+    auth = request.headers.get('Authorization', '')
+    if auth != 'Bearer admin_authenticated':
+        return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
+    
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT id, email, phone, created_at 
+            FROM consultations 
+            ORDER BY created_at DESC
+        """)
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        
+        consultations = []
+        for row in rows:
+            consultations.append({
+                'id': row[0],
+                'email': row[1],
+                'phone': row[2],
+                'created_at': row[3].isoformat() if row[3] else None
+            })
+        
+        return jsonify({'success': True, 'consultations': consultations})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/admin/lead/<int:lead_id>/tag', methods=['PUT'])
+def update_lead_tag(lead_id):
+    auth = request.headers.get('Authorization', '')
+    if auth != 'Bearer admin_authenticated':
+        return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
+    
+    data = request.get_json(silent=True) or {}
+    tag = data.get('tag')
+    
+    valid_tags = [None, '', 'da_richiamare', 'da_scrivere_whatsapp', 'contattato', 'interessato', 'non_interessato']
+    if tag not in valid_tags:
+        return jsonify({'success': False, 'error': 'Tag non valido'}), 400
+    
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("UPDATE leads SET tag = %s WHERE id = %s", (tag if tag else None, lead_id))
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify({'success': True})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/admin/stats', methods=['GET'])
+def get_admin_stats():
+    auth = request.headers.get('Authorization', '')
+    if auth != 'Bearer admin_authenticated':
+        return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
+    
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        
+        cur.execute("SELECT bando, COUNT(*) FROM leads GROUP BY bando")
+        bando_stats = dict(cur.fetchall())
+        
+        cur.execute("SELECT tag, COUNT(*) FROM leads WHERE tag IS NOT NULL GROUP BY tag")
+        tag_stats = dict(cur.fetchall())
+        
+        cur.execute("SELECT COUNT(*) FROM leads")
+        total_leads = cur.fetchone()[0]
+        
+        cur.execute("SELECT COUNT(*) FROM consultations")
+        total_consultations = cur.fetchone()[0]
+        
+        cur.close()
+        conn.close()
+        
+        return jsonify({
+            'success': True,
+            'stats': {
+                'total_leads': total_leads,
+                'total_consultations': total_consultations,
+                'by

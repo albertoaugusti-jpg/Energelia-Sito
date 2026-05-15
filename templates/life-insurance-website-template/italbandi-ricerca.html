@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-67D2BL58Y9');
+    </script>
+    <meta charset="utf-8">
+    <title>ItalBandi Ricerca - Trova il Bando Perfetto | Energelia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="Servizio professionale di ricerca bandi personalizzata. Analizziamo il tuo profilo aziendale e troviamo le opportunità di finanziamento più adatte.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+    <!-- Hero -->
+    <section class="py-5" style="background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%); padding-top: 140px !important;">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <span class="badge-animated mb-4"><i class="fas fa-search me-2"></i>Ricerca Avanzata</span>
+                    <h1 class="display-4 text-white fw-bold mb-4">ItalBandi <span style="color: #d4af37;">Ricerca</span></h1>
+                    <p class="lead text-white mb-4" style="opacity: 0.9;">
+                        Non perdere tempo a cercare tra migliaia di bandi. Il nostro team di esperti analizza il tuo profilo aziendale 
+                        e individua le opportunità di finanziamento più adatte al tuo business.
+                    </p>
+                    <a href="/contact" class="btn btn-light btn-lg rounded-pill px-4 shine-effect">
+                        <i class="fas fa-paper-plane me-2"></i>Richiedi Analisi Gratuita
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="search-visual p-4">
+                        <div class="search-box glass-effect p-4 rounded-4">
+                            <div class="search-step mb-3">
+                                <div class="step-icon"><i class="fas fa-building"></i></div>
+                                <div class="step-content">
+                                    <strong>Settore</strong>
+                                    <span>Manifatturiero, Tech, Servizi...</span>
+                                </div>
+                                <i class="fas fa-check text-success"></i>
+                            </div>
+                            <div class="search-step mb-3">
+                                <div class="step-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <div class="step-content">
+                                    <strong>Regione</strong>
+                                    <span>Liguria, Piemonte, Lombardia...</span>
+                                </div>
+                                <i class="fas fa-check text-success"></i>
+                            </div>
+                            <div class="search-step">
+                                <div class="step-icon"><i class="fas fa-euro-sign"></i></div>
+                                <div class="step-content">
+                                    <strong>Budget Progetto</strong>
+                                    <span>€50.000 - €500.000</span>
+                                </div>
+                                <i class="fas fa-check text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-5" style="background: #fff;">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <span class="label-istituzionale">Il Nostro Metodo</span>
+                <h2 class="display-5 fw-bold mt-2">Come Funziona</h2>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-item text-center h-100">
+                        <div class="service-icon-wrapper mx-auto">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h4 class="fw-bold mt-4">1. Analisi Profilo</h4>
+                        <p class="text-muted">Raccogliamo informazioni sulla tua azienda: settore, dimensione, progetti, obiettivi di crescita.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-item text-center h-100">
+                        <div class="service-icon-wrapper mx-auto">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h4 class="fw-bold mt-4">2. Screening Bandi</h4>
+                        <p class="text-muted">Incrociamo il tuo profilo con oltre 2.500 bandi attivi tra nazionali, regionali ed europei.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-item text-center h-100">
+                        <div class="service-icon-wrapper mx-auto">
+                            <i class="fas fa-file-signature"></i>
+                        </div>
+                        <h4 class="fw-bold mt-4">3. Report Personalizzato</h4>
+                        <p class="text-muted">Ricevi un report dettagliato con le opportunità più adatte e le probabilità di successo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-5" style="background: var(--sfondo-pagina);">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <span class="label-istituzionale">Vantaggi</span>
+                    <h2 class="display-5 fw-bold mt-2 mb-4">Perché Scegliere ItalBandi Ricerca</h2>
+                    
+                    <div class="timeline-pro">
+                        <div class="timeline-item">
+                            <h5 class="fw-bold">Risparmio di Tempo</h5>
+                            <p class="text-muted mb-0">Invece di passare ore a cercare, ricevi una selezione mirata in 48 ore.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="fw-bold">Esperti del Settore</h5>
+                            <p class="text-muted mb-0">Dal 2006 aiutiamo imprese a ottenere finanziamenti pubblici.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="fw-bold">Zero Sorprese</h5>
+                            <p class="text-muted mb-0">Ti indichiamo chiaramente requisiti, scadenze e probabilità di successo.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5 class="fw-bold">Supporto Completo</h5>
+                            <p class="text-muted mb-0">Dalla ricerca alla presentazione della domanda, siamo al tuo fianco.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="stats-section rounded-4 p-5">
+                        <div class="row g-4">
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <div class="stat-number">95%</div>
+                                    <div class="stat-label">Tasso di Successo</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <div class="stat-number">48h</div>
+                                    <div class="stat-label">Tempo Report</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <div class="stat-number">€120M</div>
+                                    <div class="stat-label">Fondi Ottenuti</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="stat-item">
+                                    <div class="stat-number">500+</div>
+                                    <div class="stat-label">Clienti Soddisfatti</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-5">
+        <div class="container">
+            <div class="cta-premium text-center">
+                <h2>Inizia Ora la Tua Ricerca</h2>
+                <p>Richiedi un'analisi gratuita del tuo profilo aziendale e scopri le opportunità disponibili.</p>
+                <a href="/contact" class="btn btn-cta-premium">
+                    <i class="fas fa-rocket me-2"></i>Analisi Gratuita
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {% include 'life-insurance-website-template/partials/footer.html' %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+
+<style>
+.search-step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px;
+}
+
+.step-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #1a5276, #0a1530);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.step-content {
+    flex: 1;
+    color: #fff;
+}
+
+.step-content strong {
+    display: block;
+    font-size: 0.9rem;
+}
+
+.step-content span {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+</style>

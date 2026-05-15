@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VL6MKDTQXH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-VL6MKDTQXH');
+    </script>
+    <!-- Google Ads -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17893109593"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17893109593');
+    </script>
+  
+    <meta charset="utf-8">
+    <title>Report Bando ISI INAIL 2025 - Energelia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Bando ISI INAIL 2025, contributi fondo perduto sicurezza lavoro, investimento produttivo" name="keywords">
+    <meta content="Scopri il Bando ISI INAIL 2025: fino a 130.000€ a fondo perduto per rinnovare macchinari e attrezzature. Non solo sicurezza, ma investimento produttivo." name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f6f8;
+    min-height: 100vh;
+}
+
+.report-hero {
+    background: #1a2744;
+    padding: 50px 0 70px;
+    color: white;
+    position: relative;
+    border-bottom: 4px solid #c9a227;
+}
+
+.report-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+.badge-status {
+    display: inline-block;
+    background: #c9a227;
+    color: #1a2744;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.report-title {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: white;
+}
+
+.report-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    max-width: 650px;
+    line-height: 1.6;
+}
+
+.report-card {
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 35px;
+    margin-top: -30px;
+    position: relative;
+    z-index: 10;
+    border: 1px solid #e0e4e8;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.info-box {
+    background: #fafbfc;
+    border-radius: 4px;
+    padding: 14px 16px;
+    border-left: 3px solid #1a2744;
+    border-top: 1px solid #e8eaed;
+    border-right: 1px solid #e8eaed;
+    border-bottom: 1px solid #e8eaed;
+}
+
+.info-box-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #5a6577;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+}
+
+.info-box-value {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1a2744;
+    line-height: 1.2;
+}
+
+.info-box-value.gold {
+    color: #c9a227;
+}
+
+.section-block {
+    background: white;
+    border-radius: 4px;
+    padding: 30px;
+    margin-bottom: 15px;
+    border: 1px solid #e0e4e8;
+}
+
+.section-block:last-of-type {
+    border-bottom: 1px solid #e0e4e8;
+}
+
+.section-block.highlight,
+.section-block.process,
+.section-block.investment {
+    background: #fafbfc;
+    border-left: 3px solid #1a2744;
+}
+
+.section-title {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a2744;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-title i {
+    color: #1a2744;
+}
+
+.highlight-box {
+    background: #1a2744;
+    color: white;
+    border-radius: 4px;
+    padding: 22px;
+    margin: 18px 0;
+    text-align: center;
+    border-left: 4px solid #c9a227;
+}
+
+.highlight-box .big-number {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #c9a227;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.highlight-box .label {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.example-box {
+    background: #fafbfc;
+    border: 1px solid #d0d5dc;
+    border-left: 3px solid #c9a227;
+    border-radius: 4px;
+    padding: 18px;
+    margin-top: 15px;
+}
+
+.example-box .example-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #5a6577;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.process-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 12px;
+    background: #fafbfc;
+    border: 1px solid #e0e4e8;
+    border-radius: 4px;
+}
+
+.step-number {
+    width: 36px;
+    height: 36px;
+    background: #1a2744;
+    color: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.step-content h4 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a2744;
+    margin-bottom: 4px;
+}
+
+.step-content p {
+    color: #5a6577;
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.9rem;
+}
+
+.step-badge {
+    display: inline-block;
+    background: #1a6b3d;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-left: 10px;
+}
+
+.step-badge.paid {
+    background: #b8860b;
+}
+
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.advantage-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    background: #fafbfc;
+    border-radius: 4px;
+    border: 1px solid #e0e4e8;
+}
+
+.advantage-item i {
+    color: #1a6b3d;
+    font-size: 1.1rem;
+    margin-top: 2px;
+}
+
+.advantage-item strong {
+    display: block;
+    color: #1a2744;
+    margin-bottom: 3px;
+    font-size: 0.95rem;
+}
+
+.advantage-item span {
+    font-size: 0.85rem;
+    color: #5a6577;
+}
+
+.cta-section {
+    background: #1a2744;
+    padding: 40px;
+    border-radius: 4px;
+    text-align: center;
+    margin-top: 25px;
+    color: white;
+    border-left: 4px solid #c9a227;
+}
+
+.cta-section h3 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: white;
+}
+
+.cta-section p {
+    font-size: 1rem;
+    opacity: 0.85;
+    margin-bottom: 20px;
+}
+
+.btn-download-report {
+    display: inline-block;
+    background: #c9a227;
+    color: #1a2744;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 14px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+
+.btn-download-report:hover {
+    background: #b8960c;
+    color: #1a2744;
+}
+
+.btn-call {
+    display: inline-block;
+    background: #1a6b3d;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 14px 32px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+
+.btn-call:hover {
+    background: #145530;
+    box-shadow: 0 10px 30px rgba(34,197,94,0.5);
+    color: white;
+}
+
+/* Popup Styles */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 21, 48, 0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.popup-content {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 450px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+    animation: popupSlideIn 0.3s ease;
+}
+
+@keyframes popupSlideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #94a3b8;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s;
+}
+
+.popup-close:hover {
+    color: #0a1530;
+}
+
+.popup-form h2 {
+    color: #0a1530;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.popup-form p {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.popup-form input {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+}
+
+.popup-form input:focus {
+    outline: none;
+    border-color: #d4af37;
+}
+
+.popup-form button {
+    width: 100%;
+    background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
+    color: #0a1530;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.popup-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212,175,55,0.4);
+}
+
+.popup-success {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.popup-success i {
+    font-size: 4rem;
+    color: #22c55e;
+    margin-bottom: 20px;
+}
+
+.popup-success h3 {
+    color: #0a1530;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.popup-success p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.price-highlight {
+    background: linear-gradient(135deg, #fef9e7 0%, #fdf2c7 100%);
+    border: 2px solid #d4af37;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.price-highlight .price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0a1530;
+}
+
+.price-highlight .price span {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #64748b;
+}
+
+.price-highlight .note {
+    font-size: 0.9rem;
+    color: #475569;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .report-title { font-size: 1.8rem; }
+    .report-card { padding: 20px; margin-top: -30px; }
+    .cta-section { padding: 30px 15px; }
+    .info-box-value { font-size: 1.1rem; }
+    .section-block { padding: 25px 20px !important; margin-bottom: 20px !important; }
+    .process-step { flex-direction: column; gap: 10px; }
+    .step-number { width: 40px; height: 40px; font-size: 1rem; }
+    .highlight-box .big-number { font-size: 2rem; }
+    .info-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .info-box { padding: 15px 10px; }
+    .info-box-title { font-size: 0.7rem; }
+    .advantages-grid { grid-template-columns: 1fr; gap: 12px; }
+    .advantage-item { padding: 15px; }
+    .process-steps { padding: 15px !important; }
+}
+
+@media (max-width: 480px) {
+    .report-title { font-size: 1.5rem; }
+    .report-subtitle { font-size: 1rem; }
+    .report-card { padding: 15px; }
+    .info-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .info-box { padding: 12px 8px; }
+    .info-box-title { font-size: 0.65rem; }
+    .info-box-value { font-size: 1rem; }
+    .section-block { padding: 20px 15px !important; border-radius: 12px !important; }
+    .section-title { font-size: 1.1rem; }
+    .process-steps { padding: 12px !important; }
+    .cta-section { padding: 25px 15px; }
+    .cta-section h3 { font-size: 1.3rem; }
+}
+</style>
+</head>
+
+<body>
+<!-- Popup Form -->
+<div class="popup-overlay" id="downloadPopup">
+    <div class="popup-content">
+        <button class="popup-close" onclick="closeDownloadPopup()">&times;</button>
+        <div class="popup-form" id="downloadForm">
+            <h2><i class="fas fa-file-pdf me-2" style="color:#d4af37;"></i>Scarica il Report Completo</h2>
+            <p>Inserisci i tuoi dati per ricevere il report PDF con tutti i dettagli del bando.</p>
+            <form id="leadForm">
+                <input type="email" id="leadEmail" placeholder="La tua email" required>
+                <input type="tel" id="leadPhone" placeholder="Il tuo telefono" required>
+                <button type="submit">
+                    <i class="fas fa-download me-2"></i>Scarica Report PDF
+                </button>
+            </form>
+        </div>
+        <div class="popup-success" id="downloadSuccess">
+            <i class="fas fa-check-circle"></i>
+            <h3>Grazie!</h3>
+            <p>Il download del report inizierà automaticamente.</p>
+        </div>
+    </div>
+</div>
+
+{% include 'life-insurance-website-template/partials/navbar.html' %}
+
+<!-- Back Button -->
+<div class="container py-3">
+    <a href="/" style="display: inline-flex; align-items: center; color: #0a1530; text-decoration: none; font-weight: 500; transition: all 0.2s;">
+        <i class="fas fa-arrow-left me-2"></i>Torna alla Home
+    </a>
+</div>
+
+<!-- Hero Section -->
+<div class="report-hero">
+    <div class="container">
+        <span class="badge-status"><i class="fas fa-star me-2"></i>IN APERTURA</span>
+        <h1 class="report-title">Bando ISI INAIL 2025</h1>
+        <p class="report-subtitle">Non solo sicurezza: un'opportunità concreta per rinnovare macchinari e attrezzature con contributi a fondo perduto.</p>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="container" style="padding-bottom: 80px;">
+    <div class="report-card">
+        <!-- Key Info Grid -->
+        <div class="info-grid">
+            <div class="info-box">
+                <div class="info-box-title">Contributo Massimo</div>
+                <div class="info-box-value gold">€130.000</div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">Tipo di Agevolazione</div>
+                <div class="info-box-value">Fondo Perduto</div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">Copertura Spese</div>
+                <div class="info-box-value">Fino all'80%</div>
+            </div>
+            <div class="info-box">
+                <div class="info-box-title">Dotazione Nazionale</div>
+                <div class="info-box-value">€600 Milioni</div>
+            </div>
+        </div>
+
+        <!-- Mini CTA Top -->
+        <div style="text-align: center; margin: 20px 0 10px 0; padding: 14px 18px; background: #fafbfc; border-radius: 4px; border: 1px solid #e0e4e8; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px;">
+            <span style="font-size: 0.9rem; color: #5a6577;">
+                Documentazione completa disponibile
+            </span>
+            <button onclick="openDownloadPopup()" style="background: #1a2744; color: white; border: none; padding: 8px 18px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.85rem;">
+                Scarica Report
+            </button>
+        </div>
+
+        <!-- SEZIONE: Cosa puoi fare con ISI INAIL -->
+        <div class="section-block" style="background: #fafbfc; border-left: 3px solid #1a2744;">
+            <h3 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 1.2rem; font-weight: 600; color: #1a2744; margin: 0 0 18px 0;">Investimenti ammissibili al contributo</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 22px;">
+                <div style="background: white; padding: 14px 16px; border-radius: 4px; border: 1px solid #e0e4e8; font-size: 0.95rem; color: #1a2744;">
+                    <strong>Macchinari e attrezzature</strong> <span style="color: #5a6577;">- presse, torni, frese, plotter, stampanti industriali</span>
+                </div>
+                <div style="background: white; padding: 14px 16px; border-radius: 4px; border: 1px solid #e0e4e8; font-size: 0.95rem; color: #1a2744;">
+                    <strong>Dispositivi di sicurezza</strong> <span style="color: #5a6577;">- protezioni, aspiratori, sistemi anticaduta</span>
+                </div>
+                <div style="background: white; padding: 14px 16px; border-radius: 4px; border: 1px solid #e0e4e8; font-size: 0.95rem; color: #1a2744;">
+                    <strong>Mezzi di movimentazione</strong> <span style="color: #5a6577;">- carrelli elevatori, gru, transpallet elettrici</span>
+                </div>
+                <div style="background: white; padding: 14px 16px; border-radius: 4px; border: 1px solid #e0e4e8; font-size: 0.95rem; color: #1a2744;">
+                    <strong>Interventi strutturali</strong> <span style="color: #5a6577;">- bonifica amianto, adeguamento impianti</span>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding: 22px; background: #1a2744; border-radius: 4px; border-left: 4px solid #c9a227;">
+                <p style="font-size: 0.95rem; color: white; margin: 0 0 15px 0;">
+                    Contributo a fondo perduto: <strong style="color: #c9a227;">fino all'80%</strong> della spesa sostenuta
+                </p>
+                <button onclick="openDownloadPopup()" style="background: #c9a227; color: #1a2744; border: none; padding: 12px 28px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.95rem;">
+                    Scarica il Report Informativo
+                </button>
+                <p style="font-size: 0.8rem; color: rgba(255,255,255,0.65); margin: 12px 0 0 0;">
+                    Requisiti di accesso, spese ammissibili e procedura di partecipazione
+                </p>
+            </div>
+        </div>
+
+        <!-- SEZIONE 3: Procedura di consulenza -->
+        <div class="section-block" style="background: white;">
+            <h3 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 1.2rem; font-weight: 600; color: #1a2744; margin: 0 0 18px 0;">Procedura di consulenza</h3>
+
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Analisi di pre-fattibilità <span class="step-badge" style="background: #1a6b3d;">Gratuita</span></h4>
+                        <p>Verifica dei requisiti aziendali. Senza impegno.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Raccolta documentazione</h4>
+                        <p>Predisposizione della documentazione tecnica e amministrativa.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Presentazione domanda</h4>
+                        <p>Deposito della pratica e rilascio codice conferma.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number" style="background: #c9a227;">4</div>
+                    <div class="step-content">
+                        <h4>Rendicontazione <span class="step-badge" style="background: #c9a227; color: #1a2744;">Inclusa</span></h4>
+                        <p>Assistenza completa fino all'erogazione del contributo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEZIONE 4: Riepilogo -->
+        <div class="section-block" style="background: #fafbfc; border-left: 3px solid #c9a227;">
+            <h3 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 1.2rem; font-weight: 600; color: #1a2744; margin: 0 0 18px 0;">Riepilogo del bando</h3>
+            
+            <div style="padding: 22px; background: #1a2744; border-radius: 4px; color: white; margin-bottom: 18px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div>
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Scadenza presentazione</div>
+                        <div style="font-size: 1.1rem; font-weight: 600;">15 Febbraio 2025</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Contributo massimo</div>
+                        <div style="font-family: 'Source Serif 4', Georgia, serif; font-size: 1.4rem; font-weight: 600; color: #c9a227;">€130.000</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Report Info integrato -->
+            <div style="padding: 15px; background: white; border-radius: 10px; border-left: 3px solid #d4af37;">
+                <p style="color: #1e293b; font-size: 0.9rem; line-height: 1.6; margin: 0;">
+                    <i class="fas fa-file-pdf me-2" style="color: #d4af37;"></i>
+                    <strong>Report Gratuito:</strong> requisiti, 5 assi di finanziamento, spese ammissibili e cronoprogramma.
+                </p>
+            </div>
+        </div>
+        <!-- GARANZIA GRATUITÀ - Box in evidenza -->
+        <div style="background: #fafbfc; border: 1px solid #e0e4e8; border-left: 4px solid #c9a227; border-radius: 4px; padding: 30px 25px; margin: 25px 0;">
+            <h3 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 1.3rem; font-weight: 600; color: #1a2744; margin: 0 0 18px 0;">Condizioni del servizio</h3>
+            <div style="font-size: 0.95rem; color: #1a2744; line-height: 1.8; margin-bottom: 20px;">
+                <p style="margin: 0 0 12px 0;"><strong>Paghi solo se decidi di procedere.</strong> L'analisi di pre-fattibilità è gratuita e senza impegno.</p>
+                <p style="margin: 0;"><strong>Nessun costo di consulenza.</strong> Assistenza continua fino alla decisione finale, senza oneri aggiuntivi.</p>
+            </div>
+            <div style="border-top: 1px solid #e0e4e8; padding-top: 20px; margin-top: 20px;">
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center; justify-content: center;">
+                    <a href="tel:0108078800" style="display: inline-flex; align-items: center; gap: 8px; background: #1a2744; color: white; padding: 12px 24px; border-radius: 4px; font-weight: 600; text-decoration: none; font-size: 0.95rem;">
+                        010 8078800
+                    </a>
+                    <button onclick="openDownloadPopup()" style="display: inline-flex; align-items: center; gap: 8px; background: #c9a227; color: #1a2744; padding: 12px 24px; border-radius: 4px; font-weight: 600; border: none; cursor: pointer; font-size: 0.95rem;">
+                        Richiedi Report Informativo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sezione Recensioni/Progetti Approvati -->
+<section style="padding: 50px 0 60px; background: #1a2744;">
+    
+    <div style="text-align: center; margin-bottom: 35px; padding: 0 20px;">
+        <div style="display: inline-block; background: #c9a227; color: #1a2744; padding: 5px 14px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-radius: 3px; margin-bottom: 15px;">
+            Casi di successo
+        </div>
+        <h2 style="font-family: 'Source Serif 4', Georgia, serif; font-size: 1.6rem; font-weight: 600; color: white; margin: 0 0 10px 0; line-height: 1.3;">
+            Progetti finanziati con successo
+        </h2>
+        <p style="color: rgba(255,255,255,0.65); font-size: 0.95rem; max-width: 550px; margin: 0 auto;">
+            Aziende che hanno ottenuto contributi a fondo perduto
+        </p>
+    </div>
+    
+    <div style="position: relative; overflow-x: auto; overflow-y: hidden; padding: 20px 0; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;">
+        <style>.inail-scroll::-webkit-scrollbar { display: none; }</style>
+        <div class="inail-scroll" style="display: flex; gap: 20px; width: max-content; padding: 0 20px;">
+            
+            <!-- Peraria Srl - INAIL -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 25px 20px; text-align: center; border: 1px solid rgba(255,255,255,0.06); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="background: white; border-radius: 12px; padding: 15px; display: inline-block; margin-bottom: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                    <img src="/img/loghi-clienti/peraria.png" alt="Peraria" style="height: 45px; width: auto; max-width: 110px; object-fit: contain;">
+                </div>
+                <div style="color: white; font-size: 1.05rem; font-weight: 700; margin-bottom: 5px;">Peraria Srl</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 15px;">Gonfiabili e strutture</div>
+                <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 6px 14px; display: inline-block; margin-bottom: 12px; border: 1px solid rgba(212,175,55,0.2);">
+                    <span style="font-size: 0.7rem; color: #d4af37; font-weight: 700;">ISI INAIL</span>
+                </div>
+                <div style="color: #22c55e; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">€130.000</div>
+                <div style="color: #22c55e; font-size: 0.75rem; font-weight: 600;">A fondo perduto</div>
+            </div>
+            
+            <!-- Erica - Filiera Tessile -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 25px 20px; text-align: center; border: 1px solid rgba(255,255,255,0.06); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="background: #1a1a1a; border-radius: 12px; padding: 15px; display: inline-block; margin-bottom: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                    <img src="/img/loghi-clienti/erica.png" alt="Erica" style="height: 45px; width: auto; max-width: 100px; object-fit: contain;">
+                </div>
+                <div style="color: white; font-size: 1.05rem; font-weight: 700; margin-bottom: 5px;">Erica Industria Tessile</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 15px;">Industria tessile</div>
+                <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 6px 14px; display: inline-block; margin-bottom: 12px; border: 1px solid rgba(212,175,55,0.2);">
+                    <span style="font-size: 0.7rem; color: #d4af37; font-weight: 700;">FILIERA TESSILE</span>
+                </div>
+                <div style="color: #22c55e; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">€209.000</div>
+                <div style="color: #22c55e; font-size: 0.75rem; font-weight: 600;">Approvato da graduatoria</div>
+            </div>
+            
+            <!-- Nuova Stamet -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 25px 20px; text-align: center; border: 1px solid rgba(255,255,255,0.06); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="background: white; border-radius: 12px; padding: 15px; display: inline-block; margin-bottom: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                    <img src="/img/loghi-clienti/stamet.png" alt="Nuova Stamet" style="height: 45px; width: auto; max-width: 130px; object-fit: contain;">
+                </div>
+                <div style="color: white; font-size: 1.05rem; font-weight: 700; margin-bottom: 5px;">Nuova Stamet</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 15px;">Carpenteria metallica</div>
+                <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 6px 14px; display: inline-block; margin-bottom: 12px; border: 1px solid rgba(212,175,55,0.2);">
+                    <span style="font-size: 0.7rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                </div>
+                <div style="color: #22c55e; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">€291.000</div>
+                <div style="color: #22c55e; font-size: 0.75rem; font-weight: 600;">Approvato da graduatoria</div>
+            </div>
+            
+            <!-- Idroclima Quinzanini -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 25px 20px; text-align: center; border: 1px solid rgba(255,255,255,0.06); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="background: white; border-radius: 12px; padding: 15px; display: inline-block; margin-bottom: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                    <img src="/img/loghi-clienti/quinzanini.png" alt="Quinzanini" style="height: 45px; width: auto; max-width: 130px; object-fit: contain;">
+                </div>
+                <div style="color: white; font-size: 1.05rem; font-weight: 700; margin-bottom: 5px;">Idroclima Quinzanini</div>
+                <div style="color: rgba(255,255,255,0.5); font-size: 0.75rem; margin-bottom: 15px;">Impianti termoidraulici</div>
+                <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 6px 14px; display: inline-block; margin-bottom: 12px; border: 1px solid rgba(212,175,55,0.2);">
+                    <span style="font-size: 0.7rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                </div>
+                <div style="color: #22c55e; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px;">€120.000</div>
+                <div style="color: #22c55e; font-size: 0.75rem; font-weight: 600;">Approvato da graduatoria</div>
+            </div>
+            
+            <!-- E molte altre -->
+            <div style="min-width: 280px; max-width: 280px; background: rgba(212,175,55,0.05); border-radius: 16px; padding: 35px 20px; text-align: center; border: 1px dashed rgba(212,175,55,0.3); scroll-snap-align: start; flex-shrink: 0;">
+                <div style="width: 60px; height: 60px; background: rgba(212,175,55,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                    <i class="fas fa-building" style="color: #d4af37; font-size: 1.5rem;"></i>
+                </div>
+                <div style="font-size: 1.2rem; font-weight: 800; color: #d4af37; margin-bottom: 10px;">E molte altre imprese</div>
+                <div style="color: rgba(255,255,255,0.6); font-size: 0.85rem; line-height: 1.5;">
+                    Numerose aziende italiane hanno ottenuto finanziamenti grazie alla nostra consulenza specializzata
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function openDownloadPopup() {
+    document.getElementById('downloadPopup').style.display = 'flex';
+    document.getElementById('downloadForm').style.display = 'block';
+    document.getElementById('downloadSuccess').style.display = 'none';
+}
+
+function closeDownloadPopup() {
+    document.getElementById('downloadPopup').style.display = 'none';
+}
+
+document.getElementById('leadForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('leadEmail').value.trim();
+    const phone = document.getElementById('leadPhone').value.trim();
+    const bando = 'isi_inail';
+    const submitBtn = this.querySelector('button');
+    
+    // Validazione email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Inserisci un indirizzo email valido.');
+        return;
+    }
+    
+    // Validazione telefono (solo cifre, spazi e +, minimo 8 caratteri)
+    const phoneDigits = phone.replace(/[\s\+\-]/g, '');
+    if (!/^\d{8,15}$/.test(phoneDigits)) {
+        alert('Inserisci un numero di telefono valido (8-15 cifre).');
+        return;
+    }
+    
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Invio in corso...';
+    
+    try {
+        const response = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, phone: phone, bando: bando })
+        });
+        
+        if (response.ok) {
+            document.getElementById('downloadForm').style.display = 'none';
+            document.getElementById('downloadSuccess').style.display = 'block';
+            
+            // Trigger download after 1 second
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = '/static/reports/report_inail_2025.pdf';
+                link.download = 'Report_Bando_INAIL_2025_Energelia.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // Close popup after download
+                setTimeout(closeDownloadPopup, 2000);
+            }, 1000);
+        } else {
+            throw new Error('Errore durante l\'invio');
+        }
+    } catch (error) {
+        alert('Si è verificato un errore. Riprova più tardi.');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fas fa-download me-2"></i>Scarica Report PDF';
+    }
+});
+
+// Close popup on overlay click
+document.getElementById('downloadPopup').addEventListener('click', function(e) {
+    if (e.target === this) closeDownloadPopup();
+});
+</script>
+
+{% include 'life-insurance-website-template/partials/footer.html' %}
+</body>
+</html>

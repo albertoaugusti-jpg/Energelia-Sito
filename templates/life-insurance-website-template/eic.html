@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-67D2BL58Y9');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EIC Accelerator 2025 | Horizon Europe</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { background: #f6f9fc; color: #253049; font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;}
+    .bg-gradient-hero { background: linear-gradient(120deg, #008c63 65%, #54e1a6 100%);}
+    .section-divider { border-top: 2px dashed #54e1a6; margin: 3rem 0 2rem 0; opacity: 0.16;}
+    .shadow-xxl { box-shadow: 0 14px 48px 0 rgba(0,140,99,0.13) !important;}
+    .icon-sec { font-size: 2.1rem; color: #008c63; vertical-align: middle; margin-right: 10px;}
+    .sticky-contact {
+      position: fixed; right: 2vw; bottom: 2vw; z-index: 1000;
+      background: linear-gradient(90deg,#54e1a6 65%,#008c63 100%);
+      color: #fff; padding: 1.1rem 2rem;
+      border-radius: 2rem 2rem 2rem .5rem;
+      box-shadow: 0 4px 24px rgba(0,140,99,0.13);
+      font-size: 1.1rem; font-weight: 700; transition: .2s;
+      display: flex; align-items: center; gap: 0.8rem; animation: pulse 2s infinite;
+    }
+    .sticky-contact:hover { filter: brightness(1.17);}
+    .timeline { border-left: 4px solid #008c63; margin: 2rem 0 2rem 2rem; padding-left: 1.5rem;}
+    .timeline .event { margin-bottom: 2.6rem; position: relative;}
+    .timeline .event::before {
+      content: ''; position: absolute; left: -33px; top: 4px; width: 18px; height: 18px;
+      background: #fff; border-radius: 50%; border: 3px solid #54e1a6;
+      box-shadow: 0 0 0 3px #008c63; z-index: 2;
+    }
+    .gradient-card { background: linear-gradient(100deg,#eafaea 55%,#e0f7ef 100%);
+      border-radius: 18px; border: 1px solid #c8f0e3; }
+    .callout-warning { border-left: 6px solid #ffe17a; background: #fffde6; padding: 1.1rem 1.3rem; border-radius: 9px;}
+    .table th { background: #e2f9ea; }
+    .note-legal { font-size: 0.93rem; color: #5d6d7a;}
+    .icon-step { font-size: 1.3rem; color: #008c63; margin-right: 8px;}
+    @media (max-width: 767px) {
+      .timeline { margin-left: .3rem; padding-left: .5rem;}
+      .sticky-contact { padding: 0.8rem 1.1rem; font-size: .99rem;}
+    }
+  </style>
+</head>
+  <body>
+
+     <!-- NAVBAR -->
+       <div class="container-fluid nav-bar px-0 px-lg-4 py-2"
+            style="background: #fff; box-shadow: 0 4px 16px 0 rgba(22,91,133,0.06); position: fixed; top:0; left:0; width:100%; z-index:1050;">
+         <div class="container">
+           <nav class="navbar navbar-expand-lg navbar-light px-0">
+             <div class="d-flex align-items-center justify-content-between w-100 flex-nowrap" style="min-height:64px;">
+               <!-- LOGO SINISTRA -->
+               <div class="d-flex align-items-center flex-shrink-0" style="min-width:65px;">
+                 <a href="/" class="navbar-brand d-flex align-items-center">
+                   <img src="{{ url_for('static', filename='img/loggo.jpg') }}" alt="Logo Energelia" class="navbar-logo" style="height:40px; width:auto;">
+                 </a>
+               </div>
+               <!-- CTA CENTRO -->
+               <div class="flex-grow-1 d-flex align-items-center justify-content-center" style="min-width:150px;">
+                 <div class="cta-telefono-navbar d-flex align-items-center justify-content-center px-3 py-2 rounded-4 shadow-sm"
+                      style="background: #fff; border: 1.5px solid #cbe1ef; min-width: 160px;">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="#175b85" viewBox="0 0 16 16" class="me-2">
+                     <path d="M3.654 1.328a.678.678 0 0 1 .738-.048l2.29 1.145c.329.164.445.58.264.89L6.29 4.646a.678.678 0 0 1-.946.172l-1.145-.86a11.428 11.428 0 0 0 5.292 5.292l-.86-1.145a.678.678 0 0 1 .172-.946l1.29-.915a.678.678 0 0 1 .89.264l1.145 2.29a.678.678 0 0 1-.048.738l-1.12 1.68a1.745 1.745 0 0 1-1.723.73c-1.539-.257-3.35-1.415-5.394-3.46C1.515 7.35.357 5.538.1 3.999A1.745 1.745 0 0 1 .83 2.277l1.68-1.12z"/>
+                   </svg>
+                   <div class="text-center" style="line-height:1.1;">
+                     <div style="font-size: 0.77rem; font-weight: 600; color: #1785c6; letter-spacing: .7px; text-transform: uppercase;">
+                       Consulenza gratuita
+                     </div>
+                     <a href="tel:+01234567890" class="fw-bold cta-phone-number" style="font-size: 1.13rem; color: #155f8d; text-decoration: none;">
+                       010 8078800
+                     </a>
+                   </div>
+                 </div>
+               </div>
+               <!-- MENU HAMBURGER/TENDINA DESTRA -->
+               <div class="d-flex align-items-center flex-shrink-0" style="min-width:50px;">
+                 <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                   <span class="fa fa-bars"></span>
+                 </button>
+               </div>
+             </div>
+             <div class="collapse navbar-collapse w-100" id="navbarCollapse">
+               <div class="navbar-nav ms-auto gap-3 text-end main-navbar-desktop py-2 py-lg-0">
+                 <a href="/" class="nav-item nav-link">Home</a>
+                 <a href="/finanza" class="nav-item nav-link active">Finanza agevolata</a>
+                 <a href="/altriservizi" class="nav-item nav-link">Altri servizi</a>
+                 <a href="/contact" class="nav-item nav-link">Contattaci</a>
+               </div>
+             </div>
+           </nav>
+         </div>
+       </div>
+
+       <style>
+
+         @media (max-width: 991.98px) {
+           .navbar-collapse {
+             background: #fff;
+             box-shadow: 0 8px 36px 0 rgba(22,91,133,0.10);
+             border-radius: 0 0 22px 22px;
+             margin-top: 8px;
+             padding: 18px 0 12px 0;
+             z-index: 1000;
+           }
+           .main-navbar-desktop {
+             flex-direction: column !important;
+             align-items: stretch !important;
+             gap: 0 !important;
+           }
+           .main-navbar-desktop .nav-link {
+             color: #155f8d !important;
+             font-size: 1.16rem !important;
+             font-weight: 500 !important;
+             padding: 16px 18px 14px 24px !important;
+             border-radius: 0 !important;
+             margin: 0 !important;
+             border-bottom: 1px solid #e8f1fa;
+             background: none;
+             box-shadow: none;
+             position: relative;
+             transition: background 0.15s, color 0.18s;
+           }
+           .main-navbar-desktop .nav-link:last-child {
+             border-bottom: none;
+           }
+           .main-navbar-desktop .nav-link.active,
+           .main-navbar-desktop .nav-link:focus {
+             color: #fff !important;
+             background: linear-gradient(90deg,#0072ce 0%,#2290e6 100%) !important;
+             font-weight: 700 !important;
+             border-radius: 12px !important;
+             box-shadow: 0 4px 16px rgba(0,80,181,0.09);
+           }
+           .main-navbar-desktop .nav-link:hover {
+             color: #0050b5 !important;
+             background: #f0f6ff !important;
+           }
+         }
+
+
+
+         .nav-bar {
+           position: fixed !important;
+           top: 0; left: 0; width: 100vw;
+           z-index: 1050;
+           background: #fff !important;
+           box-shadow: 0 4px 16px 0 rgba(22,91,133,0.06);
+         }
+         .navbar-logo { height: 40px !important; width: auto; transition: height 0.3s; }
+         .btn-area-clienti { display: none !important; }
+         .cta-telefono-navbar {
+           border-radius: 16px !important;
+           box-shadow: 0 2px 18px rgba(29,98,174,0.10);
+           transition: border 0.2s;
+         }
+         .cta-telefono-navbar:hover {
+           border-color: #a8d2ef;
+           box-shadow: 0 6px 22px rgba(29,98,174,0.14);
+         }
+         .cta-phone-number:hover {
+           color: #0d4167 !important;
+           text-decoration: underline !important;
+         }
+         .hero-no-overlap { margin-top: 80px; }
+         @media (min-width: 992px) {
+           .nav-bar { padding-top: 10px !important; padding-bottom: 10px !important; }
+           .navbar-logo { height: 80px !important; }
+           .cta-telefono-navbar { min-width:220px; font-size:1.11rem; padding: 14px 32px !important;}
+           .hero-no-overlap { margin-top: 100px; }
+           .main-navbar-desktop {
+             gap: 22px !important;
+             font-size: 1.13rem;
+             font-weight: 500;
+             letter-spacing: 0.01em;
+           }
+           .main-navbar-desktop .nav-link {
+             padding: 10px 0 6px 0 !important;
+             color: #185b85 !important;
+             border-radius: 0 !important;
+             position: relative;
+             transition: background 0.17s, color 0.18s;
+             background: transparent;
+             font-size: 1.08rem;
+             box-shadow: none;
+           }
+           .main-navbar-desktop .nav-link.active,
+           .main-navbar-desktop .nav-link:focus {
+             color: #0050b5 !important;
+             font-weight: 700;
+             background: transparent;
+           }
+           .main-navbar-desktop .nav-link::after {
+             content: "";
+             display: block;
+             height: 2.5px;
+             width: 0%;
+             background: linear-gradient(90deg,#199af3 0%,#155f8d 100%);
+             border-radius: 2px;
+             position: absolute;
+             left: 0; bottom: 0;
+             transition: width 0.27s cubic-bezier(.4,.86,.6,1);
+           }
+           .main-navbar-desktop .nav-link.active::after,
+           .main-navbar-desktop .nav-link:hover::after {
+             width: 100%;
+           }
+           .main-navbar-desktop .nav-link:hover,
+           .main-navbar-desktop .nav-link:focus {
+             color: #00397f !important;
+             background: #f2f7fd;
+             box-shadow: 0 2px 8px rgba(22,91,133,0.06);
+             z-index:2;
+           }
+         }
+         @media (max-width: 991.98px) {
+           .main-navbar-desktop .nav-link::after { display:none; }
+           .main-navbar-desktop { gap: 0 !important; font-size:1rem;}
+           .navbar-logo { height: 40px !important; }
+           .cta-telefono-navbar { min-width:120px; font-size:.97rem;}
+           .hero-no-overlap { margin-top: 80px; }
+         }
+       </style>
+
+     <!-- HERO -->
+     <section class="py-5 text-white bg-gradient-hero shadow animate__animated animate__fadeInDown hero-no-overlap">
+      <div class="container py-2">
+        <div class="d-flex align-items-center gap-3 mb-1">
+          <i class="fas fa-rocket fa-2x"></i>
+          <div>
+            <h1 class="fw-bold display-4 m-0">EIC Accelerator 2025</h1>
+            <div class="fs-5">Fondo UE per l’innovazione deep tech – Horizon Europe</div>
+          </div>
+        </div>
+        <p class="lead mt-2 animate__animated animate__fadeInLeft animate__delay-1s">
+          Sostegno alle PMI e start-up altamente innovative per lo sviluppo e la scalabilità di tecnologie rivoluzionarie. Scadenza: 1 ottobre 2025. Budget: 1,4 miliardi di euro.
+        </p>
+      </div>
+    </section>
+    <div class="container"><div class="section-divider"></div></div>
+
+    <!-- FINALITÀ -->
+    <section>
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-md-7">
+            <h2 class="fw-bold text-success mb-3"><i class="fa-solid fa-lightbulb icon-sec"></i>Finalità e obiettivi</h2>
+            <p class="fs-5 mb-0">
+              L’EIC Accelerator sostiene progetti ad alto impatto in fase di validazione, dimostrazione e scale-up (TRL 5–9), con strumenti misti grant/equity per accelerare l’ingresso sul mercato di tecnologie, prodotti e servizi innovativi in grado di creare nuovi mercati o rivoluzionare quelli esistenti.
+            </p>
+          </div>
+          <div class="col-md-5 text-center">
+            <img src="https://img.icons8.com/fluency/180/rocket--v1.png" alt="EIC Accelerator" style="max-width: 130px;">
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container"><div class="section-divider"></div></div>
+
+    <!-- BENEFICIARI -->
+    <section>
+      <div class="container">
+        <h2 class="fw-bold text-success mb-3"><i class="fa-solid fa-users icon-sec"></i>Chi può partecipare</h2>
+        <ul class="fs-5">
+          <li>PMI, start-up e spin-off innovative (TRL 5–9)【65†Eic ACCELERATOR.docx】</li>
+          <li>Possibile accesso anche a mid-cap (fino a 499 dipendenti) solo per la componente equity</li>
+          <li>Ammessi team con sede in UE o Paesi Associati Horizon Europe</li>
+        </ul>
+        <div class="note-legal">
+          Le imprese devono essere autonome, non “controllate” da grandi gruppi, e non essere in stato di crisi.
+        </div>
+      </div>
+    </section>
+    <div class="container"><div class="section-divider"></div></div>
+
+    <!-- CONTRIBUTI E INVESTIMENTI -->
+    <section>
+      <div class="container">
+        <h2 class="fw-bold text-success mb-3"><i class="fa-solid fa-coins icon-sec"></i>Agevolazioni e tipologie di finanziamento</h2>
+        <div class="row">
+          <div class="col-md-7">
+            <ul class="fs-5">
+              <li><b>Grant (TRL 5–8):</b> fino a 2,5 milioni di euro, max 70% dei costi ammissibili</li>
+              <li><b>Equity (TRL 9):</b> da 0,5 a 10 milioni di euro (NB: dal 2025 max ridotto a 10 M€)</li>
+              <li><b>Blended finance:</b> grant + equity</li>
+              <li><b>Equity only:</b> solo mid-cap o progetti già grant-only</li>
+            </ul>
+          </div>
+          <div class="col-md-5">
+            <div class="gradient-card p-4">
+              <b>Esempio:</b><br>
+              TRL 6: Grant richiesto: 1.200.000 €<br>
+              Copertura 70%: 840.000 €<br>
+              Equity TRL 9: 3.000.000 €
+            </div>
+          </div>
+        </div>
+        <div class="note-legal mt-2">
+          Le imprese selezionate possono ricevere blended finance (grant + equity) oppure solo grant (TRL 5–8) o solo equity (TRL 9 o mid-cap).
+        </div>
+      </div>
+    </section>
+    <div class="container"><div class="section-divider"></div></div>
+
+    <!-- SPESE AMMISSIBILI -->
+    <section>
+      <div class="container">
+        <h2 class="fw-bold text-success mb-3"><i class="fa-solid fa-gears icon-sec"></i>Spese ammissibili</h2>
+        <div class="row">
+          <div class="col-lg-8">
+            <ul class="fs-5">
+              <li>Costi diretti: personale, consulenze, attrezzature, materiali, test e validazione, certificazioni</li>
+              <li>Spese per IPR, marketing, fundraising, legali, go-to-market, preparazione equity</li>
+              <li>Costi di project management e dissemination</li>
+            </ul>
+            <div class="note-legal">
+              Non sono ammissibili spese per immobili, leasing, attività non strettamente legate al progetto, costi non documentati o fuori periodo.
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="gradient-card p-4">
+              <b>Non ammesse:</b>
+              <ul>
+                <li>Spese già finanziate da altri programmi UE</li>
+                <li>Beni immobili e leasing</li>
+                <li>Costi di routine/amministrativi generici</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container"><div class="section-divider"></div></div>
+
+    <!-- TEMPISTICHE -->
+    <section>
+      <div class="container">
+        <h2 class="fw-bold text-success mb-3"><i class="fa-solid fa-calendar-days icon-sec"></i>Tempistiche e fasi</h2>
+        <div class="timeline">
+          <div class="event">
+            <h5 class="mb-1"><span class="badge bg-success">Apertura sportello:</span> Sempre aperto, cut-off 1 ottobre 2025</h5>
+            <div class="text-muted">Domanda online tramite portale Funding & Tenders. Attenzione ai tempi per la short proposal (prima valutazione) e l’eventuale interview.</div>
+          </div>
+          <div class="event">
+            <h5 class="mb-1"><span class="badge bg-info text-dark">Step 1: Short proposal</span></h5>
+            <div class="text-muted">Abstract, slide deck e video pitch, valutazione rapida. Se approvato si accede alla full proposal.</div>
+          </div>
+          <div class="event">
+            <h5 class="mb-1"><span class="badge bg-warning text-dark">Step 2: Full proposal</span></h5>
+            <div class="text-muted">Business plan dettagliato, milestones, strategia scale-up. Se valutata positiva si passa all’intervista con gli esperti.</div>
+          </div>
+          <div class="event">
+            <h5 class="mb-1"><span class="badge bg-primary">Step 3: Interview e decisione finale</span></h5>
+            <div class="text-muted">Presentazione live, Q&A. Esito in 30 giorni circa dal colloquio.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="container"><div class="section-divider"></div></div>
+
+    <!-- PROCEDURA -->
+    <section>
+      <div class="container">
+        <h2 class="fw-bold text-success mb-3"><i class="fa-solid fa-diagram-project icon-sec"></i>Come partecipare</h2>
+        <ol class="fs-5">
+          <li><span class="icon-step"><i class="fa-solid fa-rocket"></i></span>Verifica requisiti e TRL del progetto</li>
+          <li><span class="icon-step"><i class="fa-solid fa-file-circle-check"></i></span>Prepara short proposal: abstract, pitch deck, video (tutto in inglese)</li>
+          <li><span class="icon-step"><i class="fa-solid fa-upload"></i></span>Invia domanda tramite Funding & Tenders Portal UE</li>
+          <li><span class="icon-step"><i class="fa-solid fa-handshake"></i></span>Se selezionato, prepara full proposal e intervista finale</li>
+          <li><span class="icon-step"><i class="fa-solid fa-euro-sign"></i></span>Ricevi grant/equity dopo valutazione e contrattualizzazione</li>
+        </ol>
+        <div class="note-legal">
+          Ogni step richiede precisione: errori, mancanze o inadempienze portano all’esclusione immediata.  
+          Consigliato supporto specialistico per la redazione e l’application!
+        </div>
+      </div>
+    </section>
+    <div class="container"><div class="section-divider"></div></div>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-hero py-5 mt-5 animate__animated animate__fadeInUp" style="border-top-left-radius: 2.2rem; border-top-right-radius: 2.2rem;">
+      <div class="container text-center text-white">
+        <div class="mb-3">
+          <i class="fa-solid fa-plug-circle-bolt fa-2x"></i>
+        </div>
+        <h2 class="fw-bold display-6 mb-2">Vuoi sapere se il tuo progetto è ammissibile?</h2>
+        <div class="fs-4 mb-4">Parla ora con un esperto: <span class="fw-bold text-warning" style="letter-spacing: 1px;">010 807 8800</span></div>
+        <a href="tel:+390108078800" class="btn btn-light btn-lg fw-bold px-5 py-3 shadow-lg" style="font-size: 1.5rem; border-radius: 2rem; letter-spacing: 1px;">
+          <i class="fa-solid fa-phone text-success me-2"></i> Chiama il 010 807 8800
+        </a>
+        <div class="mt-4" style="font-size:1.05rem;opacity:.86;">Numero dedicato esclusivamente al supporto EIC Accelerator</div>
+      </div>
+    </footer>
+  </body>
+
+  <!-- Banner Divider Start -->
+  <section class="banner-divider"></section>
+  <!-- Banner Divider End -->
+
+  <style>
+    .banner-divider {
+      width: 100%;
+      height: 280px;
+      background: url('img/wtc.png') center center / cover no-repeat;
+    }
+  </style>
+
+  <style>
+    .footer {
+      background: linear-gradient(135deg, #0a1530 0%, #1b2744 100%);
+      color: #e0e6f1;
+      font-size: 0.95rem;
+    }
+    .footer a {
+      color: #e0e6f1;
+      text-decoration: none;
+    }
+    .footer a:hover {
+      color: #00b5e2;
+    }
+    .footer .footer-top {
+      border-bottom: 1px solid rgba(245, 248, 253, 0.068);
+      padding-bottom: 2.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .footer .footer-logo h3 {
+      color:#8497bb ;
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+    .footer .footer-logo p {
+      line-height: 1.6;
+    }
+    .footer .footer-links h5 {
+      color:#8497bb ;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .footer .footer-links ul {
+      list-style: none;
+      padding: 0;
+    }
+    .footer .footer-links ul li {
+      margin-bottom: 0.6rem;
+    }
+    .footer .social-icons a {
+      display: inline-block;
+      width: 2.5rem;
+      height: 2.5rem;
+      line-height: 2.5rem;
+      border-radius: 50%;
+      background: rgba(224,230,241,0.1);
+      text-align: center;
+      margin-right: 0.6rem;
+    }
+    .footer .contact-info i {
+      font-size: 1.2rem;
+      width: 1.5rem;
+    }
+    .footer .newsletter input {
+      background: rgba(224,230,241,0.1);
+      border: none;
+      color: #fff;
+    }
+    .footer .newsletter .btn {
+      background: #95abd3;
+      border: none;
+    }
+    .footer .bottom-bar {
+      border-top: 1px solid rgba(224,230,241,0.2);
+      padding-top: 1rem;
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  </style>
+
+  <!-- Footer Start -->
+  <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+    <div class="container">
+      <div class="row footer-top">
+        <div class="col-md-6 col-lg-3 footer-logo">
+          <a href="index.html" class="p-0 text-white"><h3><i class="fas fa-rocket me-2"></i>Energelia</h3></a>
+          <p>Esperti in finanza agevolata dal 2006, accompagniamo la tua impresa dal bando fino alla rendicontazione.</p>
+          <div class="social-icons mt-3">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 footer-links">
+          <h5>Servizi</h5>
+          <ul>
+            <li><i class="fas fa-angle-right me-2"></i><a href="service.html">Ricerca Bandi</a></li>
+            <li><i class="fas fa-angle-right me-2"></i><a href="service.html#gestione">Gestione Pratiche</a></li>
+            <li><i class="fas fa-angle-right me-2"></i><a href="service.html#strategia">Consulenza Strategica</a></li>
+            <li><i class="fas fa-angle-right me-2"></i><a href="service.html#rendicontazione">Rendicontazione</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3 footer-links">
+          <h5>Risorse</h5>
+          <ul>
+            <li><i class="fas fa-angle-right me-2"></i><a href="bids.html">Elenco Bandi</a></li>
+            <li><i class="fas fa-angle-right me-2"></i><a href="FAQ.html">FAQ</a></li>
+            <li><i class="fas fa-angle-right me-2"></i><a href="blog.html">Blog & News</a></li>
+            <li><i class="fas fa-angle-right me-2"></i><a href="case-studies.html">Case Studies</a></li>
+          </ul>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <h5>Contatti</h5>
+          <div class="contact-info mb-4">
+            <p><i class="fas fa-map-marker-alt me-2"></i>Via De Marini 1 ; torre WTC Genova </p>
+            <p><i class="fas fa-envelope me-2"></i><a href="mailto:info@energelia.it">info@energelia.it</a></p>
+            <p><i class="fas fa-phone-alt me-2"></i><a href="tel:+0108078800"> 0108078800</a></p>
+          </div>
+          <div class="newsletter">
+            <h5>Newsletter</h5>
+            <form class="d-flex">
+              <input type="email" class="form-control me-2" placeholder="La tua email">
+              <button type="submit" class="btn text-white">Iscriviti</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row bottom-bar">
+        <div class="col-12">
+          <p class="mb-0">&copy; 2025 Energelia S.r.l. – All rights reserved  | <a href="privacy.html">Privacy Policy</a> | <a href="cookie.html">Cookie Policy</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer End -->
+
+  <!-- Back to Top -->
+  <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+  <!-- JavaScript Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+
+</html>
+
+<script>
+function filterCategory(category) {
+  const cards = document.querySelectorAll('.bandocard');
+  const buttons = document.querySelectorAll('.btn-group .btn');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    if (category === 'tutti' || card.classList.contains(category)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function filterBandi() {
+  const input = document.getElementById('searchBando').value.toLowerCase();
+  const cards = document.querySelectorAll('.bandocard');
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? 'block' : 'none';
+  });
+}
+</script>
+
+<script>
+  if (window.matchMedia("(max-width: 575.98px)").matches) {
+    let lastScroll = window.scrollY;
+    const navbar   = document.querySelector('.nav-bar');
+    navbar.classList.add('visible');
+
+    window.addEventListener('scroll', () => {
+      const current = window.scrollY;
+
+      if (current <= 10) {
+        navbar.classList.remove('hidden');
+        navbar.classList.add('visible');
+      }
+      else if (current > lastScroll + 5) {
+        navbar.classList.remove('visible');
+        navbar.classList.add('hidden');
+      }
+      else if (current < lastScroll - 5) {
+        navbar.classList.remove('hidden');
+        navbar.classList.add('visible');
+      }
+
+      lastScroll = current;
+    });
+  }
+</script>
