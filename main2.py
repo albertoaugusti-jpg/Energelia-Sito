@@ -1,4 +1,6 @@
 import os
+import re
+import html
 import psycopg2
 import feedparser
 from datetime import datetime, timedelta
@@ -374,6 +376,36 @@ def _clean_google_redirect(url):
     return url
 
 
+# Pattern usati per ripulire i titoli del feed Google Alerts
+_HTML_TAG_RE = re.compile(r'<[^>]+>')
+_GOOGLE_TRACK_RE = re.compile(
+    r'&(?:ct|cd|usg|echo|sa|ved|hl|gl|tbm|biw|bih)=[^&\s]*',
+    re.IGNORECASE
+)
+_WHITESPACE_RE = re.compile(r'\s+')
+
+
+def _clean_title(raw_title):
+    """Ripulisce il titolo di una voce Google Alerts:
+       - rimuove tag HTML (<b>...</b> usati per evidenziare le keyword)
+       - decodifica le entità HTML (&amp; -> &, &quot; -> ", ecc.)
+       - rimuove resti di parametri di tracciamento Google (&ct=, &echo=, ecc.)
+       - normalizza gli spazi multipli
+    """
+    if not raw_title:
+        return ''
+    # 1. Strip dei tag HTML (mantiene il testo interno)
+    cleaned = _HTML_TAG_RE.sub('', raw_title)
+    # 2. Decodifica entità HTML (può servire farlo due volte: il feed a volte fa doppio encoding)
+    cleaned = html.unescape(cleaned)
+    cleaned = html.unescape(cleaned)
+    # 3. Rimuove parametri tracciamento Google che a volte sbordano nei titoli
+    cleaned = _GOOGLE_TRACK_RE.sub('', cleaned)
+    # 4. Normalizza spazi
+    cleaned = _WHITESPACE_RE.sub(' ', cleaned).strip()
+    return cleaned
+
+
 def _fetch_news():
     """Legge l'RSS del Google Alert e popola la cache.
     Cache valida per NEWS_CACHE_DURATION minuti."""
@@ -386,7 +418,7 @@ def _fetch_news():
         feed = feedparser.parse(NEWS_RSS_URL)
         items = []
         for entry in feed.entries[:15]:
-            title = entry.get('title', '').strip()
+            title = _clean_title(entry.get('title', ''))
             link = _clean_google_redirect(entry.get('link', ''))
             published = entry.get('published', '') or entry.get('updated', '')
             if title and link:

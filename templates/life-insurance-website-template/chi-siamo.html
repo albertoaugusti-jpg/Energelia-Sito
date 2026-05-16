@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-67D2BL58Y9');
+    </script>
+
+    <meta charset="utf-8">
+    <title>Chi siamo | Energelia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="Conosci Energelia: dal 2006 al fianco delle imprese italiane per accedere a bandi, finanza agevolata e incentivi pubblici.">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+    <!-- Icon Fonts -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+
+    <!-- Bootstrap + Template -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <style>
+        .chi-siamo-hero {
+            background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
+            color: #fff;
+            padding: 5rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .chi-siamo-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                hsl(145, 45%, 35%) 0%, hsl(145, 45%, 35%) 33.33%,
+                #f5f5f0 33.33%, #f5f5f0 66.66%,
+                hsl(0, 70%, 45%) 66.66%, hsl(0, 70%, 45%) 100%);
+        }
+        .chi-siamo-hero h1 {
+            font-family: 'Source Serif 4', serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            margin-bottom: 1rem;
+        }
+        .chi-siamo-hero .lead {
+            font-size: 1.15rem;
+            opacity: 0.92;
+            max-width: 760px;
+        }
+        .chi-siamo-hero .badge-anni {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #f4d03f;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+
+        /* Video responsive 16:9 */
+        .video-wrap {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 14px;
+            box-shadow: 0 24px 60px rgba(10, 21, 48, 0.25);
+            background: #000;
+        }
+        .video-wrap iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: 0;
+        }
+        .video-section {
+            padding: 4rem 0;
+            background: #f5f7fa;
+        }
+        .video-section h2 {
+            font-family: 'Source Serif 4', serif;
+            color: #0a1530;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .video-section .subtitle {
+            text-align: center;
+            color: #5a6577;
+            margin-bottom: 2.5rem;
+            font-size: 1.05rem;
+        }
+
+        .valori-section {
+            padding: 4rem 0;
+            background: #fff;
+        }
+        .valori-section h2 {
+            font-family: 'Source Serif 4', serif;
+            color: #0a1530;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .valori-section p.intro {
+            color: #455062;
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 2.5rem;
+        }
+        .valore-card {
+            background: #fff;
+            border: 1px solid #e5e8ee;
+            border-radius: 14px;
+            padding: 1.75rem;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        .valore-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 42px rgba(10, 21, 48, 0.12);
+            border-color: #d4af37;
+        }
+        .valore-card .icon-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1a5276, #0a1530);
+            color: #f4d03f;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        .valore-card h5 {
+            color: #0a1530;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .valore-card p {
+            color: #5a6577;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .cta-banner {
+            background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
+            color: #fff;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        .cta-banner h3 {
+            font-family: 'Source Serif 4', serif;
+            margin-bottom: 0.75rem;
+        }
+        .cta-banner .btn-cta {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #0a1530;
+            font-weight: 700;
+            padding: 0.85rem 2rem;
+            border-radius: 30px;
+            border: none;
+            font-size: 1.05rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .cta-banner .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(212, 175, 55, 0.4);
+            color: #0a1530;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+    <!-- Hero -->
+    <section class="chi-siamo-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <span class="badge-anni"><i class="fas fa-award me-2"></i>Dal 2006 al fianco delle imprese</span>
+                    <h1>Chi siamo</h1>
+                    <p class="lead">
+                        Energelia accompagna le imprese italiane nell'accesso ai bandi pubblici, alla finanza agevolata e agli incentivi nazionali ed europei. Esperienza, metodo e una rete di professionisti per trasformare le opportunità in risultati.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="container">
+            <h2>Conosci Energelia</h2>
+            <p class="subtitle">Un breve video per raccontarti chi siamo e cosa facciamo per le imprese</p>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="video-wrap">
+                        <iframe
+                            src="https://www.youtube.com/embed/-0Hw0SGCNFg?rel=0&modestbranding=1"
+                            title="Energelia — Chi siamo"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Valori -->
+    <section class="valori-section">
+        <div class="container">
+            <div class="row align-items-start mb-4">
+                <div class="col-lg-6">
+                    <h2>La nostra missione</h2>
+                </div>
+                <div class="col-lg-6">
+                    <p class="intro">
+                        Aiutiamo le aziende a non perdere le opportunità di crescita che lo Stato e l'Europa mettono a disposizione. Lo facciamo con un metodo strutturato, fonti ufficiali verificate, e seguendo il cliente in ogni fase: dalla ricerca del bando giusto, alla presentazione della domanda, fino alla rendicontazione dei finanziamenti ottenuti.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="valore-card">
+                        <div class="icon-circle"><i class="fas fa-search"></i></div>
+                        <h5>Ricerca mirata</h5>
+                        <p>Selezioniamo solo i bandi davvero applicabili alla tua azienda, evitando di farti perdere tempo su opportunità non compatibili.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="valore-card">
+                        <div class="icon-circle"><i class="fas fa-file-signature"></i></div>
+                        <h5>Gestione pratica</h5>
+                        <p>Compiliamo, presentiamo e seguiamo per te la domanda. Niente moduli incomprensibili, niente scadenze perse.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="valore-card">
+                        <div class="icon-circle"><i class="fas fa-handshake"></i></div>
+                        <h5>Consulenza dedicata</h5>
+                        <p>Un referente per ogni cliente, sempre raggiungibile per chiarimenti, aggiornamenti e nuove opportunità.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="valore-card">
+                        <div class="icon-circle"><i class="fas fa-chart-line"></i></div>
+                        <h5>Rendicontazione</h5>
+                        <p>Ti seguiamo anche dopo l'approvazione: rendicontiamo le spese secondo le regole del bando, in tempo, senza errori.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+        <div class="container">
+            <h3>Vuoi sapere se la tua azienda può accedere a un bando attivo?</h3>
+            <p class="mb-0" style="opacity: 0.85;">Consulenza gratuita, senza impegno.</p>
+            <a href="tel:+390108078800" class="btn-cta">
+                <i class="fas fa-phone-alt me-2"></i>Chiamaci al 010 8078800
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'life-insurance-website-template/partials/footer.html' %}
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>
