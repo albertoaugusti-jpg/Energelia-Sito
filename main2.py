@@ -1,5 +1,8 @@
 import os
 import psycopg2
+import feedparser
+from datetime import datetime, timedelta
+from urllib.parse import urlparse, parse_qs, unquote
 from flask import Flask, render_template, abort, request, redirect, send_from_directory,jsonify
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -345,6 +348,68 @@ def get_admin_stats():
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
+
+# ==================== NEWS TICKER (Google Alerts RSS) ====================
+
+NEWS_RSS_URL = os.environ.get(
+    'NEWS_RSS_URL',
+    'https://www.google.com/alerts/feeds/13028029149471216123/13353592071105047130'
+)
+NEWS_CACHE = {'items': [], 'fetched_at': None}
+NEWS_CACHE_DURATION = timedelta(minutes=30)
+
+
+def _clean_google_redirect(url):
+    """Google Alerts wraps article links in a google.com/url?...&url=REAL redirect.
+    Extract the real article URL."""
+    try:
+        parsed = urlparse(url)
+        if 'google.com' in parsed.netloc and parsed.path.startswith('/url'):
+            params = parse_qs(parsed.query)
+            if 'url' in params:
+                return unquote(params['url'][0])
+    except Exception:
+        pass
+    return url
+
+
+def _fetch_news():
+    """Legge l'RSS del Google Alert e popola la cache.
+    Cache valida per NEWS_CACHE_DURATION minuti."""
+    now = datetime.now()
+    if (NEWS_CACHE['fetched_at'] is not None and
+            (now - NEWS_CACHE['fetched_at']) < NEWS_CACHE_DURATION):
+        return NEWS_CACHE['items']
+
+    try:
+        feed = feedparser.parse(NEWS_RSS_URL)
+        items = []
+        for entry in feed.entries[:15]:
+            title = entry.get('title', '').strip()
+            link = _clean_google_redirect(entry.get('link', ''))
+            published = entry.get('published', '') or entry.get('updated', '')
+            if title and link:
+                items.append({
+                    'title': title,
+                    'link': link,
+                    'published': published,
+                })
+        NEWS_CACHE['items'] = items
+        NEWS_CACHE['fetched_at'] = now
+    except Exception as e:
+        print(f"Errore fetch news RSS: {e}")
+        # Se non c'è cache precedente, restituiamo lista vuota
+        if NEWS_CACHE['fetched_at'] is None:
+            return []
+    return NEWS_CACHE['items']
+
+
+@app.route('/api/news')
+def api_news():
+    """Restituisce le ultime news dal feed Google Alert (formato JSON)."""
+    items = _fetch_news()
+    return jsonify({'items': items, 'count': len(items)})
 
 
 if __name__ == '__main__':
