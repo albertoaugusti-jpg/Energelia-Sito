@@ -373,6 +373,281 @@
       
 {% include 'life-insurance-website-template/partials/navbar.html' %}
 
+<!-- ====================  CTA RICERCA BANDI  ==================== -->
+<section class="cta-ricerca-bandi" aria-label="Ricerca bandi personalizzata">
+  <div class="container">
+    <div class="cta-ricerca-grid">
+      <div class="cta-ricerca-text">
+        <span class="cta-ricerca-badge">
+          <i class="fas fa-bullseye me-2"></i>RICERCA PERSONALIZZATA
+        </span>
+        <h2 class="cta-ricerca-title">
+          Cerchi il bando giusto per la tua azienda?
+        </h2>
+        <p class="cta-ricerca-sub">
+          Te lo troviamo noi. Ricerca dedicata, gratuita, senza impegno.
+        </p>
+        <ul class="cta-ricerca-list">
+          <li><i class="fas fa-check-circle"></i>Analisi della tua azienda e dei settori finanziabili</li>
+          <li><i class="fas fa-check-circle"></i>Selezione dei bandi compatibili attivi oggi</li>
+          <li><i class="fas fa-check-circle"></i>Ti ricontattiamo entro 48 ore lavorative</li>
+        </ul>
+      </div>
+      <div class="cta-ricerca-form-wrap">
+        <form id="ctaRicercaForm" class="cta-ricerca-form" novalidate>
+          <h3 class="cta-form-title">Richiedi la tua ricerca</h3>
+          <div class="cta-field">
+            <label for="ctaRicercaEmail">Email aziendale</label>
+            <input type="email" id="ctaRicercaEmail" name="email" placeholder="nome@azienda.it" required autocomplete="email">
+          </div>
+          <div class="cta-field">
+            <label for="ctaRicercaPhone">Telefono</label>
+            <input type="tel" id="ctaRicercaPhone" name="phone" placeholder="010 1234567" required autocomplete="tel">
+          </div>
+          <button type="submit" id="ctaRicercaSubmit" class="cta-submit-btn">
+            <span class="cta-btn-label"><i class="fas fa-paper-plane me-2"></i>Richiedimi una ricerca</span>
+            <span class="cta-btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin me-2"></i>Invio in corso…</span>
+          </button>
+          <p class="cta-privacy-note">
+            <i class="fas fa-shield-alt me-1"></i>I tuoi dati sono protetti. Vedi la <a href="/privacy-policy">Privacy Policy</a>.
+          </p>
+          <div class="cta-form-success" id="ctaRicercaSuccess" style="display:none;">
+            <i class="fas fa-check-circle me-2"></i><strong>Richiesta inviata!</strong> Ti ricontatteremo entro 48 ore.
+          </div>
+          <div class="cta-form-error" id="ctaRicercaError" style="display:none;">
+            <i class="fas fa-exclamation-triangle me-2"></i><span id="ctaRicercaErrorMsg">Si è verificato un errore. Riprova.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.cta-ricerca-bandi {
+  background: linear-gradient(135deg, #0a1530 0%, #1a5276 60%, #1f6694 100%);
+  color: #fff;
+  padding: 3.5rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid #d4af37;
+}
+.cta-ricerca-bandi::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0) 70%);
+  pointer-events: none;
+}
+.cta-ricerca-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.cta-ricerca-text { max-width: 600px; }
+.cta-ricerca-badge {
+  display: inline-block;
+  background: rgba(212,175,55,0.18);
+  border: 1px solid rgba(212,175,55,0.5);
+  color: #f4d03f;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+}
+.cta-ricerca-title {
+  font-family: 'Source Serif 4', 'Georgia', serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+.cta-ricerca-sub {
+  font-size: 1.05rem;
+  opacity: 0.92;
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+.cta-ricerca-list { list-style: none; padding: 0; margin: 0; }
+.cta-ricerca-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.92);
+}
+.cta-ricerca-list i {
+  color: #f4d03f;
+  font-size: 1rem;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.cta-ricerca-form-wrap { position: relative; }
+.cta-ricerca-form {
+  background: #fff;
+  color: #0a1530;
+  border-radius: 18px;
+  padding: 1.8rem 1.6rem;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+.cta-form-title {
+  font-family: 'Source Serif 4', 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #0a1530;
+  margin: 0 0 1.1rem;
+  text-align: center;
+}
+.cta-field { margin-bottom: 0.85rem; }
+.cta-field label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #5a6577;
+  margin-bottom: 4px;
+}
+.cta-field input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #d6dde7;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #0a1530;
+  background: #f7f9fc;
+  transition: all 0.2s ease;
+}
+.cta-field input:focus {
+  outline: none;
+  border-color: #1a5276;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,82,118,0.12);
+}
+.cta-submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #0a1530;
+  border: none;
+  border-radius: 30px;
+  padding: 13px 20px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.4rem;
+  transition: all 0.25s ease;
+}
+.cta-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(212,175,55,0.45);
+}
+.cta-submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.cta-privacy-note {
+  font-size: 0.78rem;
+  color: #6b7689;
+  text-align: center;
+  margin: 0.8rem 0 0;
+}
+.cta-privacy-note a { color: #1a5276; text-decoration: underline; }
+.cta-form-success, .cta-form-error {
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-top: 0.9rem;
+}
+.cta-form-success {
+  background: #e8f5ee;
+  color: #1e7e3a;
+  border: 1px solid #b6dec2;
+}
+.cta-form-error {
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid #f5c2bd;
+}
+
+@media (max-width: 991.98px) {
+  .cta-ricerca-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+}
+@media (max-width: 575.98px) {
+  .cta-ricerca-bandi { padding: 2.5rem 0 2.2rem; }
+  .cta-ricerca-title { font-size: 1.5rem; }
+  .cta-ricerca-list li { font-size: 0.9rem; }
+}
+</style>
+
+<script>
+(function() {
+  var form = document.getElementById('ctaRicercaForm');
+  if (!form) return;
+  var submit = document.getElementById('ctaRicercaSubmit');
+  var label = form.querySelector('.cta-btn-label');
+  var loading = form.querySelector('.cta-btn-loading');
+  var success = document.getElementById('ctaRicercaSuccess');
+  var error = document.getElementById('ctaRicercaError');
+  var errorMsg = document.getElementById('ctaRicercaErrorMsg');
+
+  function setLoading(on) {
+    if (on) { label.style.display = 'none'; loading.style.display = 'inline-block'; submit.disabled = true; }
+    else { label.style.display = 'inline-block'; loading.style.display = 'none'; submit.disabled = false; }
+  }
+  function showError(msg) {
+    success.style.display = 'none';
+    errorMsg.textContent = msg || 'Si è verificato un errore. Riprova.';
+    error.style.display = 'block';
+  }
+  function showSuccess() {
+    error.style.display = 'none';
+    success.style.display = 'block';
+    form.reset();
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('ctaRicercaEmail').value.trim();
+    var phone = document.getElementById('ctaRicercaPhone').value.trim();
+    if (!email || email.indexOf('@') === -1) { showError('Inserisci un indirizzo email valido.'); return; }
+    if (!phone || phone.length < 6) { showError('Inserisci un numero di telefono valido.'); return; }
+
+    setLoading(true);
+    fetch('/api/consultation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, phone: phone })
+    })
+    .then(function(r) { return r.json().then(function(d) { return { status: r.status, data: d }; }); })
+    .then(function(res) {
+      setLoading(false);
+      if (res.status === 200 && res.data && res.data.success) {
+        showSuccess();
+        if (typeof gtag === 'function') {
+          gtag('event', 'lead_ricerca_bandi', { 'event_category': 'CTA', 'event_label': 'home_ricerca_bandi' });
+        }
+      } else {
+        showError((res.data && res.data.error) || 'Si è verificato un errore. Riprova.');
+      }
+    })
+    .catch(function() {
+      setLoading(false);
+      showError('Connessione non disponibile. Riprova fra poco.');
+    });
+  });
+})();
+</script>
+<!-- ==================== FINE CTA RICERCA BANDI ==================== -->
+
 <style>
   /* Logo ingrandito */
 
