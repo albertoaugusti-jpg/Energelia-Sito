@@ -1359,90 +1359,112 @@
 <!-- Carousel End -->
 
 <!-- ============================================== -->
-<!-- SEZIONE VANTAGGI - 10 MOTIVI CON FOTO OGNI 3 -->
+<!-- SEZIONE PERCORSO 10 TAPPE + PROFILI CLIENTI    -->
 <!-- ============================================== -->
-<section class="vantaggi-section">
+<section class="percorso-section">
   <div class="container">
-    <div class="vantaggi-header text-center">
-      <span class="vantaggi-badge">PERCHÉ SCEGLIERE ENERGELIA</span>
-      <h2 class="vantaggi-main-title">I nostri clienti ci hanno scelto per 10 <span style="color: #d4af37;">MOTIVI</span></h2>
-      <p class="vantaggi-subtitle">Trasformiamo la complessità dei bandi in risultati concreti per la tua azienda</p>
+
+    <!-- Header -->
+    <div class="percorso-header">
+      <span class="percorso-badge">PERCHÉ SCEGLIERE ENERGELIA</span>
+      <h2 class="percorso-title">I nostri clienti ci hanno scelto per <span class="gold">10 motivi</span></h2>
+      <p class="percorso-subtitle">Trasformiamo la complessità dei bandi in risultati concreti per la tua azienda.</p>
     </div>
 
-    <!-- BLOCCO 1: Motivi 01-03 + Foto -->
-    <div class="motivi-block">
-      <div class="motivi-list">
-        <div class="motivo-item">
-          <span class="motivo-number">01</span>
-          <h3 class="motivo-title">Zero stress, <span class="gold-text">pensiamo a tutto noi</span></h3>
-          <p class="motivo-desc">La burocrazia dei bandi è <strong>complessa e stressante</strong>. Noi gestiamo tutto: <span class="gold-text">dalla ricerca del bando perfetto fino all'erogazione</span>. Tu ci dai <strong>dati, preventivi e obiettivo</strong>. Fine.</p>
+    <!-- 3 Profili cliente tipo -->
+    <div class="profili-grid">
+      <div class="profilo-card">
+        <div class="profilo-photo">
+          <img src="{{ url_for('static', filename='img/ingegnere.png') }}" alt="Profilo cliente: imprenditore manifatturiero">
         </div>
-        <div class="motivo-item">
-          <span class="motivo-number">02</span>
-          <h3 class="motivo-title">Verifichiamo <span class="gold-text">PRIMA</span> di partire</h3>
-          <p class="motivo-desc">Facciamo un <span class="gold-text">controllo di ammissibilità approfondito</span> PRIMA di iniziare. Se il bando non è adatto a te, <strong>non partiamo nemmeno</strong>.</p>
-        </div>
-        <div class="motivo-item">
-          <span class="motivo-number">03</span>
-          <h3 class="motivo-title">Seguiamo fino <span class="gold-text">all'erogazione</span></h3>
-          <p class="motivo-desc">Gestiamo l'intera istruttoria, rispondiamo alle richieste di integrazione e prepariamo la rendicontazione. <span class="gold-text">Il nostro lavoro finisce quando il contributo arriva sul tuo conto</span>.</p>
-        </div>
+        <div class="profilo-label">Profilo cliente tipico</div>
+        <div class="profilo-name">Marco</div>
+        <div class="profilo-role">Imprenditore manifatturiero</div>
       </div>
-      <div class="motivi-image">
-        <img src="{{ url_for('static', filename='img/ingegnere.png') }}" alt="Consulenza finanziamenti">
+      <div class="profilo-card">
+        <div class="profilo-photo">
+          <img src="{{ url_for('static', filename='img/imprenditrice.png') }}" alt="Profilo cliente: titolare PMI agricola">
+        </div>
+        <div class="profilo-label">Profilo cliente tipico</div>
+        <div class="profilo-name">Giulia</div>
+        <div class="profilo-role">Titolare PMI agricola</div>
       </div>
-    </div>
-
-    <!-- BLOCCO 2: Motivi 04-06 + Foto -->
-    <div class="motivi-block motivi-block-reverse">
-      <div class="motivi-list">
-        <div class="motivo-item">
-          <span class="motivo-number">04</span>
-          <h3 class="motivo-title">I nostri <span class="gold-text">interessi coincidono</span> con i tuoi</h3>
-          <p class="motivo-desc">Guadagniamo <span class="gold-text">solo quando tu ottieni risultati</span>. Il nostro successo è legato al tuo: siamo partner, non semplici fornitori.</p>
+      <div class="profilo-card">
+        <div class="profilo-photo">
+          <img src="{{ url_for('static', filename='img/donna-negozio.png') }}" alt="Profilo cliente: esercente commercio al dettaglio">
         </div>
-        <div class="motivo-item">
-          <span class="motivo-number">05</span>
-          <h3 class="motivo-title">Comunicazione <span class="gold-text">chiara</span>, sempre</h3>
-          <p class="motivo-desc">Ti teniamo <strong>aggiornato ad ogni passo</strong> con comunicazioni <span class="gold-text">chiare e tempestive</span>. Sai sempre a che punto siamo.</p>
-        </div>
-        <div class="motivo-item">
-          <span class="motivo-number">06</span>
-          <h3 class="motivo-title"><span class="gold-text">+1 milione €</span> ottenuti nel 2025</h3>
-          <p class="motivo-desc">Non promettiamo, <strong>dimostriamo</strong>. Nel solo 2025 abbiamo fatto ottenere ai nostri clienti <span class="gold-text">oltre 1.000.000€ in finanziamenti</span>.</p>
-        </div>
-      </div>
-      <div class="motivi-image">
-        <img src="{{ url_for('static', filename='img/imprenditrice.png') }}" alt="Documenti bandi">
+        <div class="profilo-label">Profilo cliente tipico</div>
+        <div class="profilo-name">Sara</div>
+        <div class="profilo-role">Esercente commercio al dettaglio</div>
       </div>
     </div>
 
-    <!-- BLOCCO 3: Motivi 07-10 + Foto -->
-    <div class="motivi-block">
-      <div class="motivi-list">
-        <div class="motivo-item">
-          <span class="motivo-number">07</span>
-          <h3 class="motivo-title">Esperienza su <span class="gold-text">ogni livello</span></h3>
-          <p class="motivo-desc">Bandi regionali, nazionali ed europei: <strong>li conosciamo tutti</strong>. Sappiamo quali funzionano e <span class="gold-text">quali evitare</span>.</p>
-        </div>
-        <div class="motivo-item">
-          <span class="motivo-number">08</span>
-          <h3 class="motivo-title">Team <span class="gold-text">multidisciplinare</span></h3>
-          <p class="motivo-desc">Tecnici, commercialisti, esperti legali: <strong>un team completo</strong> per coprire ogni aspetto della tua domanda. <span class="gold-text">Nessuna sorpresa</span>.</p>
-        </div>
-        <div class="motivo-item">
-          <span class="motivo-number">09</span>
-          <h3 class="motivo-title">Monitoraggio <span class="gold-text">costante</span></h3>
-          <p class="motivo-desc">Monitoriamo continuamente i nuovi bandi. <strong>Quando esce un'opportunità</strong> adatta a te, <span class="gold-text">ti avvisiamo subito</span>.</p>
-        </div>
-        <div class="motivo-item">
-          <span class="motivo-number">10</span>
-          <h3 class="motivo-title">Nessun anticipo, <span class="gold-text">rischi minimi</span></h3>
-          <p class="motivo-desc">Non chiediamo anticipi onerosi. <strong>Partiamo con costi minimi</strong> e il grosso della fee arriva <span class="gold-text">solo a risultato ottenuto</span>. Zero rischi per te.</p>
-        </div>
-      </div>
-      <div class="motivi-image">
-        <img src="{{ url_for('static', filename='img/donna-negozio.png') }}" alt="Team esperti">
+    <!-- Separatore "Il nostro percorso" -->
+    <div class="percorso-intro">
+      <span class="percorso-intro-label">IL NOSTRO PERCORSO</span>
+      <h3>Dalla prima telefonata all'erogazione</h3>
+      <p>Passa il mouse su ogni tappa per scoprire come lavoriamo, passo dopo passo.</p>
+    </div>
+
+    <!-- Zigzag con 10 tappe -->
+    <div class="percorso-zigzag" id="percorsoZigzag">
+      <!-- Tappa 1 -->
+      <button type="button" class="tappa tappa-up" data-num="01" data-title="Zero stress" data-text="La burocrazia dei bandi è complessa e stressante. Noi gestiamo tutto: dalla ricerca del bando perfetto fino all'erogazione. Tu ci dai dati, preventivi e obiettivo. Fine.">
+        <span class="tappa-num">01</span>
+        <span class="tappa-label">Zero stress</span>
+      </button>
+      <!-- Tappa 2 -->
+      <button type="button" class="tappa tappa-down" data-num="02" data-title="Verifica PRIMA" data-text="Facciamo un controllo di ammissibilità approfondito PRIMA di iniziare. Se il bando non è adatto a te, non partiamo nemmeno. Niente illusioni, niente tempo perso.">
+        <span class="tappa-num">02</span>
+        <span class="tappa-label">Verifica prima</span>
+      </button>
+      <!-- Tappa 3 -->
+      <button type="button" class="tappa tappa-up" data-num="03" data-title="Fino all'erogazione" data-text="Gestiamo l'intera istruttoria, rispondiamo alle richieste di integrazione e prepariamo la rendicontazione. Il nostro lavoro finisce quando il contributo arriva sul tuo conto.">
+        <span class="tappa-num">03</span>
+        <span class="tappa-label">Fino all'erogazione</span>
+      </button>
+      <!-- Tappa 4 -->
+      <button type="button" class="tappa tappa-down" data-num="04" data-title="Interessi allineati" data-text="Guadagniamo solo quando tu ottieni risultati. Il nostro successo è legato al tuo: siamo partner, non semplici fornitori.">
+        <span class="tappa-num">04</span>
+        <span class="tappa-label">Interessi allineati</span>
+      </button>
+      <!-- Tappa 5 -->
+      <button type="button" class="tappa tappa-up" data-num="05" data-title="Comunicazione chiara" data-text="Ti teniamo aggiornato ad ogni passo con comunicazioni chiare e tempestive. Sai sempre a che punto siamo, senza dover inseguire nessuno.">
+        <span class="tappa-num">05</span>
+        <span class="tappa-label">Comunicazione chiara</span>
+      </button>
+      <!-- Tappa 6 -->
+      <button type="button" class="tappa tappa-down" data-num="06" data-title="+1 milione € nel 2025" data-text="Non promettiamo, dimostriamo. Nel solo 2025 abbiamo fatto ottenere ai nostri clienti oltre 1.000.000€ in finanziamenti pubblici.">
+        <span class="tappa-num">06</span>
+        <span class="tappa-label">+1M€ ottenuti</span>
+      </button>
+      <!-- Tappa 7 -->
+      <button type="button" class="tappa tappa-up" data-num="07" data-title="Esperienza su ogni livello" data-text="Bandi regionali, nazionali ed europei: li conosciamo tutti. Sappiamo quali funzionano e quali evitare, in base al tuo settore e alla tua dimensione.">
+        <span class="tappa-num">07</span>
+        <span class="tappa-label">Ogni livello</span>
+      </button>
+      <!-- Tappa 8 -->
+      <button type="button" class="tappa tappa-down" data-num="08" data-title="Team multidisciplinare" data-text="Tecnici, commercialisti, esperti legali: un team completo per coprire ogni aspetto della tua domanda. Nessuna sorpresa burocratica all'ultimo momento.">
+        <span class="tappa-num">08</span>
+        <span class="tappa-label">Team completo</span>
+      </button>
+      <!-- Tappa 9 -->
+      <button type="button" class="tappa tappa-up" data-num="09" data-title="Monitoraggio costante" data-text="Monitoriamo continuamente i nuovi bandi in uscita. Quando esce un'opportunità adatta a te, ti avvisiamo subito — prima che scada.">
+        <span class="tappa-num">09</span>
+        <span class="tappa-label">Monitoraggio</span>
+      </button>
+      <!-- Tappa 10 -->
+      <button type="button" class="tappa tappa-down tappa-final" data-num="10" data-title="Nessun anticipo, rischi minimi" data-text="Non chiediamo anticipi onerosi. Partiamo con costi minimi e il grosso della fee arriva solo a risultato ottenuto. Zero rischi per te.">
+        <span class="tappa-num">10</span>
+        <span class="tappa-label">Nessun anticipo</span>
+      </button>
+
+      <!-- Card popup descrizione -->
+      <div class="tappa-card" id="tappaCard" role="dialog" aria-hidden="true">
+        <button type="button" class="tappa-card-close" id="tappaCardClose" aria-label="Chiudi">&times;</button>
+        <span class="tappa-card-num" id="tappaCardNum">01</span>
+        <h4 class="tappa-card-title" id="tappaCardTitle"></h4>
+        <p class="tappa-card-text" id="tappaCardText"></p>
       </div>
     </div>
 
@@ -1604,6 +1626,406 @@
   .motivo-desc { font-size: 0.95rem; }
 }
 </style>
+
+<!-- ============================================== -->
+<!-- CSS + JS PERCORSO 10 TAPPE                     -->
+<!-- ============================================== -->
+<style>
+.percorso-section {
+  padding: 6rem 0 5rem;
+  background:
+    radial-gradient(ellipse at 80% 10%, rgba(212,175,55,0.08), transparent 60%),
+    radial-gradient(ellipse at 10% 90%, rgba(26,82,118,0.07), transparent 60%),
+    #f7f9fc;
+  position: relative;
+  overflow: hidden;
+}
+.percorso-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.percorso-badge {
+  display: inline-block;
+  background: rgba(212,175,55,0.15);
+  color: #b8941f;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.percorso-title {
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  color: #0a1530;
+  font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+  margin-bottom: 0.6rem;
+  line-height: 1.2;
+}
+.percorso-title .gold { color: #d4af37; }
+.percorso-subtitle {
+  font-size: 1.08rem;
+  color: #5a6577;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ===== PROFILI CLIENTE ===== */
+.profili-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 920px;
+  margin: 0 auto 4rem;
+}
+.profilo-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 1.6rem 1.2rem;
+  text-align: center;
+  border: 1px solid #e5e8ee;
+  box-shadow: 0 10px 28px rgba(10,21,48,0.06);
+  transition: all 0.3s ease;
+}
+.profilo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 50px rgba(10,21,48,0.13);
+  border-color: #d4af37;
+}
+.profilo-photo {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  border: 3px solid #f4d03f;
+  box-shadow: 0 8px 20px rgba(212,175,55,0.25);
+  background: #f7f9fc;
+}
+.profilo-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.profilo-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #b8941f;
+  margin-bottom: 0.4rem;
+}
+.profilo-name {
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  color: #0a1530;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+}
+.profilo-role {
+  font-size: 0.92rem;
+  color: #5a6577;
+}
+
+/* ===== Separatore "Il nostro percorso" ===== */
+.percorso-intro {
+  text-align: center;
+  margin: 0 auto 3rem;
+  max-width: 600px;
+}
+.percorso-intro-label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #1a5276;
+  background: rgba(26,82,118,0.08);
+  padding: 6px 16px;
+  border-radius: 30px;
+  margin-bottom: 0.9rem;
+}
+.percorso-intro h3 {
+  font-family: 'Source Serif 4', serif;
+  color: #0a1530;
+  font-weight: 700;
+  font-size: 1.55rem;
+  margin-bottom: 0.5rem;
+}
+.percorso-intro p {
+  color: #5a6577;
+  font-size: 0.98rem;
+  margin: 0;
+}
+
+/* ===== ZIGZAG PERCORSO ===== */
+.percorso-zigzag {
+  position: relative;
+  padding: 4rem 0 3rem;
+  min-height: 280px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  align-items: center;
+  gap: 0;
+}
+/* Linea SVG del percorso (sfondo) */
+.percorso-zigzag::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 60%;
+  transform: translateY(-50%);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 200' preserveAspectRatio='none'><path d='M 0,100 Q 50,20 100,100 T 200,100 T 300,100 T 400,100 T 500,100 T 600,100 T 700,100 T 800,100 T 900,100 T 1000,100' stroke='%23d4af37' stroke-width='3' stroke-dasharray='6 6' fill='none' opacity='0.55'/></svg>");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+}
+.tappa {
+  position: relative;
+  z-index: 2;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  --tappa-color: #1a5276;
+}
+.tappa:focus { outline: 2px solid #f4d03f; outline-offset: 6px; border-radius: 8px; }
+/* posizionamento alternato su/giù */
+.tappa-up   { align-self: start; padding-top: 10px; }
+.tappa-down { align-self: end;   padding-bottom: 10px; }
+
+/* Colori graduati blu navy → oro lungo il percorso */
+.tappa[data-num="01"] { --tappa-color: #0a1530; }
+.tappa[data-num="02"] { --tappa-color: #142a55; }
+.tappa[data-num="03"] { --tappa-color: #1a4480; }
+.tappa[data-num="04"] { --tappa-color: #1a5d99; }
+.tappa[data-num="05"] { --tappa-color: #2580a8; }
+.tappa[data-num="06"] { --tappa-color: #3da0a8; }
+.tappa[data-num="07"] { --tappa-color: #6ea876; }
+.tappa[data-num="08"] { --tappa-color: #b8941f; }
+.tappa[data-num="09"] { --tappa-color: #d4af37; }
+.tappa[data-num="10"] { --tappa-color: #f4d03f; }
+
+.tappa-num {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--tappa-color);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.05rem;
+  border: 4px solid #fff;
+  box-shadow:
+    0 0 0 3px var(--tappa-color),
+    0 8px 20px rgba(0,0,0,0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.tappa:hover .tappa-num,
+.tappa.is-active .tappa-num {
+  transform: scale(1.18);
+  box-shadow:
+    0 0 0 3px var(--tappa-color),
+    0 14px 32px rgba(0,0,0,0.28);
+}
+.tappa-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0a1530;
+  max-width: 95px;
+  line-height: 1.25;
+  letter-spacing: 0.2px;
+}
+.tappa-final .tappa-num {
+  animation: tappa-final-pulse 2s ease-in-out infinite;
+}
+@keyframes tappa-final-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.12); }
+}
+
+/* CARD POPUP DESCRIZIONE TAPPA */
+.tappa-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: min(420px, 92vw);
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px 26px 20px;
+  box-shadow: 0 28px 70px rgba(10,21,48,0.32);
+  border-top: 5px solid #d4af37;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+.tappa-card.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+.tappa-card-num {
+  display: inline-block;
+  background: linear-gradient(135deg, #1a5276, #0a1530);
+  color: #f4d03f;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 1px;
+}
+.tappa-card-title {
+  font-family: 'Source Serif 4', serif;
+  color: #0a1530;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin: 0 0 0.6rem;
+}
+.tappa-card-text {
+  color: #455062;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.tappa-card-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: rgba(10,21,48,0.6);
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+.tappa-card-close:hover { color: #0a1530; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 991.98px) {
+  .profili-grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+  }
+  /* Su tablet/mobile: percorso diventa lista verticale */
+  .percorso-zigzag {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 2rem 0;
+    gap: 1.2rem;
+  }
+  .percorso-zigzag::before { display: none; }
+  .tappa {
+    flex-direction: row;
+    text-align: left;
+    align-self: stretch !important;
+    padding: 0 !important;
+    gap: 16px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 16px !important;
+    box-shadow: 0 8px 22px rgba(10,21,48,0.06);
+    border-left: 5px solid var(--tappa-color);
+  }
+  .tappa-num { width: 44px; height: 44px; font-size: 0.95rem; flex-shrink: 0; }
+  .tappa-label {
+    max-width: none;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 575.98px) {
+  .percorso-section { padding: 4rem 0 3rem; }
+  .percorso-title { font-size: 1.6rem; }
+  .percorso-intro h3 { font-size: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tappa-card { transition: opacity 0.2s; }
+  .tappa-final .tappa-num { animation: none; }
+}
+</style>
+
+<script>
+(function() {
+  var tappe   = document.querySelectorAll('#percorsoZigzag .tappa');
+  var card    = document.getElementById('tappaCard');
+  var numEl   = document.getElementById('tappaCardNum');
+  var titleEl = document.getElementById('tappaCardTitle');
+  var textEl  = document.getElementById('tappaCardText');
+  var closeBtn = document.getElementById('tappaCardClose');
+  if (!tappe.length || !card) return;
+
+  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  function open(t) {
+    numEl.textContent   = t.dataset.num   || '';
+    titleEl.textContent = t.dataset.title || '';
+    textEl.textContent  = t.dataset.text  || '';
+    card.classList.add('is-open');
+    card.setAttribute('aria-hidden', 'false');
+    tappe.forEach(function(x) { x.classList.remove('is-active'); });
+    t.classList.add('is-active');
+  }
+  function close() {
+    card.classList.remove('is-open');
+    card.setAttribute('aria-hidden', 'true');
+    tappe.forEach(function(x) { x.classList.remove('is-active'); });
+  }
+
+  tappe.forEach(function(t) {
+    t.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (t.classList.contains('is-active')) {
+        close();
+      } else {
+        open(t);
+      }
+    });
+    if (!isTouch) {
+      t.addEventListener('mouseenter', function() { open(t); });
+    }
+  });
+
+  closeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    close();
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.tappa') && !e.target.closest('.tappa-card')) {
+      close();
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') close();
+  });
+
+  // Su desktop chiudi quando esci dall'area del percorso
+  if (!isTouch) {
+    var area = document.getElementById('percorsoZigzag');
+    if (area) area.addEventListener('mouseleave', function() { close(); });
+  }
+})();
+</script>
 
 
 <!-- ============================================== -->
