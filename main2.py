@@ -63,6 +63,16 @@ def render_page(page):
     return render_template(f"life-insurance-website-template/{target}")
 
 
+# ✅ Favicon servita direttamente alla radice (richiesta automatica dai browser)
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(
+        os.path.join(app.static_folder, 'img'),
+        'favicon.ico',
+        mimetype='image/vnd.microsoft.icon'
+    )
+
+
 # ✅ Route per servire i file statici in modo trasparente
 @app.route('/<path:filename>')
 def static_files(filename):

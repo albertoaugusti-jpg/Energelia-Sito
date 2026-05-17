@@ -68,6 +68,13 @@
 
         <!-- Template Stylesheet -->
         <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <!-- Favicon Energelia -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
     </head>
 
 <style>
@@ -2991,108 +2998,4 @@
             const submitBtn = document.getElementById('consultation-submit-btn');
             
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Invio...';
-
-            try {
-              const response = await fetch('/api/consultation', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: email, phone: phone })
-              });
-
-              const data = await response.json();
-              
-              if (data.success) {
-                document.getElementById('consultation-form-wrap').style.display = 'none';
-                document.getElementById('consultation-success').style.display = 'block';
-              } else {
-                alert('Errore: ' + (data.error || 'Riprova più tardi'));
-              }
-            } catch (error) {
-              alert('Errore di connessione. Riprova.');
-            }
-
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Richiedi Consulenza';
-          }
-
-          document.getElementById('consultation-popup').addEventListener('click', function(e) {
-            if (e.target === this) closeConsultationPopup();
-          });
-        </script>
-        
-            </body>
-
-</html>
-
-<script>
-function filterCategory(category) {
-  const cards = document.querySelectorAll('.bandocard');
-  const buttons = document.querySelectorAll('.btn-group .btn');
-
-  buttons.forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-
-  cards.forEach(card => {
-    if (category === 'tutti' || card.classList.contains(category)) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-
-function filterBandi() {
-  const input = document.getElementById('searchBando').value.toLowerCase();
-  const cards = document.querySelectorAll('.bandocard');
-
-  cards.forEach(card => {
-    const text = card.innerText.toLowerCase();
-    card.style.display = text.includes(input) ? 'block' : 'none';
-  });
-}
-
-
-
-  
-</script>
-<script>
-  if (window.matchMedia("(max-width: 575.98px)").matches) {
-    const navbar = document.querySelector('.nav-bar');
-    let lastY = window.scrollY;
-
-    // Stato iniziale
-    if (lastY === 0) {
-      navbar.classList.add('at-top', 'visible');
-    } else {
-      navbar.classList.add('visible');
-    }
-
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-
-      if (y === 0) {
-        // In cima: navbar statica, SENZA visible/hidden per evitare transizioni
-        navbar.classList.add('at-top');
-        navbar.classList.remove('visible','hidden');
-      } else {
-        // dopo i primi scroll: fixed + hide/show come prima
-        navbar.classList.remove('at-top');
-        if (y > lastY + 5) {
-          navbar.classList.add('hidden');
-          navbar.classList.remove('visible');
-        } else if (y < lastY - 5) {
-          navbar.classList.add('visible');
-          navbar.classList.remove('hidden');
-        }
-      }
-
-      lastY = y;
-    });
-  }
-
-  
-</script>
-
-
-
+    
