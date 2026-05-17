@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'wait_for_update': 500
+      });
+      try {
+        if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
+          gtag('consent', 'update', {
+            'ad_storage': 'granted',
+            'analytics_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted'
+          });
+        }
+      } catch(e) {}
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-67D2BL58Y9');
+    </script>
+
+    <meta charset="utf-8">
+    <title>Fotovoltaico chiavi in mano | Energelia Energy Solutions</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="Energelia Energy Solutions: impianti fotovoltaici chiavi in mano per imprese e privati. Progettazione, installazione, gestione operativa. Acquisto diretto, finanziato o noleggio operativo. Parte della rete Enercubica.">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&display=swap" rel="stylesheet">
+
+    <!-- Icon Fonts -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+
+    <!-- Bootstrap + Template -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <style>
+        /* ===== HERO ===== */
+        .fv-hero {
+            background:
+              radial-gradient(ellipse at 80% 20%, rgba(255, 200, 80, 0.18), transparent 55%),
+              linear-gradient(135deg, #0a1530 0%, #1a5276 70%, #1f6694 100%);
+            color: #fff;
+            padding: 5rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .fv-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                hsl(145, 45%, 35%) 0%, hsl(145, 45%, 35%) 33.33%,
+                #f5f5f0 33.33%, #f5f5f0 66.66%,
+                hsl(0, 70%, 45%) 66.66%, hsl(0, 70%, 45%) 100%);
+        }
+        .fv-hero-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 3rem;
+            align-items: center;
+        }
+        .fv-hero-text { max-width: 700px; }
+        .fv-badge {
+            display: inline-block;
+            background: rgba(244, 208, 63, 0.15);
+            border: 1px solid rgba(244, 208, 63, 0.4);
+            color: #f4d03f;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+        .fv-hero h1 {
+            font-family: 'Source Serif 4', serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+        .fv-hero h1 .gold { color: #f4d03f; }
+        .fv-hero p.lead {
+            font-size: 1.15rem;
+            opacity: 0.92;
+            margin-bottom: 1.6rem;
+        }
+        .fv-hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .fv-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .fv-btn-primary {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #0a1530;
+        }
+        .fv-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(244, 208, 63, 0.45);
+            color: #0a1530;
+        }
+        .fv-btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 1.5px solid rgba(255,255,255,0.55);
+        }
+        .fv-btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+
+        /* Logo Energy Solutions (placeholder: serve il file img/logo-energelia-circle.png) */
+        .fv-hero-logo {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.45), 0 0 0 4px rgba(255,255,255,0.12);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .fv-hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* ===== SEZIONE COSA OFFRIAMO ===== */
+        .fv-offerta {
+            padding: 4.5rem 0;
+            background: #f7f9fc;
+        }
+        .fv-offerta h2 {
+            font-family: 'Source Serif 4', serif;
+            color: #0a1530;
+            font-weight: 700;
+            text-align: center;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            margin-bottom: 0.5rem;
+        }
+        .fv-offerta .subtitle {
+            text-align: center;
+            color: #5a6577;
+            font-size: 1.05rem;
+            margin-bottom: 3rem;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .fv-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 2rem 1.8rem;
+            height: 100%;
+            border: 1px solid #e5e8ee;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .fv-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37, #f4d03f);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .fv-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 56px rgba(10, 21, 48, 0.14);
+            border-color: #d4af37;
+        }
+        .fv-card:hover::before {
+            transform: scaleX(1);
+        }
+        .fv-card .icon-wrap {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1a5276, #0a1530);
+            color: #f4d03f;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+        }
+        .fv-card h3 {
+            color: #0a1530;
+            font-family: 'Source Serif 4', serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.6rem;
+        }
+        .fv-card p {
+            color: #5a6577;
+            line-height: 1.65;
+            font-size: 0.97rem;
+            margin: 0 0 0.8rem;
+        }
+        .fv-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .fv-card ul li {
+            padding: 5px 0;
+            color: #455062;
+            font-size: 0.94rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .fv-card ul li i {
+            color: #d4af37;
+            margin-top: 4px;
+            flex-shrink: 0;
+        }
+
+        /* ===== RIQUADRO RETE ENERCUBICA ===== */
+        .fv-rete {
+            padding: 4.5rem 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
+            position: relative;
+        }
+        .fv-rete-card {
+            background: #fff;
+            border-radius: 22px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 50px rgba(10, 21, 48, 0.08);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2.5rem;
+            align-items: center;
+            border-top: 5px solid #2e7d3a;
+        }
+        .fv-rete-logo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #2e7d3a;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .fv-rete-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .fv-rete-content .label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #2e7d3a;
+            margin-bottom: 0.5rem;
+        }
+        .fv-rete-content h2 {
+            font-family: 'Source Serif 4', serif;
+            font-weight: 700;
+            color: #0a1530;
+            font-size: 1.7rem;
+            margin-bottom: 0.8rem;
+        }
+        .fv-rete-content p {
+            color: #455062;
+            font-size: 1rem;
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+        .fv-rete-settori {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+        }
+        .fv-rete-settore {
+            background: #eef3ee;
+            color: #2e7d3a;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+        .fv-rete-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2e7d3a;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        .fv-rete-link:hover {
+            color: #1e5a28;
+            border-bottom-color: #2e7d3a;
+        }
+
+        /* ===== CTA FINALE ===== */
+        .fv-cta {
+            background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
+            color: #fff;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        .fv-cta h3 {
+            font-family: 'Source Serif 4', serif;
+            font-size: clamp(1.6rem, 2.5vw, 2rem);
+            margin-bottom: 0.8rem;
+        }
+        .fv-cta p {
+            opacity: 0.9;
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 991.98px) {
+            .fv-hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            .fv-hero-text { margin: 0 auto; }
+            .fv-hero-actions { justify-content: center; }
+            .fv-rete-card {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            .fv-rete-logo { margin: 0 auto; }
+            .fv-rete-settori { justify-content: center; }
+        }
+        @media (max-width: 575.98px) {
+            .fv-hero { padding: 3rem 0 2.5rem; }
+            .fv-hero-logo { width: 160px; height: 160px; }
+            .fv-rete-card { padding: 2rem 1.4rem; }
+            .fv-rete-logo { width: 140px; height: 140px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+    <!-- HERO -->
+    <section class="fv-hero">
+        <div class="container">
+            <div class="fv-hero-grid">
+                <div class="fv-hero-text">
+                    <span class="fv-badge"><i class="fas fa-solar-panel me-2"></i>Energelia Energy Solutions</span>
+                    <h1>Fotovoltaico <span class="gold">chiavi in mano</span><br>per la tua azienda</h1>
+                    <p class="lead">
+                        Progettiamo, installiamo e gestiamo impianti fotovoltaici per imprese e attività produttive. Un unico interlocutore dall'idea alla messa in funzione — con la possibilità di abbinare bandi e finanza agevolata.
+                    </p>
+                    <div class="fv-hero-actions">
+                        <a href="tel:+390108078800" class="fv-btn fv-btn-primary">
+                            <i class="fas fa-phone-alt"></i> Chiamaci 010 8078800
+                        </a>
+                        <a href="#offerta" class="fv-btn fv-btn-secondary">
+                            <i class="fas fa-arrow-down"></i> Scopri di più
+                        </a>
+                    </div>
+                </div>
+                <div class="fv-hero-logo">
+                    <img src="{{ url_for('static', filename='img/Logo Energelia Rotondo HQ.png') }}"
+                         alt="Logo Energelia Energy Solutions"
+                         onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=&quot;fas fa-solar-panel&quot; style=&quot;font-size:5rem;color:#f4d03f;&quot;></i>';">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COSA OFFRIAMO -->
+    <section class="fv-offerta" id="offerta">
+        <div class="container">
+            <h2>Cosa offriamo</h2>
+            <p class="subtitle">Un approccio tecnico, concreto e orientato ai risultati. Ti accompagniamo in ogni fase del progetto.</p>
+
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="fv-card">
+                        <div class="icon-wrap"><i class="fas fa-drafting-compass"></i></div>
+                        <h3>Soluzioni end-to-end</h3>
+                        <p>Dalla progettazione tecnica all'installazione fisica, fino alla gestione operativa dell'impianto nel tempo.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i>Sopralluogo e analisi del fabbisogno</li>
+                            <li><i class="fas fa-check"></i>Progettazione personalizzata</li>
+                            <li><i class="fas fa-check"></i>Installazione e collaudo</li>
+                            <li><i class="fas fa-check"></i>Manutenzione e monitoraggio</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="fv-card">
+                        <div class="icon-wrap"><i class="fas fa-coins"></i></div>
+                        <h3>Modalità di acquisto</h3>
+                        <p>Scegli la formula che si adatta alla tua azienda: nessun investimento iniziale obbligatorio.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i><strong>Diretto</strong>: acquisto in proprietà</li>
+                            <li><i class="fas fa-check"></i><strong>Finanziato</strong>: pagamento dilazionato</li>
+                            <li><i class="fas fa-check"></i><strong>Noleggio operativo</strong>: canone mensile, zero immobilizzo</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="fv-card">
+                        <div class="icon-wrap"><i class="fas fa-hand-holding-usd"></i></div>
+                        <h3>Contributi pubblici</h3>
+                        <p>Per ogni impianto valutiamo tutte le possibilità di agevolazione attive a livello regionale, nazionale ed europeo.</p>
+                        <ul>
+                            <li><i class="fas fa-check"></i>Bandi a fondo perduto</li>
+                            <li><i class="fas fa-check"></i>Strumenti di finanza agevolata</li>
+                            <li><i class="fas fa-check"></i>Credito d'imposta e detrazioni</li>
+                            <li><i class="fas fa-check"></i>Iter completo, dalla domanda alla rendicontazione</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RETE ENERCUBICA -->
+    <section class="fv-rete">
+        <div class="container">
+            <div class="fv-rete-card">
+                <div class="fv-rete-logo">
+                    <img src="{{ url_for('static', filename='img/logo enercubica hd.png') }}"
+                         alt="Enercubica — Rete di Impresa"
+                         onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=&quot;fas fa-network-wired&quot; style=&quot;font-size:4rem;color:#2e7d3a;&quot;></i>';">
+                </div>
+                <div class="fv-rete-content">
+                    <div class="label"><i class="fas fa-handshake me-2"></i>Parte della rete</div>
+                    <h2>Energelia è socia di Enercubica</h2>
+                    <p>
+                        <strong>Enercubica — Rete di Impresa</strong> riunisce aziende specializzate che offrono ai clienti un'unica regia per tutti i servizi tecnici legati alla casa, all'azienda e alla transizione energetica. Insieme alle altre realtà della rete possiamo seguirti su più fronti, mantenendo la qualità del consulente dedicato.
+                    </p>
+                    <div class="fv-rete-settori">
+                        <span class="fv-rete-settore">⚡ Energia &amp; Gas</span>
+                        <span class="fv-rete-settore">☀️ Fotovoltaico</span>
+                        <span class="fv-rete-settore">🏗️ Edilizia &amp; Bio-edilizia</span>
+                        <span class="fv-rete-settore">🛡️ Sicurezza &amp; Antincendio</span>
+                        <span class="fv-rete-settore">📞 Telefonia &amp; Fibra</span>
+                        <span class="fv-rete-settore">🌬️ Aria compressa</span>
+                        <span class="fv-rete-settore">♻️ Bonifica amianto</span>
+                    </div>
+                    <a href="https://www.enercubica.it" target="_blank" rel="noopener noreferrer" class="fv-rete-link">
+                        Scopri la rete Enercubica <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="fv-cta">
+        <div class="container">
+            <h3>Vuoi sapere quanto risparmi con un impianto fotovoltaico?</h3>
+            <p>Sopralluogo e preventivo gratuiti. Valutiamo subito anche i bandi attivi per la tua zona.</p>
+            <a href="tel:+390108078800" class="fv-btn fv-btn-primary">
+                <i class="fas fa-phone-alt"></i> Chiamaci al 010 8078800
+            </a>
+        </div>
+    </section>
+
+    {% include 'life-insurance-website-template/partials/footer.html' %}
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>
