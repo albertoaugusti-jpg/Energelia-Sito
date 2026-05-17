@@ -111,6 +111,49 @@
   .footer-brand-badge.digitaly {
     border-left: 3px solid #27ae60;
   }
+  /* Badge Enercubica nel footer */
+  .enercubica-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 18px 10px 10px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 50px;
+    text-decoration: none;
+    color: rgba(224,230,241,0.95) !important;
+    transition: all 0.25s ease;
+  }
+  .enercubica-badge:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.35);
+    transform: none;
+    color: #fff !important;
+  }
+  .enercubica-badge img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    padding: 3px;
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+  .enercubica-badge span {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+  .enercubica-badge strong {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .enercubica-badge small {
+    font-size: 0.78rem;
+    color: rgba(224,230,241,0.7);
+    margin-top: 2px;
+  }
 </style>
 
 <!-- Footer Start -->
@@ -152,11 +195,24 @@
       </div>
     </div>
 
+    <!-- Badge adesione Rete Enercubica -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <a href="/rete-enercubica" class="enercubica-badge" aria-label="Energelia aderisce a Enercubica Rete di Impresa">
+          <img src="{{ url_for('static', filename='img/logo enercubica hd.png') }}" alt="Enercubica Rete di Impresa">
+          <span>
+            <strong>Aderiamo al Contratto di Rete</strong>
+            <small>Enercubica — Rete di Impresa</small>
+          </span>
+        </a>
+      </div>
+    </div>
+
     <!-- Bottom Bar -->
     <div class="row bottom-bar">
       <div class="col-12">
         <p class="mb-0">
-          &copy; 2025 Energelia S.r.l. – Tutti i diritti riservati | P.IVA 02959030996 | 
+          &copy; 2025 Energelia S.r.l. – Tutti i diritti riservati | P.IVA 02959030996 |
           <a href="#">Privacy Policy</a> | <a href="#">Cookie Policy</a> | <a href="#">Termini di Servizio</a>
         </p>
       </div>

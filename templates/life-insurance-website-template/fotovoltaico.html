@@ -260,6 +260,77 @@
             flex-shrink: 0;
         }
 
+        /* ===== INFOGRAFICA ===== */
+        .fv-infografica {
+            padding: 4.5rem 0;
+            background: #0a1530;
+            color: #fff;
+        }
+        .fv-infografica h2 {
+            font-family: 'Source Serif 4', serif;
+            text-align: center;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+        .fv-infografica .subtitle {
+            text-align: center;
+            color: rgba(255,255,255,0.75);
+            font-size: 1.05rem;
+            margin-bottom: 2.5rem;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .fv-infografica-wrap {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #060d20;
+        }
+        .fv-infografica-wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ===== APPLICAZIONI ===== */
+        .fv-applicazioni {
+            padding: 4.5rem 0;
+            background: #fff;
+        }
+        .fv-applicazioni h2 {
+            font-family: 'Source Serif 4', serif;
+            text-align: center;
+            color: #0a1530;
+            font-weight: 700;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            margin-bottom: 0.5rem;
+        }
+        .fv-applicazioni .subtitle {
+            text-align: center;
+            color: #5a6577;
+            font-size: 1.05rem;
+            margin-bottom: 2.5rem;
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .fv-applicazioni-wrap {
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 18px 42px rgba(10, 21, 48, 0.18);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .fv-applicazioni-wrap img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
         /* ===== RIQUADRO RETE ENERCUBICA ===== */
         .fv-rete {
             padding: 4.5rem 0;
@@ -470,7 +541,35 @@
         </div>
     </section>
 
-    <!-- RETE ENERCUBICA -->
+    <!-- COME FUNZIONA (infografica) -->
+    <section class="fv-infografica">
+        <div class="container">
+            <h2>Come funziona il fotovoltaico</h2>
+            <p class="subtitle">Dalla luce del sole alla corrente elettrica della tua azienda, in quattro passaggi.</p>
+            <div class="fv-infografica-wrap">
+                <img src="{{ url_for('static', filename='img/fotovoltaico-infografica.png') }}"
+                     alt="Come funziona il fotovoltaico: dal fotone all'elettrone, fino alla corrente elettrica"
+                     loading="lazy"
+                     onerror="this.style.opacity='0.3'; this.alt='Infografica in arrivo';">
+            </div>
+        </div>
+    </section>
+
+    <!-- APPLICAZIONI -->
+    <section class="fv-applicazioni">
+        <div class="container">
+            <h2>Dove installiamo</h2>
+            <p class="subtitle">Casa, capannone industriale, parco fotovoltaico: progettiamo soluzioni su qualunque scala.</p>
+            <div class="fv-applicazioni-wrap">
+                <img src="{{ url_for('static', filename='img/fotovoltaico-applicazioni.png') }}"
+                     alt="Impianti fotovoltaici: residenziale, industriale e parco solare"
+                     loading="lazy"
+                     onerror="this.style.opacity='0.3'; this.alt='Immagine in arrivo';">
+            </div>
+        </div>
+    </section>
+
+    <!-- RETE ENERCUBICA (accenno breve, dettaglio nella pagina dedicata) -->
     <section class="fv-rete">
         <div class="container">
             <div class="fv-rete-card">
@@ -480,22 +579,13 @@
                          onerror="this.style.display='none'; this.parentNode.innerHTML='<i class=&quot;fas fa-network-wired&quot; style=&quot;font-size:4rem;color:#2e7d3a;&quot;></i>';">
                 </div>
                 <div class="fv-rete-content">
-                    <div class="label"><i class="fas fa-handshake me-2"></i>Parte della rete</div>
-                    <h2>Energelia è socia di Enercubica</h2>
+                    <div class="label"><i class="fas fa-handshake me-2"></i>Aderiamo al contratto di rete</div>
+                    <h2>Energelia aderisce a Enercubica</h2>
                     <p>
-                        <strong>Enercubica — Rete di Impresa</strong> riunisce aziende specializzate che offrono ai clienti un'unica regia per tutti i servizi tecnici legati alla casa, all'azienda e alla transizione energetica. Insieme alle altre realtà della rete possiamo seguirti su più fronti, mantenendo la qualità del consulente dedicato.
+                        Enercubica è un <strong>Contratto di Rete di Impresa</strong> che mette in collaborazione realtà specializzate in energia, edilizia, sicurezza, telecomunicazioni e bonifica. Grazie alla rete possiamo offrirti soluzioni integrate su più fronti, mantenendo la qualità del consulente dedicato.
                     </p>
-                    <div class="fv-rete-settori">
-                        <span class="fv-rete-settore">⚡ Energia &amp; Gas</span>
-                        <span class="fv-rete-settore">☀️ Fotovoltaico</span>
-                        <span class="fv-rete-settore">🏗️ Edilizia &amp; Bio-edilizia</span>
-                        <span class="fv-rete-settore">🛡️ Sicurezza &amp; Antincendio</span>
-                        <span class="fv-rete-settore">📞 Telefonia &amp; Fibra</span>
-                        <span class="fv-rete-settore">🌬️ Aria compressa</span>
-                        <span class="fv-rete-settore">♻️ Bonifica amianto</span>
-                    </div>
-                    <a href="https://www.enercubica.it" target="_blank" rel="noopener noreferrer" class="fv-rete-link">
-                        Scopri la rete Enercubica <i class="fas fa-external-link-alt"></i>
+                    <a href="/rete-enercubica" class="fv-rete-link">
+                        Scopri la rete Enercubica <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
