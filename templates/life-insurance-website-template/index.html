@@ -895,24 +895,50 @@
        --padding-top-extra: 110px;
      ">
   <div class="header-carousel-item" style="
-      background: 
+      background:
         linear-gradient(var(--overlay), var(--overlay)),
         var(--bg-img) center/cover no-repeat;
+      position: relative;
+      overflow: hidden;
     ">
-    <div class="carousel-caption" style="padding: calc(var(--padding-vertical) + var(--padding-top-extra, 0px)) 0 var(--padding-vertical) 0;">
+    <!-- Effetto fascio del faro -->
+    <div class="hero-fx" aria-hidden="true">
+      <svg class="lighthouse-beam" viewBox="0 0 200 1000" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="beamGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255, 230, 150, 0.55)"/>
+            <stop offset="40%" stop-color="rgba(255, 230, 150, 0.18)"/>
+            <stop offset="100%" stop-color="rgba(255, 230, 150, 0)"/>
+          </linearGradient>
+        </defs>
+        <polygon points="100,0 0,1000 200,1000" fill="url(#beamGrad)"/>
+      </svg>
+      <!-- Onde del mare -->
+      <svg class="hero-wave hero-wave-back" viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <path d="M0,40 C240,10 480,70 720,40 C960,10 1200,70 1440,40 L1440,80 L0,80 Z"
+              fill="rgba(212,175,55,0.10)"/>
+      </svg>
+      <svg class="hero-wave hero-wave-front" viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <path d="M0,30 C180,5 360,55 720,30 C1080,5 1260,55 1440,30 L1440,60 L0,60 Z"
+              fill="rgba(255,255,255,0.06)"/>
+      </svg>
+    </div>
+
+    <div class="carousel-caption" style="padding: calc(var(--padding-vertical) + var(--padding-top-extra, 0px)) 0 var(--padding-vertical) 0; position: relative; z-index: 3;">
       <div class="container">
         <div class="row g-4 align-items-center">
           <div class="col-lg-12 animated fadeInUp">
             <div class="text-center">
-              <h1 class="display-1 mb-4 text-uppercase"
+              <h1 id="heroRotator" class="display-1 mb-4 text-uppercase"
                   style="
                     color: var(--h1-color);
                     font-size: var(--h1-size);
                     text-shadow: 0 3px 6px rgba(0,0,0,0.6);
                     line-height: 1.15;
                     letter-spacing: 2px;
+                    min-height: 4em;
                   ">
-                TROVARE UN BANDO NON CONCLUDE IL NOSTRO LAVORO,<br><span style="color: #d4af37;">FARLO DIVENTARE FINANZA PER I CLIENTI È IL NOSTRO APPRODO</span>
+                <span class="hero-rotator-slot hero-rotator-active">TROVARE UN BANDO NON CONCLUDE IL NOSTRO LAVORO,<br><span style="color: #d4af37;">FARLO DIVENTARE FINANZA PER I CLIENTI È IL NOSTRO APPRODO</span></span>
               </h1>
               <p class="mb-5 mx-auto"
                  style="
@@ -930,6 +956,113 @@
       </div>
     </div>
   </div>
+
+<style>
+/* ===== HERO FX: fascio del faro + onde ===== */
+.hero-fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+.lighthouse-beam {
+  position: absolute;
+  top: 33%;
+  left: 50%;
+  width: 110px;
+  height: 75vh;
+  transform-origin: 50% 0;
+  animation: beam-sweep 18s ease-in-out infinite;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+  filter: blur(2px);
+}
+@keyframes beam-sweep {
+  0%   { transform: translateX(-50%) rotate(-32deg); }
+  50%  { transform: translateX(-50%) rotate(32deg); }
+  100% { transform: translateX(-50%) rotate(-32deg); }
+}
+.hero-wave {
+  position: absolute;
+  left: 0;
+  width: 200%;
+  height: 70px;
+  pointer-events: none;
+}
+.hero-wave-back {
+  bottom: 0;
+  animation: wave-move-slow 18s ease-in-out infinite alternate;
+}
+.hero-wave-front {
+  bottom: 0;
+  height: 50px;
+  animation: wave-move-fast 11s ease-in-out infinite alternate;
+}
+@keyframes wave-move-slow {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-6%); }
+}
+@keyframes wave-move-fast {
+  from { transform: translateX(-3%); }
+  to   { transform: translateX(3%); }
+}
+
+/* ===== Rotatore claim ===== */
+.hero-rotator-slot {
+  display: block;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+.hero-rotator-slot.is-leaving {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+.hero-rotator-slot.is-entering {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+@media (max-width: 575.98px) {
+  .lighthouse-beam { width: 70px; height: 60vh; opacity: 0.7; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lighthouse-beam,
+  .hero-wave-back,
+  .hero-wave-front { animation: none; }
+  .hero-rotator-slot { transition: none; }
+}
+</style>
+
+<script>
+(function() {
+  var slot = document.querySelector('#heroRotator .hero-rotator-slot');
+  if (!slot) return;
+
+  var claims = [
+    'TROVARE UN BANDO NON CONCLUDE IL NOSTRO LAVORO,<br><span style="color:#d4af37;">FARLO DIVENTARE FINANZA PER I CLIENTI È IL NOSTRO APPRODO</span>',
+    'NAVIGHIAMO TRA BANDI E INCENTIVI<br><span style="color:#d4af37;">PER PORTARE LE IMPRESE A DESTINAZIONE DAL 2006</span>',
+    'OGNI AZIENDA HA IL SUO BANDO,<br><span style="color:#d4af37;">NOI LO TROVIAMO E LO TRASFORMIAMO IN FINANZIAMENTO</span>',
+    'NEL MARE DEI BANDI SERVE UN FARO,<br><span style="color:#d4af37;">ENERGELIA È QUELLA LUCE PER LE IMPRESE ITALIANE</span>'
+  ];
+
+  var idx = 0;
+  function rotate() {
+    idx = (idx + 1) % claims.length;
+    slot.classList.add('is-leaving');
+    setTimeout(function() {
+      slot.innerHTML = claims[idx];
+      slot.classList.remove('is-leaving');
+      slot.classList.add('is-entering');
+      // forziamo il reflow per applicare la transizione di entrata
+      void slot.offsetWidth;
+      slot.classList.remove('is-entering');
+    }, 700);
+  }
+  setInterval(rotate, 6500);
+})();
+</script>
 </div>
 <!-- Carousel End -->
 
