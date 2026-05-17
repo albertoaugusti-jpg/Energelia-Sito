@@ -187,6 +187,75 @@
             margin: 0;
         }
 
+        /* ===== TEAM ===== */
+        .team-section {
+            padding: 4rem 0;
+            background: #f5f7fa;
+        }
+        .team-section h2 {
+            font-family: 'Source Serif 4', serif;
+            color: #0a1530;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .team-section .subtitle {
+            text-align: center;
+            color: #5a6577;
+            margin-bottom: 3rem;
+            font-size: 1.05rem;
+        }
+        .team-card {
+            background: #fff;
+            border: 1px solid #e5e8ee;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 50px rgba(10, 21, 48, 0.14);
+            border-color: #d4af37;
+        }
+        .team-photo {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            object-position: center top;
+            background: #e5e8ee;
+            display: block;
+        }
+        .team-card .body {
+            padding: 1.5rem 1.4rem 1.6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+        .team-card .role {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #d4af37;
+            font-weight: 700;
+        }
+        .team-card h4 {
+            font-family: 'Source Serif 4', serif;
+            color: #0a1530;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 0 0 0.4rem;
+        }
+        .team-card p {
+            color: #455062;
+            font-size: 0.93rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
         .cta-banner {
             background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
             color: #fff;
@@ -300,6 +369,52 @@
                         <div class="icon-circle"><i class="fas fa-chart-line"></i></div>
                         <h5>Rendicontazione</h5>
                         <p>Ti seguiamo anche dopo l'approvazione: rendicontiamo le spese secondo le regole del bando, in tempo, senza errori.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="team-section">
+        <div class="container">
+            <h2>Le persone</h2>
+            <p class="subtitle">Chi guida Energelia ogni giorno</p>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <img class="team-photo"
+                             src="{{ url_for('static', filename='img/Bruno Ufficio.png') }}"
+                             alt="Bruno Massimo Legger — Amministratore Unico Energelia">
+                        <div class="body">
+                            <span class="role">Amministratore Unico</span>
+                            <h4>Bruno Massimo Legger</h4>
+                            <p>Laureato in Scienze Politiche all'Università di Torino con tesi sul finanziamento internazionale della PMI. Una carriera tra cosmetica internazionale — Estée Lauder e Revlon a New York, Shiseido Italia — e distribuzione di marchi (Christian Dior Bijoux, Lesportsac). Dal 2014 si dedica al settore energetico: Project Manager in Conus Technology e Branch Manager Italia di AEM S.A. per contatori gas, elettrici e idrici. Oggi guida Energelia.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <img class="team-photo"
+                             src="{{ url_for('static', filename='img/Alberto ufficio.png') }}"
+                             alt="Alberto Augusti — Responsabile Business Development Energelia">
+                        <div class="body">
+                            <span class="role">Responsabile Business Development</span>
+                            <h4>Alberto Augusti</h4>
+                            <p>Genovese, classe 1978, laurea in Scienze Internazionali e Diplomatiche e Master in Business and Product Management al Sole 24 Ore. Vent'anni nella vendita e nella gestione d'impresa: ha fondato e guidato come Amministratore Unico Generelia ai tempi del Conto Energia (oltre 15 persone, 2 milioni di fatturato), è stato Responsabile Commerciale di Enercubica e Specialista Business Development in Poste Energia. Esperto in Gestione dell'Energia certificato Bureau Veritas (UNI CEI 11339:2009), Giovane Imprenditore Ligure dell'anno 2011.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <img class="team-photo"
+                             src="{{ url_for('static', filename='img/Foto Antonio Ufficio in piedi.png') }}"
+                             alt="Antonio Castagnaro — Responsabile Commerciale Energelia">
+                        <div class="body">
+                            <span class="role">Responsabile Commerciale</span>
+                            <h4>Antonio Castagnaro</h4>
+                            <p>Classe 1979, diplomato classico. Dopo una carriera nell'arbitraggio nazionale di pallacanestro ha fondato AC Eventi a Genova, agenzia specializzata nell'organizzazione chiavi in mano di congressi, cerimonie e manifestazioni sportive, e ha ideato il progetto Wedding Vintage Motors. Trasferitosi a Torino, oggi dedica tutta la sua attività al ruolo di Responsabile Commerciale di Energelia.</p>
+                        </div>
                     </div>
                 </div>
             </div>

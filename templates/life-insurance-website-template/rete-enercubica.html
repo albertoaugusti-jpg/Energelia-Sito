@@ -299,6 +299,26 @@
             text-align: center;
             backdrop-filter: blur(8px);
         }
+        .contatto-card .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top;
+            border: 4px solid rgba(255,255,255,0.25);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.35);
+            margin: 0 auto 1.2rem;
+            display: block;
+            background: rgba(255,255,255,0.1);
+        }
+        .contatto-card .bio {
+            color: rgba(255,255,255,0.88);
+            font-size: 0.96rem;
+            line-height: 1.65;
+            margin: 0 auto 1.4rem;
+            max-width: 500px;
+            text-align: center;
+        }
         .contatto-card .role {
             font-size: 0.78rem;
             text-transform: uppercase;
@@ -507,8 +527,15 @@
             <h2>Contatta la rete Enercubica</h2>
             <p class="subtitle">Per informazioni dirette sulla rete e sui suoi servizi.</p>
             <div class="contatto-card">
+                <img class="profile-photo"
+                     src="{{ url_for('static', filename='img/Alessandro Valzania.png') }}"
+                     alt="Alessandro Valzania — Responsabile Sviluppo Rete Enercubica"
+                     onerror="this.style.display='none';">
                 <div class="role">Business Development — Responsabile Sviluppo Rete</div>
                 <h3>Alessandro Valzania</h3>
+                <p class="bio">
+                    Classe 1990, ragioniere, esperto del mercato energetico. Si è distinto in Liguria e a livello nazionale come uno dei broker più efficienti nella gestione dei grandi clienti, con una specializzazione consolidata nello sviluppo di reti di partner e nella consulenza energetica complessa.
+                </p>
                 <div class="info">
                     <div class="info-row">
                         <i class="fas fa-envelope"></i>
