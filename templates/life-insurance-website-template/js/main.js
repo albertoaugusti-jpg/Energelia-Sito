@@ -16,21 +16,19 @@
     // Inizializza WOW.js
     new WOW().init();
 
-    // Header carousel
+    // Header carousel (UNA sola slide: no autoplay, no nav, no dots, no loop)
     $(".header-carousel").owlCarousel({
-        animateOut: 'fadeOut',
         items: 1,
         margin: 0,
         stagePadding: 0,
-        autoplay: true,
-        smartSpeed: 500,
-        dots: true,
+        autoplay: false,
         loop: false,
-        nav : true,
-        navText : [
-            '<i class="bi bi-arrow-left"></i>',
-            '<i class="bi bi-arrow-right"></i>'
-        ],
+        nav : false,
+        dots: false,
+        mouseDrag: false,
+        touchDrag: false,
+        pullDrag: false,
+        freeDrag: false,
     });
 
     // Testimonial carousel

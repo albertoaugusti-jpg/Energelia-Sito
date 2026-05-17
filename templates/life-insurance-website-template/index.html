@@ -981,19 +981,8 @@
       position: relative;
       overflow: hidden;
     ">
-    <!-- Effetto fascio del faro -->
+    <!-- Effetto onde del mare (il fascio del faro è già nell'immagine, non lo sovrapponiamo) -->
     <div class="hero-fx" aria-hidden="true">
-      <svg class="lighthouse-beam" viewBox="0 0 200 1000" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="beamGrad" x1="50%" y1="0%" x2="50%" y2="100%">
-            <stop offset="0%" stop-color="rgba(255, 230, 150, 0.55)"/>
-            <stop offset="40%" stop-color="rgba(255, 230, 150, 0.18)"/>
-            <stop offset="100%" stop-color="rgba(255, 230, 150, 0)"/>
-          </linearGradient>
-        </defs>
-        <polygon points="100,0 0,1000 200,1000" fill="url(#beamGrad)"/>
-      </svg>
-      <!-- Onde del mare -->
       <svg class="hero-wave hero-wave-back" viewBox="0 0 1440 80" preserveAspectRatio="none">
         <path d="M0,40 C240,10 480,70 720,40 C960,10 1200,70 1440,40 L1440,80 L0,80 Z"
               fill="rgba(212,175,55,0.10)"/>
@@ -1046,23 +1035,7 @@
   z-index: 2;
   overflow: hidden;
 }
-.lighthouse-beam {
-  position: absolute;
-  top: 33%;
-  left: 50%;
-  width: 110px;
-  height: 75vh;
-  transform-origin: 50% 0;
-  animation: beam-sweep 18s ease-in-out infinite;
-  mix-blend-mode: screen;
-  opacity: 0.85;
-  filter: blur(2px);
-}
-@keyframes beam-sweep {
-  0%   { transform: translateX(-50%) rotate(-32deg); }
-  50%  { transform: translateX(-50%) rotate(32deg); }
-  100% { transform: translateX(-50%) rotate(-32deg); }
-}
+/* (Rimosso il fascio CSS: usiamo solo quello già dipinto nell'immagine) */
 .hero-wave {
   position: absolute;
   left: 0;
@@ -1104,11 +1077,7 @@
   transform: translateY(12px);
 }
 
-@media (max-width: 575.98px) {
-  .lighthouse-beam { width: 70px; height: 60vh; opacity: 0.7; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .lighthouse-beam,
   .hero-wave-back,
   .hero-wave-front { animation: none; }
   .hero-rotator-slot { transition: none; }
