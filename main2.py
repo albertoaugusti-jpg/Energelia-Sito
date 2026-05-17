@@ -1,10 +1,14 @@
 import os
 import re
 import html
+import smtplib
+import threading
 import psycopg2
 import feedparser
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, parse_qs, unquote
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from flask import Flask, render_template, abort, request, redirect, send_from_directory,jsonify
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -67,6 +71,68 @@ def static_files(filename):
     if os.path.isfile(file_path):
         return send_from_directory(static_dir, filename)
     abort(404)
+
+
+# ==================== EMAIL NOTIFICATIONS ====================
+
+# Configurazione SMTP via env vars (impostarle su Render).
+# Default: SMTP di Gmail. Se SMTP_USER/SMTP_PASS/LEAD_NOTIFY_TO non sono settate,
+# l'invio è silenziosamente saltato (il sito funziona comunque, salvataggio DB ok).
+SMTP_HOST = os.environ.get('SMTP_HOST', 'smtp.gmail.com')
+SMTP_PORT = int(os.environ.get('SMTP_PORT', '587'))
+SMTP_USER = os.environ.get('SMTP_USER', '')
+SMTP_PASS = os.environ.get('SMTP_PASS', '')
+LEAD_NOTIFY_TO = os.environ.get('LEAD_NOTIFY_TO', 'a.castagnaro@energelia.it')
+LEAD_NOTIFY_FROM_NAME = os.environ.get('LEAD_NOTIFY_FROM_NAME', 'Sito Energelia')
+
+
+def _send_lead_email(subject, body):
+    """Invio reale SMTP (chiamato dentro un thread)."""
+    if not (SMTP_USER and SMTP_PASS and LEAD_NOTIFY_TO):
+        return
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = f"{LEAD_NOTIFY_FROM_NAME} <{SMTP_USER}>"
+        msg['To'] = LEAD_NOTIFY_TO
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'plain', 'utf-8'))
+
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=15) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASS)
+            server.send_message(msg)
+    except Exception as e:
+        # Niente raise: la mancata notifica non deve far fallire la richiesta utente
+        print(f"[notify-email] errore invio: {e}")
+
+
+def notify_new_lead(source, email='', phone='', bando=''):
+    """Avvia in background l'invio della notifica email per un nuovo contatto."""
+    when = datetime.now().strftime('%d/%m/%Y %H:%M')
+    subject = f"Nuovo contatto su energelia.it — {source}"
+    lines = [
+        "Nuovo contatto ricevuto dal sito energelia.it",
+        "",
+        f"Tipo:      {source}",
+        f"Data/ora:  {when}",
+        f"Email:     {email or '—'}",
+        f"Telefono:  {phone or '—'}",
+    ]
+    if bando:
+        lines.append(f"Bando:     {bando}")
+    lines.extend([
+        "",
+        "Pannello admin: https://energelia.it/forzasamp",
+        "",
+        "— Notifica automatica del sito Energelia",
+    ])
+    body = "\n".join(lines)
+
+    threading.Thread(
+        target=_send_lead_email,
+        args=(subject, body),
+        daemon=True
+    ).start()
 
 
 def get_db_connection():
@@ -139,6 +205,8 @@ def save_lead():
         conn.commit()
         cur.close()
         conn.close()
+        # Notifica email in background (non blocca la risposta)
+        notify_new_lead('Lead — download report', email=email, phone=phone, bando=bando)
         return jsonify({'success': True})
     except Exception as e:
         print(f"Errore save_lead: {e}")
@@ -175,6 +243,8 @@ def save_consultation():
         conn.commit()
         cur.close()
         conn.close()
+        # Notifica email in background (non blocca la risposta)
+        notify_new_lead('Richiesta consulenza / Ricerca Bandi', email=email, phone=phone)
         return jsonify({'success': True})
     except Exception as e:
         print(f"Errore save_consultation: {e}")
