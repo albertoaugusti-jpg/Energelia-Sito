@@ -68,13 +68,13 @@
 
         <!-- Template Stylesheet -->
         <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
     <!-- Favicon Energelia -->
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
-
     </head>
 
 <style>
@@ -1441,9 +1441,9 @@
         <span class="tappa-label">Comunicazione chiara</span>
       </button>
       <!-- Tappa 6 -->
-      <button type="button" class="tappa tappa-down" data-num="06" data-title="+1 milione € nel 2025" data-text="Non promettiamo, dimostriamo. Nel solo 2025 abbiamo fatto ottenere ai nostri clienti oltre 1.000.000€ in finanziamenti pubblici.">
+      <button type="button" class="tappa tappa-down" data-num="06" data-title="Track record consolidato" data-text="Dal 2006 al fianco delle imprese italiane: domande presentate, approvate ed erogate, progetti rendicontati fino all'ultimo centesimo. La nostra reputazione si costruisce sul metodo, non sui proclami.">
         <span class="tappa-num">06</span>
-        <span class="tappa-label">+1M€ ottenuti</span>
+        <span class="tappa-label">Track record</span>
       </button>
       <!-- Tappa 7 -->
       <button type="button" class="tappa tappa-up" data-num="07" data-title="Esperienza su ogni livello" data-text="Bandi regionali, nazionali ed europei: li conosciamo tutti. Sappiamo quali funzionano e quali evitare, in base al tuo settore e alla tua dimensione.">
@@ -2069,7 +2069,15 @@
         </div>
 
         <div class="bandi-carousel-item">
-          <div class="bando-card-new">
+          <div class="bando-card-new"
+               data-bando-titolo="Distretti del Commercio 2026"
+               data-bando-ente="Regione Lombardia"
+               data-bando-scadenza="2026-07-31"
+               data-bando-stato="aperto"
+               data-bando-importo="€63 milioni totali — fino a €520.000 per progetti di eccellenza, €189.900 per progetti ordinari (contributo 50% del costo)"
+               data-bando-beneficiari="Comuni, Comunità Montane e Unioni di Comuni aderenti a un Distretto del Commercio (DUC — Distretto Urbano del Commercio o DID — Distretto Diffuso a Rilevanza Intercomunale)"
+               data-bando-spese="Rigenerazione e riqualificazione delle aree del Distretto; servizi comuni a imprese, utenti e visitatori; interventi per la sicurezza; governance e Manager di Distretto; animazione, promozione ed eventi"
+               data-bando-fonte="https://www.regione.lombardia.it/wps/portal/istituzionale/HP/DettaglioAvviso/servizi-e-informazioni/enti-e-operatori/commercio-e-fiere/distretti-del-commercio/criteri-bando-distretti26/criteri-bando-distretti26">
             <div class="bando-card-image">
               <img src="{{ url_for('static', filename='img/business_funding_bg.jpg') }}" alt="Distretti del Commercio Lombardia 2026">
               <span class="bando-novita-badge"><i class="fas fa-map-marker-alt me-1"></i>Regione Lombardia</span>
@@ -2077,15 +2085,24 @@
             <div class="bando-card-body">
               <h4 class="bando-card-title-new">Distretti del Commercio 2026</h4>
               <p class="bando-card-desc-new">Fino a €520.000 per Comuni e Distretti del Commercio lombardi. Rigenerazione urbana e attrattività territoriale. Scadenza 31 luglio 2026.</p>
-              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
-                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
               </a>
             </div>
           </div>
         </div>
 
         <div class="bandi-carousel-item">
-          <div class="bando-card-new">
+          <div class="bando-card-new"
+               data-bando-titolo="Torino Compra Vicino — DUC"
+               data-bando-ente="Città di Torino"
+               data-bando-scadenza="2026-07-31"
+               data-bando-stato="sospeso"
+               data-bando-importo="Dotazione €225.000 — contributo fino all'80% delle spese ammissibili, massimo €15.000 per impresa"
+               data-bando-beneficiari="Micro e piccole imprese con sede operativa nel perimetro del Distretto Urbano del Commercio di Torino (negozi di vicinato, somministrazione, ambulanti in sede fissa o su area pubblica)"
+               data-bando-spese="Rinnovo vetrine e arredi commerciali, interventi di accessibilità, sicurezza e antitaccheggio, digitalizzazione dei punti vendita ed e-commerce"
+               data-bando-nota="Sportello sospeso dal 13 maggio 2026 per esaurimento dei fondi. La domanda può essere ripresentata in caso di nuovo rifinanziamento o riapertura dei termini."
+               data-bando-fonte="https://bandi.comune.torino.it/avviso/bando-supporto-delle-imprese-distretto-urbano-commercio-duc-progetto-torino-compra-vicino">
             <div class="bando-card-image">
               <img src="{{ url_for('static', filename='img/botteghe-entroterra.jpg') }}" alt="DUC Torino Compra Vicino">
               <span class="bando-novita-badge"><i class="fas fa-store me-1"></i>Città di Torino</span>
@@ -2093,31 +2110,23 @@
             <div class="bando-card-body">
               <h4 class="bando-card-title-new">Torino Compra Vicino — DUC</h4>
               <p class="bando-card-desc-new">Fino all'80% a fondo perduto (max €15.000) per negozi e locali nel perimetro DUC di Torino. Vetrine, digitalizzazione, sicurezza. Scadenza 31 luglio 2026.</p>
-              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
-                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
               </a>
             </div>
           </div>
         </div>
 
         <div class="bandi-carousel-item">
-          <div class="bando-card-new">
-            <div class="bando-card-image">
-              <img src="{{ url_for('static', filename='img/agriturismi.png') }}" alt="OCM Vino Lombardia 2026">
-              <span class="bando-novita-badge"><i class="fas fa-wine-bottle me-1"></i>Regione Lombardia</span>
-            </div>
-            <div class="bando-card-body">
-              <h4 class="bando-card-title-new">OCM Vino — Investimenti Lombardia</h4>
-              <p class="bando-card-desc-new">Fino al 40% a fondo perduto per PMI vitivinicole lombarde. Cantina, attrezzature, punti vendita ed e-commerce. Dotazione ~€2 mln. Scadenza 14 maggio 2026.</p>
-              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
-                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="bandi-carousel-item">
-          <div class="bando-card-new bando-card-featured-new">
+          <div class="bando-card-new bando-card-featured-new"
+               data-bando-titolo="Vita &amp; Opportunità — Disabilità"
+               data-bando-ente="Presidenza del Consiglio dei Ministri / Invitalia"
+               data-bando-scadenza="2026-08-29"
+               data-bando-stato="sportello"
+               data-bando-importo="€386,4 milioni totali — contributo fino al 95% del costo del progetto, valutazione in ordine cronologico (no click day)"
+               data-bando-beneficiari="Enti del Terzo Settore (ETS) iscritti al RUNTS, in forma singola o associata. Per la linea Attività Ricreative ammessi anche istituti scolastici come soggetti promotori sul territorio."
+               data-bando-spese="Tre linee di intervento: 1) Progetto di Vita — autonomia abitativa, inserimento lavorativo, tempo libero; 2) Agricoltura sociale — inclusione lavorativa con attività agricole e di allevamento; 3) Attività ricreative — iniziative per giovani fino a 22 anni"
+               data-bando-fonte="https://www.invitalia.it/incentivi-e-strumenti/vita-opportunita">
             <div class="bando-card-image">
               <img src="{{ url_for('static', filename='img/professional_italian_6adfd241.jpg') }}" alt="Vita e Opportunità 2026">
               <span class="bando-novita-badge bando-novita-hot"><i class="fas fa-hands-helping me-1"></i>PCM / Invitalia</span>
@@ -2125,31 +2134,23 @@
             <div class="bando-card-body">
               <h4 class="bando-card-title-new">Vita &amp; Opportunità — Disabilità</h4>
               <p class="bando-card-desc-new">€386 milioni per ETS. Fino al 95% di contributo per inclusione, lavoro e autonomia di persone con disabilità. Sportello aperto.</p>
-              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
-                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
               </a>
             </div>
           </div>
         </div>
 
         <div class="bandi-carousel-item">
-          <div class="bando-card-new">
-            <div class="bando-card-image">
-              <img src="{{ url_for('static', filename='img/entrepreneur.jpg') }}" alt="OCM Vino Piemonte 2026">
-              <span class="bando-novita-badge"><i class="fas fa-wine-glass-alt me-1"></i>Regione Piemonte</span>
-            </div>
-            <div class="bando-card-body">
-              <h4 class="bando-card-title-new">OCM Vino — Punti Vendita Piemonte</h4>
-              <p class="bando-card-desc-new">Fino al 40% per cantine e aziende vitivinicole piemontesi. Punti vendita, sale degustazione, digitalizzazione. Dotazione €6,76 mln. Scadenza 15 maggio 2026.</p>
-              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
-                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="bandi-carousel-item">
-          <div class="bando-card-new">
+          <div class="bando-card-new"
+               data-bando-titolo="Terzo Settore — Piemonte 2026"
+               data-bando-ente="Regione Piemonte"
+               data-bando-scadenza="2026-07-07"
+               data-bando-stato="aperto"
+               data-bando-importo="Dotazione €1.413.687 per la prima annualità — contributi tra €20.000 e €50.000 per progetto. Una quota del 10% è riservata alle Fondazioni del Terzo Settore e Fondazioni ONLUS."
+               data-bando-beneficiari="Organizzazioni di Volontariato (ODV), Associazioni di Promozione Sociale (APS) e Fondazioni del Terzo Settore iscritte al RUNTS, con sede legale e operativa in Piemonte."
+               data-bando-spese="Progetti di rilevanza locale ai sensi degli artt. 72 e 73 del D.Lgs. 117/2017 — Codice del Terzo Settore. Interventi in ambito sociale, culturale, ambientale, di animazione del territorio e di tutela del patrimonio."
+               data-bando-fonte="https://bandi.regione.piemonte.it/contributi-finanziamenti/sostegno-progetti-rilevanza-locale-promossi-organizzazioni-volontariato-associazioni-promozione">
             <div class="bando-card-image">
               <img src="{{ url_for('static', filename='img/italian_business_wom_eae50a53.jpg') }}" alt="Terzo Settore Piemonte 2026">
               <span class="bando-novita-badge"><i class="fas fa-hands-helping me-1"></i>Regione Piemonte</span>
@@ -2157,8 +2158,8 @@
             <div class="bando-card-body">
               <h4 class="bando-card-title-new">Terzo Settore — Piemonte 2026</h4>
               <p class="bando-card-desc-new">Fino al 100% a fondo perduto per ODV, APS e Fondazioni piemontesi. Contributi tra €20.000 e €50.000 per progetti di rilevanza locale. Scadenza 7 luglio 2026.</p>
-              <a href="javascript:void(0)" onclick="openConsultationPopup()" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
-                <i class="fas fa-phone me-2"></i>Richiedi Informazioni
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
               </a>
             </div>
           </div>
@@ -2171,6 +2172,155 @@
     </div>
 
   </div>
+
+  <!-- ===== Modal sintesi bando (popolata da JS) ===== -->
+  <div class="bando-modal-overlay" id="bandoModalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="bando-modal" role="document">
+      <button type="button" class="bando-modal-close" onclick="closeBandoModal()" aria-label="Chiudi">
+        <i class="fas fa-times"></i>
+      </button>
+      <span class="bando-modal-ente" id="bandoModalEnte">Ente</span>
+      <h3 class="bando-modal-title" id="bandoModalTitle">Titolo bando</h3>
+      <span class="bando-modal-status" id="bandoModalStatus"><i class="fas fa-circle"></i>Stato</span>
+      <div class="bando-modal-grid">
+        <div class="bando-modal-item">
+          <div class="bando-modal-item-label"><i class="fas fa-coins"></i>Importo e contributo</div>
+          <div class="bando-modal-item-value" id="bandoModalImporto">—</div>
+        </div>
+        <div class="bando-modal-item">
+          <div class="bando-modal-item-label"><i class="fas fa-calendar-alt"></i>Scadenza</div>
+          <div class="bando-modal-item-value" id="bandoModalScadenza">—</div>
+        </div>
+      </div>
+      <div class="bando-modal-section">
+        <h5><i class="fas fa-users me-1"></i> Chi può partecipare</h5>
+        <p id="bandoModalBeneficiari">—</p>
+      </div>
+      <div class="bando-modal-section">
+        <h5><i class="fas fa-tools me-1"></i> Spese ammissibili / tipologia interventi</h5>
+        <p id="bandoModalSpese">—</p>
+      </div>
+      <div class="bando-modal-note" id="bandoModalNote"></div>
+      <div class="bando-modal-actions">
+        <button type="button" class="bando-modal-btn bando-modal-btn-primary" onclick="closeBandoModal(); openConsultationPopup();">
+          <i class="fas fa-phone-alt"></i> Richiedi consulenza gratuita
+        </button>
+        <a id="bandoModalFonte" href="#" target="_blank" rel="noopener noreferrer" class="bando-modal-btn bando-modal-btn-secondary">
+          <i class="fas fa-external-link-alt"></i> Bando ufficiale
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const MS_PER_DAY = 86400000;
+      const URGENZA_GIORNI = 30;
+      const stateLabels = {
+        aperto:    { text: 'Aperto',                  icon: 'fa-circle-check',   cls: 'is-aperto' },
+        urgente:   { text: 'Prossimo a scadenza',     icon: 'fa-exclamation',    cls: 'is-urgente' },
+        sportello: { text: 'Sportello aperto',        icon: 'fa-door-open',      cls: 'is-sportello' },
+        sospeso:   { text: 'Sportello sospeso',       icon: 'fa-ban',            cls: 'is-sospeso' }
+      };
+      function daysUntil(s){ if(!s) return null; const t=new Date(s+'T23:59:59'); if(isNaN(t.getTime()))return null; return Math.ceil((t-new Date())/MS_PER_DAY); }
+      function formatDate(s){ if(!s) return '—'; const d=new Date(s+'T00:00:00'); if(isNaN(d.getTime()))return s; return d.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'}); }
+      function applyBadges(){
+        document.querySelectorAll('.bando-card-new[data-bando-titolo]').forEach(card => {
+          const stato = card.dataset.bandoStato;
+          const sc = card.dataset.bandoScadenza;
+          const wrap = card.querySelector('.bando-card-image');
+          if (!wrap || wrap.querySelector('.bando-urgency-badge')) return;
+          let b = null;
+          if (stato === 'sospeso') {
+            b = document.createElement('span'); b.className = 'bando-urgency-badge is-sospeso';
+            b.innerHTML = '<i class="fas fa-ban"></i> Sospeso';
+          } else if (sc) {
+            const gg = daysUntil(sc);
+            if (gg !== null && gg >= 0 && gg <= URGENZA_GIORNI) {
+              b = document.createElement('span'); b.className = 'bando-urgency-badge';
+              const lab = gg === 0 ? 'Ultimo giorno' : (gg === 1 ? 'Scade domani' : 'Scade tra ' + gg + ' giorni');
+              b.innerHTML = '<i class="fas fa-clock"></i> ' + lab;
+            }
+          }
+          if (b) wrap.appendChild(b);
+        });
+      }
+      window.openBandoModal = function(el){
+        const card = el.closest('.bando-card-new');
+        if (!card) return;
+        const ov = document.getElementById('bandoModalOverlay');
+        const d = card.dataset;
+        document.getElementById('bandoModalEnte').textContent = d.bandoEnte||'';
+        document.getElementById('bandoModalTitle').innerHTML = d.bandoTitolo||'';
+        document.getElementById('bandoModalImporto').textContent = d.bandoImporto||'—';
+        document.getElementById('bandoModalBeneficiari').textContent = d.bandoBeneficiari||'—';
+        document.getElementById('bandoModalSpese').textContent = d.bandoSpese||'—';
+        let stato = d.bandoStato || 'aperto';
+        const gg = daysUntil(d.bandoScadenza);
+        if (stato === 'aperto' && gg !== null && gg >= 0 && gg <= URGENZA_GIORNI) stato = 'urgente';
+        const st = stateLabels[stato] || stateLabels.aperto;
+        const stEl = document.getElementById('bandoModalStatus');
+        stEl.className = 'bando-modal-status ' + st.cls;
+        stEl.innerHTML = '<i class="fas ' + st.icon + '"></i> ' + st.text;
+        let sc = formatDate(d.bandoScadenza);
+        if (gg !== null && gg >= 0 && stato !== 'sospeso') sc += gg === 0 ? ' — ultimo giorno' : gg === 1 ? ' — scade domani' : ' (tra ' + gg + ' giorni)';
+        else if (stato === 'sportello' && d.bandoScadenza) sc = 'Sportello aperto fino al ' + formatDate(d.bandoScadenza);
+        else if (stato === 'sospeso') sc = formatDate(d.bandoScadenza) + ' — sportello sospeso';
+        document.getElementById('bandoModalScadenza').textContent = sc;
+        const nEl = document.getElementById('bandoModalNote');
+        if (d.bandoNota){ nEl.innerHTML = '<i class="fas fa-info-circle me-1"></i> ' + d.bandoNota; nEl.classList.add('is-visible'); }
+        else { nEl.innerHTML=''; nEl.classList.remove('is-visible'); }
+        const fEl = document.getElementById('bandoModalFonte');
+        if (d.bandoFonte){ fEl.href = d.bandoFonte; fEl.style.display=''; } else fEl.style.display='none';
+        ov.classList.add('is-open'); ov.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      };
+      window.closeBandoModal = function(){
+        const ov = document.getElementById('bandoModalOverlay');
+        ov.classList.remove('is-open'); ov.setAttribute('aria-hidden','true'); document.body.style.overflow='';
+      };
+      document.addEventListener('DOMContentLoaded', function(){
+        applyBadges();
+        const ov = document.getElementById('bandoModalOverlay');
+        if (ov) ov.addEventListener('click', function(e){ if (e.target===ov) closeBandoModal(); });
+        document.addEventListener('keydown', function(e){ if (e.key==='Escape') closeBandoModal(); });
+      });
+    })();
+  </script>
+
+  <style>
+  .bando-urgency-badge { position:absolute; top:12px; right:12px; z-index:3; display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#dc2626,#991b1b); color:#fff; font-size:0.72rem; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:6px 12px; border-radius:20px; box-shadow:0 6px 16px rgba(220,38,38,0.45); animation:bandoPulse 1.6s ease-in-out infinite; }
+  .bando-urgency-badge.is-sospeso { background:linear-gradient(135deg,#6b7280,#374151); box-shadow:0 6px 16px rgba(55,65,81,0.4); animation:none; }
+  @keyframes bandoPulse { 0%,100%{transform:scale(1); box-shadow:0 6px 16px rgba(220,38,38,0.45);} 50%{transform:scale(1.06); box-shadow:0 8px 22px rgba(220,38,38,0.7);} }
+  .bando-modal-overlay { position:fixed; inset:0; background:rgba(10,21,48,0.78); backdrop-filter:blur(6px); display:none; align-items:flex-start; justify-content:center; z-index:9999; padding:5vh 20px; overflow-y:auto; }
+  .bando-modal-overlay.is-open { display:flex; animation:bandoFadeIn 0.25s ease; }
+  @keyframes bandoFadeIn { from{opacity:0;} to{opacity:1;} }
+  .bando-modal { background:#fff; border-radius:18px; max-width:720px; width:100%; padding:2.2rem 2rem 1.8rem; position:relative; box-shadow:0 40px 80px rgba(0,0,0,0.45); animation:bandoSlideUp 0.3s ease; }
+  @keyframes bandoSlideUp { from{transform:translateY(30px); opacity:0;} to{transform:translateY(0); opacity:1;} }
+  .bando-modal-close { position:absolute; top:12px; right:14px; background:#f3f4f6; border:none; width:36px; height:36px; border-radius:50%; font-size:1.1rem; color:#0a1530; cursor:pointer; transition:all 0.2s ease; }
+  .bando-modal-close:hover { background:#e5e7eb; transform:rotate(90deg); }
+  .bando-modal-ente { display:inline-block; background:linear-gradient(135deg,#1a5276,#0a1530); color:#fff; font-size:0.74rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:0.8rem; }
+  .bando-modal-title { font-family:'Source Serif 4',serif; font-weight:700; font-size:1.55rem; color:#0a1530; margin:0 0 0.4rem; line-height:1.25; }
+  .bando-modal-status { display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:700; padding:5px 12px; border-radius:18px; margin-bottom:1.2rem; }
+  .bando-modal-status.is-aperto{background:#dcfce7; color:#166534;} .bando-modal-status.is-urgente{background:#fee2e2; color:#991b1b;} .bando-modal-status.is-sospeso{background:#f3f4f6; color:#374151;} .bando-modal-status.is-sportello{background:#dbeafe; color:#1e40af;}
+  .bando-modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.2rem 0 0.8rem; }
+  .bando-modal-item { background:#f8fafc; border-left:3px solid #d4af37; border-radius:8px; padding:0.9rem 1rem; }
+  .bando-modal-item-label { font-size:0.72rem; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase; margin-bottom:0.3rem; display:flex; align-items:center; gap:6px; }
+  .bando-modal-item-label i { color:#d4af37; }
+  .bando-modal-item-value { color:#0a1530; font-size:0.95rem; font-weight:600; line-height:1.4; }
+  .bando-modal-section { margin-top:1rem; }
+  .bando-modal-section h5 { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:#6b7280; margin:0 0 0.4rem; }
+  .bando-modal-section p { font-size:0.96rem; line-height:1.6; color:#1f2937; margin:0; }
+  .bando-modal-note { background:#fff7ed; border:1px solid #fdba74; border-radius:10px; padding:0.8rem 1rem; font-size:0.88rem; color:#9a3412; margin-top:1rem; display:none; }
+  .bando-modal-note.is-visible { display:block; }
+  .bando-modal-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:1.6rem; padding-top:1.4rem; border-top:1px solid #e5e7eb; }
+  .bando-modal-btn { flex:1; min-width:200px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0.85rem 1.4rem; border-radius:30px; font-weight:700; font-size:0.95rem; text-decoration:none; border:none; cursor:pointer; transition:all 0.25s ease; }
+  .bando-modal-btn-primary { background:linear-gradient(135deg,#d4af37,#f4d03f); color:#0a1530; }
+  .bando-modal-btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 28px rgba(212,175,55,0.45); color:#0a1530; }
+  .bando-modal-btn-secondary { background:#f3f4f6; color:#0a1530; border:1px solid #e5e7eb; }
+  .bando-modal-btn-secondary:hover { background:#e5e7eb; color:#0a1530; }
+  @media (max-width:600px){ .bando-modal{padding:1.6rem 1.2rem;} .bando-modal-title{font-size:1.25rem;} .bando-modal-grid{grid-template-columns:1fr;} }
+  </style>
+
 </section>
 
 <style>
@@ -2998,4 +3148,108 @@
             const submitBtn = document.getElementById('consultation-submit-btn');
             
             submitBtn.disabled = true;
-    
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Invio...';
+
+            try {
+              const response = await fetch('/api/consultation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, phone: phone })
+              });
+
+              const data = await response.json();
+              
+              if (data.success) {
+                document.getElementById('consultation-form-wrap').style.display = 'none';
+                document.getElementById('consultation-success').style.display = 'block';
+              } else {
+                alert('Errore: ' + (data.error || 'Riprova più tardi'));
+              }
+            } catch (error) {
+              alert('Errore di connessione. Riprova.');
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Richiedi Consulenza';
+          }
+
+          document.getElementById('consultation-popup').addEventListener('click', function(e) {
+            if (e.target === this) closeConsultationPopup();
+          });
+        </script>
+        
+            </body>
+
+</html>
+
+<script>
+function filterCategory(category) {
+  const cards = document.querySelectorAll('.bandocard');
+  const buttons = document.querySelectorAll('.btn-group .btn');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    if (category === 'tutti' || card.classList.contains(category)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function filterBandi() {
+  const input = document.getElementById('searchBando').value.toLowerCase();
+  const cards = document.querySelectorAll('.bandocard');
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? 'block' : 'none';
+  });
+}
+
+
+
+  
+</script>
+<script>
+  if (window.matchMedia("(max-width: 575.98px)").matches) {
+    const navbar = document.querySelector('.nav-bar');
+    let lastY = window.scrollY;
+
+    // Stato iniziale
+    if (lastY === 0) {
+      navbar.classList.add('at-top', 'visible');
+    } else {
+      navbar.classList.add('visible');
+    }
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+
+      if (y === 0) {
+        // In cima: navbar statica, SENZA visible/hidden per evitare transizioni
+        navbar.classList.add('at-top');
+        navbar.classList.remove('visible','hidden');
+      } else {
+        // dopo i primi scroll: fixed + hide/show come prima
+        navbar.classList.remove('at-top');
+        if (y > lastY + 5) {
+          navbar.classList.add('hidden');
+          navbar.classList.remove('visible');
+        } else if (y < lastY - 5) {
+          navbar.classList.add('visible');
+          navbar.classList.remove('hidden');
+        }
+      }
+
+      lastY = y;
+    });
+  }
+
+  
+</script>
+
+
+

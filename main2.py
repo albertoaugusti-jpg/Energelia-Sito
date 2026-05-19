@@ -73,6 +73,22 @@ def favicon():
     )
 
 
+# ✅ Health check endpoint per servizi di keep-alive (UptimeRobot ecc.)
+# Risponde 200 OK con un payload minimo e SENZA Google Analytics:
+# così il container Render non va mai in sleep e le statistiche restano pulite.
+@app.route('/healthz')
+def healthz():
+    return ('OK', 200, {'Content-Type': 'text/plain; charset=utf-8',
+                        'Cache-Control': 'no-store'})
+
+
+# ✅ Health check endpoint per uptime monitoring (UptimeRobot ecc.)
+# Restituisce solo "OK" senza HTML né Google Analytics: non inquina le statistiche.
+@app.route('/healthz')
+def healthz():
+    return ('OK', 200, {'Content-Type': 'text/plain; charset=utf-8'})
+
+
 # ✅ Route per servire i file statici in modo trasparente
 @app.route('/<path:filename>')
 def static_files(filename):
