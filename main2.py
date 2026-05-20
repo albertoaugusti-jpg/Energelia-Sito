@@ -82,13 +82,6 @@ def healthz():
                         'Cache-Control': 'no-store'})
 
 
-# ✅ Health check endpoint per uptime monitoring (UptimeRobot ecc.)
-# Restituisce solo "OK" senza HTML né Google Analytics: non inquina le statistiche.
-@app.route('/healthz')
-def healthz():
-    return ('OK', 200, {'Content-Type': 'text/plain; charset=utf-8'})
-
-
 # ✅ Route per servire i file statici in modo trasparente
 @app.route('/<path:filename>')
 def static_files(filename):
