@@ -1,6 +1,5 @@
 import os
 import re
-import json
 import html
 import smtplib
 import threading
@@ -282,35 +281,16 @@ def scarica_sito():
 
 @app.route('/download-report/<bando>')
 def download_report(bando):
-    """Serve un PDF report a partire dal suo slug.
-    La mappa slug -> filename viene letta da static/reports/_reports.json
-    (gestito dall'app locale bandi-manager). Mantiene fallback per
-    i bandi storici cablati nel codice."""
-    reports_dir = os.path.join(app.static_folder, 'reports')
-
-    # Mappa dinamica gestita da bandi-manager
-    reports_json = os.path.join(reports_dir, '_reports.json')
-    dynamic_reports = {}
-    if os.path.exists(reports_json):
-        try:
-            with open(reports_json, 'r', encoding='utf-8') as f:
-                dynamic_reports = json.load(f)
-        except (json.JSONDecodeError, OSError):
-            dynamic_reports = {}
-
-    # Fallback storico (bandi vecchi cablati in codice)
-    legacy_reports = {
+    reports = {
         'isi_inail': 'report_inail_2025.pdf',
         'parco_agrisolare': 'parco_agrisolare.pdf',
         'resto_sud': 'resto_sud.pdf'
     }
 
-    # Dynamic ha priorità su legacy (così Alberto può sovrascrivere)
-    reports = {**legacy_reports, **dynamic_reports}
-
     if bando not in reports:
         abort(404)
 
+    reports_dir = os.path.join('static', 'reports')
     return send_from_directory(reports_dir, reports[bando], as_attachment=True)
 
 
