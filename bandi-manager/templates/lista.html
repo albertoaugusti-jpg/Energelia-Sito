@@ -1,0 +1,186 @@
+{% extends "_base.html" %}
+{% block title %}Lista bandi{% endblock %}
+
+{% block extra_head %}
+<style>
+  .info-bar code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; }
+  .bandi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .bando-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.15s;
+  }
+  .bando-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .bando-card-img {
+    height: 140px;
+    background-size: cover;
+    background-position: center;
+    background-color: #e5e7eb;
+    position: relative;
+  }
+  .bando-card-img .badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(10,37,64,0.92);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .bando-card-img .badge.hot { background: var(--accent); color: var(--primary); }
+  .bando-card-img .featured-flag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--accent);
+    color: var(--primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+  .bando-card-body {
+    padding: 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .bando-card-body h3 {
+    margin: 0 0 6px 0;
+    font-size: 1rem;
+    color: var(--primary);
+  }
+  .bando-card-body p {
+    margin: 0 0 12px 0;
+    font-size: 0.83rem;
+    color: var(--muted);
+    flex: 1;
+  }
+  .bando-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .bando-tag {
+    font-size: 0.72rem;
+    padding: 3px 8px;
+    border-radius: 12px;
+    background: var(--bg);
+    color: var(--muted);
+  }
+  .bando-tag.stato-aperto    { background: #dcfce7; color: #15803d; }
+  .bando-tag.stato-sportello { background: #dcfce7; color: #15803d; }
+  .bando-tag.stato-futuro    { background: #fef3c7; color: #92400e; }
+  .bando-tag.stato-sospeso   { background: #fef3c7; color: #92400e; }
+  .bando-tag.stato-scaduto   { background: #fee2e2; color: #991b1b; }
+  .bando-tag.cta-report      { background: #dbeafe; color: #1e40af; }
+  .bando-actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .bando-actions form { margin: 0; display: inline-block; }
+  .empty-state {
+    text-align: center;
+    padding: 64px 24px;
+    background: var(--card);
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="info-bar">
+  <div>
+    <strong>{{ totale }}</strong> bandi caricati da
+    <code>{{ index_path }}</code>
+  </div>
+  <a href="{{ url_for('nuovo') }}" class="btn accent">
+    <i class="fas fa-plus"></i> Aggiungi nuovo bando
+  </a>
+</div>
+
+{% if not bandi %}
+<div class="empty-state">
+  <p style="font-size: 1.1rem; margin-bottom: 16px;">Nessun bando trovato.</p>
+  <a href="{{ url_for('nuovo') }}" class="btn primary">
+    <i class="fas fa-plus"></i> Crea il primo bando
+  </a>
+</div>
+{% else %}
+<div class="bandi-grid">
+  {% for b in bandi %}
+  <div class="bando-card">
+    <div class="bando-card-img"
+         style="background-image: url('{{ url_for('anteprima_img', filename=b.immagine[4:] if b.immagine.startswith('img/') else b.immagine) }}');">
+      {% if b.badge_testo %}
+      <span class="badge {% if b.badge_hot %}hot{% endif %}">
+        <i class="fas {{ b.badge_icona }}"></i> {{ b.badge_testo }}
+      </span>
+      {% endif %}
+      {% if b.featured %}
+      <span class="featured-flag">FEATURED</span>
+      {% endif %}
+    </div>
+    <div class="bando-card-body">
+      <h3>{{ b.titolo_breve or b.titolo }}</h3>
+      <p>{{ b.descrizione_breve[:140] }}{% if b.descrizione_breve|length > 140 %}…{% endif %}</p>
+      <div class="bando-meta">
+        <span class="bando-tag stato-{{ b.stato }}">{{ b.stato }}</span>
+        {% if b.cta_tipo == 'report_pdf' %}
+        <span class="bando-tag cta-report"><i class="fas fa-file-pdf"></i> PDF</span>
+        {% endif %}
+        {% if b.scadenza %}
+        <span class="bando-tag"><i class="far fa-calendar-alt"></i> {{ b.scadenza }}</span>
+        {% endif %}
+      </div>
+      <div class="bando-actions">
+        <a href="{{ url_for('modifica', slug=b.slug) }}" class="btn small primary">
+          <i class="fas fa-pen"></i> Modifica
+        </a>
+        <form method="post" action="{{ url_for('duplica', slug=b.slug) }}">
+          <button type="submit" class="btn small"><i class="fas fa-clone"></i> Duplica</button>
+        </form>
+        {% if not loop.first %}
+        <form method="post" action="{{ url_for('sposta', slug=b.slug, direzione='su') }}">
+          <button type="submit" class="btn small" title="Sposta su"><i class="fas fa-arrow-up"></i></button>
+        </form>
+        {% endif %}
+        {% if not loop.last %}
+        <form method="post" action="{{ url_for('sposta', slug=b.slug, direzione='giu') }}">
+          <button type="submit" class="btn small" title="Sposta giù"><i class="fas fa-arrow-down"></i></button>
+        </form>
+        {% endif %}
+        <form method="post" action="{{ url_for('elimina', slug=b.slug) }}"
+              onsubmit="return confirm('Sicuro di voler eliminare il bando &laquo;{{ b.titolo_breve|e }}&raquo;?');">
+          <button type="submit" class="btn small danger"><i class="fas fa-trash"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="info-bar" style="margin-top: 32px; background: #fffbeb; border-color: #fde68a;">
+  <div>
+    <i class="fas fa-info-circle" style="color: var(--warning);"></i>
+    <strong>Ricorda:</strong> dopo le modifiche, apri <strong>GitHub Desktop</strong>,
+    scrivi un Summary, fai <strong>Commit</strong> e <strong>Push origin</strong>.
+    Il sito si aggiorna su Render in ~2 minuti.
+  </div>
+</div>
+{% endblock %}

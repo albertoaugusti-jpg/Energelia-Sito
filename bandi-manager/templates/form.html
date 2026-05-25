@@ -1,0 +1,389 @@
+{% extends "_base.html" %}
+{% block title %}{% if azione == 'nuovo' %}Nuovo bando{% else %}Modifica bando{% endif %}{% endblock %}
+
+{% block extra_head %}
+<style>
+  .form-wrap {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  .form-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .form-card h2 {
+    margin-top: 0;
+    color: var(--primary);
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .form-row.full { grid-template-columns: 1fr; }
+  .form-field label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--primary);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .form-field .hint {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+  .form-field input[type="text"],
+  .form-field input[type="url"],
+  .form-field input[type="date"],
+  .form-field input[type="file"],
+  .form-field select,
+  .form-field textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-size: 0.92rem;
+    font-family: inherit;
+    background: white;
+  }
+  .form-field textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(10,37,64,0.1);
+  }
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .checkbox-row input[type="checkbox"] { width: auto; }
+  .checkbox-row label { margin: 0; cursor: pointer; }
+  .actions-bar {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    padding: 14px 24px;
+    margin: 24px -24px -24px -24px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    border-radius: 0 0 8px 8px;
+  }
+  .img-preview {
+    margin-top: 8px;
+    height: 80px;
+    background-size: cover;
+    background-position: center;
+    background-color: #e5e7eb;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .icon-suggest {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .icon-suggest button {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.82rem;
+  }
+  .icon-suggest button:hover { background: var(--accent); color: var(--primary); }
+  .cta-block { display: none; }
+  .cta-block.active { display: block; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-wrap">
+  <form method="post" enctype="multipart/form-data" action="">
+
+    <div class="form-card">
+      <h2>1. Aspetto della card</h2>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Titolo breve <span style="color:var(--danger)">*</span></label>
+          <input type="text" name="titolo_breve" required maxlength="80"
+                 value="{{ bando.titolo_breve if bando else '' }}"
+                 placeholder="Es. Conto Termico 3.0">
+          <div class="hint">Visibile in grande sulla card. Max ~50 caratteri.</div>
+        </div>
+        <div class="form-field">
+          <label>Titolo esteso (per modal)</label>
+          <input type="text" name="titolo" maxlength="200"
+                 value="{{ bando.titolo if bando else '' }}"
+                 placeholder="Es. Conto Termico 3.0 — Efficienza energetica">
+          <div class="hint">Se vuoto usa il titolo breve.</div>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-field">
+          <label>Descrizione breve <span style="color:var(--danger)">*</span></label>
+          <textarea name="descrizione_breve" required maxlength="240"
+                    placeholder="Una frase di 1-2 righe che spiega il bando.">{{ bando.descrizione_breve if bando else '' }}</textarea>
+          <div class="hint">Max ~200 caratteri. Va sotto il titolo nella card.</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Badge (ente sintetico)</label>
+          <input type="text" name="badge_testo" maxlength="50"
+                 value="{{ bando.badge_testo if bando else '' }}"
+                 placeholder="Es. INAIL, Regione Lombardia">
+          <div class="hint">Etichetta nell'angolo della card.</div>
+        </div>
+        <div class="form-field">
+          <label>Icona badge (FontAwesome)</label>
+          <input type="text" name="badge_icona" id="badge_icona"
+                 value="{{ bando.badge_icona if bando else 'fa-bullhorn' }}"
+                 placeholder="fa-building">
+          <div class="icon-suggest">
+            {% for ic in ['fa-bullhorn','fa-building','fa-bolt','fa-hotel','fa-mountain','fa-user-tie','fa-tshirt','fa-tools','fa-landmark','fa-leaf','fa-store','fa-hands-helping','fa-map-marker-alt','fa-industry','fa-tractor','fa-graduation-cap'] %}
+            <button type="button" onclick="document.getElementById('badge_icona').value='{{ ic }}';">
+              <i class="fas {{ ic }}"></i> {{ ic }}
+            </button>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" name="badge_hot" id="badge_hot"
+               {% if bando and bando.badge_hot %}checked{% endif %}>
+        <label for="badge_hot">Badge "hot" (sfondo oro, evidenziato)</label>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" name="featured" id="featured"
+               {% if bando and bando.featured %}checked{% endif %}>
+        <label for="featured">Card "featured" (bordo dorato in evidenza)</label>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Immagine esistente</label>
+          <select name="immagine" id="immagine_select">
+            <option value="">— scegli una immagine —</option>
+            {% for img in immagini %}
+            <option value="{{ img }}" {% if bando and bando.immagine == img %}selected{% endif %}>{{ img }}</option>
+            {% endfor %}
+          </select>
+          <div class="img-preview" id="img_preview"
+               style="background-image: url('{% if bando and bando.immagine %}{{ url_for('anteprima_img', filename=bando.immagine[4:] if bando.immagine.startswith('img/') else bando.immagine) }}{% endif %}');"></div>
+        </div>
+        <div class="form-field">
+          <label>Oppure carica una nuova immagine</label>
+          <input type="file" name="immagine_upload" accept="image/*">
+          <div class="hint">Se carichi un file, sovrascrive la selezione sopra. Va in <code>img/</code>.</div>
+
+          <label style="margin-top:14px;">Alt immagine (accessibilità)</label>
+          <input type="text" name="alt_immagine"
+                 value="{{ bando.alt_immagine if bando else '' }}"
+                 placeholder="Es. Bando Conto Termico per efficienza energetica">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>2. Dati dettagliati (visibili nel modal)</h2>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Ente erogatore</label>
+          <input type="text" name="ente" maxlength="200"
+                 value="{{ bando.ente if bando else '' }}"
+                 placeholder="Es. Regione Lombardia (PR FESR 2021-2027)">
+        </div>
+        <div class="form-field">
+          <label>Stato</label>
+          <select name="stato">
+            {% for k, label in stati %}
+            <option value="{{ k }}" {% if bando and bando.stato == k %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Scadenza (opzionale)</label>
+          <input type="date" name="scadenza"
+                 value="{{ bando.scadenza if bando else '' }}">
+          <div class="hint">Attiva il badge "scadenza imminente" sotto i 30 giorni.</div>
+        </div>
+        <div class="form-field">
+          <label>Fonte ufficiale (URL)</label>
+          <input type="url" name="fonte"
+                 value="{{ bando.fonte if bando else '' }}"
+                 placeholder="https://www.regione...">
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-field">
+          <label>Importo / dotazione</label>
+          <textarea name="importo" maxlength="500">{{ bando.importo if bando else '' }}</textarea>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-field">
+          <label>Beneficiari</label>
+          <textarea name="beneficiari" maxlength="800">{{ bando.beneficiari if bando else '' }}</textarea>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-field">
+          <label>Spese ammissibili</label>
+          <textarea name="spese" maxlength="800">{{ bando.spese if bando else '' }}</textarea>
+        </div>
+      </div>
+
+      <div class="form-row full">
+        <div class="form-field">
+          <label>Nota aggiuntiva (opzionale)</label>
+          <textarea name="nota" maxlength="500"
+                    placeholder="Es. Apertura sportello prevista per...">{{ bando.nota if bando else '' }}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>3. Pulsante (Call to Action)</h2>
+
+      <div class="form-row full">
+        <div class="form-field">
+          <label>Comportamento del bottone</label>
+          <select name="cta_tipo" id="cta_tipo">
+            <option value="modal"        {% if not bando or bando.cta_tipo == 'modal' %}selected{% endif %}>Modal con dettagli (scopri di più)</option>
+            <option value="report_pdf"   {% if bando and bando.cta_tipo == 'report_pdf' %}selected{% endif %}>Download diretto di un PDF report</option>
+            <option value="link_diretto" {% if bando and bando.cta_tipo == 'link_diretto' %}selected{% endif %}>Link a una pagina del sito (URL custom)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="cta-block" data-cta="report_pdf" {% if bando and bando.cta_tipo == 'report_pdf' %}style="display:block;"{% endif %}>
+        <div class="form-row">
+          <div class="form-field">
+            <label>Carica PDF report</label>
+            <input type="file" name="pdf_report" accept="application/pdf">
+            <div class="hint">
+              Verrà salvato in <code>static/reports/{slug}.pdf</code>.
+              {% if bando and bando.report_filename %}Attuale: <code>{{ bando.report_filename }}</code>. Lascia vuoto per non sostituirlo.{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-block" data-cta="link_diretto" {% if bando and bando.cta_tipo == 'link_diretto' %}style="display:block;"{% endif %}>
+        <div class="form-row">
+          <div class="form-field">
+            <label>URL di destinazione</label>
+            <input type="text" name="cta_url"
+                   value="{{ bando.cta_url if bando else '' }}"
+                   placeholder="/report-inail oppure https://...">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Testo del bottone (opzionale)</label>
+          <input type="text" name="cta_label" maxlength="60"
+                 value="{{ bando.cta_label if bando else '' }}"
+                 placeholder="Lascia vuoto per il default in base al tipo">
+        </div>
+        <div class="form-field">
+          <label>Icona del bottone (opzionale)</label>
+          <input type="text" name="cta_icon"
+                 value="{{ bando.cta_icon if bando else '' }}"
+                 placeholder="fa-file-download / fa-info-circle / ...">
+        </div>
+      </div>
+    </div>
+
+    {% if azione == 'nuovo' %}
+    <div class="form-card">
+      <h2>4. Posizione nel carosello</h2>
+      <div class="form-row">
+        <div class="form-field">
+          <label>Dove inserire</label>
+          <select name="posizione">
+            <option value="cima">In cima (primo bando)</option>
+            <option value="fondo" selected>In fondo (ultimo bando)</option>
+          </select>
+          <div class="hint">Potrai poi spostarlo su/giù dalla lista.</div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="form-card">
+      <div class="actions-bar">
+        <a href="{{ url_for('lista') }}" class="btn">Annulla</a>
+        <button type="submit" class="btn accent">
+          <i class="fas fa-save"></i>
+          {% if azione == 'nuovo' %}Crea bando{% else %}Salva modifiche{% endif %}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script>
+  // Anteprima immagine al cambio del select
+  const sel = document.getElementById('immagine_select');
+  const preview = document.getElementById('img_preview');
+  if (sel) {
+    sel.addEventListener('change', () => {
+      const val = sel.value;
+      if (val) {
+        const fname = val.startsWith('img/') ? val.substring(4) : val;
+        preview.style.backgroundImage = "url('/anteprima-img/" + encodeURIComponent(fname) + "')";
+      } else {
+        preview.style.backgroundImage = '';
+      }
+    });
+  }
+
+  // Mostra/nascondi blocchi CTA in base al tipo
+  const ctaSel = document.getElementById('cta_tipo');
+  const ctaBlocks = document.querySelectorAll('.cta-block');
+  function refreshCta() {
+    const val = ctaSel.value;
+    ctaBlocks.forEach(b => {
+      b.style.display = (b.dataset.cta === val) ? 'block' : 'none';
+    });
+  }
+  if (ctaSel) {
+    ctaSel.addEventListener('change', refreshCta);
+    refreshCta();
+  }
+</script>
+{% endblock %}
