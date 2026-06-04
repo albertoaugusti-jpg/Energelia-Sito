@@ -1,0 +1,3501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>  
+        <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'wait_for_update': 500
+  });
+  try {
+    if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'analytics_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted'
+      });
+    }
+  } catch(e) {}
+</script>
+
+<!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-VL6MKDTQXH"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-VL6MKDTQXH');
+        </script>
+        <!-- Google Ads -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17893109593"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-17893109593');
+        </script>
+      
+        <meta charset="utf-8">
+        <title> Energelia </title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts - Stile Istituzionale -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+        <link href="{{ url_for('static', filename='lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <!-- Favicon Energelia -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    </head>
+
+<style>
+  @media (max-width: 575.98px) {
+    .nav-bar {
+      padding-top: 0.25rem !important;
+      padding-bottom: 0.25rem !important;
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+    }
+    .nav-bar .navbar-nav .nav-link {
+      padding: 0.25rem 0.5rem !important;
+      font-size: 0.9rem;
+    }
+    .nav-bar .navbar-brand .navbar-logo {
+      height: 50px !important;
+    }
+  }
+
+ 
+
+  @media (max-width: 575.98px) {
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
+      z-index: 999;
+    }
+    .nav-bar.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    .nav-bar.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @media (max-width: 767px) {
+    .counters-grid {
+      justify-content: center !important;  /* centra gli item invece di space-between */
+      flex-wrap: wrap;                      /* permette il wrap se lo schermo è stretto */
+      gap: 12px;                            /* spazio leggermente ridotto */
+    }
+    .counter-item {
+      flex: 0 1 auto;                      /* dimensione automatica al contenuto */
+      margin: 0;                            /* rimuove margini esterni */
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    /* 1) In cima: navbar statica e spinge il banner */
+    .nav-bar.at-top {
+      position: static !important;
+      background-color: rgba(255,255,255,0.85);
+    }
+    /* 2) Dopo scroll: fixed con hide/show */
+    .nav-bar:not(.at-top) {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
+    }
+    .nav-bar.hidden { transform: translateY(-100%); opacity: 0; }
+    .nav-bar.visible { transform: translateY(0);    opacity: 1; }
+  }
+
+  @media (max-width: 575.98px) {
+    /* Niente transizioni quando sei in cima */
+    .nav-bar.at-top {
+      transition: none !important;
+    }
+  }
+
+
+  @media (max-width: 575.98px) {
+    /* In cima: navbar statica e senza transizioni */
+    .nav-bar.at-top {
+      position: static !important;
+      transition: none !important;
+    }
+
+    /* Oltre la soglia: fixed con le tue transizioni */
+    .nav-bar:not(.at-top) {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 999;
+      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
+    }
+
+    .nav-bar.hidden { transform: translateY(-100%); opacity: 0; }
+    .nav-bar.visible { transform: translateY(0);    opacity: 1; }
+  }
+
+
+
+
+  /* === Popup Overlay & Content === */
+  .popup-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: none;             /* start hidden */
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
+    padding: 1rem;
+  }
+
+  .popup-content {
+    background: #fff;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    text-align: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    animation: popup-zoom-in 0.6s ease-out forwards;
+  }
+
+  .popup-close {
+    position: absolute;
+    top: 0.5rem; right: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+  }
+
+  /* Form elements */
+  #popup-form input[type="email"] {
+    width: calc(100% - 20px);
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  #popup-form button {
+    background: #0050b5;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  #popup-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,80,181,0.3);
+  }
+
+  /* Responsiveness */
+  @media (max-width: 480px) {
+    .popup-content {
+      padding: 1.5rem 1rem;
+    }
+    .popup-close {
+      font-size: 1.2rem;
+    }
+  }
+
+  /* === Animazione di ingresso === */
+  @keyframes popup-zoom-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  /* === Schermata di successo === */
+  .popup-success-wrap {
+    text-align: center;
+    animation: popup-zoom-in 0.6s ease-out forwards;
+  }
+  .popup-success-wrap h2 {
+    font-size: 1.8rem;
+    color: #0050b5;
+    margin-bottom: 0.5rem;
+  }
+  .popup-success-wrap p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  .popup-close-success {
+    background: #00aaff;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .popup-close-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,170,255,0.3);
+  }
+
+
+  </style>
+    <body>
+      <div id="lead-popup" class="popup-overlay" style="display:none;">
+        <div class="popup-content">
+          <button class="popup-close" onclick="closeLeadPopup()">&times;</button>
+
+          <div class="popup-form-wrap" id="lead-form-wrap">
+            <h2 id="popup-bando-title">Scarica il Report Gratuito</h2>
+            <p>Inserisci la tua email per ricevere il report completo con tutte le informazioni sul bando.</p>
+            <form id="lead-form" onsubmit="submitLead(event)">
+              <input type="email" id="lead-email" placeholder="La tua email aziendale" required>
+              <input type="hidden" id="lead-bando-id" value="">
+              <button type="submit" id="lead-submit-btn">
+                <i class="fas fa-download me-2"></i>Scarica Report
+              </button>
+            </form>
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">I tuoi dati non verranno condivisi con terzi.</p>
+          </div>
+
+          <div class="popup-success-wrap" id="lead-success" style="display:none;">
+            <h2>Report in arrivo!</h2>
+            <p>Il download partirà automaticamente.<br>Controlla la tua email per altri aggiornamenti.</p>
+            <button class="popup-close-success" onclick="closeLeadPopup()">Chiudi</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POPUP CONSULENZA GRATUITA -->
+      <div id="consultation-popup" class="popup-overlay" style="display:none;">
+        <div class="popup-content">
+          <button class="popup-close" onclick="closeConsultationPopup()">&times;</button>
+
+          <div class="popup-form-wrap" id="consultation-form-wrap">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 15px;">
+                <i class="fas fa-calendar-check" style="color: white; font-size: 1.5rem;"></i>
+              </div>
+              <h2 style="color:#0a1530; margin: 0 0 8px 0; font-size: 1.6rem; font-weight: 700;">Prenota Consulenza Gratuita</h2>
+              <p style="color:#666; margin: 0; font-size: 0.95rem;">Un nostro consulente ti contatterà <strong>entro 48 ore</strong></p>
+            </div>
+            
+            <div style="background: #f8f9fa; border-radius: 10px; padding: 16px; margin-bottom: 20px; border-left: 3px solid #d4af37;">
+              <p style="color: #0a1530; font-weight: 600; margin: 0 0 12px 0; font-size: 0.9rem;">
+                <i class="fas fa-gift me-2" style="color: #d4af37;"></i>Cosa otterrai:
+              </p>
+              <ul style="margin: 0; padding: 0; list-style: none;">
+                <li style="color: #444; font-size: 0.85rem; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px;">
+                  <i class="fas fa-check-circle" style="color: #22c55e; margin-top: 3px; flex-shrink: 0;"></i>
+                  <span>Analisi gratuita dei preventivi per verificare la fattibilità di un bando</span>
+                </li>
+                <li style="color: #444; font-size: 0.85rem; display: flex; align-items: flex-start; gap: 8px;">
+                  <i class="fas fa-check-circle" style="color: #22c55e; margin-top: 3px; flex-shrink: 0;"></i>
+                  <span>Report ufficiale Energelia dei bandi di tuo interesse</span>
+                </li>
+              </ul>
+            </div>
+            
+            <form id="consultation-form" onsubmit="submitConsultation(event)">
+              <input type="email" id="consultation-email" placeholder="La tua email aziendale" required style="margin-bottom: 12px; border: 1px solid #ddd; border-radius: 8px; padding: 14px 16px; font-size: 0.95rem;">
+              <input type="tel" id="consultation-phone" placeholder="Numero di telefono" required style="margin-bottom: 16px; border: 1px solid #ddd; border-radius: 8px; padding: 14px 16px; font-size: 0.95rem;">
+              <button type="submit" id="consultation-submit-btn" style="background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%); color: #0a1530; font-weight: 600; padding: 14px 24px; border-radius: 8px; font-size: 1rem; width: 100%; border: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                <i class="fas fa-paper-plane me-2"></i>Richiedi Consulenza Gratuita
+              </button>
+            </form>
+            <p style="font-size: 0.75rem; color: #999; margin-top: 14px; text-align: center;">
+              <i class="fas fa-lock me-1"></i>I tuoi dati sono al sicuro. Non condividiamo nulla con terzi.
+            </p>
+          </div>
+
+          <div class="popup-success-wrap" id="consultation-success" style="display:none;">
+            <h2 style="color:#0a1530;"><i class="fas fa-check-circle me-2" style="color:#28a745;"></i>Richiesta Inviata!</h2>
+            <p style="color:#555;">Un nostro consulente ti contatterà <strong>entro 48 ore</strong>.<br>Grazie per averci scelto!</p>
+            <button class="popup-close-success" onclick="closeConsultationPopup()" style="background: #d4af37; color: #0a1530;">Chiudi</button>
+          </div>
+        </div>
+      </div>
+
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+        
+
+      
+{% include 'life-insurance-website-template/partials/navbar.html' %}
+
+<!-- ====================  SHIELD LOGO (deborda navbar → CTA)  ==================== -->
+<style>
+  #shield-logo-wrap {
+    position: relative;
+    z-index: 1100;
+    height: 0;
+    overflow: visible;
+  }
+  #shield-logo-link {
+    position: absolute;
+    top: -70px;
+    left: 28px;
+    display: block;
+    z-index: 1100;
+    text-decoration: none;
+  }
+  #shield-logo-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    background-color: #0c1e4a;
+    border-radius: 12px;
+    border: 4px solid #ffffff;
+    box-shadow:
+      0 0 0 6px rgba(255,255,255,0.16),
+      0 14px 40px rgba(0,0,0,0.65);
+    display: block;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease;
+  }
+  /* Alone dorato pulsante dietro il logo */
+  #shield-logo-link::before {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    border-radius: 22px;
+    background: radial-gradient(ellipse at center,
+      rgba(244, 208, 63, 0.55) 0%,
+      rgba(212, 175, 55, 0.25) 45%,
+      rgba(212, 175, 55, 0) 75%);
+    z-index: 1;
+    pointer-events: none;
+    animation: logo-glow-pulse 3.4s ease-in-out infinite;
+  }
+  @keyframes logo-glow-pulse {
+    0%, 100% { transform: scale(0.96); opacity: 0.55; }
+    50%      { transform: scale(1.06); opacity: 0.95; }
+  }
+  /* Shimmer obliquo che attraversa il logo */
+  #shield-logo-link::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border-radius: 10px;
+    background: linear-gradient(115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.28) 48%,
+      rgba(255, 255, 255, 0.42) 50%,
+      rgba(255, 255, 255, 0.28) 52%,
+      transparent 70%);
+    background-size: 250% 100%;
+    background-position: 200% 0;
+    z-index: 3;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    animation: logo-shimmer 5.5s ease-in-out infinite;
+  }
+  @keyframes logo-shimmer {
+    0%, 85%, 100% { background-position: 200% 0; opacity: 0; }
+    90%           { opacity: 1; }
+    95%           { background-position: -50% 0; opacity: 1; }
+  }
+  #shield-logo-link:hover #shield-logo-img {
+    transform: scale(1.05);
+  }
+  @media (max-width: 575.98px) {
+    #shield-logo-link { top: -46px; left: 14px; }
+    #shield-logo-img  { width: 80px; height: 80px; border-radius: 10px; border-width: 3px; }
+    #shield-logo-link::before { inset: -10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #shield-logo-link::before,
+    #shield-logo-link::after { animation: none; }
+  }
+</style>
+<div id="shield-logo-wrap">
+  <a id="shield-logo-link" href="/" aria-label="Energelia — Home">
+    <img id="shield-logo-img" src="img/logo-hq.png" alt="Logo Energelia">
+  </a>
+</div>
+<!-- ====================  FINE SHIELD LOGO  ==================== -->
+
+<!-- ====================  CTA RICERCA BANDI  ==================== -->
+<section class="cta-ricerca-bandi" aria-label="Ricerca bandi personalizzata">
+  <div class="container">
+    <div class="cta-ricerca-grid">
+      <div class="cta-ricerca-text">
+        <span class="cta-ricerca-badge">
+          <i class="fas fa-bullseye me-2"></i>RICERCA PERSONALIZZATA
+        </span>
+        <h2 class="cta-ricerca-title">
+          Cerchi il bando giusto per la tua azienda?
+        </h2>
+        <p class="cta-ricerca-sub">
+          Te lo troviamo noi. Ricerca dedicata, gratuita, senza impegno.
+        </p>
+        <ul class="cta-ricerca-list">
+          <li><i class="fas fa-check-circle"></i>Analisi della tua azienda e dei settori finanziabili</li>
+          <li><i class="fas fa-check-circle"></i>Selezione dei bandi compatibili attivi oggi</li>
+          <li><i class="fas fa-check-circle"></i>Ti ricontattiamo entro 48 ore lavorative</li>
+        </ul>
+      </div>
+      <div class="cta-ricerca-form-wrap">
+        <form id="ctaRicercaForm" class="cta-ricerca-form" novalidate>
+          <h3 class="cta-form-title">Richiedi la tua ricerca</h3>
+          <div class="cta-field">
+            <label for="ctaRicercaEmail">Email aziendale</label>
+            <input type="email" id="ctaRicercaEmail" name="email" placeholder="nome@azienda.it" required autocomplete="email">
+          </div>
+          <div class="cta-field">
+            <label for="ctaRicercaPhone">Telefono</label>
+            <input type="tel" id="ctaRicercaPhone" name="phone" placeholder="010 1234567" required autocomplete="tel">
+          </div>
+          <button type="submit" id="ctaRicercaSubmit" class="cta-submit-btn">
+            <span class="cta-btn-label"><i class="fas fa-paper-plane me-2"></i>Richiedimi una ricerca</span>
+            <span class="cta-btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin me-2"></i>Invio in corso…</span>
+          </button>
+          <p class="cta-privacy-note">
+            <i class="fas fa-shield-alt me-1"></i>I tuoi dati sono protetti. Vedi la <a href="/privacy-policy">Privacy Policy</a>.
+          </p>
+          <div class="cta-form-success" id="ctaRicercaSuccess" style="display:none;">
+            <i class="fas fa-check-circle me-2"></i><strong>Richiesta inviata!</strong> Ti ricontatteremo entro 48 ore.
+          </div>
+          <div class="cta-form-error" id="ctaRicercaError" style="display:none;">
+            <i class="fas fa-exclamation-triangle me-2"></i><span id="ctaRicercaErrorMsg">Si è verificato un errore. Riprova.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.cta-ricerca-bandi {
+  background: linear-gradient(135deg, #0a1530 0%, #1a5276 60%, #1f6694 100%);
+  color: #fff;
+  padding: 3.5rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid #d4af37;
+}
+.cta-ricerca-bandi::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0) 70%);
+  pointer-events: none;
+}
+.cta-ricerca-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.cta-ricerca-text { max-width: 600px; }
+.cta-ricerca-badge {
+  display: inline-block;
+  background: rgba(212,175,55,0.18);
+  border: 1px solid rgba(212,175,55,0.5);
+  color: #f4d03f;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+}
+.cta-ricerca-title {
+  font-family: 'Source Serif 4', 'Georgia', serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+.cta-ricerca-sub {
+  font-size: 1.05rem;
+  opacity: 0.92;
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+.cta-ricerca-list { list-style: none; padding: 0; margin: 0; }
+.cta-ricerca-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.92);
+}
+.cta-ricerca-list i {
+  color: #f4d03f;
+  font-size: 1rem;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.cta-ricerca-form-wrap { position: relative; }
+.cta-ricerca-form {
+  background: #fff;
+  color: #0a1530;
+  border-radius: 18px;
+  padding: 1.8rem 1.6rem;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+.cta-form-title {
+  font-family: 'Source Serif 4', 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #0a1530;
+  margin: 0 0 1.1rem;
+  text-align: center;
+}
+.cta-field { margin-bottom: 0.85rem; }
+.cta-field label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #5a6577;
+  margin-bottom: 4px;
+}
+.cta-field input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #d6dde7;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #0a1530;
+  background: #f7f9fc;
+  transition: all 0.2s ease;
+}
+.cta-field input:focus {
+  outline: none;
+  border-color: #1a5276;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,82,118,0.12);
+}
+.cta-submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #0a1530;
+  border: none;
+  border-radius: 30px;
+  padding: 13px 20px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.4rem;
+  transition: all 0.25s ease;
+}
+.cta-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(212,175,55,0.45);
+}
+.cta-submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.cta-privacy-note {
+  font-size: 0.78rem;
+  color: #6b7689;
+  text-align: center;
+  margin: 0.8rem 0 0;
+}
+.cta-privacy-note a { color: #1a5276; text-decoration: underline; }
+.cta-form-success, .cta-form-error {
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-top: 0.9rem;
+}
+.cta-form-success {
+  background: #e8f5ee;
+  color: #1e7e3a;
+  border: 1px solid #b6dec2;
+}
+.cta-form-error {
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid #f5c2bd;
+}
+
+@media (max-width: 991.98px) {
+  .cta-ricerca-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+}
+@media (max-width: 575.98px) {
+  .cta-ricerca-bandi { padding: 2.5rem 0 2.2rem; }
+  .cta-ricerca-title { font-size: 1.5rem; }
+  .cta-ricerca-list li { font-size: 0.9rem; }
+}
+</style>
+
+<script>
+(function() {
+  var form = document.getElementById('ctaRicercaForm');
+  if (!form) return;
+  var submit = document.getElementById('ctaRicercaSubmit');
+  var label = form.querySelector('.cta-btn-label');
+  var loading = form.querySelector('.cta-btn-loading');
+  var success = document.getElementById('ctaRicercaSuccess');
+  var error = document.getElementById('ctaRicercaError');
+  var errorMsg = document.getElementById('ctaRicercaErrorMsg');
+
+  function setLoading(on) {
+    if (on) { label.style.display = 'none'; loading.style.display = 'inline-block'; submit.disabled = true; }
+    else { label.style.display = 'inline-block'; loading.style.display = 'none'; submit.disabled = false; }
+  }
+  function showError(msg) {
+    success.style.display = 'none';
+    errorMsg.textContent = msg || 'Si è verificato un errore. Riprova.';
+    error.style.display = 'block';
+  }
+  function showSuccess() {
+    error.style.display = 'none';
+    success.style.display = 'block';
+    form.reset();
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('ctaRicercaEmail').value.trim();
+    var phone = document.getElementById('ctaRicercaPhone').value.trim();
+    if (!email || email.indexOf('@') === -1) { showError('Inserisci un indirizzo email valido.'); return; }
+    if (!phone || phone.length < 6) { showError('Inserisci un numero di telefono valido.'); return; }
+
+    setLoading(true);
+    fetch('/api/consultation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, phone: phone })
+    })
+    .then(function(r) { return r.json().then(function(d) { return { status: r.status, data: d }; }); })
+    .then(function(res) {
+      setLoading(false);
+      if (res.status === 200 && res.data && res.data.success) {
+        showSuccess();
+        if (typeof gtag === 'function') {
+          gtag('event', 'lead_ricerca_bandi', { 'event_category': 'CTA', 'event_label': 'home_ricerca_bandi' });
+        }
+      } else {
+        showError((res.data && res.data.error) || 'Si è verificato un errore. Riprova.');
+      }
+    })
+    .catch(function() {
+      setLoading(false);
+      showError('Connessione non disponibile. Riprova fra poco.');
+    });
+  });
+})();
+</script>
+<!-- ==================== FINE CTA RICERCA BANDI ==================== -->
+
+<style>
+  /* Logo ingrandito */
+
+
+  .nav-bar {
+    background-color: rgba(255,255,255,0.97) !important;
+    box-shadow: 0 4px 16px 0 rgba(34,97,170,0.06); /* effetto elegante, cambia pure il colore se vuoi */
+    transition: background-color 0.2s, box-shadow 0.2s;
+  }
+
+  
+  .navbar-logo {
+    height: 120px !important;
+    width: auto;
+  }
+
+  /* Area Clienti button */
+  .btn-area-clienti {
+    background-color: #0050b5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .btn-area-clienti:hover {
+    background-color: #00397f;
+    transform: translateY(-2px);
+  }
+</style>
+
+
+<style>
+
+  
+  /* Area Clienti button */
+  .btn-area-clienti {
+    background-color: #0050b5;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .btn-area-clienti:hover {
+    background-color: #00397f;
+    transform: translateY(-2px);
+  }
+
+  /* Adjust spacing for call icon area */
+  .nav-bar .btn-light {
+    padding: 0.5rem;
+  }
+</style>
+
+
+        <style>
+  .navbar-logo {
+    height: 80px !important;
+    width: auto;
+  }
+</style>
+
+
+        <style>
+.navbar-nav .nav-link {
+  position: relative;
+  font-weight: 500;
+  color: #222 !important;
+  padding: 8px 10px;
+  transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 0%;
+  height: 2px;
+  background-color: #0050b5;
+  transition: width 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  width: 100%;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #0050b5 !important;
+}
+
+.navbar {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+}
+
+.dropdown-menu {
+  border: none;
+  padding: 0.5rem;
+  background-color: #fff;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-item {
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f6ff;
+  color: #0050b5;
+}
+
+.nav-bar {
+  z-index: 999;
+}
+
+/* MOBILE RESPONSIVE - 576px e sotto */
+@media (max-width: 576px) {
+  /* Hero carousel */
+  .header-carousel-item {
+    min-height: 75vh;
+    height: auto !important;
+    display: flex;
+    align-items: center;
+  }
+  .header-carousel-item .carousel-caption {
+    padding: 90px 15px 50px !important;
+    position: relative;
+  }
+  .header-carousel-item h1.display-1 {
+    font-size: 1.4rem !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 1.2rem !important;
+  }
+  .header-carousel-item p {
+    font-size: 0.9rem !important;
+    margin-bottom: 1.5rem !important;
+    padding: 0 5px;
+  }
+  /* CTA Buttons mobile */
+  .header-carousel-item .hero-cta-btn {
+    width: 100%;
+    padding: 14px 20px !important;
+    font-size: 0.85rem !important;
+  }
+  .header-carousel-item .d-flex.gap-3 {
+    gap: 10px !important;
+    padding: 0 5px;
+  }
+  /* Vantaggi section mobile spacing */
+  .vantaggi-section {
+    margin-top: 0 !important;
+    padding-top: 60px !important;
+  }
+  .vantaggi-header {
+    margin-bottom: 40px !important;
+  }
+  .vantaggi-badge {
+    font-size: 0.7rem !important;
+    padding: 10px 20px !important;
+    letter-spacing: 2px !important;
+  }
+}
+
+/* Tablet responsive */
+@media (max-width: 768px) and (min-width: 577px) {
+  .header-carousel-item h1.display-1 {
+    font-size: 2rem !important;
+  }
+  .header-carousel-item .hero-cta-btn {
+    padding: 12px 20px !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+</style>
+
+        <!-- Modal Search Start -->
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center bg-primary">
+                        <div class="input-group w-75 mx-auto d-flex">
+                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span id="search-icon-1" class="btn bg-light border nput-group-text p-3"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Search End -->
+
+
+        <!-- Shield Logo: vuoto qui, viene reso subito dopo la navbar (vedi sopra) -->
+
+        <!-- Carousel Start -->
+<div class="header-carousel owl-carousel"
+     style="
+       /* QUI REGOLI TUTTO */
+       --bg-img: url('img/hero-quadro.png');
+       --overlay: rgba(0, 0, 0, 0.28);
+       --h4-color: #ffffff;
+       --h4-size: 1rem;
+       --h1-color: #ffffff;
+       --h1-size: 1.85rem;
+       --p-color: #dddddd;
+       --p-size: 1.05rem;
+       --btn1-bg: #ffffff;
+       --btn1-color: #333333;
+       --btn2-bg: #002244;
+       --btn2-color: #ffffff;
+       --padding-vertical: 30px;
+       --padding-top-extra: 110px;
+     ">
+  <div class="header-carousel-item" style="
+      background: transparent;
+      position: relative;
+      overflow: hidden;
+    ">
+    <!-- VIDEO HERO — sostituisce l'immagine del faro -->
+    <div style="position:absolute;inset:0;z-index:0;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:var(--overlay,rgba(0,0,0,0.28));z-index:1;"></div>
+      <video id="heroVideo" autoplay muted loop playsinline
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;">
+        <source src="img/hero-video.mp4" type="video/mp4">
+      </video>
+    </div>
+    <!-- Pulsante mute/unmute -->
+    <button id="heroAudioBtn" onclick="(function(){var v=document.getElementById('heroVideo');v.muted=!v.muted;document.getElementById('heroAudioBtn').innerHTML=v.muted?'&#128263;':'&#128266;'})()" 
+            style="position:absolute;bottom:22px;right:22px;z-index:20;background:rgba(0,0,0,0.45);border:none;border-radius:50%;width:44px;height:44px;font-size:1.3rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:background 0.2s;"
+            title="Attiva/disattiva audio">&#128263;</button>
+    <!-- Effetto onde del mare -->
+    <div class="hero-fx" aria-hidden="true">
+      <svg class="hero-wave hero-wave-back" viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <path d="M0,40 C240,10 480,70 720,40 C960,10 1200,70 1440,40 L1440,80 L0,80 Z"
+              fill="rgba(212,175,55,0.10)"/>
+      </svg>
+      <svg class="hero-wave hero-wave-front" viewBox="0 0 1440 60" preserveAspectRatio="none">
+        <path d="M0,30 C180,5 360,55 720,30 C1080,5 1260,55 1440,30 L1440,60 L0,60 Z"
+              fill="rgba(255,255,255,0.06)"/>
+      </svg>
+    </div>
+
+    <!-- Hotspot interattivi: faro, nave, porto -->
+    <div class="hero-hotspots">
+      <button type="button" class="hero-hotspot hero-hotspot-faro" data-title="Il Faro — Energelia" data-story="Il faro siamo noi. Dal 2006 mostriamo alle imprese dove cercare i bandi giusti." aria-label="Scopri: il Faro">
+        <span class="hero-hotspot-dot"></span>
+      </button>
+      <button type="button" class="hero-hotspot hero-hotspot-nave" data-title="La Nave — L'impresa" data-story="La nave sei tu. Scegli la rotta, noi illuminiamo la via." aria-label="Scopri: la Nave">
+        <span class="hero-hotspot-dot"></span>
+      </button>
+      <button type="button" class="hero-hotspot hero-hotspot-porto" data-title="Il Porto — Il finanziamento" data-story="Il porto è il bando vinto. È lì che la rotta diventa risultato." aria-label="Scopri: il Porto">
+        <span class="hero-hotspot-dot"></span>
+      </button>
+      <!-- Card "diario di bordo" condivisa -->
+      <div class="hero-hotspot-card" id="heroHotspotCard" role="dialog" aria-hidden="true">
+        <button type="button" class="hero-hotspot-close" id="heroHotspotClose" aria-label="Chiudi">&times;</button>
+        <div class="hero-hotspot-corner hero-hotspot-corner-tl"></div>
+        <div class="hero-hotspot-corner hero-hotspot-corner-tr"></div>
+        <div class="hero-hotspot-corner hero-hotspot-corner-bl"></div>
+        <div class="hero-hotspot-corner hero-hotspot-corner-br"></div>
+        <h4 class="hero-hotspot-title" id="heroHotspotTitle"></h4>
+        <p class="hero-hotspot-text" id="heroHotspotText"></p>
+        <div class="hero-hotspot-compass" aria-hidden="true">&#x2693;</div>
+      </div>
+    </div>
+
+    <div class="carousel-caption" style="padding: calc(var(--padding-vertical) + var(--padding-top-extra, 0px)) 0 var(--padding-vertical) 0; position: relative; z-index: 3;">
+      <div class="container">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-12 animated fadeInUp">
+            <div class="text-center">
+              <h1 id="heroRotator" class="display-1 mb-4 text-uppercase"
+                  style="
+                    color: var(--h1-color);
+                    font-size: var(--h1-size);
+                    text-shadow: 0 3px 6px rgba(0,0,0,0.6);
+                    line-height: 1.15;
+                    letter-spacing: 2px;
+                    min-height: 4em;
+                  ">
+                <span class="hero-rotator-slot hero-rotator-active">TROVARE UN BANDO NON CONCLUDE IL NOSTRO LAVORO,<br><span style="color: #d4af37;">FARLO DIVENTARE FINANZA PER I CLIENTI È IL NOSTRO APPRODO</span></span>
+              </h1>
+              <p class="mb-5 mx-auto"
+                 style="
+                   color: var(--p-color);
+                   font-size: var(--p-size);
+                   line-height: 1.6;
+                   max-width: 700px;
+                   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+                 ">
+                Energelia Srl supporta le imprese a trovare finanza agevolata, bandi e incentivi.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<style>
+/* ===== HERO FX: fascio del faro + onde ===== */
+.hero-fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+}
+/* (Rimosso il fascio CSS: usiamo solo quello già dipinto nell'immagine) */
+.hero-wave {
+  position: absolute;
+  left: 0;
+  width: 200%;
+  height: 70px;
+  pointer-events: none;
+}
+.hero-wave-back {
+  bottom: 0;
+  animation: wave-move-slow 18s ease-in-out infinite alternate;
+}
+.hero-wave-front {
+  bottom: 0;
+  height: 50px;
+  animation: wave-move-fast 11s ease-in-out infinite alternate;
+}
+@keyframes wave-move-slow {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-6%); }
+}
+@keyframes wave-move-fast {
+  from { transform: translateX(-3%); }
+  to   { transform: translateX(3%); }
+}
+
+/* ===== Rotatore claim ===== */
+.hero-rotator-slot {
+  display: block;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  opacity: 1;
+  transform: translateY(0);
+}
+.hero-rotator-slot.is-leaving {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+.hero-rotator-slot.is-entering {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-wave-back,
+  .hero-wave-front { animation: none; }
+  .hero-rotator-slot { transition: none; }
+}
+
+/* ===== HOTSPOT INTERATTIVI ===== */
+.hero-hotspots {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+.hero-hotspot {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.hero-hotspot:focus { outline: 2px solid #f4d03f; outline-offset: 4px; }
+.hero-hotspot-faro  { top: 36%; left: 49%; }
+.hero-hotspot-nave  { top: 60%; left: 81%; }
+.hero-hotspot-porto { top: 78%; left: 12%; }
+
+.hero-hotspot-dot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(244,208,63,1) 0%,
+    rgba(212,175,55,0.85) 35%,
+    rgba(212,175,55,0) 70%);
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.6),
+    0 0 18px rgba(244,208,63,0.7);
+  animation: hotspot-pulse 2.2s ease-in-out infinite;
+}
+@keyframes hotspot-pulse {
+  0%, 100% { transform: scale(0.85); opacity: 0.85; }
+  50%      { transform: scale(1.15); opacity: 1; }
+}
+.hero-hotspot:hover .hero-hotspot-dot,
+.hero-hotspot.is-active .hero-hotspot-dot {
+  animation: none;
+  transform: scale(1.25);
+  background: radial-gradient(circle,
+    rgba(255,236,170,1) 0%,
+    rgba(244,208,63,1) 35%,
+    rgba(212,175,55,0.5) 70%);
+}
+
+/* CARD "DIARIO DI BORDO" */
+.hero-hotspot-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: min(380px, 88vw);
+  padding: 22px 24px 20px;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(0,0,0,0.04), rgba(0,0,0,0.0) 70%),
+    radial-gradient(ellipse at 70% 80%, rgba(139,90,30,0.07), rgba(0,0,0,0) 60%),
+    linear-gradient(135deg, #f5e6c4 0%, #ecd5a6 50%, #e0c690 100%);
+  color: #3a2a16;
+  font-family: 'Source Serif 4', 'Georgia', serif;
+  border: 2px solid #8b6f3f;
+  border-radius: 4px;
+  box-shadow:
+    0 18px 40px rgba(0,0,0,0.5),
+    inset 0 0 40px rgba(139,111,63,0.12);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+  z-index: 10;
+  pointer-events: none;
+}
+.hero-hotspot-card.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+.hero-hotspot-card::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed rgba(139,111,63,0.55);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.hero-hotspot-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #8b6f3f;
+}
+.hero-hotspot-corner-tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+.hero-hotspot-corner-tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+.hero-hotspot-corner-bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+.hero-hotspot-corner-br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+.hero-hotspot-title {
+  font-family: 'Source Serif 4', 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #4a3520;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(139,111,63,0.4);
+}
+.hero-hotspot-text {
+  font-size: 1rem;
+  line-height: 1.55;
+  margin: 0;
+  text-align: center;
+  font-style: italic;
+  color: #3a2a16;
+}
+.hero-hotspot-compass {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 1.2rem;
+  color: rgba(139,111,63,0.6);
+}
+.hero-hotspot-close {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  color: rgba(74,53,32,0.7);
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  z-index: 2;
+}
+.hero-hotspot-close:hover { color: #3a2a16; }
+
+@media (max-width: 575.98px) {
+  .hero-hotspot { width: 32px; height: 32px; }
+  .hero-hotspot-card { padding: 18px 18px 16px; }
+  .hero-hotspot-title { font-size: 0.95rem; }
+  .hero-hotspot-text { font-size: 0.92rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-hotspot-dot { animation: none; }
+  .hero-hotspot-card { transition: opacity 0.2s; }
+}
+</style>
+
+<script>
+(function() {
+  var slot = document.querySelector('#heroRotator .hero-rotator-slot');
+  if (!slot) return;
+
+  var claims = [
+    'TROVARE UN BANDO NON CONCLUDE IL NOSTRO LAVORO,<br><span style="color:#d4af37;">FARLO DIVENTARE FINANZA PER I CLIENTI È IL NOSTRO APPRODO</span>',
+    'NAVIGHIAMO TRA BANDI E INCENTIVI<br><span style="color:#d4af37;">PER PORTARE LE IMPRESE A DESTINAZIONE DAL 2006</span>',
+    'OGNI AZIENDA HA IL SUO BANDO,<br><span style="color:#d4af37;">NOI LO TROVIAMO E LO TRASFORMIAMO IN FINANZIAMENTO</span>',
+    'NEL MARE DEI BANDI SERVE UN FARO,<br><span style="color:#d4af37;">ENERGELIA È QUELLA LUCE PER LE IMPRESE ITALIANE</span>'
+  ];
+
+  var idx = 0;
+  function rotate() {
+    idx = (idx + 1) % claims.length;
+    slot.classList.add('is-leaving');
+    setTimeout(function() {
+      slot.innerHTML = claims[idx];
+      slot.classList.remove('is-leaving');
+      slot.classList.add('is-entering');
+      // forziamo il reflow per applicare la transizione di entrata
+      void slot.offsetWidth;
+      slot.classList.remove('is-entering');
+    }, 700);
+  }
+  setInterval(rotate, 6500);
+})();
+</script>
+
+<script>
+/* Hotspot interattivi sul hero: faro, nave, porto */
+(function() {
+  var hotspots = document.querySelectorAll('.hero-hotspot');
+  var card     = document.getElementById('heroHotspotCard');
+  var titleEl  = document.getElementById('heroHotspotTitle');
+  var textEl   = document.getElementById('heroHotspotText');
+  var closeBtn = document.getElementById('heroHotspotClose');
+  if (!hotspots.length || !card) return;
+
+  // Su touch usiamo solo click; su desktop usiamo hover + click
+  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  function open(spot) {
+    titleEl.textContent = spot.dataset.title || '';
+    textEl.textContent  = spot.dataset.story || '';
+    card.classList.add('is-open');
+    card.setAttribute('aria-hidden', 'false');
+    hotspots.forEach(function(h) { h.classList.remove('is-active'); });
+    spot.classList.add('is-active');
+  }
+  function close() {
+    card.classList.remove('is-open');
+    card.setAttribute('aria-hidden', 'true');
+    hotspots.forEach(function(h) { h.classList.remove('is-active'); });
+  }
+
+  hotspots.forEach(function(spot) {
+    spot.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (spot.classList.contains('is-active')) {
+        close();
+      } else {
+        open(spot);
+      }
+    });
+    if (!isTouch) {
+      spot.addEventListener('mouseenter', function() { open(spot); });
+    }
+  });
+
+  // Chiusura: tasto X, click fuori, ESC
+  closeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    close();
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.hero-hotspot') && !e.target.closest('.hero-hotspot-card')) {
+      close();
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') close();
+  });
+
+  // Su desktop: chiudi quando si esce dall'intera area hotspot
+  if (!isTouch) {
+    var heroArea = document.querySelector('.header-carousel-item');
+    if (heroArea) {
+      heroArea.addEventListener('mouseleave', function() { close(); });
+    }
+  }
+})();
+</script>
+</div>
+<!-- Carousel End -->
+
+<!-- ============================================== -->
+<!-- SEZIONE PERCORSO 10 TAPPE + PROFILI CLIENTI    -->
+<!-- ============================================== -->
+<section class="percorso-section">
+  <div class="container">
+
+    <!-- Header -->
+    <div class="percorso-header">
+      <span class="percorso-badge">PERCHÉ SCEGLIERE ENERGELIA</span>
+      <h2 class="percorso-title">I nostri clienti ci hanno scelto per <span class="gold">10 motivi</span></h2>
+      <p class="percorso-subtitle">Trasformiamo la complessità dei bandi in risultati concreti per la tua azienda.</p>
+    </div>
+
+    <!-- 3 Profili cliente tipo -->
+    <div class="profili-grid">
+      <div class="profilo-card">
+        <div class="profilo-photo">
+          <img src="{{ url_for('static', filename='img/ingegnere.png') }}" alt="Profilo cliente: imprenditore manifatturiero">
+        </div>
+        <div class="profilo-label">Profilo cliente tipico</div>
+        <div class="profilo-name">Marco</div>
+        <div class="profilo-role">Imprenditore manifatturiero</div>
+      </div>
+      <div class="profilo-card">
+        <div class="profilo-photo">
+          <img src="{{ url_for('static', filename='img/imprenditrice.png') }}" alt="Profilo cliente: titolare PMI agricola">
+        </div>
+        <div class="profilo-label">Profilo cliente tipico</div>
+        <div class="profilo-name">Giulia</div>
+        <div class="profilo-role">Titolare PMI agricola</div>
+      </div>
+      <div class="profilo-card">
+        <div class="profilo-photo">
+          <img src="{{ url_for('static', filename='img/donna-negozio.png') }}" alt="Profilo cliente: esercente commercio al dettaglio">
+        </div>
+        <div class="profilo-label">Profilo cliente tipico</div>
+        <div class="profilo-name">Sara</div>
+        <div class="profilo-role">Esercente commercio al dettaglio</div>
+      </div>
+    </div>
+
+    <!-- Separatore "Il nostro percorso" -->
+    <div class="percorso-intro">
+      <span class="percorso-intro-label">IL NOSTRO PERCORSO</span>
+      <h3>Dalla prima telefonata all'erogazione</h3>
+      <p>Passa il mouse su ogni tappa per scoprire come lavoriamo, passo dopo passo.</p>
+    </div>
+
+    <!-- Zigzag con 10 tappe -->
+    <div class="percorso-zigzag" id="percorsoZigzag">
+      <!-- Tappa 1 -->
+      <button type="button" class="tappa tappa-up" data-num="01" data-title="Zero stress" data-text="La burocrazia dei bandi è complessa e stressante. Noi gestiamo tutto: dalla ricerca del bando perfetto fino all'erogazione. Tu ci dai dati, preventivi e obiettivo. Fine.">
+        <span class="tappa-num">01</span>
+        <span class="tappa-label">Zero stress</span>
+      </button>
+      <!-- Tappa 2 -->
+      <button type="button" class="tappa tappa-down" data-num="02" data-title="Verifica PRIMA" data-text="Facciamo un controllo di ammissibilità approfondito PRIMA di iniziare. Se il bando non è adatto a te, non partiamo nemmeno. Niente illusioni, niente tempo perso.">
+        <span class="tappa-num">02</span>
+        <span class="tappa-label">Verifica prima</span>
+      </button>
+      <!-- Tappa 3 -->
+      <button type="button" class="tappa tappa-up" data-num="03" data-title="Fino all'erogazione" data-text="Gestiamo l'intera istruttoria, rispondiamo alle richieste di integrazione e prepariamo la rendicontazione. Il nostro lavoro finisce quando il contributo arriva sul tuo conto.">
+        <span class="tappa-num">03</span>
+        <span class="tappa-label">Fino all'erogazione</span>
+      </button>
+      <!-- Tappa 4 -->
+      <button type="button" class="tappa tappa-down" data-num="04" data-title="Interessi allineati" data-text="Guadagniamo solo quando tu ottieni risultati. Il nostro successo è legato al tuo: siamo partner, non semplici fornitori.">
+        <span class="tappa-num">04</span>
+        <span class="tappa-label">Interessi allineati</span>
+      </button>
+      <!-- Tappa 5 -->
+      <button type="button" class="tappa tappa-up" data-num="05" data-title="Comunicazione chiara" data-text="Ti teniamo aggiornato ad ogni passo con comunicazioni chiare e tempestive. Sai sempre a che punto siamo, senza dover inseguire nessuno.">
+        <span class="tappa-num">05</span>
+        <span class="tappa-label">Comunicazione chiara</span>
+      </button>
+      <!-- Tappa 6 -->
+      <button type="button" class="tappa tappa-down" data-num="06" data-title="Track record consolidato" data-text="Dal 2006 al fianco delle imprese italiane: domande presentate, approvate ed erogate, progetti rendicontati fino all'ultimo centesimo. La nostra reputazione si costruisce sul metodo, non sui proclami.">
+        <span class="tappa-num">06</span>
+        <span class="tappa-label">Track record</span>
+      </button>
+      <!-- Tappa 7 -->
+      <button type="button" class="tappa tappa-up" data-num="07" data-title="Esperienza su ogni livello" data-text="Bandi regionali, nazionali ed europei: li conosciamo tutti. Sappiamo quali funzionano e quali evitare, in base al tuo settore e alla tua dimensione.">
+        <span class="tappa-num">07</span>
+        <span class="tappa-label">Ogni livello</span>
+      </button>
+      <!-- Tappa 8 -->
+      <button type="button" class="tappa tappa-down" data-num="08" data-title="Team multidisciplinare" data-text="Tecnici, commercialisti, esperti legali: un team completo per coprire ogni aspetto della tua domanda. Nessuna sorpresa burocratica all'ultimo momento.">
+        <span class="tappa-num">08</span>
+        <span class="tappa-label">Team completo</span>
+      </button>
+      <!-- Tappa 9 -->
+      <button type="button" class="tappa tappa-up" data-num="09" data-title="Monitoraggio costante" data-text="Monitoriamo continuamente i nuovi bandi in uscita. Quando esce un'opportunità adatta a te, ti avvisiamo subito — prima che scada.">
+        <span class="tappa-num">09</span>
+        <span class="tappa-label">Monitoraggio</span>
+      </button>
+      <!-- Tappa 10 -->
+      <button type="button" class="tappa tappa-down tappa-final" data-num="10" data-title="Nessun anticipo, rischi minimi" data-text="Non chiediamo anticipi onerosi. Partiamo con costi minimi e il grosso della fee arriva solo a risultato ottenuto. Zero rischi per te.">
+        <span class="tappa-num">10</span>
+        <span class="tappa-label">Nessun anticipo</span>
+      </button>
+
+      <!-- Card popup descrizione -->
+      <div class="tappa-card" id="tappaCard" role="dialog" aria-hidden="true">
+        <button type="button" class="tappa-card-close" id="tappaCardClose" aria-label="Chiudi">&times;</button>
+        <span class="tappa-card-num" id="tappaCardNum">01</span>
+        <h4 class="tappa-card-title" id="tappaCardTitle"></h4>
+        <p class="tappa-card-text" id="tappaCardText"></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.vantaggi-section {
+  background: linear-gradient(180deg, #050a15 0%, #0a1530 50%, #050a15 100%);
+  padding: 100px 0 120px;
+  position: relative;
+}
+.vantaggi-header {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 70px;
+}
+.vantaggi-badge {
+  display: inline-block;
+  background: rgba(212, 175, 55, 0.12);
+  color: #d4af37;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  padding: 12px 28px;
+  border-radius: 30px;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  margin-bottom: 25px;
+}
+.vantaggi-main-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+}
+.vantaggi-subtitle {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 550px;
+  margin: 0 auto;
+}
+
+/* NUOVO LAYOUT: BLOCCHI CON 3 MOTIVI + FOTO */
+.motivi-block {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 80px;
+}
+.motivi-block:last-child {
+  margin-bottom: 0;
+}
+.motivi-block-reverse {
+  flex-direction: row-reverse;
+}
+.motivi-list {
+  flex: 1;
+}
+.motivo-item {
+  margin-bottom: 35px;
+  padding-bottom: 35px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.motivo-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.motivi-image {
+  width: 380px;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+.motivi-image-small {
+  height: 280px;
+}
+.motivi-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: transform 0.5s ease;
+}
+.motivi-image:hover img {
+  transform: scale(1.05);
+}
+.motivo-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: rgba(212, 175, 55, 0.25);
+  line-height: 1;
+  margin-bottom: 8px;
+  font-family: 'Inter', sans-serif;
+}
+.motivo-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.motivo-desc {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.7;
+  margin: 0;
+}
+.motivo-desc strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+.gold-text {
+  color: #d4af37;
+}
+
+/* RESPONSIVE */
+@media (max-width: 991px) {
+  .vantaggi-section { padding: 80px 0; }
+  .vantaggi-main-title { font-size: 2.4rem; }
+  .motivi-block {
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+  .motivi-block-reverse {
+    flex-direction: column;
+  }
+  .motivi-image {
+    width: 100%;
+    height: 280px;
+  }
+  .motivi-image-small {
+    height: 220px;
+  }
+  .motivo-number { font-size: 2rem; }
+  .motivo-title { font-size: 1.3rem; }
+}
+@media (max-width: 576px) {
+  .vantaggi-section { padding: 60px 0; }
+  .vantaggi-main-title { font-size: 1.9rem; }
+  .vantaggi-subtitle { font-size: 1rem; }
+  .vantaggi-header { margin-bottom: 50px; }
+  .motivi-block { margin-bottom: 50px; gap: 30px; }
+  .motivi-image {
+    width: 100%;
+    height: 220px;
+  }
+  .motivi-image-small {
+    height: 180px;
+  }
+  .motivo-item { margin-bottom: 25px; padding-bottom: 25px; }
+  .motivo-number { font-size: 1.8rem; }
+  .motivo-title { font-size: 1.2rem; }
+  .motivo-desc { font-size: 0.95rem; }
+}
+</style>
+
+<!-- ============================================== -->
+<!-- CSS + JS PERCORSO 10 TAPPE                     -->
+<!-- ============================================== -->
+<style>
+.percorso-section {
+  padding: 6rem 0 5rem;
+  background:
+    radial-gradient(ellipse at 80% 10%, rgba(212,175,55,0.08), transparent 60%),
+    radial-gradient(ellipse at 10% 90%, rgba(26,82,118,0.07), transparent 60%),
+    #f7f9fc;
+  position: relative;
+  overflow: hidden;
+}
+.percorso-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+.percorso-badge {
+  display: inline-block;
+  background: rgba(212,175,55,0.15);
+  color: #b8941f;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.percorso-title {
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  color: #0a1530;
+  font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+  margin-bottom: 0.6rem;
+  line-height: 1.2;
+}
+.percorso-title .gold { color: #d4af37; }
+.percorso-subtitle {
+  font-size: 1.08rem;
+  color: #5a6577;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ===== PROFILI CLIENTE ===== */
+.profili-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 920px;
+  margin: 0 auto 4rem;
+}
+.profilo-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 1.6rem 1.2rem;
+  text-align: center;
+  border: 1px solid #e5e8ee;
+  box-shadow: 0 10px 28px rgba(10,21,48,0.06);
+  transition: all 0.3s ease;
+}
+.profilo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 50px rgba(10,21,48,0.13);
+  border-color: #d4af37;
+}
+.profilo-photo {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+  border: 3px solid #f4d03f;
+  box-shadow: 0 8px 20px rgba(212,175,55,0.25);
+  background: #f7f9fc;
+}
+.profilo-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.profilo-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #b8941f;
+  margin-bottom: 0.4rem;
+}
+.profilo-name {
+  font-family: 'Source Serif 4', serif;
+  font-weight: 700;
+  color: #0a1530;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+}
+.profilo-role {
+  font-size: 0.92rem;
+  color: #5a6577;
+}
+
+/* ===== Separatore "Il nostro percorso" ===== */
+.percorso-intro {
+  text-align: center;
+  margin: 0 auto 3rem;
+  max-width: 600px;
+}
+.percorso-intro-label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #1a5276;
+  background: rgba(26,82,118,0.08);
+  padding: 6px 16px;
+  border-radius: 30px;
+  margin-bottom: 0.9rem;
+}
+.percorso-intro h3 {
+  font-family: 'Source Serif 4', serif;
+  color: #0a1530;
+  font-weight: 700;
+  font-size: 1.55rem;
+  margin-bottom: 0.5rem;
+}
+.percorso-intro p {
+  color: #5a6577;
+  font-size: 0.98rem;
+  margin: 0;
+}
+
+/* ===== ZIGZAG PERCORSO ===== */
+.percorso-zigzag {
+  position: relative;
+  padding: 4rem 0 3rem;
+  min-height: 280px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  align-items: center;
+  gap: 0;
+}
+/* Linea SVG del percorso (sfondo) */
+.percorso-zigzag::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 60%;
+  transform: translateY(-50%);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 200' preserveAspectRatio='none'><path d='M 0,100 Q 50,20 100,100 T 200,100 T 300,100 T 400,100 T 500,100 T 600,100 T 700,100 T 800,100 T 900,100 T 1000,100' stroke='%23d4af37' stroke-width='3' stroke-dasharray='6 6' fill='none' opacity='0.55'/></svg>");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 1;
+  pointer-events: none;
+}
+.tappa {
+  position: relative;
+  z-index: 2;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  --tappa-color: #1a5276;
+}
+.tappa:focus { outline: 2px solid #f4d03f; outline-offset: 6px; border-radius: 8px; }
+/* posizionamento alternato su/giù */
+.tappa-up   { align-self: start; padding-top: 10px; }
+.tappa-down { align-self: end;   padding-bottom: 10px; }
+
+/* Colori graduati blu navy → oro lungo il percorso */
+.tappa[data-num="01"] { --tappa-color: #0a1530; }
+.tappa[data-num="02"] { --tappa-color: #142a55; }
+.tappa[data-num="03"] { --tappa-color: #1a4480; }
+.tappa[data-num="04"] { --tappa-color: #1a5d99; }
+.tappa[data-num="05"] { --tappa-color: #2580a8; }
+.tappa[data-num="06"] { --tappa-color: #3da0a8; }
+.tappa[data-num="07"] { --tappa-color: #6ea876; }
+.tappa[data-num="08"] { --tappa-color: #b8941f; }
+.tappa[data-num="09"] { --tappa-color: #d4af37; }
+.tappa[data-num="10"] { --tappa-color: #f4d03f; }
+
+.tappa-num {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--tappa-color);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.05rem;
+  border: 4px solid #fff;
+  box-shadow:
+    0 0 0 3px var(--tappa-color),
+    0 8px 20px rgba(0,0,0,0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.tappa:hover .tappa-num,
+.tappa.is-active .tappa-num {
+  transform: scale(1.18);
+  box-shadow:
+    0 0 0 3px var(--tappa-color),
+    0 14px 32px rgba(0,0,0,0.28);
+}
+.tappa-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0a1530;
+  max-width: 95px;
+  line-height: 1.25;
+  letter-spacing: 0.2px;
+}
+.tappa-final .tappa-num {
+  animation: tappa-final-pulse 2s ease-in-out infinite;
+}
+@keyframes tappa-final-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.12); }
+}
+
+/* CARD POPUP DESCRIZIONE TAPPA */
+.tappa-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: min(420px, 92vw);
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px 26px 20px;
+  box-shadow: 0 28px 70px rgba(10,21,48,0.32);
+  border-top: 5px solid #d4af37;
+  z-index: 10;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+.tappa-card.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+.tappa-card-num {
+  display: inline-block;
+  background: linear-gradient(135deg, #1a5276, #0a1530);
+  color: #f4d03f;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.82rem;
+  margin-bottom: 0.8rem;
+  letter-spacing: 1px;
+}
+.tappa-card-title {
+  font-family: 'Source Serif 4', serif;
+  color: #0a1530;
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin: 0 0 0.6rem;
+}
+.tappa-card-text {
+  color: #455062;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
+}
+.tappa-card-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: rgba(10,21,48,0.6);
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+.tappa-card-close:hover { color: #0a1530; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 991.98px) {
+  .profili-grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+  }
+  /* Su tablet/mobile: percorso diventa lista verticale */
+  .percorso-zigzag {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 2rem 0;
+    gap: 1.2rem;
+  }
+  .percorso-zigzag::before { display: none; }
+  .tappa {
+    flex-direction: row;
+    text-align: left;
+    align-self: stretch !important;
+    padding: 0 !important;
+    gap: 16px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px 16px !important;
+    box-shadow: 0 8px 22px rgba(10,21,48,0.06);
+    border-left: 5px solid var(--tappa-color);
+  }
+  .tappa-num { width: 44px; height: 44px; font-size: 0.95rem; flex-shrink: 0; }
+  .tappa-label {
+    max-width: none;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 575.98px) {
+  .percorso-section { padding: 4rem 0 3rem; }
+  .percorso-title { font-size: 1.6rem; }
+  .percorso-intro h3 { font-size: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tappa-card { transition: opacity 0.2s; }
+  .tappa-final .tappa-num { animation: none; }
+}
+</style>
+
+<script>
+(function() {
+  var tappe   = document.querySelectorAll('#percorsoZigzag .tappa');
+  var card    = document.getElementById('tappaCard');
+  var numEl   = document.getElementById('tappaCardNum');
+  var titleEl = document.getElementById('tappaCardTitle');
+  var textEl  = document.getElementById('tappaCardText');
+  var closeBtn = document.getElementById('tappaCardClose');
+  if (!tappe.length || !card) return;
+
+  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+  function open(t) {
+    numEl.textContent   = t.dataset.num   || '';
+    titleEl.textContent = t.dataset.title || '';
+    textEl.textContent  = t.dataset.text  || '';
+    card.classList.add('is-open');
+    card.setAttribute('aria-hidden', 'false');
+    tappe.forEach(function(x) { x.classList.remove('is-active'); });
+    t.classList.add('is-active');
+  }
+  function close() {
+    card.classList.remove('is-open');
+    card.setAttribute('aria-hidden', 'true');
+    tappe.forEach(function(x) { x.classList.remove('is-active'); });
+  }
+
+  tappe.forEach(function(t) {
+    t.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (t.classList.contains('is-active')) {
+        close();
+      } else {
+        open(t);
+      }
+    });
+    if (!isTouch) {
+      t.addEventListener('mouseenter', function() { open(t); });
+    }
+  });
+
+  closeBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    close();
+  });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.tappa') && !e.target.closest('.tappa-card')) {
+      close();
+    }
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') close();
+  });
+
+  // Su desktop chiudi quando esci dall'area del percorso
+  if (!isTouch) {
+    var area = document.getElementById('percorsoZigzag');
+    if (area) area.addEventListener('mouseleave', function() { close(); });
+  }
+})();
+</script>
+
+
+<!-- ============================================== -->
+<!-- SEZIONE BANDI IN EVIDENZA -->
+<!-- ============================================== -->
+<section class="bandi-evidenza-section" id="bandi-evidenza">
+  <div class="container">
+    <div class="bandi-header text-center mb-5">
+      <span class="bandi-badge">BANDI IN EVIDENZA</span>
+      <h2 class="bandi-title">Le ultime opportunità per la tua azienda</h2>
+      <p class="bandi-subtitle">Scopri i bandi più richiesti e scarica il report gratuito</p>
+    </div>
+
+    <div class="bandi-carousel-wrapper">
+      <button class="bandi-arrow bandi-arrow-prev" onclick="bandiScroll(-1)" aria-label="Precedente">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="bandi-carousel-track" id="bandiTrack">
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/fotovoltaico.png') }}" alt="Bando ISI INAIL">
+              <span class="bando-novita-badge"><i class="fas fa-building me-1"></i>INAIL</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Bando ISI INAIL 2025</h4>
+              <p class="bando-card-desc-new">Contributi a fondo perduto per la tua azienda. Requisiti, importi, scadenze e strategia per massimizzare le possibilità di successo.</p>
+              <a href="/report-inail" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-file-download me-2"></i>Scarica Report Gratuito
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Conto Termico 3.0"
+               data-bando-ente="MASE / Gestore Servizi Energetici (GSE)"
+               data-bando-stato="sportello"
+               data-bando-importo="Dotazione €900 milioni/anno — contributo fino al 65% per imprese del terziario, fino al 100% per scuole, ospedali e PA"
+               data-bando-beneficiari="Pubblica Amministrazione, Enti del Terzo Settore iscritti al RUNTS, imprese e privati per edifici a uso terziario"
+               data-bando-spese="Isolamento termico, infissi, NZEB, illuminazione LED, building automation, fotovoltaico e accumulo, pompe di calore, solare termico, colonnine elettriche, prestazioni professionali connesse"
+               data-bando-fonte="https://www.gse.it">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/fotovoltaico.png') }}" alt="Conto Termico 3.0">
+              <span class="bando-novita-badge"><i class="fas fa-bolt me-1"></i>MASE / GSE</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Conto Termico 3.0</h4>
+              <p class="bando-card-desc-new">€900 milioni/anno per efficienza energetica e FER. Fino al 65% per imprese terziario, 100% per scuole e ospedali. Sportello aperto.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Fondo Sostegno Imprese Turismo"
+               data-bando-ente="Ministero del Turismo / Invitalia"
+               data-bando-stato="futuro"
+               data-bando-importo="Dotazione €109 milioni — investimenti €1-15 milioni. Fondo perduto 30% (max €4,5 mln) + finanziamento agevolato 70% (max €10,5 mln)"
+               data-bando-beneficiari="Imprese turistiche di qualsiasi dimensione con ATECO 55.10 alberghi, 55.20 villaggi, 55.30 campeggi, 56.10 ristoranti, 96.04 terme. Iscritte al Registro Imprese da almeno 3 anni."
+               data-bando-spese="Efficienza energetica (coibentazione, infissi, FER, accumulo), digitalizzazione (PMS, domotica, automazione), impianti e attrezzature, soft asset (brevetti, licenze), consulenze (max 4%, solo PMI). Spese entro 30/09/2028."
+               data-bando-nota="Apertura sportello Invitalia attesa per l'estate 2026. Decreto MiTur 4 marzo 2026, vistato MEF 16 marzo 2026."
+               data-bando-fonte="https://www.invitalia.it">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/turismosicilia.png') }}" alt="Fondo Sostegno Imprese Turismo">
+              <span class="bando-novita-badge bando-novita-hot"><i class="fas fa-hotel me-1"></i>MiTur / Invitalia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Fondo Sostegno Imprese Turismo</h4>
+              <p class="bando-card-desc-new">€109 milioni nazionali per hotel, ristoranti e ricettivo. Fino a €15 mln di investimento con 30% a fondo perduto + 70% finanziamento agevolato.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Innovazione e sostenibilità — Valle d'Aosta"
+               data-bando-ente="Regione Valle d'Aosta (L.R. 25/2025)"
+               data-bando-stato="sportello"
+               data-bando-importo="Investimenti €20.000-€250.000 — contributo 30-40% (40% energia/acqua, 30% digitalizzazione) con premialità +10% per giovani e donne"
+               data-bando-beneficiari="PMI valdostane del turismo (alberghiero ed extralberghiero), commercio, ristorazione e servizi, con disponibilità dell'immobile"
+               data-bando-spese="Fonti rinnovabili e riduzione consumi, software/cloud/cybersecurity/siti, arredi, impianti e opere edilizie. Interventi solo dopo presentazione della domanda."
+               data-bando-fonte="https://www.regione.vda.it">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/agriturismi.png') }}" alt="Bando Valle d'Aosta turismo e commercio">
+              <span class="bando-novita-badge"><i class="fas fa-mountain me-1"></i>Regione Valle d'Aosta</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Innovazione e sostenibilità — VdA</h4>
+              <p class="bando-card-desc-new">Fino al 50% (con premialità) per PMI valdostane del turismo, commercio e servizi. Energia, digitale, opere edilizie. Sportello fino a esaurimento.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Bonus assunzione tirocinanti Under 35 — Toscana"
+               data-bando-ente="Regione Toscana (PR FSE+ 2021-2027)"
+               data-bando-scadenza="2027-01-10"
+               data-bando-stato="aperto"
+               data-bando-importo="Dotazione €1 milione — fino a €9.188 per assunzione a tempo indeterminato full time, €4.594 per T.D. ≥12 mesi full time"
+               data-bando-beneficiari="Qualsiasi datore di lavoro privato con sede in Toscana: ristoranti, hotel, B&amp;B, agriturismi, commercio, artigianato, industria, servizi, liberi professionisti. Assunzioni 01/01/2026-31/12/2026."
+               data-bando-spese="Bonus assunzione cumulabile per più assunzioni. Tirocinante under 35 al momento dell'assunzione. Durata minima 12 mesi T.D., 24 mesi T.I. Regime de minimis."
+               data-bando-fonte="https://www.regione.toscana.it">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/entrepreneur_startup_16eebfbd.jpg') }}" alt="Bonus assunzione tirocinanti Toscana">
+              <span class="bando-novita-badge"><i class="fas fa-user-tie me-1"></i>Regione Toscana</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Tirocinanti Under 35 — Toscana</h4>
+              <p class="bando-card-desc-new">Fino a €9.188 di fondo perduto per ogni assunzione di tirocinante under 35 in Toscana. Cumulabile, scadenza 10 gennaio 2027.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="TERTIUM — Tessile, Moda e Accessorio"
+               data-bando-ente="Regione Lombardia (PR FESR 2021-2027 Azione 1.3.3)"
+               data-bando-stato="futuro"
+               data-bando-importo="Investimenti €60.000-€500.000 — contributo 60% fondo perduto, max €150.000 per progetto"
+               data-bando-beneficiari="PMI lombarde del tessile, moda e accessorio con sede operativa in Lombardia, iscritte al Registro Imprese con almeno 2 bilanci depositati"
+               data-bando-spese="Macchinari, impianti, hardware, software (max 12 mesi cloud/SaaS), consulenze specialistiche (max 50%), percorsi di accelerazione, deposito marchi e disegni, spese generali forfettarie 7%. Un solo progetto per PMI."
+               data-bando-nota="Criteri pubblicati sul BUR Lombardia il 7 aprile 2026. Apertura dello sportello in corso di definizione."
+               data-bando-fonte="https://www.bandi.regione.lombardia.it">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/professional_italian_91f004b6.jpg') }}" alt="TERTIUM Tessile Moda Lombardia">
+              <span class="bando-novita-badge"><i class="fas fa-tshirt me-1"></i>Regione Lombardia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">TERTIUM — Tessile e Moda</h4>
+              <p class="bando-card-desc-new">60% fondo perduto fino a €150.000 per PMI lombarde di tessile, moda e accessorio. Brand, transizione digitale ed ecologica.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="EDIL-SOS — Edilizia Sostenibile e Innovativa"
+               data-bando-ente="Regione Lombardia (PR FESR 2021-2027)"
+               data-bando-stato="futuro"
+               data-bando-importo="Investimento minimo €35.000 — contributo 50% (max €200.000) per imprese singole, 60% (max €250.000) in aggregazione"
+               data-bando-beneficiari="Micro, piccole e medie imprese lombarde della filiera edilizia: costruttori, impiantisti, produttori di materiali. Ammesse anche aggregazioni con grandi imprese, MidCap, università (ma contributo solo a MPMI)."
+               data-bando-spese="Macchinari per de-produzione, sistemi di gestione energetica, filtri e trattamento, consulenze specialistiche (max 25%) per diagnosi energetiche, LCA, certificazioni ISO 14001/EMAS/ECOLABEL/EPD. Spese generali forfettarie 7%."
+               data-bando-nota="Criteri pubblicati sul BUR Lombardia il 9 dicembre 2025. Apertura dello sportello in corso di definizione."
+               data-bando-fonte="https://www.bandi.regione.lombardia.it">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/business_meeting_pro_278cc566.jpg') }}" alt="EDIL-SOS Edilizia Sostenibile Lombardia">
+              <span class="bando-novita-badge"><i class="fas fa-hard-hat me-1"></i>Regione Lombardia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">EDIL-SOS — Edilizia Sostenibile</h4>
+              <p class="bando-card-desc-new">Fino al 60% a fondo perduto per MPMI edili lombarde su economia circolare, materiali sostenibili e certificazioni ambientali.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Imprese Storiche verso il Futuro 2026"
+               data-bando-ente="Unioncamere Lombardia"
+               data-bando-stato="futuro"
+               data-bando-importo="Dotazione €7 milioni — contributo 50% delle spese ammissibili, massimo €30.000 per impresa. Investimento minimo €5.000."
+               data-bando-beneficiari="Micro imprese, PMI e Grandi Imprese del Commercio e Artigianato iscritte all'elenco regionale lombardo delle Attività Storiche e di Tradizione e alla Camera di Commercio della Lombardia. Escluse imprese già beneficiarie dell'edizione 2025."
+               data-bando-spese="4 assi: ricambio generazionale (formazione, consulenza), riqualificazione unità locale (allestimenti, riqualificazione energetica), restauro e conservazione (arredi, insegne, macchinari tradizionali), innovazione (processi, digitalizzazione). Spese entro 30/09/2027."
+               data-bando-nota="Bando di prossima apertura. Iscrizione all'elenco regionale delle attività storiche è requisito essenziale."
+               data-bando-fonte="https://www.lombardia.camcom.it">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/botteghe-entroterra.jpg') }}" alt="Imprese Storiche Lombardia 2026">
+              <span class="bando-novita-badge"><i class="fas fa-landmark me-1"></i>Unioncamere Lombardia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Imprese Storiche verso il Futuro 2026</h4>
+              <p class="bando-card-desc-new">50% fondo perduto fino a €30.000 per le attività storiche e di tradizione lombarde. Restauro, ricambio generazionale, innovazione.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Distretti del Commercio 2026"
+               data-bando-ente="Regione Lombardia"
+               data-bando-scadenza="2026-07-31"
+               data-bando-stato="aperto"
+               data-bando-importo="€63 milioni totali — fino a €520.000 per progetti di eccellenza, €189.900 per progetti ordinari (contributo 50% del costo)"
+               data-bando-beneficiari="Comuni, Comunità Montane e Unioni di Comuni aderenti a un Distretto del Commercio (DUC — Distretto Urbano del Commercio o DID — Distretto Diffuso a Rilevanza Intercomunale)"
+               data-bando-spese="Rigenerazione e riqualificazione delle aree del Distretto; servizi comuni a imprese, utenti e visitatori; interventi per la sicurezza; governance e Manager di Distretto; animazione, promozione ed eventi"
+               data-bando-fonte="https://www.regione.lombardia.it/wps/portal/istituzionale/HP/DettaglioAvviso/servizi-e-informazioni/enti-e-operatori/commercio-e-fiere/distretti-del-commercio/criteri-bando-distretti26/criteri-bando-distretti26">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/business_funding_bg.jpg') }}" alt="Distretti del Commercio Lombardia 2026">
+              <span class="bando-novita-badge"><i class="fas fa-map-marker-alt me-1"></i>Regione Lombardia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Distretti del Commercio 2026</h4>
+              <p class="bando-card-desc-new">Fino a €520.000 per Comuni e Distretti del Commercio lombardi. Rigenerazione urbana e attrattività territoriale. Scadenza 31 luglio 2026.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Torino Compra Vicino — DUC"
+               data-bando-ente="Città di Torino"
+               data-bando-scadenza="2026-07-31"
+               data-bando-stato="sospeso"
+               data-bando-importo="Dotazione €225.000 — contributo fino all'80% delle spese ammissibili, massimo €15.000 per impresa"
+               data-bando-beneficiari="Micro e piccole imprese con sede operativa nel perimetro del Distretto Urbano del Commercio di Torino (negozi di vicinato, somministrazione, ambulanti in sede fissa o su area pubblica)"
+               data-bando-spese="Rinnovo vetrine e arredi commerciali, interventi di accessibilità, sicurezza e antitaccheggio, digitalizzazione dei punti vendita ed e-commerce"
+               data-bando-nota="Sportello sospeso dal 13 maggio 2026 per esaurimento dei fondi. La domanda può essere ripresentata in caso di nuovo rifinanziamento o riapertura dei termini."
+               data-bando-fonte="https://bandi.comune.torino.it/avviso/bando-supporto-delle-imprese-distretto-urbano-commercio-duc-progetto-torino-compra-vicino">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/botteghe-entroterra.jpg') }}" alt="DUC Torino Compra Vicino">
+              <span class="bando-novita-badge"><i class="fas fa-store me-1"></i>Città di Torino</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Torino Compra Vicino — DUC</h4>
+              <p class="bando-card-desc-new">Fino all'80% a fondo perduto (max €15.000) per negozi e locali nel perimetro DUC di Torino. Vetrine, digitalizzazione, sicurezza. Scadenza 31 luglio 2026.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new bando-card-featured-new"
+               data-bando-titolo="Vita &amp; Opportunità — Disabilità"
+               data-bando-ente="Presidenza del Consiglio dei Ministri / Invitalia"
+               data-bando-scadenza="2026-08-29"
+               data-bando-stato="sportello"
+               data-bando-importo="€386,4 milioni totali — contributo fino al 95% del costo del progetto, valutazione in ordine cronologico (no click day)"
+               data-bando-beneficiari="Enti del Terzo Settore (ETS) iscritti al RUNTS, in forma singola o associata. Per la linea Attività Ricreative ammessi anche istituti scolastici come soggetti promotori sul territorio."
+               data-bando-spese="Tre linee di intervento: 1) Progetto di Vita — autonomia abitativa, inserimento lavorativo, tempo libero; 2) Agricoltura sociale — inclusione lavorativa con attività agricole e di allevamento; 3) Attività ricreative — iniziative per giovani fino a 22 anni"
+               data-bando-fonte="https://www.invitalia.it/incentivi-e-strumenti/vita-opportunita">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/professional_italian_6adfd241.jpg') }}" alt="Vita e Opportunità 2026">
+              <span class="bando-novita-badge bando-novita-hot"><i class="fas fa-hands-helping me-1"></i>PCM / Invitalia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Vita &amp; Opportunità — Disabilità</h4>
+              <p class="bando-card-desc-new">€386 milioni per ETS. Fino al 95% di contributo per inclusione, lavoro e autonomia di persone con disabilità. Sportello aperto.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Terzo Settore — Piemonte 2026"
+               data-bando-ente="Regione Piemonte"
+               data-bando-scadenza="2026-07-07"
+               data-bando-stato="aperto"
+               data-bando-importo="Dotazione €1.413.687 per la prima annualità — contributi tra €20.000 e €50.000 per progetto. Una quota del 10% è riservata alle Fondazioni del Terzo Settore e Fondazioni ONLUS."
+               data-bando-beneficiari="Organizzazioni di Volontariato (ODV), Associazioni di Promozione Sociale (APS) e Fondazioni del Terzo Settore iscritte al RUNTS, con sede legale e operativa in Piemonte."
+               data-bando-spese="Progetti di rilevanza locale ai sensi degli artt. 72 e 73 del D.Lgs. 117/2017 — Codice del Terzo Settore. Interventi in ambito sociale, culturale, ambientale, di animazione del territorio e di tutela del patrimonio."
+               data-bando-fonte="https://bandi.regione.piemonte.it/contributi-finanziamenti/sostegno-progetti-rilevanza-locale-promossi-organizzazioni-volontariato-associazioni-promozione">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/italian_business_wom_eae50a53.jpg') }}" alt="Terzo Settore Piemonte 2026">
+              <span class="bando-novita-badge"><i class="fas fa-hands-helping me-1"></i>Regione Piemonte</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Terzo Settore — Piemonte 2026</h4>
+              <p class="bando-card-desc-new">Fino al 100% a fondo perduto per ODV, APS e Fondazioni piemontesi. Contributi tra €20.000 e €50.000 per progetti di rilevanza locale. Scadenza 7 luglio 2026.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dote Sport 2026 Liguria -->
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Dote Sport 2026 — Liguria"
+               data-bando-ente="Regione Liguria (PR FSE+ 2021-2027)"
+               data-bando-scadenza="2026-06-30"
+               data-bando-stato="aperto"
+               data-bando-importo="Dotazione €1,5 milioni — contributo fino a €400 per figlio (ISEE ≤ €25.000) o €300 per figlio (ISEE €25.000–€35.000). Intensità 100% a fondo perduto."
+               data-bando-beneficiari="Nuclei familiari residenti in Liguria con ISEE minorenne ≤ €35.000 e figli 5-17 anni iscritti ad ASD/SSD del Registro Nazionale (RAS) o sezione parallela CIP. Massimo 2 domande per nucleo. Riserva 10% minori con disabilità (L. 104/92)."
+               data-bando-spese="Iscrizione e frequenza attività sportive presso associazioni e società sportive dilettantistiche con sede legale in Liguria, stagione 2025/2026. Spese con data giustificativo successiva al 31/08/2021."
+               data-bando-nota="Apertura sportello: 9 giugno 2026 ore 08:30. Scadenza: 30 giugno 2026 ore 17:30 (procedura a sportello FIFO). Domande online su piattaforma FILSE con SPID/CIE/CNS."
+               data-bando-fonte="https://www.filse.it">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/sport.png') }}" alt="Dote Sport 2026 Regione Liguria">
+              <span class="bando-novita-badge bando-novita-hot"><i class="fas fa-running me-1"></i>Regione Liguria</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">Dote Sport 2026 — Liguria</h4>
+              <p class="bando-card-desc-new">Fino a €400 a figlio per attività sportive di minori 5-17 anni. Famiglie liguri con ISEE ≤ €35.000. Sportello 9 giugno → 30 giugno 2026.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ISI INAIL 2025 Asse 3 Amianto -->
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="ISI INAIL 2025 — Asse 3 Bonifica Amianto"
+               data-bando-ente="INAIL (Avviso ISI 2025, Delibera n. 187 del 19/11/2025)"
+               data-bando-stato="futuro"
+               data-bando-importo="Dotazione Asse 3: €140 milioni. Contributo 65% a fondo perduto delle spese ammesse (netto IVA). Minimo €5.000 — Massimo €130.000. Anticipo 50% erogabile prima dei lavori."
+               data-bando-beneficiari="Tutte le imprese italiane iscritte alla CCIAA (qualsiasi settore e dimensione, incluse individuali). L'immobile da bonificare deve essere nella disponibilità dell'impresa. Escluse imprese già beneficiarie di ISI 2022, 2023 o 2024. Plafond de minimis max €300.000."
+               data-bando-spese="Rimozione, trasporto e smaltimento amianto/eternit; rifacimento copertura (lucernari, grondaie, lattoneria); fotovoltaico contestuale sulla nuova copertura; linee vita definitive; spese tecniche (perizie, analisi, progettazione) max 10% e massimo €10.000."
+               data-bando-nota="Procedura a click day regionale (ordine cronologico fino a esaurimento). Iter 2026 con date di click day da definire. Solo ditte iscritte all'Albo Gestori Ambientali Cat. 10 possono eseguire la bonifica."
+               data-bando-fonte="https://www.inail.it">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/inail3.jpg') }}" alt="ISI INAIL Asse 3 Bonifica Amianto">
+              <span class="bando-novita-badge bando-novita-hot"><i class="fas fa-hard-hat me-1"></i>INAIL</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">ISI INAIL — Bonifica Amianto</h4>
+              <p class="bando-card-desc-new">65% a fondo perduto (max €130.000) per rimuovere amianto, rifare la copertura e installare fotovoltaico. Aperto a tutte le imprese italiane.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fondo Nazionale Efficienza Energetica - Invitalia -->
+        <div class="bandi-carousel-item">
+          <div class="bando-card-new"
+               data-bando-titolo="Fondo Nazionale Efficienza Energetica (FNEE)"
+               data-bando-ente="MASE / Invitalia"
+               data-bando-stato="sportello"
+               data-bando-importo="Dotazione €310 milioni. Garanzie fino all'80% per finanziamenti da €150.000 a €2.500.000. Finanziamento agevolato 0,25% (durata max 15 anni): fino al 70% dei costi per imprese/ESCO su importi €250.000–€4.000.000, fino al 60% per PA (80% per infrastrutture e illuminazione pubblica)."
+               data-bando-beneficiari="Imprese di tutti i settori (singole o associate: Consorzi, Contratti di rete, ATI), ESCO singole o aggregate, Pubbliche Amministrazioni. Requisiti: almeno 2 anni di costituzione, iscrizione al Registro Imprese, sede legale in Italia, regolarità contributiva e fiscale."
+               data-bando-spese="Riduzione consumi energetici in processi industriali; efficientamento edifici (involucro, impianti, macchinari); reti di teleriscaldamento/teleraffrescamento; efficientamento servizi e infrastrutture pubbliche (anche illuminazione); consulenze specialistiche per efficienza energetica."
+               data-bando-nota="Sportello permanente dal 20 maggio 2019 fino ad esaurimento fondi. Istruttoria 60 giorni dalla ricezione documentazione completa. Avvio lavori entro 12 mesi dall'ammissione, conclusione entro 36 mesi. Cofinanziamento beneficiario minimo 15-40%."
+               data-bando-fonte="https://www.invitalia.it/cosa-facciamo/sostenibilita-ambientale/fondo-nazionale-efficienza-energetica">
+            <div class="bando-card-image">
+              <img src="{{ url_for('static', filename='img/fotovoltaico-applicazioni.png') }}" alt="Fondo Nazionale Efficienza Energetica Invitalia">
+              <span class="bando-novita-badge"><i class="fas fa-bolt me-1"></i>MASE / Invitalia</span>
+            </div>
+            <div class="bando-card-body">
+              <h4 class="bando-card-title-new">FNEE — Efficienza Energetica</h4>
+              <p class="bando-card-desc-new">€310 milioni a sportello: finanziamento agevolato 0,25% fino al 70% e garanzia fino all'80% per imprese, ESCO e PA. Investimenti €150K–€4M.</p>
+              <a href="javascript:void(0)" onclick="openBandoModal(this)" class="btn-scarica-report-new" style="text-decoration: none; display: inline-block;">
+                <i class="fas fa-info-circle me-2"></i>Scopri di più
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <button class="bandi-arrow bandi-arrow-next" onclick="bandiScroll(1)" aria-label="Successivo">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ===== Modal sintesi bando (popolata da JS) ===== -->
+  <div class="bando-modal-overlay" id="bandoModalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="bando-modal" role="document">
+      <button type="button" class="bando-modal-close" onclick="closeBandoModal()" aria-label="Chiudi">
+        <i class="fas fa-times"></i>
+      </button>
+      <span class="bando-modal-ente" id="bandoModalEnte">Ente</span>
+      <h3 class="bando-modal-title" id="bandoModalTitle">Titolo bando</h3>
+      <span class="bando-modal-status" id="bandoModalStatus"><i class="fas fa-circle"></i>Stato</span>
+      <div class="bando-modal-grid">
+        <div class="bando-modal-item">
+          <div class="bando-modal-item-label"><i class="fas fa-coins"></i>Importo e contributo</div>
+          <div class="bando-modal-item-value" id="bandoModalImporto">—</div>
+        </div>
+        <div class="bando-modal-item">
+          <div class="bando-modal-item-label"><i class="fas fa-calendar-alt"></i>Scadenza</div>
+          <div class="bando-modal-item-value" id="bandoModalScadenza">—</div>
+        </div>
+      </div>
+      <div class="bando-modal-section">
+        <h5><i class="fas fa-users me-1"></i> Chi può partecipare</h5>
+        <p id="bandoModalBeneficiari">—</p>
+      </div>
+      <div class="bando-modal-section">
+        <h5><i class="fas fa-tools me-1"></i> Spese ammissibili / tipologia interventi</h5>
+        <p id="bandoModalSpese">—</p>
+      </div>
+      <div class="bando-modal-note" id="bandoModalNote"></div>
+      <div class="bando-modal-actions">
+        <button type="button" class="bando-modal-btn bando-modal-btn-primary" onclick="closeBandoModal(); openConsultationPopup();">
+          <i class="fas fa-phone-alt"></i> Richiedi consulenza gratuita
+        </button>
+        <a id="bandoModalFonte" href="#" target="_blank" rel="noopener noreferrer" class="bando-modal-btn bando-modal-btn-secondary">
+          <i class="fas fa-external-link-alt"></i> Bando ufficiale
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const MS_PER_DAY = 86400000;
+      const URGENZA_GIORNI = 30;
+      const stateLabels = {
+        aperto:    { text: 'Aperto',                  icon: 'fa-circle-check',   cls: 'is-aperto' },
+        urgente:   { text: 'Prossimo a scadenza',     icon: 'fa-exclamation',    cls: 'is-urgente' },
+        sportello: { text: 'Sportello aperto',        icon: 'fa-door-open',      cls: 'is-sportello' },
+        sospeso:   { text: 'Sportello sospeso',       icon: 'fa-ban',            cls: 'is-sospeso' },
+        futuro:    { text: 'Prossima apertura',       icon: 'fa-hourglass-half', cls: 'is-futuro' }
+      };
+      function daysUntil(s){ if(!s) return null; const t=new Date(s+'T23:59:59'); if(isNaN(t.getTime()))return null; return Math.ceil((t-new Date())/MS_PER_DAY); }
+      function formatDate(s){ if(!s) return '—'; const d=new Date(s+'T00:00:00'); if(isNaN(d.getTime()))return s; return d.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'}); }
+      function applyBadges(){
+        document.querySelectorAll('.bando-card-new[data-bando-titolo]').forEach(card => {
+          const stato = card.dataset.bandoStato;
+          const sc = card.dataset.bandoScadenza;
+          const wrap = card.querySelector('.bando-card-image');
+          if (!wrap || wrap.querySelector('.bando-urgency-badge')) return;
+          let b = null;
+          if (stato === 'sospeso') {
+            b = document.createElement('span'); b.className = 'bando-urgency-badge is-sospeso';
+            b.innerHTML = '<i class="fas fa-ban"></i> Sospeso';
+          } else if (stato === 'futuro') {
+            b = document.createElement('span'); b.className = 'bando-urgency-badge is-futuro';
+            b.innerHTML = '<i class="fas fa-hourglass-half"></i> In apertura';
+          } else if (sc) {
+            const gg = daysUntil(sc);
+            if (gg !== null && gg >= 0 && gg <= URGENZA_GIORNI) {
+              b = document.createElement('span'); b.className = 'bando-urgency-badge';
+              const lab = gg === 0 ? 'Ultimo giorno' : (gg === 1 ? 'Scade domani' : 'Scade tra ' + gg + ' giorni');
+              b.innerHTML = '<i class="fas fa-clock"></i> ' + lab;
+            }
+          }
+          if (b) wrap.appendChild(b);
+        });
+      }
+      window.openBandoModal = function(el){
+        const card = el.closest('.bando-card-new');
+        if (!card) return;
+        const ov = document.getElementById('bandoModalOverlay');
+        const d = card.dataset;
+        document.getElementById('bandoModalEnte').textContent = d.bandoEnte||'';
+        document.getElementById('bandoModalTitle').innerHTML = d.bandoTitolo||'';
+        document.getElementById('bandoModalImporto').textContent = d.bandoImporto||'—';
+        document.getElementById('bandoModalBeneficiari').textContent = d.bandoBeneficiari||'—';
+        document.getElementById('bandoModalSpese').textContent = d.bandoSpese||'—';
+        let stato = d.bandoStato || 'aperto';
+        const gg = daysUntil(d.bandoScadenza);
+        if (stato === 'aperto' && gg !== null && gg >= 0 && gg <= URGENZA_GIORNI) stato = 'urgente';
+        const st = stateLabels[stato] || stateLabels.aperto;
+        const stEl = document.getElementById('bandoModalStatus');
+        stEl.className = 'bando-modal-status ' + st.cls;
+        stEl.innerHTML = '<i class="fas ' + st.icon + '"></i> ' + st.text;
+        let sc = formatDate(d.bandoScadenza);
+        if (gg !== null && gg >= 0 && stato !== 'sospeso' && stato !== 'futuro') sc += gg === 0 ? ' — ultimo giorno' : gg === 1 ? ' — scade domani' : ' (tra ' + gg + ' giorni)';
+        else if (stato === 'sportello' && !d.bandoScadenza) sc = 'Sportello aperto fino a esaurimento fondi';
+        else if (stato === 'sportello' && d.bandoScadenza) sc = 'Sportello aperto fino al ' + formatDate(d.bandoScadenza);
+        else if (stato === 'sospeso') sc = formatDate(d.bandoScadenza) + ' — sportello sospeso';
+        else if (stato === 'futuro') sc = d.bandoScadenza ? 'Apertura prevista: ' + formatDate(d.bandoScadenza) : 'Apertura sportello in pubblicazione';
+        document.getElementById('bandoModalScadenza').textContent = sc;
+        const nEl = document.getElementById('bandoModalNote');
+        if (d.bandoNota){ nEl.innerHTML = '<i class="fas fa-info-circle me-1"></i> ' + d.bandoNota; nEl.classList.add('is-visible'); }
+        else { nEl.innerHTML=''; nEl.classList.remove('is-visible'); }
+        const fEl = document.getElementById('bandoModalFonte');
+        if (d.bandoFonte){ fEl.href = d.bandoFonte; fEl.style.display=''; } else fEl.style.display='none';
+        ov.classList.add('is-open'); ov.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+      };
+      window.closeBandoModal = function(){
+        const ov = document.getElementById('bandoModalOverlay');
+        ov.classList.remove('is-open'); ov.setAttribute('aria-hidden','true'); document.body.style.overflow='';
+      };
+      document.addEventListener('DOMContentLoaded', function(){
+        applyBadges();
+        const ov = document.getElementById('bandoModalOverlay');
+        if (ov) ov.addEventListener('click', function(e){ if (e.target===ov) closeBandoModal(); });
+        document.addEventListener('keydown', function(e){ if (e.key==='Escape') closeBandoModal(); });
+      });
+    })();
+  </script>
+
+  <style>
+  .bando-urgency-badge { position:absolute; top:12px; right:12px; z-index:3; display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#dc2626,#991b1b); color:#fff; font-size:0.72rem; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:6px 12px; border-radius:20px; box-shadow:0 6px 16px rgba(220,38,38,0.45); animation:bandoPulse 1.6s ease-in-out infinite; }
+  .bando-urgency-badge.is-sospeso { background:linear-gradient(135deg,#6b7280,#374151); box-shadow:0 6px 16px rgba(55,65,81,0.4); animation:none; }
+  .bando-urgency-badge.is-futuro { background:linear-gradient(135deg,#d4af37,#b8860b); box-shadow:0 6px 16px rgba(212,175,55,0.4); animation:none; }
+  @keyframes bandoPulse { 0%,100%{transform:scale(1); box-shadow:0 6px 16px rgba(220,38,38,0.45);} 50%{transform:scale(1.06); box-shadow:0 8px 22px rgba(220,38,38,0.7);} }
+  .bando-modal-overlay { position:fixed; inset:0; background:rgba(10,21,48,0.78); backdrop-filter:blur(6px); display:none; align-items:flex-start; justify-content:center; z-index:9999; padding:5vh 20px; overflow-y:auto; }
+  .bando-modal-overlay.is-open { display:flex; animation:bandoFadeIn 0.25s ease; }
+  @keyframes bandoFadeIn { from{opacity:0;} to{opacity:1;} }
+  .bando-modal { background:#fff; border-radius:18px; max-width:720px; width:100%; padding:2.2rem 2rem 1.8rem; position:relative; box-shadow:0 40px 80px rgba(0,0,0,0.45); animation:bandoSlideUp 0.3s ease; }
+  @keyframes bandoSlideUp { from{transform:translateY(30px); opacity:0;} to{transform:translateY(0); opacity:1;} }
+  .bando-modal-close { position:absolute; top:12px; right:14px; background:#f3f4f6; border:none; width:36px; height:36px; border-radius:50%; font-size:1.1rem; color:#0a1530; cursor:pointer; transition:all 0.2s ease; }
+  .bando-modal-close:hover { background:#e5e7eb; transform:rotate(90deg); }
+  .bando-modal-ente { display:inline-block; background:linear-gradient(135deg,#1a5276,#0a1530); color:#fff; font-size:0.74rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:0.8rem; }
+  .bando-modal-title { font-family:'Source Serif 4',serif; font-weight:700; font-size:1.55rem; color:#0a1530; margin:0 0 0.4rem; line-height:1.25; }
+  .bando-modal-status { display:inline-flex; align-items:center; gap:6px; font-size:0.8rem; font-weight:700; padding:5px 12px; border-radius:18px; margin-bottom:1.2rem; }
+  .bando-modal-status.is-aperto{background:#dcfce7; color:#166534;} .bando-modal-status.is-urgente{background:#fee2e2; color:#991b1b;} .bando-modal-status.is-sospeso{background:#f3f4f6; color:#374151;} .bando-modal-status.is-sportello{background:#dbeafe; color:#1e40af;} .bando-modal-status.is-futuro{background:#fef3c7; color:#92400e;}
+  .bando-modal-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.2rem 0 0.8rem; }
+  .bando-modal-item { background:#f8fafc; border-left:3px solid #d4af37; border-radius:8px; padding:0.9rem 1rem; }
+  .bando-modal-item-label { font-size:0.72rem; font-weight:700; letter-spacing:1px; color:#6b7280; text-transform:uppercase; margin-bottom:0.3rem; display:flex; align-items:center; gap:6px; }
+  .bando-modal-item-label i { color:#d4af37; }
+  .bando-modal-item-value { color:#0a1530; font-size:0.95rem; font-weight:600; line-height:1.4; }
+  .bando-modal-section { margin-top:1rem; }
+  .bando-modal-section h5 { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:#6b7280; margin:0 0 0.4rem; }
+  .bando-modal-section p { font-size:0.96rem; line-height:1.6; color:#1f2937; margin:0; }
+  .bando-modal-note { background:#fff7ed; border:1px solid #fdba74; border-radius:10px; padding:0.8rem 1rem; font-size:0.88rem; color:#9a3412; margin-top:1rem; display:none; }
+  .bando-modal-note.is-visible { display:block; }
+  .bando-modal-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:1.6rem; padding-top:1.4rem; border-top:1px solid #e5e7eb; }
+  .bando-modal-btn { flex:1; min-width:200px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0.85rem 1.4rem; border-radius:30px; font-weight:700; font-size:0.95rem; text-decoration:none; border:none; cursor:pointer; transition:all 0.25s ease; }
+  .bando-modal-btn-primary { background:linear-gradient(135deg,#d4af37,#f4d03f); color:#0a1530; }
+  .bando-modal-btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 28px rgba(212,175,55,0.45); color:#0a1530; }
+  .bando-modal-btn-secondary { background:#f3f4f6; color:#0a1530; border:1px solid #e5e7eb; }
+  .bando-modal-btn-secondary:hover { background:#e5e7eb; color:#0a1530; }
+  @media (max-width:600px){ .bando-modal{padding:1.6rem 1.2rem;} .bando-modal-title{font-size:1.25rem;} .bando-modal-grid{grid-template-columns:1fr;} }
+  </style>
+
+</section>
+
+<style>
+.bandi-evidenza-section {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  padding: 100px 0;
+}
+.bandi-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #1a5276, #0a1530);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+}
+.bandi-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #0a1530;
+  margin-bottom: 15px;
+}
+.bandi-subtitle {
+  font-size: 1.15rem;
+  color: #6c757d;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.bando-card-new {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 100%;
+  box-shadow: 0 10px 40px rgba(10, 21, 48, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.bando-card-new:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px rgba(10, 21, 48, 0.15);
+}
+.bando-card-featured-new {
+  border: 2px solid #d4af37;
+}
+.bando-card-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+.bando-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.bando-card-new:hover .bando-card-image img {
+  transform: scale(1.08);
+}
+.bando-novita-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: linear-gradient(135deg, #1a5276, #0a1530);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.bando-novita-hot {
+  background: linear-gradient(135deg, #d4af37, #b8960c);
+  color: #0a1530;
+}
+.bando-card-body {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.bando-card-title-new {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0a1530;
+  margin-bottom: 12px;
+}
+.bando-card-desc-new {
+  font-size: 0.95rem;
+  color: #6c757d;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+.bando-card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #adb5bd;
+  margin-bottom: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+.bando-card-meta span i {
+  color: #1a5276;
+}
+.btn-scarica-report-new {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #d4af37, #b8960c);
+  color: #0a1530;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 14px 24px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
+  width: 100%;
+}
+.btn-scarica-report-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+}
+.btn-vedi-tutti {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #0a1530, #1a2a4a);
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 16px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(10, 21, 48, 0.2);
+}
+.btn-vedi-tutti:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(10, 21, 48, 0.3);
+  color: #ffffff;
+}
+/* --- Carousel --- */
+.bandi-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.bandi-carousel-track {
+  display: flex;
+  gap: 24px;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  padding: 12px 4px 20px;
+  flex: 1;
+}
+.bandi-carousel-item {
+  flex: 0 0 calc(33.333% - 16px);
+  min-width: 0;
+}
+.bandi-arrow {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #0a1530;
+  background: #ffffff;
+  color: #0a1530;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(10,21,48,0.12);
+  z-index: 2;
+}
+.bandi-arrow:hover {
+  background: #0a1530;
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(10,21,48,0.25);
+}
+.bandi-arrow-prev { margin-right: 16px; }
+.bandi-arrow-next { margin-left: 16px; }
+@media (max-width: 991px) {
+  .bandi-evidenza-section { padding: 60px 0; }
+  .bandi-title { font-size: 2.2rem; }
+  .bandi-carousel-item { flex: 0 0 calc(50% - 12px); }
+}
+@media (max-width: 767px) {
+  .bandi-title { font-size: 1.8rem; }
+  .bando-card-image { height: 180px; }
+  .bandi-carousel-item { flex: 0 0 85%; }
+  .bandi-arrow { width: 38px; height: 38px; font-size: 0.85rem; }
+  .bandi-arrow-prev { margin-right: 8px; }
+  .bandi-arrow-next { margin-left: 8px; }
+}
+</style>
+<script>
+(function() {
+  var cardWidth = 0;
+  var gap = 24;
+  function getVisibleCount() {
+    if (window.innerWidth < 768) return 1;
+    if (window.innerWidth < 992) return 2;
+    return 3;
+  }
+  window.bandiScroll = function(dir) {
+    var track = document.getElementById('bandiTrack');
+    if (!track) return;
+    var item = track.querySelector('.bandi-carousel-item');
+    if (!item) return;
+    var step = (item.offsetWidth + gap) * getVisibleCount();
+    track.scrollLeft += dir * step;
+  };
+})();
+</script>
+
+
+<!-- ============================================== -->
+<!-- SEZIONE TESTIMONIANZE - Storie di Successo -->
+<!-- ============================================== -->
+<section class="testimonials-premium" style="padding: 80px 0 100px; position: relative; overflow: visible; background: linear-gradient(180deg, #0a1628 0%, #0d1d35 50%, #0a1628 100%);">
+    
+    <div style="text-align: center; margin-bottom: 50px; padding: 0 20px;">
+        <div style="display: inline-flex; align-items: center; gap: 12px; background: rgba(212,175,55,0.1); padding: 10px 24px; border-radius: 50px; border: 1px solid rgba(212,175,55,0.25); margin-bottom: 25px;">
+            <i class="fas fa-trophy" style="color: #d4af37; font-size: 1rem;"></i>
+            <span style="color: #d4af37; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;">Progetti Approvati</span>
+        </div>
+        <h2 style="font-size: 2.5rem; font-weight: 800; color: white; margin: 0 0 15px 0; line-height: 1.2;">
+            I nostri clienti hanno ottenuto 
+            <span style="background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">risultati concreti</span>
+        </h2>
+        <p style="color: rgba(255,255,255,0.6); font-size: 1.05rem; max-width: 600px; margin: 0 auto;">
+            Aziende che si sono affidate a noi e hanno ricevuto finanziamenti a fondo perduto
+        </p>
+    </div>
+    
+    <div class="testimonials-scroll-wrapper" style="position: relative; overflow-x: auto; overflow-y: hidden; padding: 20px 0; -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none;">
+            
+            <div class="testimonials-track" id="testimonialsTrack" style="display: flex; gap: 20px; width: max-content; padding: 0 20px;">
+                
+                <!-- Peraria Srl - INAIL -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/peraria.png" alt="Peraria" style="height: 55px; width: auto; max-width: 130px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Peraria Srl</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Gonfiabili e strutture</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">ISI INAIL</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€130.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">A fondo perduto</div>
+                </div>
+                
+                <!-- Peraria Srl - Filiere Tessili -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/peraria.png" alt="Peraria" style="height: 55px; width: auto; max-width: 130px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Peraria Srl</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Gonfiabili e strutture</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FILIERA TESSILE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€125.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Erica - Filiera Tessile Inv Italia -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: #1a1a1a; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/erica.png" alt="Erica" style="height: 50px; width: auto; max-width: 110px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Erica Industria Tessile</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Industria tessile</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FILIERA TESSILE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€209.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Erica - FER Autoproduzione -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: #1a1a1a; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/erica.png" alt="Erica" style="height: 50px; width: auto; max-width: 110px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Erica Industria Tessile</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Industria tessile</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€107.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Stamet -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/stamet.png" alt="Nuova Stamet" style="height: 55px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Nuova Stamet</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Carpenteria metallica</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€291.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Quinzanini -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/quinzanini.png" alt="Quinzanini" style="height: 50px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Idroclima Quinzanini</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Impianti termoidraulici</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€120.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Joy Srl - ISI INAIL -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06); transition: transform 0.3s ease, background 0.3s ease;">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/joy.jpg" alt="Joy" style="height: 55px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Joy Srl</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">RSA — Residenza Sanitaria Assistenziale</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">ISI INAIL</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€130.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">A fondo perduto</div>
+                </div>
+
+                <!-- Card "E molte altre" -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(212,175,55,0.05); border-radius: 16px; padding: 40px 25px; text-align: center; border: 1px dashed rgba(212,175,55,0.3);">
+                    <div style="width: 70px; height: 70px; background: rgba(212,175,55,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-building" style="color: #d4af37; font-size: 1.8rem;"></i>
+                    </div>
+                    <div style="font-size: 1.3rem; font-weight: 800; color: #d4af37; margin-bottom: 10px;">E molte altre imprese</div>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">
+                        Numerose aziende italiane hanno ottenuto finanziamenti grazie alla nostra consulenza specializzata
+                    </div>
+                </div>
+
+                <!-- DUPLICATI PER SCROLL INFINITO -->
+                
+                <!-- Peraria INAIL (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/peraria.png" alt="Peraria" style="height: 55px; width: auto; max-width: 130px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Peraria Srl</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Gonfiabili e strutture</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">ISI INAIL</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€130.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">A fondo perduto</div>
+                </div>
+                
+                <!-- Erica Filiera (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="background: #1a1a1a; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/erica.png" alt="Erica" style="height: 50px; width: auto; max-width: 110px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Erica Industria Tessile</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Industria tessile</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FILIERA TESSILE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€209.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Stamet (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/stamet.png" alt="Nuova Stamet" style="height: 55px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Nuova Stamet</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Carpenteria metallica</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€291.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Quinzanini (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/quinzanini.png" alt="Quinzanini" style="height: 50px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Idroclima Quinzanini</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">Impianti termoidraulici</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">FER AUTOPRODUZIONE</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€120.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">Approvato da graduatoria</div>
+                </div>
+                
+                <!-- Joy Srl - ISI INAIL (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(255,255,255,0.03); border-radius: 16px; padding: 30px 25px; text-align: center; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="background: white; border-radius: 12px; padding: 20px; display: inline-block; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.15);">
+                        <img src="img/loghi-clienti/joy.jpg" alt="Joy" style="height: 55px; width: auto; max-width: 150px; object-fit: contain;">
+                    </div>
+                    <div style="color: white; font-size: 1.15rem; font-weight: 700; margin-bottom: 5px;">Joy Srl</div>
+                    <div style="color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-bottom: 20px;">RSA — Residenza Sanitaria Assistenziale</div>
+                    <div style="background: rgba(212,175,55,0.1); border-radius: 8px; padding: 8px 16px; display: inline-block; margin-bottom: 15px; border: 1px solid rgba(212,175,55,0.2);">
+                        <span style="font-size: 0.75rem; color: #d4af37; font-weight: 700;">ISI INAIL</span>
+                    </div>
+                    <div style="color: #22c55e; font-size: 2.2rem; font-weight: 800; margin-bottom: 8px;">€130.000</div>
+                    <div style="color: #22c55e; font-size: 0.8rem; font-weight: 600;">A fondo perduto</div>
+                </div>
+
+                <!-- E molte altre (duplicato) -->
+                <div class="testimonial-premium-card" style="min-width: 300px; max-width: 300px; background: rgba(212,175,55,0.05); border-radius: 16px; padding: 40px 25px; text-align: center; border: 1px dashed rgba(212,175,55,0.3);">
+                    <div style="width: 70px; height: 70px; background: rgba(212,175,55,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i class="fas fa-building" style="color: #d4af37; font-size: 1.8rem;"></i>
+                    </div>
+                    <div style="font-size: 1.3rem; font-weight: 800; color: #d4af37; margin-bottom: 10px;">E molte altre imprese</div>
+                    <div style="color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6;">
+                        Numerose aziende italiane hanno ottenuto finanziamenti grazie alla nostra consulenza specializzata
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 60px;">
+            <a href="tel:0108078800" style="display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%); color: #0a1530; padding: 18px 40px; border-radius: 50px; font-weight: 700; font-size: 1.1rem; text-decoration: none; box-shadow: 0 10px 40px rgba(212,175,55,0.3); transition: all 0.3s ease;">
+                <i class="fas fa-phone-alt"></i>
+                Chiamaci: 010 8078800
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+@-webkit-keyframes scrollTestimonials {
+    0% { -webkit-transform: translateX(0); transform: translateX(0); }
+    100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+}
+
+@keyframes scrollTestimonials {
+    0% { -webkit-transform: translateX(0); transform: translateX(0); }
+    100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
+}
+
+.testimonials-track {
+    -webkit-animation: scrollTestimonials 50s linear infinite;
+    animation: scrollTestimonials 50s linear infinite;
+    will-change: transform;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.testimonials-track:hover {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
+.testimonial-premium-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -webkit-transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-premium-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+}
+
+.testimonials-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.testimonial-premium-card {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .testimonials-premium {
+        padding: 60px 0 80px !important;
+    }
+    
+    .testimonials-premium h2 {
+        font-size: 2rem !important;
+    }
+    
+    .testimonial-premium-card {
+        min-width: 280px !important;
+        max-width: 280px !important;
+    }
+    
+    .testimonials-scroll-wrapper > div:first-child,
+    .testimonials-scroll-wrapper > div:nth-child(2) {
+        width: 40px !important;
+    }
+}
+</style>
+
+
+<!-- SEZIONE PRENOTA CONSULENZA -->
+<!-- ============================================== -->
+<section class="prenota-consulenza-section">
+  <div class="container">
+    <div class="prenota-grid">
+
+      <!-- FOTO TEAM -->
+      <div class="prenota-photo-col">
+        <img src="{{ url_for('static', filename='img/ufficio-team.png') }}"
+             alt="Il team Energelia in consulenza"
+             class="prenota-team-photo">
+      </div>
+
+      <!-- TESTO + CTA -->
+      <div class="prenota-content">
+        <div class="prenota-icon-box">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <h2 class="prenota-title">Prenota la tua consulenza gratuita</h2>
+        <p class="prenota-subtitle">Scopri se ci sono bandi adatti alla tua azienda. Senza impegno.</p>
+        <div class="prenota-features">
+          <div class="prenota-feature">
+            <i class="fas fa-clock"></i>
+            <span>Risposta in 24h</span>
+          </div>
+          <div class="prenota-feature">
+            <i class="fas fa-file-alt"></i>
+            <span>Analisi personalizzata</span>
+          </div>
+          <div class="prenota-feature">
+            <i class="fas fa-hand-holding-usd"></i>
+            <span>Zero costi iniziali</span>
+          </div>
+        </div>
+        <div class="prenota-cta-buttons">
+          <button onclick="openConsultationPopup()" class="btn-prenota-primary" style="border: none; cursor: pointer;">
+            <i class="fas fa-paper-plane me-2"></i>Richiedi Consulenza Gratuita
+          </button>
+          <a href="tel:+390108078800" class="btn-prenota-phone">
+            <i class="fas fa-phone-alt me-2"></i>010 8078800
+          </a>
+        </div>
+        <p class="prenota-trust-note">
+          <i class="fas fa-shield-alt me-2"></i>I tuoi dati sono al sicuro. Nessuna newsletter non richiesta.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.05); }
+}
+@keyframes floatParticle {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(180deg); }
+}
+.prenota-consulenza-section {
+  background: #0a1530;
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+}
+.prenota-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.prenota-photo-col {
+  position: relative;
+}
+.prenota-team-photo {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 16px;
+  box-shadow: 0 25px 70px rgba(0,0,0,0.5);
+  display: block;
+}
+.prenota-content {
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 991.98px) {
+  .prenota-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .prenota-team-photo {
+    height: 320px;
+  }
+}
+.prenota-icon-box {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, #d4af37, #b8960c);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+}
+.prenota-icon-box i {
+  font-size: 2.2rem;
+  color: #0a1530;
+}
+.prenota-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+.prenota-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 35px;
+}
+.prenota-features {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.prenota-feature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  font-weight: 500;
+}
+.prenota-feature i {
+  color: #d4af37;
+  font-size: 1.2rem;
+}
+.prenota-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+.btn-prenota-primary {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+  color: #0a1530;
+  font-size: 1.15rem;
+  font-weight: 700;
+  padding: 18px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.btn-prenota-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  color: #0a1530;
+}
+.btn-prenota-phone {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 18px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+.btn-prenota-phone:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+.prenota-trust-note {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.prenota-trust-note i {
+  color: #27ae60;
+}
+@media (max-width: 991px) {
+  .prenota-consulenza-section { padding: 60px 0; }
+  .prenota-title { font-size: 2.2rem; }
+  .prenota-features { gap: 25px; }
+}
+@media (max-width: 767px) {
+  .prenota-title { font-size: 1.8rem; }
+  .prenota-subtitle { font-size: 1.1rem; }
+  .prenota-feature { font-size: 0.9rem; }
+  .btn-prenota-primary, .btn-prenota-phone { padding: 15px 30px; font-size: 1rem; }
+}
+</style>
+
+
+{% include 'life-insurance-website-template/partials/footer.html' %}
+        
+        
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+        
+
+        <!-- Template Javascript -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+        <!-- Lead Capture Popup Script -->
+        <script>
+          let currentBandoId = '';
+          let currentBandoName = '';
+
+          function openLeadPopup(bandoId, bandoName) {
+            currentBandoId = bandoId;
+            currentBandoName = bandoName;
+            document.getElementById('popup-bando-title').textContent = 'Scarica Report: ' + bandoName;
+            document.getElementById('lead-bando-id').value = bandoId;
+            document.getElementById('lead-form-wrap').style.display = 'block';
+            document.getElementById('lead-success').style.display = 'none';
+            document.getElementById('lead-popup').style.display = 'flex';
+          }
+
+          function closeLeadPopup() {
+            document.getElementById('lead-popup').style.display = 'none';
+          }
+
+          async function submitLead(event) {
+            event.preventDefault();
+            const email = document.getElementById('lead-email').value;
+            const bandoId = document.getElementById('lead-bando-id').value;
+            const submitBtn = document.getElementById('lead-submit-btn');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Invio...';
+
+            try {
+              const response = await fetch('/api/lead', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, bando: bandoId })
+              });
+
+              const data = await response.json();
+              
+              if (data.success) {
+                document.getElementById('lead-form-wrap').style.display = 'none';
+                document.getElementById('lead-success').style.display = 'block';
+                window.location.href = '/download-report/' + bandoId;
+              } else {
+                alert('Errore: ' + (data.error || 'Riprova più tardi'));
+              }
+            } catch (error) {
+              alert('Errore di connessione. Riprova.');
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-download me-2"></i>Scarica Report';
+          }
+
+          document.getElementById('lead-popup').addEventListener('click', function(e) {
+            if (e.target === this) closeLeadPopup();
+          });
+
+          // Consultation Popup Functions
+          function openConsultationPopup() {
+            document.getElementById('consultation-form-wrap').style.display = 'block';
+            document.getElementById('consultation-success').style.display = 'none';
+            document.getElementById('consultation-popup').style.display = 'flex';
+          }
+
+          function closeConsultationPopup() {
+            document.getElementById('consultation-popup').style.display = 'none';
+          }
+
+          async function submitConsultation(event) {
+            event.preventDefault();
+            const email = document.getElementById('consultation-email').value;
+            const phone = document.getElementById('consultation-phone').value;
+            const submitBtn = document.getElementById('consultation-submit-btn');
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Invio...';
+
+            try {
+              const response = await fetch('/api/consultation', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, phone: phone })
+              });
+
+              const data = await response.json();
+              
+              if (data.success) {
+                document.getElementById('consultation-form-wrap').style.display = 'none';
+                document.getElementById('consultation-success').style.display = 'block';
+              } else {
+                alert('Errore: ' + (data.error || 'Riprova più tardi'));
+              }
+            } catch (error) {
+              alert('Errore di connessione. Riprova.');
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Richiedi Consulenza';
+          }
+
+          document.getElementById('consultation-popup').addEventListener('click', function(e) {
+            if (e.target === this) closeConsultationPopup();
+          });
+        </script>
+        
+            </body>
+
+</html>
+
+<script>
+function filterCategory(category) {
+  const cards = document.querySelectorAll('.bandocard');
+  const buttons = document.querySelectorAll('.btn-group .btn');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  cards.forEach(card => {
+    if (category === 'tutti' || card.classList.contains(category)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function filterBandi() {
+  const input = document.getElementById('searchBando').value.toLowerCase();
+  const cards = document.querySelectorAll('.bandocard');
+
+  cards.forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? 'block' : 'none';
+  });
+}
+
+
+
+  
+</script>
+<script>
+  if (window.matchMedia("(max-width: 575.98px)").matches) {
+    const navbar = document.querySelector('.nav-bar');
+    let lastY = window.scrollY;
+
+    // Stato iniziale
+    if (lastY === 0) {
+      navbar.classList.add('at-top', 'visible');
+    } else {
+      navbar.classList.add('visible');
+    }
+
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+
+      if (y === 0) {
+        // In cima: navbar statica, SENZA visible/hidden per evitare transizioni
+        navbar.classList.add('at-top');
+        navbar.classList.remove('visible','hidden');
+      } else {
+        // dopo i primi scroll: fixed + hide/show come prima
+        navbar.classList.remove('at-top');
+        if (y > lastY + 5) {
+          navbar.classList.add('hidden');
+          navbar.classList.remove('visible');
+        } else if (y < lastY - 5) {
+          navbar.classList.add('
