@@ -981,12 +981,16 @@
        --padding-top-extra: 110px;
      ">
   <div class="header-carousel-item" style="
-      background:
-        linear-gradient(var(--overlay), var(--overlay)),
-        var(--bg-img) center/cover no-repeat;
+      background: transparent;
       position: relative;
       overflow: hidden;
     ">
+    <!-- VIDEO HERO -->
+    <div style="position:absolute;inset:0;z-index:0;overflow:hidden;">
+      <video id="heroVideo" autoplay muted playsinline style="width:100%;height:100%;object-fit:cover;">
+        <source src="img/hero-video.mp4" type="video/mp4">
+      </video>
+    </div>
     <!-- Effetto onde del mare (il fascio del faro è già nell'immagine, non lo sovrapponiamo) -->
     <div class="hero-fx" aria-hidden="true">
       <svg class="hero-wave hero-wave-back" viewBox="0 0 1440 80" preserveAspectRatio="none">
