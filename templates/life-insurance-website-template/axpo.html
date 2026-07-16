@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'wait_for_update': 500
+      });
+      try {
+        if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
+          gtag('consent', 'update', {
+            'ad_storage': 'granted',
+            'analytics_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted'
+          });
+        }
+      } catch(e) {}
+    </script>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-67D2BL58Y9');
+    </script>
+
+    <meta charset="utf-8">
+    <title>Fotovoltaico chiavi in mano | Energelia Energy Solutions</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="Energelia Energy Solutions: impianti fotovoltaici chiavi in mano per imprese e privati. Progettazione, installazione, gestione operativa. Acquisto diretto, finanziato o noleggio operativo. Parte della rete Enercubica.">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&display=swap" rel="stylesheet">
+
+    <!-- Icon Fonts -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+
+    <!-- Bootstrap + Template -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+        <meta name="description" content="Energelia partner AXPO: ricerca incentivi per fotovoltaico ed efficienza energetica per le imprese italiane.">
+    <title>Energelia × AXPO — Partner per la Transizione Energetica</title>
+    <style>
+        .axpo-hero {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1a2940 60%, #0d1b2a 100%);
+            padding: 90px 0 70px;
+            color: #fff;
+        }
+        .axpo-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+        @media(max-width:768px){ .axpo-hero-grid { grid-template-columns: 1fr; } }
+        .axpo-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #ff6b35, #e8215d, #7b2fbe);
+            color: #fff;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        .axpo-hero h1 { font-size: 2.6rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+        .axpo-hero h1 span.grad { background: linear-gradient(90deg, #ff9a3c, #e8215d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .axpo-hero .lead { color: rgba(255,255,255,.8); font-size: 1.1rem; line-height: 1.7; margin-bottom: 32px; }
+        .axpo-btn-primary { background: linear-gradient(90deg, #ff6b35, #e8215d); color: #fff; border: none; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 1rem; cursor: pointer; text-decoration: none; display: inline-block; }
+        .axpo-btn-primary:hover { opacity: .9; color: #fff; }
+        .axpo-btn-outline { border: 2px solid rgba(255,255,255,.5); color: #fff; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 1rem; text-decoration: none; display: inline-block; margin-left: 16px; }
+        .axpo-btn-outline:hover { border-color: #fff; color: #fff; }
+        .axpo-hero-logo-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+        .axpo-hero-logo-box { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 20px; padding: 40px 48px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        .axpo-hero-logo-box img { max-width: 200px; height: auto; }
+        .axpo-partner-label { color: rgba(255,255,255,.5); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+        .plus-sign { font-size: 2rem; color: rgba(255,255,255,.3); font-weight: 300; }
+
+        /* Chi è AXPO */
+        .axpo-about { padding: 80px 0; background: #f8f9fb; }
+        .axpo-about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        @media(max-width:768px){ .axpo-about-grid { grid-template-columns: 1fr; } }
+        .axpo-about h2 { font-size: 2rem; font-weight: 800; margin-bottom: 16px; color: #1a1a2e; }
+        .axpo-about p { color: #555; line-height: 1.8; margin-bottom: 16px; }
+        .axpo-stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; margin-top: 32px; }
+        .axpo-stat-card { background: #fff; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,.07); }
+        .axpo-stat-num { font-size: 2rem; font-weight: 800; background: linear-gradient(90deg, #ff6b35, #e8215d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .axpo-stat-label { font-size: .82rem; color: #888; margin-top: 4px; }
+        .axpo-logo-showcase { background: #fff; border-radius: 20px; padding: 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 24px rgba(0,0,0,.08); }
+        .axpo-logo-showcase img { max-width: 260px; height: auto; }
+
+        /* Partnership */
+        .axpo-partnership { padding: 80px 0; }
+        .axpo-partnership h2 { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 12px; }
+        .axpo-partnership .subtitle { text-align: center; color: #666; margin-bottom: 48px; font-size: 1.05rem; }
+        .axpo-cols { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+        @media(max-width:768px){ .axpo-cols { grid-template-columns: 1fr; } }
+        .axpo-card { background: #fff; border-radius: 16px; padding: 32px 28px; box-shadow: 0 3px 20px rgba(0,0,0,.07); border-top: 4px solid; }
+        .axpo-card:nth-child(1) { border-color: #ff6b35; }
+        .axpo-card:nth-child(2) { border-color: #e8215d; }
+        .axpo-card:nth-child(3) { border-color: #7b2fbe; }
+        .axpo-card-icon { font-size: 2rem; margin-bottom: 16px; }
+        .axpo-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: #1a1a2e; }
+        .axpo-card p { color: #666; line-height: 1.7; font-size: .95rem; }
+
+        /* Incentivi */
+        .axpo-incentivi { padding: 80px 0; background: #f8f9fb; }
+        .axpo-incentivi h2 { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 12px; }
+        .axpo-incentivi .subtitle { text-align: center; color: #666; margin-bottom: 48px; }
+        .axpo-bandi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+        @media(max-width:768px){ .axpo-bandi-grid { grid-template-columns: 1fr; } }
+        .axpo-bando-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 3px 20px rgba(0,0,0,.07); }
+        .axpo-bando-header { background: linear-gradient(135deg, #1a2940, #0d1b2a); padding: 20px 24px; }
+        .axpo-bando-ente { color: rgba(255,255,255,.6); font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; }
+        .axpo-bando-titolo { color: #fff; font-weight: 700; font-size: 1rem; margin-top: 4px; }
+        .axpo-bando-body { padding: 20px 24px; }
+        .axpo-bando-importo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(90deg, #ff6b35, #e8215d); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .axpo-bando-desc { color: #666; font-size: .9rem; margin-top: 8px; line-height: 1.6; }
+        .axpo-bando-stato { display: inline-block; background: #e8f5e9; color: #2e7d32; font-size: .75rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-top: 12px; }
+
+        /* Form */
+        .axpo-form-section { padding: 80px 0; background: linear-gradient(135deg, #0d1b2a 0%, #1a2940 100%); color: #fff; }
+        .axpo-form-section h2 { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 12px; }
+        .axpo-form-section .subtitle { text-align: center; color: rgba(255,255,255,.7); margin-bottom: 48px; }
+        .axpo-form { max-width: 560px; margin: 0 auto; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: 20px; padding: 40px; }
+        .axpo-form .form-control { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: #fff; border-radius: 8px; padding: 12px 16px; }
+        .axpo-form .form-control::placeholder { color: rgba(255,255,255,.4); }
+        .axpo-form .form-control:focus { background: rgba(255,255,255,.15); border-color: #ff6b35; box-shadow: none; color: #fff; }
+        .axpo-form label { color: rgba(255,255,255,.8); font-size: .9rem; margin-bottom: 6px; }
+        .axpo-form-msg { margin-top: 16px; padding: 12px; border-radius: 8px; text-align: center; display: none; }
+        .axpo-form-msg.success { background: rgba(46,125,50,.3); border: 1px solid rgba(76,175,80,.4); color: #a5d6a7; }
+        .axpo-form-msg.error { background: rgba(198,40,40,.3); border: 1px solid rgba(239,83,80,.4); color: #ef9a9a; }
+
+        /* CTA */
+        .axpo-cta { padding: 64px 0; text-align: center; }
+        .axpo-cta h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
+        .axpo-cta p { color: #666; margin-bottom: 32px; }
+    </style>
+</head>
+
+<body>
+
+    {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+    <!-- HERO -->
+    <section class="axpo-hero">
+        <div class="container">
+            <div class="axpo-hero-grid">
+                <div>
+                    <span class="axpo-badge"><i class="fas fa-handshake me-2"></i>Partner Ufficiale AXPO</span>
+                    <h1>Fotovoltaico ed efficienza energetica:<br><span class="grad">incentivi per la tua azienda</span></h1>
+                    <p class="lead">
+                        Energelia e AXPO uniscono le competenze per aiutare le imprese italiane a finanziare impianti fotovoltaici e interventi di efficienza energetica. Individuiamo i bandi più vantaggiosi e gestiamo la pratica dall&apos;inizio alla fine.
+                    </p>
+                    <a href="#contatto" class="axpo-btn-primary"><i class="fas fa-phone-alt me-2"></i>Richiedi consulenza gratuita</a>
+                    <a href="#incentivi" class="axpo-btn-outline">Vedi i bandi attivi</a>
+                </div>
+                <div class="axpo-hero-logo-wrap">
+                    <div class="axpo-hero-logo-box">
+                        <span class="axpo-partner-label">in collaborazione con</span>
+                        <img src="https://cdn.cookielaw.org/logos/400a5c89-a3a5-4159-a7c1-ac26e096f4ce/ab4f4777-a7ff-4e9f-b571-1cd2ab60a755/4836b8a9-c0b8-485f-ac86-70be322e8a73/AxpoLogo1.png" alt="AXPO SpA" onerror="this.style.display='none'">
+                        <span class="axpo-partner-label">Partner Energetico</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHI E' AXPO -->
+    <section class="axpo-about">
+        <div class="container">
+            <div class="axpo-about-grid">
+                <div class="axpo-logo-showcase">
+                    <img src="https://cdn.cookielaw.org/logos/400a5c89-a3a5-4159-a7c1-ac26e096f4ce/ab4f4777-a7ff-4e9f-b571-1cd2ab60a755/4836b8a9-c0b8-485f-ac86-70be322e8a73/AxpoLogo1.png" alt="AXPO SpA" style="max-width:240px;" onerror="this.style.display='none'">
+                </div>
+                <div>
+                    <h2>Chi è AXPO</h2>
+                    <p>
+                        AXPO è uno dei principali operatori europei nel settore energetico, con oltre 100 anni di esperienza nella produzione e fornitura di energia sostenibile. Leader internazionale nel trading di energia e nella commercializzazione di energia solare ed eolica, AXPO opera in oltre 30 paesi tra Europa, Nord America e Asia.
+                    </p>
+                    <p>
+                        In Italia, AXPO è presente dal 2000 con oltre 250 dipendenti e offre soluzioni integrate per imprese e grandi aziende: fornitura di luce e gas, impianti fotovoltaici per industria e terziario, efficienza energetica, comunità energetiche e molto altro.
+                    </p>
+                    <div class="axpo-stats">
+                        <div class="axpo-stat-card">
+                            <div class="axpo-stat-num">250+</div>
+                            <div class="axpo-stat-label">Dipendenti in Italia</div>
+                        </div>
+                        <div class="axpo-stat-card">
+                            <div class="axpo-stat-num">30+</div>
+                            <div class="axpo-stat-label">Paesi nel mondo</div>
+                        </div>
+                        <div class="axpo-stat-card">
+                            <div class="axpo-stat-num">6,9 Mld</div>
+                            <div class="axpo-stat-label">Fatturato gruppo</div>
+                        </div>
+                        <div class="axpo-stat-card">
+                            <div class="axpo-stat-num">2000</div>
+                            <div class="axpo-stat-label">Anno di fondazione IT</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COSA FACCIAMO INSIEME -->
+    <section class="axpo-partnership">
+        <div class="container">
+            <h2>Cosa facciamo insieme</h2>
+            <p class="subtitle">Un unico punto di riferimento per trovare le risorse pubbliche e realizzare il tuo impianto</p>
+            <div class="axpo-cols">
+                <div class="axpo-card">
+                    <div class="axpo-card-icon">🔍</div>
+                    <h3>Ricerca bandi e incentivi</h3>
+                    <p>Identifichiamo i bandi attivi più vantaggiosi per il tuo progetto fotovoltaico o di efficienza energetica: fondi perduto, finanziamenti agevolati, crediti d&apos;imposta a livello locale, nazionale ed europeo.</p>
+                </div>
+                <div class="axpo-card">
+                    <div class="axpo-card-icon">⚡</div>
+                    <h3>Impianti fotovoltaici industriali</h3>
+                    <p>AXPO progetta e realizza impianti fotovoltaici su misura per industria e terziario. Noi di Energelia affianchiamo il processo individuando le agevolazioni disponibili e gestendo le pratiche burocratiche.</p>
+                </div>
+                <div class="axpo-card">
+                    <div class="axpo-card-icon">📋</div>
+                    <h3>Gestione pratiche end-to-end</h3>
+                    <p>Dalla pre-fattibilità alla rendicontazione finale: seguiamo ogni fase della domanda di finanziamento, coordinandoci con AXPO per garantire che il progetto rispetti tutti i requisiti richiesti dal bando.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INCENTIVI DISPONIBILI -->
+    <section class="axpo-incentivi" id="incentivi">
+        <div class="container">
+            <h2>Incentivi disponibili</h2>
+            <p class="subtitle">I principali strumenti attivi per fotovoltaico ed efficienza energetica</p>
+            <div class="axpo-bandi-grid">
+                <div class="axpo-bando-card">
+                    <div class="axpo-bando-header">
+                        <div class="axpo-bando-ente">MASE / GSE</div>
+                        <div class="axpo-bando-titolo">Conto Termico 3.0</div>
+                    </div>
+                    <div class="axpo-bando-body">
+                        <div class="axpo-bando-importo">Fino al 65%</div>
+                        <div class="axpo-bando-desc">€900 milioni/anno per efficienza energetica e fonti rinnovabili termiche. Fino al 65% per imprese del terziario, 100% per scuole e ospedali. Sportello sempre aperto.</div>
+                        <span class="axpo-bando-stato">🟢 Sportello aperto</span>
+                    </div>
+                </div>
+                <div class="axpo-bando-card">
+                    <div class="axpo-bando-header">
+                        <div class="axpo-bando-ente">MASE — PN RIC 2021-2027</div>
+                        <div class="axpo-bando-titolo">Fotovoltaico Mezzogiorno</div>
+                    </div>
+                    <div class="axpo-bando-body">
+                        <div class="axpo-bando-importo">Fino al 63%</div>
+                        <div class="axpo-bando-desc">262 milioni di euro a fondo perduto per impianti fotovoltaici e sistemi di stoccaggio aziendali nelle regioni del Sud Italia. Investimenti da €20K a €2M.</div>
+                        <span class="axpo-bando-stato">📋 Verifica scadenza</span>
+                    </div>
+                </div>
+                <div class="axpo-bando-card">
+                    <div class="axpo-bando-header">
+                        <div class="axpo-bando-ente">MASE / Invitalia</div>
+                        <div class="axpo-bando-titolo">FNEE — Efficienza Energetica</div>
+                    </div>
+                    <div class="axpo-bando-body">
+                        <div class="axpo-bando-importo">€150K – €4M</div>
+                        <div class="axpo-bando-desc">€310 milioni a sportello: finanziamento agevolato allo 0,25% fino al 70% dell&apos;investimento e garanzia fino all&apos;80%. Per imprese, ESCO e PA.</div>
+                        <span class="axpo-bando-stato">🟢 Sportello aperto</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORM CONTATTO -->
+    <section class="axpo-form-section" id="contatto">
+        <div class="container">
+            <h2>Richiedi una consulenza gratuita</h2>
+            <p class="subtitle">Uno dei nostri consulenti ti ricontatta entro 48 ore per valutare insieme il tuo progetto</p>
+            <div class="axpo-form">
+                <div class="mb-3">
+                    <label class="form-label">Nome e Cognome *</label>
+                    <input type="text" class="form-control" id="axpoNome" placeholder="Mario Rossi" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email aziendale *</label>
+                    <input type="email" class="form-control" id="axpoEmail" placeholder="mario@azienda.it" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Telefono</label>
+                    <input type="tel" class="form-control" id="axpoTel" placeholder="+39 010 000 0000">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Descrivi brevemente il tuo progetto</label>
+                    <textarea class="form-control" id="axpoMsg" rows="3" placeholder="Es. installazione fotovoltaico su capannone industriale, 150 kWp..."></textarea>
+                </div>
+                <button type="button" class="axpo-btn-primary w-100" onclick="inviaAxpoForm()" id="axpoSubmit">
+                    <i class="fas fa-paper-plane me-2"></i>Invia richiesta
+                </button>
+                <div class="axpo-form-msg" id="axpoMsg2"></div>
+                <p style="margin-top:20px; font-size:.8rem; color:rgba(255,255,255,.4); text-align:center;">
+                    I tuoi dati non vengono condivisi con terzi. Vedi la <a href="/privacy-policy" style="color:rgba(255,255,255,.5);">Privacy Policy</a>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINALE -->
+    <section class="axpo-cta">
+        <div class="container">
+            <h3>Pronto a ridurre i costi energetici della tua azienda?</h3>
+            <p>Chiamaci adesso per una valutazione gratuita. Nessun impegno, risposta in 24h.</p>
+            <a href="tel:+390107776530" class="axpo-btn-primary" style="background:linear-gradient(90deg,#ff6b35,#e8215d);">
+                <i class="fas fa-phone-alt me-2"></i>010 777 65 30
+            </a>
+        </div>
+    </section>
+
+    {% include 'life-insurance-website-template/partials/footer.html' %}
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>
+
+
+    <script>
+    function inviaAxpoForm() {
+        var nome = document.getElementById('axpoNome').value.trim();
+        var email = document.getElementById('axpoEmail').value.trim();
+        var tel = document.getElementById('axpoTel').value.trim();
+        var msg = document.getElementById('axpoMsg').value.trim();
+        var msgDiv = document.getElementById('axpoMsg2');
+        var btn = document.getElementById('axpoSubmit');
+        if (!nome || !email) { msgDiv.className='axpo-form-msg error'; msgDiv.style.display='block'; msgDiv.textContent='Compila nome ed email.'; return; }
+        btn.disabled = true; btn.textContent = 'Invio in corso...';
+        fetch('/api/consultation', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name: nome, email: email, phone: tel, message: 'AXPO Partnership: ' + msg, source: 'axpo-page'})
+        }).then(r => r.json()).then(d => {
+            msgDiv.className='axpo-form-msg success'; msgDiv.style.display='block';
+            msgDiv.textContent = 'Richiesta inviata! Ti ricontattiamo entro 48 ore.';
+            btn.textContent = 'Inviato ✓';
+        }).catch(() => {
+            msgDiv.className='axpo-form-msg error'; msgDiv.style.display='block';
+            msgDiv.textContent = 'Errore. Riprova o chiamaci al 010 777 65 30.';
+            btn.disabled = false; btn.textContent = 'Invia richiesta';
+        });
+    }
+    </script>
+
+</body>
+</html>
