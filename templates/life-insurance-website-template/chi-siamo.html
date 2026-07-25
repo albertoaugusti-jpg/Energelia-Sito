@@ -73,7 +73,7 @@
             background: linear-gradient(90deg,
                 hsl(145, 45%, 35%) 0%, hsl(145, 45%, 35%) 33.33%,
                 #f5f5f0 33.33%, #f5f5f0 66.66%,
-                hsl(0, 70%, 45%) 66.66%, hsl(0, 70%, 45%) 100%);
+                hsl(0, 70%, 45') 66.66%, hsl(0, 70%, 45%) 100%);
         }
         .chi-siamo-hero h1 {
             font-family: 'Source Serif 4', serif;
@@ -256,6 +256,99 @@
             margin: 0;
         }
 
+        /* ===== DOVE SIAMO ===== */
+        .dove-siamo-section {
+            padding: 4rem 0;
+            background: #fff;
+        }
+        .dove-siamo-section h2 {
+            font-family: 'Source Serif 4', serif;
+            color: #0a1530;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .dove-siamo-section .subtitle {
+            color: #5a6577;
+            margin-bottom: 3rem;
+            font-size: 1.05rem;
+        }
+        .sede-card {
+            background: #fff;
+            border: 1px solid #e5e8ee;
+            border-radius: 16px;
+            overflow: hidden;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        .sede-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 50px rgba(10, 21, 48, 0.14);
+            border-color: #d4af37;
+        }
+        .sede-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+            padding: 1.4rem 1.4rem 1rem;
+        }
+        .sede-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #1a5276, #0a1530);
+            color: #f4d03f;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .sede-header h5 {
+            color: #0a1530;
+            font-weight: 700;
+            margin: 0 0 0.2rem;
+            font-size: 1.05rem;
+        }
+        .sede-address {
+            color: #455062;
+            font-size: 0.92rem;
+            margin: 0 0 0.35rem;
+        }
+        .badge-sede {
+            font-size: 0.68rem;
+            font-weight: 600;
+            background: rgba(212,175,55,0.15);
+            border: 1px solid rgba(212,175,55,0.4);
+            color: #b8860b;
+            padding: 2px 8px;
+            border-radius: 20px;
+            letter-spacing: 0.4px;
+            vertical-align: middle;
+        }
+        .badge-appuntamento {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            background: rgba(26,82,118,0.1);
+            border: 1px solid rgba(26,82,118,0.3);
+            color: #1a5276;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+        .map-wrap {
+            position: relative;
+            padding-bottom: 62%;
+            height: 0;
+            overflow: hidden;
+        }
+        .map-wrap iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: 0;
+        }
+
         .cta-banner {
             background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
             color: #fff;
@@ -307,7 +400,7 @@
                     <span class="badge-anni"><i class="fas fa-award me-2"></i>Dal 2006 al fianco delle imprese</span>
                     <h1>Chi siamo</h1>
                     <p class="lead">
-                        Energelia accompagna le imprese italiane nell'accesso ai bandi pubblici, alla finanza agevolata e agli incentivi nazionali ed europei. Esperienza, metodo e una rete di professionisti per trasformare le opportunità in risultati.
+                        Energelia accompagna le imprese italiane nell'accesso ai bandi pubblici, alla finanza agevolata e agli incentivi nazionali ed europei. Esperienza, metodo e una rete di professionisti per trasformare le opportunitÃ  in risultati.
                     </p>
                 </div>
             </div>
@@ -323,8 +416,8 @@
                 <div class="col-lg-10">
                     <div class="video-wrap">
                         <iframe
-                            src="https://www.youtube.com/embed/wAUiuzHYkzA?rel=0&modestbranding=1"
-                            title="Energelia — Chi siamo"
+                            src="https://www.youtube.com/embed/-0Hw0SGCNFg?rel=0&modestbranding=1"
+                            title="Energelia â Chi siamo"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen
                             loading="lazy">
@@ -344,7 +437,7 @@
                 </div>
                 <div class="col-lg-6">
                     <p class="intro">
-                        Aiutiamo le aziende a non perdere le opportunità di crescita che lo Stato e l'Europa mettono a disposizione. Lo facciamo con un metodo strutturato, fonti ufficiali verificate, e seguendo il cliente in ogni fase: dalla ricerca del bando giusto, alla presentazione della domanda, fino alla rendicontazione dei finanziamenti ottenuti.
+                        Aiutiamo le aziende a non perdere le opportunitÃ  di crescita che lo Stato e l'Europa mettono a disposizione. Lo facciamo con un metodo strutturato, fonti ufficiali verificate, e seguendo il cliente in ogni fase: dalla ricerca del bando giusto, alla presentazione della domanda, fino alla rendicontazione dei finanziamenti ottenuti.
                     </p>
                 </div>
             </div>
@@ -354,7 +447,7 @@
                     <div class="valore-card">
                         <div class="icon-circle"><i class="fas fa-search"></i></div>
                         <h5>Ricerca mirata</h5>
-                        <p>Selezioniamo solo i bandi davvero applicabili alla tua azienda, evitando di farti perdere tempo su opportunità non compatibili.</p>
+                        <p>Selezioniamo solo i bandi davvero applicabili alla tua azienda, evitando di farti perdere tempo su opportunitÃ  non compatibili.</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
@@ -368,7 +461,7 @@
                     <div class="valore-card">
                         <div class="icon-circle"><i class="fas fa-handshake"></i></div>
                         <h5>Consulenza dedicata</h5>
-                        <p>Un referente per ogni cliente, sempre raggiungibile per chiarimenti, aggiornamenti e nuove opportunità.</p>
+                        <p>Un referente per ogni cliente, sempre raggiungibile per chiarimenti, aggiornamenti e nuove opportunitÃ .</p>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
@@ -392,11 +485,11 @@
                     <div class="team-card">
                         <img class="team-photo"
                              src="{{ url_for('static', filename='img/Bruno Ufficio.png') }}"
-                             alt="Bruno Massimo Legger — Amministratore Unico Energelia">
+                             alt="Bruno Massimo Legger â Amministratore Unico Energelia">
                         <div class="body">
                             <span class="role">Amministratore Unico</span>
                             <h4>Bruno Massimo Legger</h4>
-                            <p>Laureato in Scienze Politiche all'Università di Torino con tesi sul finanziamento internazionale della PMI. Una carriera tra cosmetica internazionale — Estée Lauder e Revlon a New York, Shiseido Italia — e distribuzione di marchi (Christian Dior Bijoux, Lesportsac). Dal 2014 si dedica al settore energetico: Project Manager in Conus Technology e Branch Manager Italia di AEM S.A. per contatori gas, elettrici e idrici. Oggi guida Energelia.</p>
+                            <p>Laureato in Scienze Politiche all'UniversitÃ  di Torino con tesi sul finanziamento internazionale della PMI. Una carriera tra cosmetica internazionale â EstÃ©e Lauder e Revlon a New York, Shiseido Italia â e distribuzione di marchi (Christian Dior Bijoux, Lesportsac). Dal 2014 si dedica al settore energetico: Project Manager in Conus Technology e Branch Manager Italia di AEM S.A. per contatori gas, elettrici e idrici. Oggi guida Energelia.</p>
                         </div>
                     </div>
                 </div>
@@ -404,11 +497,11 @@
                     <div class="team-card">
                         <img class="team-photo"
                              src="{{ url_for('static', filename='img/Alberto ufficio.png') }}"
-                             alt="Alberto Augusti — Responsabile Business Development Energelia">
+                             alt="Alberto Augusti â Responsabile Business Development Energelia">
                         <div class="body">
                             <span class="role">Responsabile Business Development</span>
                             <h4>Alberto Augusti</h4>
-                            <p>Genovese, classe 1978, laurea in Scienze Internazionali e Diplomatiche e Master in Business and Product Management al Sole 24 Ore. Vent'anni nella vendita e nella gestione d'impresa: ha fondato e guidato come Amministratore Unico Generelia ai tempi del Conto Energia (oltre 15 persone, 2 milioni di fatturato), è stato Responsabile Commerciale di Enercubica e Specialista Business Development in Poste Energia. Esperto in Gestione dell'Energia certificato Bureau Veritas (UNI CEI 11339:2009), Giovane Imprenditore Ligure dell'anno 2011.</p>
+                            <p>Genovese, classe 1978, laurea in Scienze Internazionali e Diplomatiche e Master in Business and Product Management al Sole 24 Ore. Vent'anni nella vendita e nella gestione d'impresa: ha fondato e guidato come Amministratore Unico Generelia ai tempi del Conto Energia (oltre 15 persone, 2 milioni di fatturato), Ã¨ stato Responsabile Commerciale di Enercubica e Specialista Business Development in Poste Energia. Esperto in Gestione dell'Energia certificato Bureau Veritas (UNI CEI 11339:2009), Giovane Imprenditore Ligure dell'anno 2011.</p>
                         </div>
                     </div>
                 </div>
@@ -416,11 +509,64 @@
                     <div class="team-card">
                         <img class="team-photo"
                              src="{{ url_for('static', filename='img/Foto Antonio Ufficio in piedi.png') }}"
-                             alt="Antonio Castagnaro — Responsabile Commerciale Energelia">
+                             alt="Antonio Castagnaro â Responsabile Commerciale Energelia">
                         <div class="body">
                             <span class="role">Responsabile Commerciale</span>
                             <h4>Antonio Castagnaro</h4>
-                            <p>Classe 1979, diplomato classico. Dopo una carriera nell'arbitraggio nazionale di pallacanestro ha fondato AC Eventi a Genova, agenzia specializzata nell'organizzazione chiavi in mano di congressi, cerimonie e manifestazioni sportive, e ha ideato il progetto Wedding Vintage Motors. Trasferitosi a Torino, oggi dedica tutta la sua attività al ruolo di Responsabile Commerciale di Energelia.</p>
+                            <p>Classe 1979, diplomato classico. Dopo una carriera nell'arbitraggio nazionale di pallacanestro ha fondato AC Eventi a Genova, agenzia specializzata nell'organizzazione chiavi in mano di congressi, cerimonie e manifestazioni sportive, e ha ideato il progetto Wedding Vintage Motors. Trasferitosi a Torino, oggi dedica tutta la sua attivitÃ  al ruolo di Responsabile Commerciale di Energelia.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dove siamo -->
+    <section class="dove-siamo-section">
+        <div class="container">
+            <h2 class="text-center">Dove siamo</h2>
+            <p class="subtitle text-center">Le nostre sedi sul territorio</p>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="sede-card">
+                        <div class="sede-header">
+                            <div class="sede-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h5>Genova &nbsp;<span class="badge-sede">Sede principale</span></h5>
+                                <p class="sede-address">Piazza Giacomo Matteotti 2, int. 3C</p>
+                            </div>
+                        </div>
+                        <div class="map-wrap">
+                            <iframe src="https://maps.google.com/maps?q=Piazza+Giacomo+Matteotti+2,+Genova,+Italy&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Energelia Genova"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sede-card">
+                        <div class="sede-header">
+                            <div class="sede-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h5>Milano</h5>
+                                <p class="sede-address">Via Cassala 30<br><small style="color:#6b7a8d;">c/o UltraRem Srl</small></p>
+                            </div>
+                        </div>
+                        <div class="map-wrap">
+                            <iframe src="https://maps.google.com/maps?q=Via+Cassala+30,+Milano,+Italy&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Energelia Milano"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="sede-card">
+                        <div class="sede-header">
+                            <div class="sede-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h5>Torino</h5>
+                                <p class="sede-address">Piazza Solferino 6</p>
+                                <span class="badge-appuntamento"><i class="fas fa-calendar-check" style="margin-right:4px;font-size:0.65rem;"></i>Solo su appuntamento</span>
+                            </div>
+                        </div>
+                        <div class="map-wrap">
+                            <iframe src="https://maps.google.com/maps?q=Piazza+Solferino+6,+Torino,+Italy&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Energelia Torino"></iframe>
                         </div>
                     </div>
                 </div>
@@ -431,10 +577,10 @@
     <!-- CTA -->
     <section class="cta-banner">
         <div class="container">
-            <h3>Vuoi sapere se la tua azienda può accedere a un bando attivo?</h3>
+            <h3>Vuoi sapere se la tua azienda puÃ² accedere a un bando attivo?</h3>
             <p class="mb-0" style="opacity: 0.85;">Consulenza gratuita, senza impegno.</p>
-            <a href="tel:+390107776530" class="btn-cta">
-                <i class="fas fa-phone-alt me-2"></i>Chiamaci al 010 7776530
+            <a href="tel:+390108078800" class="btn-cta">
+                <i class="fas fa-phone-alt me-2"></i>Chiamaci al 010 8078800
             </a>
         </div>
     </section>
