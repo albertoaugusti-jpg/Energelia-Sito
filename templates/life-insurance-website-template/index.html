@@ -3130,56 +3130,67 @@
 
 <!-- ====================  BANNER ITALBANDI  ==================== -->
 <section class="italbandi-banner-section">
-  <div class="container">
-    <a href="https://italbandi.com" target="_blank" rel="noopener noreferrer" class="italbandi-banner-link">
-      <img src="{{ url_for('static', filename='img/banner_italbandi.png') }}" alt="ItalBandi – Investiamo nel futuro, costruiamo valore" class="italbandi-banner-img">
-      <div class="italbandi-banner-overlay">
-        <span class="italbandi-banner-cta">Scopri i tuoi bandi su ItalBandi.com &rarr;</span>
+  <a href="https://italbandi.com" target="_blank" rel="noopener noreferrer" class="italbandi-banner-link" title="Vai su ItalBandi.com">
+    <div class="container">
+      <div class="italbandi-banner-inner">
+        <img src="{{ url_for('static', filename='img/logo_ItalBandi.png') }}" alt="ItalBandi" class="italbandi-banner-logo">
+        <div class="italbandi-banner-text">
+          <p class="italbandi-banner-subtitle">Il portale dei bandi per la tua impresa</p>
+          <span class="italbandi-banner-cta">Scopri i tuoi bandi &rarr;</span>
+        </div>
       </div>
-    </a>
-  </div>
+    </div>
+  </a>
 </section>
 <style>
 .italbandi-banner-section {
-  background: #0a1530;
-  padding: 40px 0;
+  background: linear-gradient(135deg, #0a1530 0%, #1a2a50 60%, #0c1e3a 100%);
+  padding: 0;
+  border-top: 3px solid #cc0000;
+  border-bottom: 3px solid #cc0000;
 }
 .italbandi-banner-link {
   display: block;
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-decoration: none;
+  transition: background 0.3s ease;
+  padding: 32px 0;
 }
 .italbandi-banner-link:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 60px rgba(0,0,0,0.5);
+  background: rgba(255,255,255,0.04);
 }
-.italbandi-banner-img {
-  width: 100%;
-  max-height: 320px;
-  object-fit: cover;
-  display: block;
+.italbandi-banner-inner {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  justify-content: center;
 }
-.italbandi-banner-overlay {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.75));
-  padding: 20px 30px;
-  text-align: center;
+.italbandi-banner-logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+}
+.italbandi-banner-text {
+  text-align: left;
+}
+.italbandi-banner-subtitle {
+  color: rgba(255,255,255,0.75);
+  font-size: 0.95rem;
+  margin: 0 0 8px;
+  letter-spacing: 0.3px;
 }
 .italbandi-banner-cta {
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: 0.5px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  border-bottom: 2px solid #cc0000;
+  padding-bottom: 2px;
 }
-@media (max-width: 768px) {
-  .italbandi-banner-img { max-height: 200px; }
-  .italbandi-banner-cta { font-size: 0.9rem; }
+@media (max-width: 576px) {
+  .italbandi-banner-inner { flex-direction: column; gap: 16px; text-align: center; }
+  .italbandi-banner-text { text-align: center; }
+  .italbandi-banner-logo { height: 60px; }
 }
 </style>
 <!-- ==================== FINE BANNER ITALBANDI ==================== -->
