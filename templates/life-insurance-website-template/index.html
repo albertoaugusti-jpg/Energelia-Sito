@@ -3127,6 +3127,63 @@
 
 
 
+
+<!-- ====================  BANNER ITALBANDI  ==================== -->
+<section class="italbandi-banner-section">
+  <div class="container">
+    <a href="https://italbandi.com" target="_blank" rel="noopener noreferrer" class="italbandi-banner-link">
+      <img src="{{ url_for('static', filename='img/banner_italbandi.png') }}" alt="ItalBandi – Investiamo nel futuro, costruiamo valore" class="italbandi-banner-img">
+      <div class="italbandi-banner-overlay">
+        <span class="italbandi-banner-cta">Scopri i tuoi bandi su ItalBandi.com &rarr;</span>
+      </div>
+    </a>
+  </div>
+</section>
+<style>
+.italbandi-banner-section {
+  background: #0a1530;
+  padding: 40px 0;
+}
+.italbandi-banner-link {
+  display: block;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+}
+.italbandi-banner-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 60px rgba(0,0,0,0.5);
+}
+.italbandi-banner-img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  display: block;
+}
+.italbandi-banner-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.75));
+  padding: 20px 30px;
+  text-align: center;
+}
+.italbandi-banner-cta {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+@media (max-width: 768px) {
+  .italbandi-banner-img { max-height: 200px; }
+  .italbandi-banner-cta { font-size: 0.9rem; }
+}
+</style>
+<!-- ==================== FINE BANNER ITALBANDI ==================== -->
+
 <!-- ====================  CTA RICERCA BANDI  ==================== -->
 <section class="cta-ricerca-bandi" aria-label="Ricerca bandi personalizzata">
   <div class="container">
