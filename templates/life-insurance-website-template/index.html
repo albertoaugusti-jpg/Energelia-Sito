@@ -367,6 +367,95 @@
       </div>
 
 
+      <!-- POPUP ITALBANDI -->
+      <div id="italbandi-popup" class="popup-overlay" style="display:none; z-index:2100;">
+        <div class="popup-content italbandi-popup-content">
+          <button class="popup-close" onclick="closeItalbandiPopup()" aria-label="Chiudi">&times;</button>
+          <a href="https://italbandi.com" target="_blank" rel="noopener" class="italbandi-popup-logo-link">
+            <img src="{{ url_for('static', filename='img/logo_ItalBandi.png') }}" alt="ItalBandi" class="italbandi-popup-logo">
+          </a>
+          <h2 class="italbandi-popup-title">Tutti i bandi possibili per te</h2>
+          <p class="italbandi-popup-text">
+            Su <strong>ItalBandi</strong> trovi ogni bando europeo, nazionale e regionale
+            adatto alla tua impresa, aggiornato in tempo reale. Non perdere più un'opportunità.
+          </p>
+          <a href="https://italbandi.com" target="_blank" rel="noopener" class="italbandi-popup-btn"
+             onclick="if(typeof gtag==='function'){gtag('event','click_italbandi_popup',{'event_category':'CTA','event_label':'home_popup_italbandi'});}">
+            <i class="fas fa-rocket me-2"></i>Scopri i tuoi bandi su ItalBandi
+          </a>
+          <button class="italbandi-popup-dismiss" onclick="closeItalbandiPopup()">No grazie, continua sul sito</button>
+        </div>
+      </div>
+
+      <style>
+        .italbandi-popup-content {
+          max-width: 440px;
+          padding: 2.2rem 1.8rem 1.8rem;
+          background: linear-gradient(150deg, #0a1838 0%, #0c1e4a 60%, #10265c 100%);
+          border: 1px solid rgba(212,175,55,0.3);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+        }
+        .italbandi-popup-content .popup-close { color: #fff; opacity: 0.8; }
+        .italbandi-popup-content .popup-close:hover { opacity: 1; }
+        .italbandi-popup-logo-link { display: inline-block; margin-bottom: 1.1rem; }
+        .italbandi-popup-logo {
+          width: 150px; height: 150px; object-fit: contain; border-radius: 16px;
+          box-shadow: 0 12px 34px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,175,55,0.3);
+        }
+        .italbandi-popup-title {
+          color: #ffffff; font-size: 1.55rem; font-weight: 800; margin: 0 0 0.7rem; line-height: 1.2;
+        }
+        .italbandi-popup-text {
+          color: #c5d1e6; font-size: 0.98rem; line-height: 1.55; margin: 0 0 1.5rem;
+        }
+        .italbandi-popup-text strong { color: #f4d03f; }
+        .italbandi-popup-btn {
+          display: inline-flex; align-items: center; justify-content: center;
+          background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
+          color: #0c1e4a; font-weight: 800; font-size: 1.02rem;
+          padding: 0.9rem 1.8rem; border-radius: 999px; text-decoration: none; width: 100%;
+          box-shadow: 0 10px 26px rgba(212,175,55,0.4);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .italbandi-popup-btn:hover { transform: translateY(-2px); box-shadow: 0 15px 34px rgba(212,175,55,0.55); color: #0c1e4a; }
+        .italbandi-popup-dismiss {
+          display: block; margin: 1rem auto 0; background: none; border: none;
+          color: #8ea3c4; font-size: 0.85rem; cursor: pointer; text-decoration: underline;
+        }
+        .italbandi-popup-dismiss:hover { color: #c5d1e6; }
+        @media (max-width: 480px) {
+          .italbandi-popup-content { padding: 1.8rem 1.2rem 1.4rem; }
+          .italbandi-popup-logo { width: 120px; height: 120px; }
+          .italbandi-popup-title { font-size: 1.35rem; }
+        }
+      </style>
+
+      <script>
+        function openItalbandiPopup() {
+          var p = document.getElementById('italbandi-popup');
+          if (p) p.style.display = 'flex';
+        }
+        function closeItalbandiPopup() {
+          var p = document.getElementById('italbandi-popup');
+          if (p) p.style.display = 'none';
+        }
+        // Compare dopo pochi secondi, a ogni apertura della home
+        window.addEventListener('load', function () {
+          setTimeout(openItalbandiPopup, 4000);
+        });
+        // Chiudi cliccando fuori dal riquadro
+        document.addEventListener('click', function (e) {
+          var overlay = document.getElementById('italbandi-popup');
+          if (overlay && e.target === overlay) closeItalbandiPopup();
+        });
+        // Chiudi con ESC
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') closeItalbandiPopup();
+        });
+      </script>
+      <!-- FINE POPUP ITALBANDI -->
+
+
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
@@ -476,280 +565,6 @@
 </div>
 <!-- ====================  FINE SHIELD LOGO  ==================== -->
 
-<!-- ====================  CTA RICERCA BANDI  ==================== -->
-<section class="cta-ricerca-bandi" aria-label="Ricerca bandi personalizzata">
-  <div class="container">
-    <div class="cta-ricerca-grid">
-      <div class="cta-ricerca-text">
-        <span class="cta-ricerca-badge">
-          <i class="fas fa-bullseye me-2"></i>RICERCA PERSONALIZZATA
-        </span>
-        <h2 class="cta-ricerca-title">
-          Cerchi il bando giusto per la tua azienda?
-        </h2>
-        <p class="cta-ricerca-sub">
-          Te lo troviamo noi. Ricerca dedicata, gratuita, senza impegno.
-        </p>
-        <ul class="cta-ricerca-list">
-          <li><i class="fas fa-check-circle"></i>Analisi della tua azienda e dei settori finanziabili</li>
-          <li><i class="fas fa-check-circle"></i>Selezione dei bandi compatibili attivi oggi</li>
-          <li><i class="fas fa-check-circle"></i>Ti ricontattiamo entro 48 ore lavorative</li>
-        </ul>
-      </div>
-      <div class="cta-ricerca-form-wrap">
-        <form id="ctaRicercaForm" class="cta-ricerca-form" novalidate>
-          <h3 class="cta-form-title">Richiedi la tua ricerca</h3>
-          <div class="cta-field">
-            <label for="ctaRicercaEmail">Email aziendale</label>
-            <input type="email" id="ctaRicercaEmail" name="email" placeholder="nome@azienda.it" required autocomplete="email">
-          </div>
-          <div class="cta-field">
-            <label for="ctaRicercaPhone">Telefono</label>
-            <input type="tel" id="ctaRicercaPhone" name="phone" placeholder="010 1234567" required autocomplete="tel">
-          </div>
-          <button type="submit" id="ctaRicercaSubmit" class="cta-submit-btn">
-            <span class="cta-btn-label"><i class="fas fa-paper-plane me-2"></i>Richiedimi una ricerca</span>
-            <span class="cta-btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin me-2"></i>Invio in corso…</span>
-          </button>
-          <p class="cta-privacy-note">
-            <i class="fas fa-shield-alt me-1"></i>I tuoi dati sono protetti. Vedi la <a href="/privacy-policy">Privacy Policy</a>.
-          </p>
-          <div class="cta-form-success" id="ctaRicercaSuccess" style="display:none;">
-            <i class="fas fa-check-circle me-2"></i><strong>Richiesta inviata!</strong> Ti ricontatteremo entro 48 ore.
-          </div>
-          <div class="cta-form-error" id="ctaRicercaError" style="display:none;">
-            <i class="fas fa-exclamation-triangle me-2"></i><span id="ctaRicercaErrorMsg">Si è verificato un errore. Riprova.</span>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>
-.cta-ricerca-bandi {
-  background: linear-gradient(135deg, #0a1530 0%, #1a5276 60%, #1f6694 100%);
-  color: #fff;
-  padding: 3.5rem 0 3rem;
-  position: relative;
-  overflow: hidden;
-  border-bottom: 4px solid #d4af37;
-}
-.cta-ricerca-bandi::before {
-  content: '';
-  position: absolute;
-  top: -40%;
-  right: -10%;
-  width: 480px;
-  height: 480px;
-  background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0) 70%);
-  pointer-events: none;
-}
-.cta-ricerca-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 3rem;
-  align-items: center;
-  position: relative;
-  z-index: 2;
-}
-.cta-ricerca-text { max-width: 600px; }
-.cta-ricerca-badge {
-  display: inline-block;
-  background: rgba(212,175,55,0.18);
-  border: 1px solid rgba(212,175,55,0.5);
-  color: #f4d03f;
-  padding: 6px 16px;
-  border-radius: 30px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  margin-bottom: 1.1rem;
-}
-.cta-ricerca-title {
-  font-family: 'Source Serif 4', 'Georgia', serif;
-  font-weight: 700;
-  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
-  line-height: 1.2;
-  margin-bottom: 1rem;
-  color: #fff;
-}
-.cta-ricerca-sub {
-  font-size: 1.05rem;
-  opacity: 0.92;
-  line-height: 1.55;
-  margin-bottom: 1.5rem;
-}
-.cta-ricerca-list { list-style: none; padding: 0; margin: 0; }
-.cta-ricerca-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 6px 0;
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.92);
-}
-.cta-ricerca-list i {
-  color: #f4d03f;
-  font-size: 1rem;
-  margin-top: 3px;
-  flex-shrink: 0;
-}
-.cta-ricerca-form-wrap { position: relative; }
-.cta-ricerca-form {
-  background: #fff;
-  color: #0a1530;
-  border-radius: 18px;
-  padding: 1.8rem 1.6rem;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
-}
-.cta-form-title {
-  font-family: 'Source Serif 4', 'Georgia', serif;
-  font-weight: 700;
-  font-size: 1.3rem;
-  color: #0a1530;
-  margin: 0 0 1.1rem;
-  text-align: center;
-}
-.cta-field { margin-bottom: 0.85rem; }
-.cta-field label {
-  display: block;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #5a6577;
-  margin-bottom: 4px;
-}
-.cta-field input {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid #d6dde7;
-  border-radius: 10px;
-  font-size: 1rem;
-  color: #0a1530;
-  background: #f7f9fc;
-  transition: all 0.2s ease;
-}
-.cta-field input:focus {
-  outline: none;
-  border-color: #1a5276;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(26,82,118,0.12);
-}
-.cta-submit-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #d4af37, #f4d03f);
-  color: #0a1530;
-  border: none;
-  border-radius: 30px;
-  padding: 13px 20px;
-  font-weight: 800;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 0.4rem;
-  transition: all 0.25s ease;
-}
-.cta-submit-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(212,175,55,0.45);
-}
-.cta-submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
-.cta-privacy-note {
-  font-size: 0.78rem;
-  color: #6b7689;
-  text-align: center;
-  margin: 0.8rem 0 0;
-}
-.cta-privacy-note a { color: #1a5276; text-decoration: underline; }
-.cta-form-success, .cta-form-error {
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  margin-top: 0.9rem;
-}
-.cta-form-success {
-  background: #e8f5ee;
-  color: #1e7e3a;
-  border: 1px solid #b6dec2;
-}
-.cta-form-error {
-  background: #fdecea;
-  color: #b3261e;
-  border: 1px solid #f5c2bd;
-}
-
-@media (max-width: 991.98px) {
-  .cta-ricerca-grid { grid-template-columns: 1fr; gap: 1.8rem; }
-}
-@media (max-width: 575.98px) {
-  .cta-ricerca-bandi { padding: 2.5rem 0 2.2rem; }
-  .cta-ricerca-title { font-size: 1.5rem; }
-  .cta-ricerca-list li { font-size: 0.9rem; }
-}
-</style>
-
-<script>
-(function() {
-  var form = document.getElementById('ctaRicercaForm');
-  if (!form) return;
-  var submit = document.getElementById('ctaRicercaSubmit');
-  var label = form.querySelector('.cta-btn-label');
-  var loading = form.querySelector('.cta-btn-loading');
-  var success = document.getElementById('ctaRicercaSuccess');
-  var error = document.getElementById('ctaRicercaError');
-  var errorMsg = document.getElementById('ctaRicercaErrorMsg');
-
-  function setLoading(on) {
-    if (on) { label.style.display = 'none'; loading.style.display = 'inline-block'; submit.disabled = true; }
-    else { label.style.display = 'inline-block'; loading.style.display = 'none'; submit.disabled = false; }
-  }
-  function showError(msg) {
-    success.style.display = 'none';
-    errorMsg.textContent = msg || 'Si è verificato un errore. Riprova.';
-    error.style.display = 'block';
-  }
-  function showSuccess() {
-    error.style.display = 'none';
-    success.style.display = 'block';
-    form.reset();
-  }
-
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    var email = document.getElementById('ctaRicercaEmail').value.trim();
-    var phone = document.getElementById('ctaRicercaPhone').value.trim();
-    if (!email || email.indexOf('@') === -1) { showError('Inserisci un indirizzo email valido.'); return; }
-    if (!phone || phone.length < 6) { showError('Inserisci un numero di telefono valido.'); return; }
-
-    setLoading(true);
-    fetch('/api/consultation', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, phone: phone })
-    })
-    .then(function(r) { return r.json().then(function(d) { return { status: r.status, data: d }; }); })
-    .then(function(res) {
-      setLoading(false);
-      if (res.status === 200 && res.data && res.data.success) {
-        showSuccess();
-        if (typeof gtag === 'function') {
-          gtag('event', 'lead_ricerca_bandi', { 'event_category': 'CTA', 'event_label': 'home_ricerca_bandi' });
-        }
-      } else {
-        showError((res.data && res.data.error) || 'Si è verificato un errore. Riprova.');
-      }
-    })
-    .catch(function() {
-      setLoading(false);
-      showError('Connessione non disponibile. Riprova fra poco.');
-    });
-  });
-})();
-</script>
-<!-- ==================== FINE CTA RICERCA BANDI ==================== -->
 
 <style>
   /* Logo ingrandito */
@@ -3311,6 +3126,282 @@
 </style>
 
 
+
+<!-- ====================  CTA RICERCA BANDI  ==================== -->
+<section class="cta-ricerca-bandi" aria-label="Ricerca bandi personalizzata">
+  <div class="container">
+    <div class="cta-ricerca-grid">
+      <div class="cta-ricerca-text">
+        <span class="cta-ricerca-badge">
+          <i class="fas fa-bullseye me-2"></i>RICERCA PERSONALIZZATA
+        </span>
+        <h2 class="cta-ricerca-title">
+          Cerchi il bando giusto per la tua azienda?
+        </h2>
+        <p class="cta-ricerca-sub">
+          Te lo troviamo noi. Ricerca dedicata, gratuita, senza impegno.
+        </p>
+        <ul class="cta-ricerca-list">
+          <li><i class="fas fa-check-circle"></i>Analisi della tua azienda e dei settori finanziabili</li>
+          <li><i class="fas fa-check-circle"></i>Selezione dei bandi compatibili attivi oggi</li>
+          <li><i class="fas fa-check-circle"></i>Ti ricontattiamo entro 48 ore lavorative</li>
+        </ul>
+      </div>
+      <div class="cta-ricerca-form-wrap">
+        <form id="ctaRicercaForm" class="cta-ricerca-form" novalidate>
+          <h3 class="cta-form-title">Richiedi la tua ricerca</h3>
+          <div class="cta-field">
+            <label for="ctaRicercaEmail">Email aziendale</label>
+            <input type="email" id="ctaRicercaEmail" name="email" placeholder="nome@azienda.it" required autocomplete="email">
+          </div>
+          <div class="cta-field">
+            <label for="ctaRicercaPhone">Telefono</label>
+            <input type="tel" id="ctaRicercaPhone" name="phone" placeholder="010 1234567" required autocomplete="tel">
+          </div>
+          <button type="submit" id="ctaRicercaSubmit" class="cta-submit-btn">
+            <span class="cta-btn-label"><i class="fas fa-paper-plane me-2"></i>Richiedimi una ricerca</span>
+            <span class="cta-btn-loading" style="display:none;"><i class="fas fa-spinner fa-spin me-2"></i>Invio in corso…</span>
+          </button>
+          <p class="cta-privacy-note">
+            <i class="fas fa-shield-alt me-1"></i>I tuoi dati sono protetti. Vedi la <a href="/privacy-policy">Privacy Policy</a>.
+          </p>
+          <div class="cta-form-success" id="ctaRicercaSuccess" style="display:none;">
+            <i class="fas fa-check-circle me-2"></i><strong>Richiesta inviata!</strong> Ti ricontatteremo entro 48 ore.
+          </div>
+          <div class="cta-form-error" id="ctaRicercaError" style="display:none;">
+            <i class="fas fa-exclamation-triangle me-2"></i><span id="ctaRicercaErrorMsg">Si è verificato un errore. Riprova.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.cta-ricerca-bandi {
+  background: linear-gradient(135deg, #0a1530 0%, #1a5276 60%, #1f6694 100%);
+  color: #fff;
+  padding: 3.5rem 0 3rem;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid #d4af37;
+}
+.cta-ricerca-bandi::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -10%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0) 70%);
+  pointer-events: none;
+}
+.cta-ricerca-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.cta-ricerca-text { max-width: 600px; }
+.cta-ricerca-badge {
+  display: inline-block;
+  background: rgba(212,175,55,0.18);
+  border: 1px solid rgba(212,175,55,0.5);
+  color: #f4d03f;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+}
+.cta-ricerca-title {
+  font-family: 'Source Serif 4', 'Georgia', serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+.cta-ricerca-sub {
+  font-size: 1.05rem;
+  opacity: 0.92;
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+.cta-ricerca-list { list-style: none; padding: 0; margin: 0; }
+.cta-ricerca-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.92);
+}
+.cta-ricerca-list i {
+  color: #f4d03f;
+  font-size: 1rem;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+.cta-ricerca-form-wrap { position: relative; }
+.cta-ricerca-form {
+  background: #fff;
+  color: #0a1530;
+  border-radius: 18px;
+  padding: 1.8rem 1.6rem;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+.cta-form-title {
+  font-family: 'Source Serif 4', 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #0a1530;
+  margin: 0 0 1.1rem;
+  text-align: center;
+}
+.cta-field { margin-bottom: 0.85rem; }
+.cta-field label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #5a6577;
+  margin-bottom: 4px;
+}
+.cta-field input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #d6dde7;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #0a1530;
+  background: #f7f9fc;
+  transition: all 0.2s ease;
+}
+.cta-field input:focus {
+  outline: none;
+  border-color: #1a5276;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,82,118,0.12);
+}
+.cta-submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #0a1530;
+  border: none;
+  border-radius: 30px;
+  padding: 13px 20px;
+  font-weight: 800;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.4rem;
+  transition: all 0.25s ease;
+}
+.cta-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(212,175,55,0.45);
+}
+.cta-submit-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+.cta-privacy-note {
+  font-size: 0.78rem;
+  color: #6b7689;
+  text-align: center;
+  margin: 0.8rem 0 0;
+}
+.cta-privacy-note a { color: #1a5276; text-decoration: underline; }
+.cta-form-success, .cta-form-error {
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-top: 0.9rem;
+}
+.cta-form-success {
+  background: #e8f5ee;
+  color: #1e7e3a;
+  border: 1px solid #b6dec2;
+}
+.cta-form-error {
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid #f5c2bd;
+}
+
+@media (max-width: 991.98px) {
+  .cta-ricerca-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+}
+@media (max-width: 575.98px) {
+  .cta-ricerca-bandi { padding: 2.5rem 0 2.2rem; }
+  .cta-ricerca-title { font-size: 1.5rem; }
+  .cta-ricerca-list li { font-size: 0.9rem; }
+}
+</style>
+
+<script>
+(function() {
+  var form = document.getElementById('ctaRicercaForm');
+  if (!form) return;
+  var submit = document.getElementById('ctaRicercaSubmit');
+  var label = form.querySelector('.cta-btn-label');
+  var loading = form.querySelector('.cta-btn-loading');
+  var success = document.getElementById('ctaRicercaSuccess');
+  var error = document.getElementById('ctaRicercaError');
+  var errorMsg = document.getElementById('ctaRicercaErrorMsg');
+
+  function setLoading(on) {
+    if (on) { label.style.display = 'none'; loading.style.display = 'inline-block'; submit.disabled = true; }
+    else { label.style.display = 'inline-block'; loading.style.display = 'none'; submit.disabled = false; }
+  }
+  function showError(msg) {
+    success.style.display = 'none';
+    errorMsg.textContent = msg || 'Si è verificato un errore. Riprova.';
+    error.style.display = 'block';
+  }
+  function showSuccess() {
+    error.style.display = 'none';
+    success.style.display = 'block';
+    form.reset();
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('ctaRicercaEmail').value.trim();
+    var phone = document.getElementById('ctaRicercaPhone').value.trim();
+    if (!email || email.indexOf('@') === -1) { showError('Inserisci un indirizzo email valido.'); return; }
+    if (!phone || phone.length < 6) { showError('Inserisci un numero di telefono valido.'); return; }
+
+    setLoading(true);
+    fetch('/api/consultation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, phone: phone })
+    })
+    .then(function(r) { return r.json().then(function(d) { return { status: r.status, data: d }; }); })
+    .then(function(res) {
+      setLoading(false);
+      if (res.status === 200 && res.data && res.data.success) {
+        showSuccess();
+        if (typeof gtag === 'function') {
+          gtag('event', 'lead_ricerca_bandi', { 'event_category': 'CTA', 'event_label': 'home_ricerca_bandi' });
+        }
+      } else {
+        showError((res.data && res.data.error) || 'Si è verificato un errore. Riprova.');
+      }
+    })
+    .catch(function() {
+      setLoading(false);
+      showError('Connessione non disponibile. Riprova fra poco.');
+    });
+  });
+})();
+</script>
+<!-- ==================== FINE CTA RICERCA BANDI ==================== -->
+
 {% include 'life-insurance-website-template/partials/footer.html' %}
         
         
@@ -3438,6 +3529,70 @@
           });
         </script>
         
+
+      <!-- ===== POPUP RETE ENERCUBICA ===== -->
+      <div id="rete-popup" class="popup-overlay" style="display:none; z-index:2050;">
+        <div class="popup-content" style="
+          background: linear-gradient(135deg, #0a1530 0%, #1a2a50 60%, #0c1e3a 100%);
+          color: #fff;
+          border-radius: 20px;
+          padding: 2.5rem 2rem;
+          max-width: 480px;
+          text-align: center;
+          border-top: 4px solid #cc0000;
+          box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+        ">
+          <button class="popup-close" onclick="closeRetePopup()" aria-label="Chiudi" style="color:#fff; opacity:0.8;">&times;</button>
+          <div style="margin-bottom: 1rem;">
+            <i class="fas fa-network-wired" style="font-size: 3rem; color: #d4af37; margin-bottom: 0.5rem; display: block;"></i>
+          </div>
+          <h2 style="font-size:1.6rem; font-weight:800; color:#fff; margin-bottom:0.6rem; letter-spacing:-0.5px;">
+            Rete Enercubica
+          </h2>
+          <p style="color:rgba(255,255,255,0.85); font-size:0.97rem; line-height:1.65; margin-bottom:1.5rem;">
+            Un ecosistema di partner selezionati per accompagnare le imprese 
+            in ogni fase: dall'efficienza energetica ai bandi, dall'internazionalizzazione 
+            alla crescita digitale.
+          </p>
+          <a href="/rete-enercubica" class="italbandi-popup-btn" style="display:inline-block; margin-bottom:1rem;"
+             onclick="if(typeof gtag==='function'){gtag('event','click_rete_popup',{'event_category':'CTA','event_label':'home_popup_rete'});}">
+            <i class="fas fa-arrow-right me-2"></i>Scopri la Rete Enercubica
+          </a>
+          <br>
+          <button onclick="closeRetePopup()" style="
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.55);
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 0.3rem 0.8rem;
+            transition: color 0.2s;
+          " onmouseover="this.style.color='rgba(255,255,255,0.85)'" 
+             onmouseout="this.style.color='rgba(255,255,255,0.55)'">
+            Chiudi
+          </button>
+        </div>
+      </div>
+      <script>
+        function openRetePopup() {
+          var p = document.getElementById('rete-popup');
+          if (p) { p.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        }
+        function closeRetePopup() {
+          var p = document.getElementById('rete-popup');
+          if (p) { p.style.display = 'none'; document.body.style.overflow = ''; }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+          var overlay = document.getElementById('rete-popup');
+          if (overlay) overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closeRetePopup();
+          });
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeRetePopup();
+          });
+        });
+      </script>
+      <!-- ===== FINE POPUP RETE ENERCUBICA ===== -->
             </body>
 
 </html>
