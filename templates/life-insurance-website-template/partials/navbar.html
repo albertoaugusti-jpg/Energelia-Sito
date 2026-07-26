@@ -68,7 +68,7 @@
             <a href="/fotovoltaico" class="nav-link nav-link-home {% if request.path == '/fotovoltaico' %}active{% endif %}">Fotovoltaico</a>
           </li>
           <li class="nav-item">
-            <a href="/rete-enercubica" class="nav-link nav-link-home {% if request.path == '/rete-enercubica' %}active{% endif %}">Rete</a>
+            <a href="#" onclick="if(typeof openRetePopup==='function'){openRetePopup();}return false;" class="nav-link nav-link-home">Rete</a>
           </li>
           <li class="nav-item">
             <a href="/axpo" class="nav-link nav-link-home {% if request.path == '/axpo' %}active{% endif %}">AXPO</a>
@@ -239,7 +239,7 @@
   background: linear-gradient(90deg, #0a1530 0%, #1a5276 100%);
   color: #fff;
   font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   overflow: hidden;
   border-bottom: 2px solid #cc0000;
   position: relative;
@@ -249,14 +249,14 @@
   flex: 0 0 auto;
   background: #cc0000;
   color: #fff;
-  padding: 6px 16px;
+  padding: 9px 18px;
   display: flex;
   align-items: center;
   gap: 8px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   white-space: nowrap;
   box-shadow: 2px 0 8px rgba(0,0,0,0.2);
 }
@@ -271,7 +271,7 @@
   flex: 1 1 auto;
   overflow: hidden;
   position: relative;
-  padding: 6px 0;
+  padding: 9px 0;
 }
 .news-ticker-wrap::before,
 .news-ticker-wrap::after {
