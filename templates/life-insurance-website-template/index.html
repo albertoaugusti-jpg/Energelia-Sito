@@ -474,15 +474,16 @@
   #shield-logo-wrap {
     position: relative;
     z-index: 1100;
-    height: 0;
+    height: 130px;
     overflow: visible;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
   }
   #shield-logo-link {
-    position: absolute;
-    top: -70px;
-    right: 28px;
-    left: auto;
-    display: block;
+    position: relative;
+    display: inline-flex;
+    margin-left: 28px;
     z-index: 1100;
     text-decoration: none;
   }
@@ -550,7 +551,8 @@
     transform: scale(1.05);
   }
   @media (max-width: 575.98px) {
-    #shield-logo-link { top: -46px; left: 14px; right: auto; }
+    #shield-logo-wrap { height: 90px; }
+    #shield-logo-link { margin-left: 14px; }
     #shield-logo-img  { width: 80px; height: 80px; border-radius: 10px; border-width: 3px; }
     #shield-logo-link::before { inset: -10px; }
   }
