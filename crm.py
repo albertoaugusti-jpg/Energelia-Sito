@@ -97,6 +97,17 @@ class Utente(Base):
         return self.ruolo == "admin"
 
 
+class ContoBancario(Base):
+    """I conti di Energelia su cui i clienti versano il corrispettivo.
+    Gestiti una volta sola in Impostazioni, poi scelti con un menu a tendina su ogni pratica."""
+    __tablename__ = "crm_conti_bancari"
+    id = Column(Integer, primary_key=True)
+    nome = Column(String(120), nullable=False)   # es. "Energelia — Ordinario"
+    iban = Column(String(34))
+    banca = Column(String(120))
+    attivo = Column(Boolean, default=True)
+
+
 class Cliente(Base):
     __tablename__ = "crm_clienti"
     id = Column(Integer, primary_key=True)
@@ -113,6 +124,11 @@ class Cliente(Base):
     telefono = Column(String(60))
     email = Column(String(200))
     pec = Column(String(200))
+    iban = Column(String(34))                  # IBAN del cliente: dove riceve l'accredito del bando
+    codice_fiscale = Column(String(16))
+    codice_sdi = Column(String(10))             # fatturazione elettronica
+    intestatario_conto = Column(String(255))    # se diverso dalla ragione sociale
+    email_fatturazione = Column(String(200))
     consulente_id = Column(Integer, ForeignKey("crm_utenti.id"))
     canale = Column(String(40))
     data_primo_contatto = Column(Date)
@@ -157,11 +173,13 @@ class Pratica(Base):
     success_fee_perc = Column(Numeric(6, 2))
     fatturato = Column(Numeric(12, 2))
     incassato = Column(Numeric(12, 2))
+    conto_incasso_id = Column(Integer, ForeignKey("crm_conti_bancari.id"))
     note = Column(Text)
     creato_il = Column(DateTime, default=dt.datetime.utcnow)
 
     cliente = relationship("Cliente", back_populates="pratiche")
     attivita = relationship("Attivita", back_populates="pratica")
+    conto_incasso = relationship("ContoBancario")
 
     @property
     def success_fee_maturata(self):
@@ -604,6 +622,13 @@ T_CLIENTE_FORM = """{% extends "base" %}{% block contenuto %}
   <label><span class="etichetta">Email</span><input name="email" type="email" value="{{ cliente.email or '' }}"></label>
   <label><span class="etichetta">PEC</span><input name="pec" value="{{ cliente.pec or '' }}"></label>
 </div></fieldset>
+<fieldset><legend>Dati economici</legend><div class="griglia g3">
+  <label><span class="etichetta">Codice Fiscale</span><input name="codice_fiscale" value="{{ cliente.codice_fiscale or '' }}"></label>
+  <label><span class="etichetta">Codice destinatario SDI</span><input name="codice_sdi" value="{{ cliente.codice_sdi or '' }}"></label>
+  <label><span class="etichetta">Intestatario conto (se diverso)</span><input name="intestatario_conto" value="{{ cliente.intestatario_conto or '' }}"></label>
+  <label><span class="etichetta">IBAN del cliente</span><input name="iban" value="{{ cliente.iban or '' }}" placeholder="Dove riceve l'accredito del bando"></label>
+  <label><span class="etichetta">Email di fatturazione</span><input name="email_fatturazione" type="email" value="{{ cliente.email_fatturazione or '' }}"></label>
+</div></fieldset>
 <fieldset><legend>Gestione</legend><div class="griglia g3">
   <label><span class="etichetta">Consulente Energelia</span><select name="consulente_id"><option value=""></option>
     {% for u in consulenti %}<option value="{{ u.id }}" {{ 'selected' if cliente.consulente_id==u.id }}>{{ u.nome }}</option>{% endfor %}</select></label>
@@ -633,6 +658,11 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
   <dt>Telefono</dt><dd>{{ c.telefono or '—' }}</dd>
   <dt>Email</dt><dd>{% if c.email %}<a href="mailto:{{ c.email }}">{{ c.email }}</a>{% else %}—{% endif %}</dd>
   <dt>PEC</dt><dd>{{ c.pec or '—' }}</dd>
+  <dt>Codice Fiscale</dt><dd>{{ c.codice_fiscale or '—' }}</dd>
+  <dt>Codice SDI</dt><dd>{{ c.codice_sdi or '—' }}</dd>
+  <dt>IBAN cliente</dt><dd>{{ c.iban or '—' }}</dd>
+  <dt>Intestatario conto</dt><dd>{{ c.intestatario_conto or '—' }}</dd>
+  <dt>Email fatturazione</dt><dd>{{ c.email_fatturazione or '—' }}</dd>
   <dt>Consulente</dt><dd>{{ c.consulente.nome if c.consulente else '—' }}</dd>
   <dt>Canale</dt><dd>{{ c.canale or '—' }}</dd>
   <dt>Primo contatto</dt><dd>{{ data_it(c.data_primo_contatto) }}</dd>
@@ -763,6 +793,8 @@ T_PRATICA_FORM = """{% extends "base" %}{% block contenuto %}
   <label><span class="etichetta">Success fee %</span><input name="success_fee_perc" inputmode="decimal" placeholder="5" value="{{ p.success_fee_perc or '' }}"></label>
   <label><span class="etichetta">Fatturato €</span><input name="fatturato" inputmode="decimal" value="{{ p.fatturato or '' }}"></label>
   <label><span class="etichetta">Incassato €</span><input name="incassato" inputmode="decimal" value="{{ p.incassato or '' }}"></label>
+  <label><span class="etichetta">Conto d'incasso Energelia</span><select name="conto_incasso_id"><option value="">—</option>
+    {% for conto in conti %}<option value="{{ conto.id }}" {{ 'selected' if p.conto_incasso_id==conto.id }}>{{ conto.nome }}</option>{% endfor %}</select></label>
 </div>
 <label><span class="etichetta">Note</span><textarea name="note">{{ p.note or '' }}</textarea></label>
 </fieldset>
@@ -811,6 +843,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   <dt>Totale</dt><dd><strong>{{ euro(p.compenso_totale) }}</strong></dd>
   <dt>Fatturato</dt><dd>{{ euro(p.fatturato) }}</dd>
   <dt>Incassato</dt><dd>{{ euro(p.incassato) }}</dd>
+  <dt>Conto d'incasso</dt><dd>{{ p.conto_incasso.nome if p.conto_incasso else '—' }}</dd>
 </dl>
 
 <h2>Registra un'attività</h2>
@@ -879,6 +912,25 @@ T_IMPOSTAZIONI = """{% extends "base" %}{% block contenuto %}
   <label><span class="etichetta">Ruolo</span><select name="ruolo">
     {% for r in ruoli %}<option>{{ r }}</option>{% endfor %}</select></label>
 </div><button class="btn" type="submit">Crea utente</button></div></form>
+
+<h2>Conti bancari Energelia</h2>
+<p class="sottotitolo" style="margin-top:-8px">Su questi conti scegliete di volta in volta, per ogni pratica, su quale il cliente deve pagarvi.</p>
+<div class="tabella scorri"><table>
+<thead><tr><th>Nome</th><th>IBAN</th><th>Banca</th><th>Stato</th><th></th></tr></thead><tbody>
+{% for conto in conti_tutti %}<tr>
+  <td>{{ conto.nome }}</td><td>{{ conto.iban or '—' }}</td><td>{{ conto.banca or '—' }}</td>
+  <td>{{ 'attivo' if conto.attivo else 'disattivato' }}</td>
+  <td class="num">
+    <form method="post" action="/crm/conti/{{ conto.id }}/stato" style="display:inline">
+    <button class="btn chiaro" type="submit">{{ 'Disattiva' if conto.attivo else 'Riattiva' }}</button></form></td>
+</tr>{% endfor %}</tbody></table></div>
+
+<h2>Nuovo conto</h2>
+<form method="post" action="/crm/conti/nuovo" class="riquadro"><div class="corpo"><div class="griglia g3">
+  <label><span class="etichetta">Nome identificativo</span><input name="nome" required placeholder="Es. Energelia — Ordinario"></label>
+  <label><span class="etichetta">IBAN</span><input name="iban"></label>
+  <label><span class="etichetta">Banca</span><input name="banca"></label>
+</div><button class="btn" type="submit">Aggiungi conto</button></div></form>
 
 <h2>Cambia la tua password</h2>
 <form method="post" action="/crm/password" class="riquadro"><div class="corpo"><div class="griglia g2">
@@ -1074,6 +1126,11 @@ def _leggi_cliente(form, cliente):
     cliente.telefono = s(form.get("telefono"))
     cliente.email = s(form.get("email"))
     cliente.pec = s(form.get("pec"))
+    cliente.codice_fiscale = s(form.get("codice_fiscale"))
+    cliente.codice_sdi = s(form.get("codice_sdi"))
+    cliente.intestatario_conto = s(form.get("intestatario_conto"))
+    cliente.iban = (s(form.get("iban")) or "").upper().replace(" ", "") or None
+    cliente.email_fatturazione = s(form.get("email_fatturazione"))
     cid = s(form.get("consulente_id"))
     cliente.consulente_id = int(cid) if cid else None
     cliente.canale = s(form.get("canale"))
@@ -1178,6 +1235,8 @@ def _leggi_pratica(form, p):
     p.success_fee_perc = n(form.get("success_fee_perc"))
     p.fatturato = n(form.get("fatturato"))
     p.incassato = n(form.get("incassato"))
+    conto = s(form.get("conto_incasso_id"))
+    p.conto_incasso_id = int(conto) if conto else None
     p.note = s(form.get("note"))
 
 
@@ -1188,7 +1247,9 @@ def nuova_pratica_form():
     if cliente:
         p.cliente_id = int(cliente)
     return rendi("pratica_form", titolo="Nuova pratica", pagina="pratiche", p=p,
-                 clienti=SessionLocale.query(Cliente).order_by(Cliente.ragione_sociale).all())
+                 clienti=SessionLocale.query(Cliente).order_by(Cliente.ragione_sociale).all(),
+                 conti=SessionLocale.query(ContoBancario).filter(
+                     ContoBancario.attivo.is_(True)).order_by(ContoBancario.nome).all())
 
 
 @crm.post("/pratiche/nuova")
@@ -1218,7 +1279,9 @@ def modifica_pratica_form(pid):
     if not p:
         abort(404)
     return rendi("pratica_form", titolo="Modifica pratica", pagina="pratiche", p=p,
-                 clienti=SessionLocale.query(Cliente).order_by(Cliente.ragione_sociale).all())
+                 clienti=SessionLocale.query(Cliente).order_by(Cliente.ragione_sociale).all(),
+                 conti=SessionLocale.query(ContoBancario).filter(
+                     ContoBancario.attivo.is_(True)).order_by(ContoBancario.nome).all())
 
 
 @crm.post("/pratiche/<int:pid>/modifica")
@@ -1277,7 +1340,36 @@ def impostazioni():
     if not utente_corrente().is_admin:
         return redirect("/crm/")
     return rendi("impostazioni", titolo="Impostazioni", pagina="impostazioni",
-                 utenti=SessionLocale.query(Utente).order_by(Utente.nome).all())
+                 utenti=SessionLocale.query(Utente).order_by(Utente.nome).all(),
+                 conti_tutti=SessionLocale.query(ContoBancario).order_by(ContoBancario.nome).all())
+
+
+@crm.post("/conti/nuovo")
+def nuovo_conto():
+    if not utente_corrente().is_admin:
+        return redirect("/crm/")
+    nome = s(request.form.get("nome"))
+    if not nome:
+        avvisa("Il conto ha bisogno di un nome.", "ko")
+    else:
+        SessionLocale.add(ContoBancario(nome=nome,
+                                        iban=(s(request.form.get("iban")) or "").upper().replace(" ", "") or None,
+                                        banca=s(request.form.get("banca"))))
+        SessionLocale.commit()
+        avvisa(f"Conto {nome} aggiunto.")
+    return redirect("/crm/impostazioni")
+
+
+@crm.post("/conti/<int:cid>/stato")
+def stato_conto(cid):
+    if not utente_corrente().is_admin:
+        return redirect("/crm/")
+    conto = SessionLocale.get(ContoBancario, cid)
+    if conto:
+        conto.attivo = not conto.attivo
+        SessionLocale.commit()
+        avvisa(f"{conto.nome} è ora {'attivo' if conto.attivo else 'disattivato'}.")
+    return redirect("/crm/impostazioni")
 
 
 @crm.post("/utenti/nuovo")
