@@ -48,6 +48,7 @@ from sqlalchemy.orm import declarative_base, relationship, sessionmaker, scoped_
 
 import openpyxl
 import pdfplumber
+import pypdf
 from openpyxl.styles import Font, PatternFill, Alignment
 
 # --------------------------------------------------------------------------
@@ -425,12 +426,55 @@ def _anthropic_chiama(system, messaggio, max_token=2000):
     return "".join(b.get("text", "") for b in blocchi if b.get("type") == "text")
 
 
-def _estrai_testo_pdf(contenuto_bytes):
+def _estrai_testo_pdf_pdfplumber(contenuto_bytes):
     testo = []
+    pagine_saltate = 0
     with pdfplumber.open(io.BytesIO(contenuto_bytes)) as pdf:
-        for pagina in pdf.pages:
+        for numero, pagina in enumerate(pdf.pages, start=1):
+            try:
+                testo.append(pagina.extract_text() or "")
+            except Exception as errore:
+                pagine_saltate += 1
+                print(f"[crm] pdfplumber: pagina {numero} illeggibile, salto: {errore}")
+    return "\n".join(testo).strip(), pagine_saltate
+
+
+def _estrai_testo_pdf_pypdf(contenuto_bytes):
+    lettore = pypdf.PdfReader(io.BytesIO(contenuto_bytes))
+    testo = []
+    for numero, pagina in enumerate(lettore.pages, start=1):
+        try:
             testo.append(pagina.extract_text() or "")
+        except Exception as errore:
+            print(f"[crm] pypdf: pagina {numero} illeggibile, salto: {errore}")
     return "\n".join(testo).strip()
+
+
+def _estrai_testo_pdf(contenuto_bytes):
+    """Alcuni PDF (spesso esportazioni da sistemi camerali o scansioni) hanno
+    strutture interne che fanno inciampare pdfplumber (bug noto di pdfminer,
+    tipicamente 'unhashable type: dict'). pdfplumber e pypdf sono due motori
+    indipendenti: se il primo fallisce del tutto, provo il secondo prima di
+    arrendermi — sono scritti da persone diverse, raramente si rompono sullo
+    stesso file per lo stesso motivo."""
+    try:
+        risultato, pagine_saltate = _estrai_testo_pdf_pdfplumber(contenuto_bytes)
+    except Exception as errore:
+        print(f"[crm] pdfplumber non apre il file, provo pypdf: {errore}")
+        risultato, pagine_saltate = "", None
+
+    if not risultato:
+        try:
+            risultato = _estrai_testo_pdf_pypdf(contenuto_bytes)
+        except Exception as errore:
+            print(f"[crm] anche pypdf fallisce: {errore}")
+
+    if not risultato.strip():
+        raise ValueError(
+            "Non riesco a leggere il testo di questo PDF con nessuno dei due motori "
+            "disponibili: potrebbe essere una scansione senza testo selezionabile."
+        )
+    return risultato.strip()
 
 
 SYSTEM_ESTRAI_BANDO = """Estrai i dati da una scheda di bando italiana (finanza agevolata).
