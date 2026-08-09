@@ -188,11 +188,14 @@ class Pratica(Base):
     incassato = Column(Numeric(12, 2))
     conto_incasso_id = Column(Integer, ForeignKey("crm_conti_bancari.id"))
     note = Column(Text)
+    token_caricamento = Column(String(64), unique=True, index=True)   # link pubblico per QUESTA pratica
     creato_il = Column(DateTime, default=dt.datetime.utcnow)
 
     cliente = relationship("Cliente", back_populates="pratiche")
     attivita = relationship("Attivita", back_populates="pratica")
     conto_incasso = relationship("ContoBancario")
+    voci_richiesta = relationship("VoceRichiesta", back_populates="pratica",
+                                  order_by="VoceRichiesta.ordine", cascade="all, delete-orphan")
 
     @property
     def success_fee_maturata(self):
@@ -275,6 +278,25 @@ class Documento(Base):
 
     cliente = relationship("Cliente")
     pratica = relationship("Pratica")
+
+
+class VoceRichiesta(Base):
+    """Una voce specifica che chiedete al cliente per QUESTA pratica —
+    testo libero (es. una spiegazione) oppure uno slot di caricamento con
+    nome (es. 'Preventivo fornitore'), distinta dal cestello generico."""
+    __tablename__ = "crm_voci_richiesta"
+    id = Column(Integer, primary_key=True)
+    pratica_id = Column(Integer, ForeignKey("crm_pratiche.id"), nullable=False)
+    etichetta = Column(String(200), nullable=False)
+    tipo_risposta = Column(String(10), default="file")   # file / testo
+    valore_testo = Column(Text)
+    documento_id = Column(Integer, ForeignKey("crm_documenti.id"))
+    compilata = Column(Boolean, default=False)
+    ordine = Column(Integer, default=0)
+    creato_il = Column(DateTime, default=dt.datetime.utcnow)
+
+    pratica = relationship("Pratica", back_populates="voci_richiesta")
+    documento = relationship("Documento")
 
 
 # --------------------------------------------------------------------------
@@ -627,6 +649,57 @@ button:hover{background:#143453}
     <div class="zona"><input type="file" name="file" multiple required></div>
     <button type="submit">Carica</button>
   </form>
+{% endif %}
+</div>
+</body></html>"""
+
+T_RICHIESTA_PUBBLICA = """<!doctype html><html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>{{ p.nome_bando }} · Energelia</title>
+<style>
+body{margin:0;min-height:100vh;background:#f6f7f9;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:24px 16px}
+.scheda{background:#fff;padding:30px;border-radius:8px;max-width:560px;margin:0 auto;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+h1{font-size:14px;letter-spacing:.14em;margin:0 0 4px;color:#1f4e78;font-weight:800}
+h1 span{color:#e07a2f}
+.nome-pratica{font-size:19px;font-weight:700;color:#1f4e78;margin:14px 0 2px}
+.nome-cliente{color:#6b7b8c;font-size:13px;margin:0 0 20px}
+.voce{border:1px solid #dde2e8;border-radius:6px;padding:14px 16px;margin-bottom:12px}
+.voce label{display:block;font-weight:700;font-size:13px;color:#1f4e78;margin-bottom:8px}
+.gia-ricevuto{font-size:12px;color:#1c6340;margin:-4px 0 8px}
+input[type=text],textarea{width:100%;padding:8px 10px;border:1px solid #dde2e8;border-radius:5px;font:inherit;box-sizing:border-box}
+textarea{min-height:70px;resize:vertical}
+input[type=file]{width:100%;font-size:13px}
+button{width:100%;background:#1f4e78;color:#fff;border:0;padding:11px;border-radius:5px;
+ font-weight:700;font-size:14px;cursor:pointer;margin-top:6px}
+button:hover{background:#143453}
+.ok{background:#e8f5ee;border:1px solid #bfe0cd;color:#1c6340;padding:12px 14px;border-radius:5px;font-size:13px;margin-bottom:16px}
+.ko{background:#fdecea;color:#a3271a;padding:10px 12px;border-radius:5px;font-size:13px;margin-bottom:16px}
+</style></head><body>
+<div class="scheda">
+<h1>ENERGELIA<span>·</span>CRM</h1>
+<p class="nome-pratica">{{ p.nome_bando }}</p>
+<p class="nome-cliente">{{ p.cliente.ragione_sociale }}</p>
+{% if fatto %}<div class="ok">Ricevuto, grazie. Puoi tornare su questo link in qualsiasi momento per completare o aggiungere altro.</div>{% endif %}
+{% if not configurato %}
+  <div class="ko">Il caricamento non è ancora attivo. Mandaci i documenti direttamente via email, ci scusiamo per il disagio.</div>
+{% else %}
+<form method="post" enctype="multipart/form-data">
+{% for v in p.voci_richiesta %}
+  <div class="voce">
+    <label>{{ v.etichetta }}</label>
+    {% if v.tipo_risposta == 'testo' %}
+      <textarea name="voce_{{ v.id }}">{{ v.valore_testo or '' }}</textarea>
+    {% else %}
+      {% if v.compilata %}<p class="gia-ricevuto">Già ricevuto — carica di nuovo solo se vuoi sostituirlo.</p>{% endif %}
+      <input type="file" name="voce_{{ v.id }}">
+    {% endif %}
+  </div>
+{% endfor %}
+  <div class="voce">
+    <label>Altri documenti (facoltativo)</label>
+    <input type="file" name="extra" multiple>
+  </div>
+  <button type="submit">Invia</button>
+</form>
 {% endif %}
 </div>
 </body></html>"""
@@ -1051,6 +1124,46 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   {% if a.utente %}<span>· {{ a.utente.nome }}</span>{% endif %}</div>
   <div>{{ a.testo }}</div></li>{% endfor %}
 </ul>{% else %}<div class="vuoto">Nessuna attività su questa pratica.</div>{% endif %}
+
+<h2>Richiesta al cliente per questa pratica</h2>
+<div class="riquadro"><div class="corpo">
+  <p style="margin-top:0;color:#6b7b8c">Un link diverso da quello generico del cliente: mostra solo le voci
+  che elenchi qui sotto, ognuna con il suo spazio dedicato.</p>
+  <div class="griglia g2">
+    <input readonly id="link-pratica" value="{{ request.url_root.rstrip('/') }}/crm/richiesta/{{ p.token_caricamento }}"
+      style="font-size:12px">
+    <button type="button" class="btn chiaro" onclick="
+      navigator.clipboard.writeText(document.getElementById('link-pratica').value);
+      this.textContent='Copiato!'; setTimeout(()=>this.textContent='Copia link', 1500);
+    ">Copia link</button>
+  </div>
+</div></div>
+
+{% if p.voci_richiesta %}
+<div class="tabella scorri"><table>
+<thead><tr><th>Voce</th><th>Tipo</th><th>Stato</th><th></th></tr></thead><tbody>
+{% for v in p.voci_richiesta %}<tr>
+  <td>{{ v.etichetta }}</td>
+  <td>{{ 'Caricamento file' if v.tipo_risposta == 'file' else 'Testo libero' }}</td>
+  <td>{% if v.compilata %}
+        {% if v.tipo_risposta == 'file' and v.documento and v.documento.link_drive %}
+          <a href="{{ v.documento.link_drive }}" target="_blank">✓ ricevuto</a>
+        {% elif v.tipo_risposta == 'testo' %}<span class="pill ok">✓ {{ v.valore_testo[:60] }}{{ '…' if v.valore_testo and v.valore_testo|length > 60 }}</span>
+        {% else %}<span class="pill ok">✓ ricevuto</span>{% endif %}
+      {% else %}<span class="pill">in attesa</span>{% endif %}</td>
+  <td class="num"><form method="post" action="/crm/voci/{{ v.id }}/elimina" style="display:inline">
+    <button class="btn chiaro" type="submit">Rimuovi</button></form></td>
+</tr>{% endfor %}</tbody></table></div>
+{% endif %}
+
+<form method="post" action="/crm/pratiche/{{ p.id }}/voci/nuova" class="riquadro"><div class="corpo">
+  <div class="griglia g3">
+    <label><span class="etichetta">Etichetta</span><input name="etichetta" required placeholder="Es. Preventivo fornitore"></label>
+    <label><span class="etichetta">Tipo di risposta</span><select name="tipo_risposta">
+      <option value="file">Caricamento file</option><option value="testo">Testo libero</option></select></label>
+  </div>
+  <button class="btn ambra" type="submit">Aggiungi voce</button>
+</div></form>
 {% endblock %}"""
 
 T_ATTIVITA = """{% extends "base" %}{% block contenuto %}
@@ -1229,6 +1342,7 @@ env = Environment(loader=DictLoader({
     "cliente_form": T_CLIENTE_FORM, "cliente": T_CLIENTE, "pratiche": T_PRATICHE,
     "pratica_form": T_PRATICA_FORM, "pratica": T_PRATICA, "attivita": T_ATTIVITA,
     "impostazioni": T_IMPOSTAZIONI, "lead": T_LEAD, "carica_pubblico": T_CARICA_PUBBLICO,
+    "richiesta_pubblica": T_RICHIESTA_PUBBLICA,
     "documenti": T_DOCUMENTI,
 }), autoescape=select_autoescape(["html"]))
 
@@ -1268,7 +1382,8 @@ def avvisa(testo, tipo="ok"):
 
 crm = Blueprint("crm", __name__, url_prefix="/crm")
 
-LIBERE = {"crm.accedi", "crm.pagina_caricamento", "crm.carica_file_pubblico"}
+LIBERE = {"crm.accedi", "crm.pagina_caricamento", "crm.carica_file_pubblico",
+          "crm.pagina_richiesta", "crm.invia_richiesta"}
 
 
 def utente_corrente():
@@ -1342,6 +1457,64 @@ def carica_file_pubblico(token):
             print(f"[crm] Errore caricamento file '{f.filename}' da {cliente.codice}: {errore}")
     SessionLocale.commit()
     return env.get_template("carica_pubblico").render(cliente=cliente, configurato=True, fatto=ricevuti)
+
+
+@crm.get("/richiesta/<token>")
+def pagina_richiesta(token):
+    p = SessionLocale.query(Pratica).filter_by(token_caricamento=token).first()
+    if not p:
+        abort(404)
+    return env.get_template("richiesta_pubblica").render(p=p, configurato=drive_configurato())
+
+
+@crm.post("/richiesta/<token>")
+def invia_richiesta(token):
+    p = SessionLocale.query(Pratica).filter_by(token_caricamento=token).first()
+    if not p:
+        abort(404)
+    if not drive_configurato():
+        return env.get_template("richiesta_pubblica").render(p=p, configurato=False)
+
+    for v in p.voci_richiesta:
+        if v.tipo_risposta == "testo":
+            valore = s(request.form.get(f"voce_{v.id}"))
+            if valore:
+                v.valore_testo = valore
+                v.compilata = True
+        else:
+            f = request.files.get(f"voce_{v.id}")
+            if f and f.filename:
+                try:
+                    cartella_id = _drive_cartella_cliente(p.cliente)
+                    risultato = _drive_carica_file(cartella_id, f.filename, f.read(), f.mimetype)
+                    doc = Documento(
+                        cliente_id=p.cliente_id, pratica_id=p.id, nome_file=f.filename,
+                        google_file_id=risultato.get("id"), link_drive=risultato.get("webViewLink"),
+                        dimensione_byte=int(risultato.get("size") or 0),
+                        caricato_da="cliente", stato="assegnato")
+                    SessionLocale.add(doc)
+                    SessionLocale.flush()
+                    v.documento_id = doc.id
+                    v.compilata = True
+                except Exception as errore:
+                    print(f"[crm] Errore caricamento voce '{v.etichetta}' pratica {p.codice}: {errore}")
+
+    for f in request.files.getlist("extra"):
+        if not f or not f.filename:
+            continue
+        try:
+            cartella_id = _drive_cartella_cliente(p.cliente)
+            risultato = _drive_carica_file(cartella_id, f.filename, f.read(), f.mimetype)
+            SessionLocale.add(Documento(
+                cliente_id=p.cliente_id, pratica_id=p.id, nome_file=f.filename,
+                google_file_id=risultato.get("id"), link_drive=risultato.get("webViewLink"),
+                dimensione_byte=int(risultato.get("size") or 0),
+                caricato_da="cliente", stato="assegnato"))
+        except Exception as errore:
+            print(f"[crm] Errore caricamento extra pratica {p.codice}: {errore}")
+
+    SessionLocale.commit()
+    return env.get_template("richiesta_pubblica").render(p=p, configurato=True, fatto=True)
 
 
 # ---------------------------------------------------------------- dashboard
@@ -1607,7 +1780,35 @@ def scheda_pratica(pid):
     p = SessionLocale.get(Pratica, pid)
     if not p:
         abort(404)
+    if not p.token_caricamento:
+        p.token_caricamento = secrets.token_urlsafe(24)
+        SessionLocale.commit()
     return rendi("pratica", titolo=p.nome_bando, pagina="pratiche", p=p)
+
+
+@crm.post("/pratiche/<int:pid>/voci/nuova")
+def nuova_voce_richiesta(pid):
+    etichetta = s(request.form.get("etichetta"))
+    if not etichetta:
+        avvisa("La voce ha bisogno di un'etichetta.", "ko")
+        return redirect(f"/crm/pratiche/{pid}")
+    tipo = request.form.get("tipo_risposta") if request.form.get("tipo_risposta") in ("file", "testo") else "file"
+    ordine = SessionLocale.query(func.count(VoceRichiesta.id)).filter_by(pratica_id=pid).scalar()
+    SessionLocale.add(VoceRichiesta(pratica_id=pid, etichetta=etichetta, tipo_risposta=tipo, ordine=ordine))
+    SessionLocale.commit()
+    avvisa("Voce aggiunta.")
+    return redirect(f"/crm/pratiche/{pid}")
+
+
+@crm.post("/voci/<int:vid>/elimina")
+def elimina_voce_richiesta(vid):
+    v = SessionLocale.get(VoceRichiesta, vid)
+    if v:
+        pid = v.pratica_id
+        SessionLocale.delete(v)
+        SessionLocale.commit()
+        return redirect(f"/crm/pratiche/{pid}")
+    return redirect("/crm/pratiche")
 
 
 @crm.get("/pratiche/<int:pid>/modifica")
