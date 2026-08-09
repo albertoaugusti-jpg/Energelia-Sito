@@ -251,6 +251,9 @@ class Lead(Base):
     tipo = Column(String(120))               # categoria Maps, es. "Ristorante italiano"
     query_ricerca = Column(String(200))      # keyword usata dallo scraper
     indirizzo = Column(String(300))
+    comune = Column(String(120))
+    provincia = Column(String(10), index=True)
+    cap = Column(String(10))
     telefono = Column(String(60))
     cellulare = Column(String(60))
     sito = Column(String(300))
@@ -1251,6 +1254,8 @@ T_LEAD = """{% extends "base" %}{% block contenuto %}
     {% for x in stati_lead %}<option {{ 'selected' if stato==x }}>{{ x }}</option>{% endfor %}</select>
   <select name="fonte"><option value="">Tutte le fonti</option>
     {% for x in fonti %}<option {{ 'selected' if fonte==x }}>{{ x }}</option>{% endfor %}</select>
+  <select name="provincia"><option value="">Tutte le province</option>
+    {% for x in province %}<option {{ 'selected' if provincia==x }}>{{ x }}</option>{% endfor %}</select>
   <button class="btn" type="submit">Filtra</button>
   {% if q or stato or fonte %}<a class="btn chiaro" href="/crm/lead">Azzera</a>{% endif %}
 </form>
@@ -1271,7 +1276,8 @@ T_LEAD = """{% extends "base" %}{% block contenuto %}
 <div class="tabella scorri"><table>
 <thead><tr><th>Nome</th><th>Tipo</th><th>Contatto</th><th>Fonte</th><th>Stato</th><th></th></tr></thead><tbody>
 {% for l in elenco %}<tr>
-  <td>{{ l.nome }}{% if l.indirizzo %}<div class="nota">{{ l.indirizzo }}</div>{% endif %}</td>
+  <td>{{ l.nome }}{% if l.indirizzo %}<div class="nota">{{ l.indirizzo }}</div>
+    {% elif l.comune or l.provincia %}<div class="nota">{{ [l.comune, l.provincia]|select|join(' · ') }}</div>{% endif %}</td>
   <td>{{ l.tipo or '—' }}</td>
   <td>{{ l.contatto_migliore }}</td>
   <td>{{ l.fonte or '—' }}</td>
@@ -2013,6 +2019,7 @@ def lista_lead():
     q = request.args.get("q", "")
     stato = request.args.get("stato", "")
     fonte = request.args.get("fonte", "")
+    provincia = request.args.get("provincia", "")
     try:
         pagina_n = max(1, int(request.args.get("pagina", 1)))
     except ValueError:
@@ -2028,6 +2035,8 @@ def lista_lead():
         query = query.filter(Lead.stato == stato)
     if fonte:
         query = query.filter(Lead.fonte == fonte)
+    if provincia:
+        query = query.filter(Lead.provincia == provincia)
 
     totale = query.count()
     pagine_tot = max(1, (totale + PER_PAGINA - 1) // PER_PAGINA)
@@ -2037,14 +2046,18 @@ def lista_lead():
 
     fonti = [r[0] for r in SessionLocale.query(Lead.fonte).filter(Lead.fonte.isnot(None))
              .distinct().order_by(Lead.fonte).all()]
+    province = [r[0] for r in SessionLocale.query(Lead.provincia).filter(Lead.provincia.isnot(None))
+                .distinct().order_by(Lead.provincia).all()]
 
     parti_query = []
     if q: parti_query.append(f"q={q}")
     if stato: parti_query.append(f"stato={stato}")
     if fonte: parti_query.append(f"fonte={fonte}")
+    if provincia: parti_query.append(f"provincia={provincia}")
 
     return rendi("lead", titolo="Lead", pagina="lead", elenco=elenco, totale=totale,
-                 q=q, stato=stato, fonte=fonte, fonti=fonti, stati_lead=STATI_LEAD,
+                 q=q, stato=stato, fonte=fonte, fonti=fonti, provincia=provincia, province=province,
+                 stati_lead=STATI_LEAD,
                  pagina_n=pagina_n, pagine_tot=pagine_tot,
                  query_senza_pagina="&".join(parti_query))
 
@@ -2105,9 +2118,12 @@ def _leggi_csv(contenuto_bytes):
 INTESTAZIONI_LEAD = {
     "nome": "nome", "ragione sociale": "nome",
     "tipo (maps)": "tipo", "tipo": "tipo",
-    "query ricerca": "query_ricerca",
+    "query ricerca": "query_ricerca", "query/settore": "query_ricerca",
     "indirizzo": "indirizzo",
-    "tel. fisso": "telefono", "telefono": "telefono",
+    "comune": "comune",
+    "provincia": "provincia",
+    "cap": "cap",
+    "tel. fisso": "telefono", "tel fisso": "telefono", "telefono": "telefono",
     "cellulare": "cellulare",
     "sito web": "sito", "sito": "sito", "pagina trovata": "sito",
     "email": "email", "altre email": "altra_email", "pec": "pec",
