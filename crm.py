@@ -382,6 +382,11 @@ textarea{width:100%;min-height:72px;resize:vertical}
 label{display:block;margin-bottom:14px}
 label .etichetta{display:block;margin-bottom:4px}
 label input,label select{width:100%}
+.campo-pw{position:relative}
+.campo-pw input{padding-right:34px;width:100%;box-sizing:border-box}
+.campo-pw .occhio{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:none;
+  border:0;cursor:pointer;font-size:15px;line-height:1;padding:6px;color:var(--tenue)}
+.campo-pw .occhio:hover{color:var(--navy)}
 fieldset{border:1px solid var(--bordo);border-radius:6px;padding:16px 16px 2px;margin:0 0 16px;background:#fff}
 legend{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--tenue);
   font-weight:700;padding:0 7px}
@@ -419,7 +424,11 @@ legend{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--
 <main>
 {% for tipo, testo in messaggi %}<div class="avviso {{ tipo }}">{{ testo }}</div>{% endfor %}
 {% block contenuto %}{% endblock %}
-</main></body></html>"""
+</main>
+<script>
+function mostraPw(id){var c=document.getElementById(id);c.type=(c.type==='password')?'text':'password';}
+</script>
+</body></html>"""
 
 T_LOGIN = """<!doctype html><html lang="it"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>Accedi · CRM Energelia</title>
@@ -438,14 +447,25 @@ button{width:100%;background:#1f4e78;color:#fff;border:0;padding:11px;border-rad
  font-weight:700;font-size:14px;cursor:pointer}
 button:hover{background:#143453}
 .ko{background:#fdecea;color:#a3271a;padding:10px 12px;border-radius:5px;font-size:13px;margin-bottom:16px}
+.campo-pw{position:relative}
+.campo-pw input{padding-right:34px}
+.campo-pw .occhio{position:absolute;right:4px;top:9px;background:none;border:0;cursor:pointer;
+ font-size:15px;line-height:1;padding:6px;color:#6b7b8c}
+.campo-pw .occhio:hover{color:#1f4e78}
 </style></head><body>
 <form class="scheda" method="post" action="/crm/accedi">
 <h1>ENERGELIA<span>·</span>CRM</h1><p>Area riservata</p>
 {% if errore %}<div class="ko">{{ errore }}</div>{% endif %}
 <label for="email">Email</label><input id="email" name="email" type="email" required autofocus>
-<label for="password">Password</label><input id="password" name="password" type="password" required>
+<label for="password">Password</label>
+<div class="campo-pw"><input id="password" name="password" type="password" required>
+<button type="button" class="occhio" onclick="mostraPw('password')" aria-label="Mostra password">occhio</button></div>
 <button type="submit">Accedi</button>
-</form></body></html>"""
+</form>
+<script>
+function mostraPw(id){var c=document.getElementById(id);c.type=(c.type==='password')?'text':'password';}
+</script>
+</body></html>"""
 
 T_DASHBOARD = """{% extends "base" %}{% block contenuto %}
 <div class="testa"><div>
@@ -853,15 +873,21 @@ T_IMPOSTAZIONI = """{% extends "base" %}{% block contenuto %}
 <form method="post" action="/crm/utenti/nuovo" class="riquadro"><div class="corpo"><div class="griglia g4">
   <label><span class="etichetta">Nome e cognome</span><input name="nome" required></label>
   <label><span class="etichetta">Email</span><input name="email" type="email" required></label>
-  <label><span class="etichetta">Password</span><input name="password" required minlength="8"></label>
+  <label><span class="etichetta">Password</span>
+  <div class="campo-pw"><input id="pw-nuovo" name="password" type="password" required minlength="8">
+  <button type="button" class="occhio" onclick="mostraPw('pw-nuovo')" aria-label="Mostra password">occhio</button></div></label>
   <label><span class="etichetta">Ruolo</span><select name="ruolo">
     {% for r in ruoli %}<option>{{ r }}</option>{% endfor %}</select></label>
 </div><button class="btn" type="submit">Crea utente</button></div></form>
 
 <h2>Cambia la tua password</h2>
 <form method="post" action="/crm/password" class="riquadro"><div class="corpo"><div class="griglia g2">
-  <label><span class="etichetta">Password attuale</span><input name="attuale" type="password" required></label>
-  <label><span class="etichetta">Nuova password</span><input name="nuova" type="password" required minlength="8"></label>
+  <label><span class="etichetta">Password attuale</span>
+  <div class="campo-pw"><input id="pw-attuale" name="attuale" type="password" required>
+  <button type="button" class="occhio" onclick="mostraPw('pw-attuale')" aria-label="Mostra password">occhio</button></div></label>
+  <label><span class="etichetta">Nuova password</span>
+  <div class="campo-pw"><input id="pw-nuova" name="nuova" type="password" required minlength="8">
+  <button type="button" class="occhio" onclick="mostraPw('pw-nuova')" aria-label="Mostra password">occhio</button></div></label>
 </div><button class="btn" type="submit">Aggiorna password</button></div></form>
 
 <h2>Importa dal foglio Excel</h2>
