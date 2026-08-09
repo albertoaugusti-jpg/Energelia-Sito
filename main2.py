@@ -23,22 +23,8 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 # Genera URL con https:// invece di http:// nei template
 app.config['PREFERRED_URL_SCHEME'] = 'https'
 
-
-GA4_SNIPPET = (
-    '<script async src="https://www.googletagmanager.com/gtag/js?id=G-PNQNJG5LLV"></script>'
-    '<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}'
-    'gtag("js",new Date());gtag("config","G-PNQNJG5LLV");</script>'
-)
-
-@app.after_request
-def inject_ga4(response):
-    """Inietta il tag Google Analytics 4 in tutte le pagine HTML."""
-    if response.content_type.startswith('text/html'):
-        data = response.get_data(as_text=True)
-        if '</head>' in data and 'G-PNQNJG5LLV' not in data:
-            data = data.replace('</head>', GA4_SNIPPET + '</head>', 1)
-            response.set_data(data)
-    return response
+from crm import init_crm
+init_crm(app)
 
 
 @app.before_request
