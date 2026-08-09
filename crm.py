@@ -250,13 +250,13 @@ class Lead(Base):
     nome = Column(String(255), nullable=False, index=True)
     tipo = Column(String(120))               # categoria Maps, es. "Ristorante italiano"
     query_ricerca = Column(String(200))      # keyword usata dallo scraper
-    indirizzo = Column(String(300))
+    indirizzo = Column(Text)      # senza limite: gli indirizzi reali variano parecchio
     comune = Column(String(120))
     provincia = Column(String(10), index=True)
     cap = Column(String(10))
     telefono = Column(String(60))
     cellulare = Column(String(60))
-    sito = Column(String(300))
+    sito = Column(Text)           # senza limite: alcuni URL con parametri sono lunghissimi
     email = Column(String(200), index=True)
     altra_email = Column(String(200))
     pec = Column(String(200))
@@ -2541,16 +2541,26 @@ def _allinea_colonne():
         for tabella in Base.metadata.sorted_tables:
             if not ispettore.has_table(tabella.name):
                 continue
-            colonne_presenti = {c["name"] for c in ispettore.get_columns(tabella.name)}
+            info_presenti = {c["name"]: c for c in ispettore.get_columns(tabella.name)}
             for colonna in tabella.columns:
-                if colonna.name in colonne_presenti:
+                if colonna.name not in info_presenti:
+                    nome_tipo = colonna.type.__class__.__name__.upper()
+                    costruttore = tipo_sql.get(nome_tipo, lambda c: "TEXT")
+                    conn.execute(text(
+                        f'ALTER TABLE {tabella.name} ADD COLUMN {colonna.name} {costruttore(colonna)}'
+                    ))
+                    print(f"[crm] Aggiunta colonna {tabella.name}.{colonna.name}")
                     continue
-                nome_tipo = colonna.type.__class__.__name__.upper()
-                costruttore = tipo_sql.get(nome_tipo, lambda c: "TEXT")
-                conn.execute(text(
-                    f'ALTER TABLE {tabella.name} ADD COLUMN {colonna.name} {costruttore(colonna)}'
-                ))
-                print(f"[crm] Aggiunta colonna {tabella.name}.{colonna.name}")
+                # Il modello dice Text ma il database ha ancora un VARCHAR con un
+                # limite (creato in una versione precedente): lo allargo. Un
+                # ALTER a TEXT su Postgres è economico, non riscrive le righe.
+                if colonna.type.__class__.__name__.upper() == "TEXT":
+                    tipo_attuale = str(info_presenti[colonna.name]["type"]).upper()
+                    if tipo_attuale != "TEXT":
+                        conn.execute(text(
+                            f'ALTER TABLE {tabella.name} ALTER COLUMN {colonna.name} TYPE TEXT'
+                        ))
+                        print(f"[crm] Allargata a TEXT la colonna {tabella.name}.{colonna.name} (era {tipo_attuale})")
 
 
 def prepara_database():
