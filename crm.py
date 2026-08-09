@@ -403,9 +403,20 @@ def anthropic_configurato():
     return bool(ANTHROPIC_API_KEY)
 
 
-def _anthropic_chiama(system, messaggio, max_token=2000):
+def _anthropic_chiama(system, messaggio, max_token=2000, con_ricerca_web=False):
     """Una chiamata semplice all'API Messages. Solleva eccezione se qualcosa
-    va storto — chi la usa decide come mostrarlo (avvisa/log)."""
+    va storto — chi la usa decide come mostrarlo (avvisa/log).
+    Con con_ricerca_web=True l'IA può cercare sul web da sola (strumento
+    lato server di Anthropic: la ricerca vera e propria non passa da qui,
+    la fa Anthropic e ci restituisce solo il testo finale)."""
+    corpo = {
+        "model": ANTHROPIC_MODELLO,
+        "max_tokens": max_token,
+        "system": system,
+        "messages": [{"role": "user", "content": messaggio}],
+    }
+    if con_ricerca_web:
+        corpo["tools"] = [{"type": "web_search_20250305", "name": "web_search", "max_uses": 5}]
     r = requests.post(
         "https://api.anthropic.com/v1/messages",
         headers={
@@ -413,13 +424,8 @@ def _anthropic_chiama(system, messaggio, max_token=2000):
             "anthropic-version": "2023-06-01",
             "content-type": "application/json",
         },
-        json={
-            "model": ANTHROPIC_MODELLO,
-            "max_tokens": max_token,
-            "system": system,
-            "messages": [{"role": "user", "content": messaggio}],
-        },
-        timeout=90,
+        json=corpo,
+        timeout=120,
     )
     r.raise_for_status()
     blocchi = r.json().get("content", [])
@@ -548,11 +554,12 @@ def genera_approfondimento(bando):
 SYSTEM_ESTRAI_VISURA = """Estrai dati anagrafici da una visura camerale italiana.
 
 Rispondi ESCLUSIVAMENTE con un oggetto JSON, senza testo prima o dopo, con queste chiavi:
-ragione_sociale, piva, codice_fiscale, ateco, citta, provincia, regione,
+ragione_sociale, piva, codice_fiscale, ateco, citta, provincia, regione, pec,
 referente, ruolo_referente, titolari_effettivi
 
 Regole:
 - Se un dato non è presente o non sei sicuro, metti stringa vuota "". Non inventare.
+- "pec": l'indirizzo di posta elettronica certificata, se presente nella visura.
 - "referente" è il nome del legale rappresentante (chi ha i poteri di firma), non un socio qualunque.
 - "ruolo_referente" per il legale rappresentante è di norma "Legale rappresentante" o la carica esatta
   se diversa (es. "Amministratore Unico", "Presidente CdA").
@@ -570,6 +577,40 @@ def estrai_visura_da_testo(testo_visura):
     if grezzo.startswith("```"):
         grezzo = grezzo.split("\n", 1)[1].rsplit("```", 1)[0]
     return json.loads(grezzo)
+
+
+SYSTEM_CERCA_CLIENTE = """Trova informazioni pubbliche di contatto su un'azienda italiana usando la
+ricerca web (Google Maps, il sito dell'azienda, elenchi pubblici tipo Registro Imprese/PagineGialle).
+
+Rispondi ESCLUSIVAMENTE con un oggetto JSON, senza testo prima o dopo, con queste chiavi:
+sito, telefono, email, pec, indirizzo, citta, provincia
+
+Regole:
+- Se non trovi un dato con ragionevole certezza, metti stringa vuota "". Non inventare MAI un numero,
+  un indirizzo o un'email che non hai trovato in una fonte.
+- Verifica che il risultato corrisponda davvero all'azienda indicata (stessa città/provincia se data,
+  non un'azienda omonima in un'altra zona) prima di riportare un dato.
+- "pec" solo se la trovi esplicitamente indicata come PEC (posta elettronica certificata), non un'email
+  generica scambiata per PEC.
+"""
+
+
+def cerca_cliente_online(cliente):
+    pezzi = [f"Ragione sociale: {cliente.ragione_sociale}"]
+    if cliente.citta: pezzi.append(f"Città: {cliente.citta}")
+    if cliente.provincia: pezzi.append(f"Provincia: {cliente.provincia}")
+    if cliente.piva: pezzi.append(f"Partita IVA: {cliente.piva}")
+    messaggio = "\n".join(pezzi)
+
+    grezzo = _anthropic_chiama(SYSTEM_CERCA_CLIENTE, messaggio, max_token=1500, con_ricerca_web=True).strip()
+    if grezzo.startswith("```"):
+        grezzo = grezzo.split("\n", 1)[1].rsplit("```", 1)[0]
+    # con la ricerca web l'IA a volte aggiunge una frase prima/dopo il JSON nonostante l'istruzione:
+    # prendo solo la parte fra la prima { e l'ultima }
+    inizio, fine = grezzo.find("{"), grezzo.rfind("}")
+    if inizio == -1 or fine == -1:
+        raise ValueError("La ricerca non ha restituito un risultato leggibile.")
+    return json.loads(grezzo[inizio:fine + 1])
 
 
 def _drive_token_accesso():
@@ -1089,6 +1130,7 @@ T_CLIENTE_FORM = """{% extends "base" %}{% block contenuto %}
   {{ cliente.codice or 'Il codice viene assegnato al salvataggio.' }}
   {% if lead %}· precompilato dal lead <strong>{{ lead.nome }}</strong>{% endif %}
   {% if da_visura %}· campi anagrafici presi dalla visura caricata{% endif %}
+  {% if da_ricerca %}· contatti trovati con la ricerca online{% endif %}
 </p>
 
 {% if not cliente.id %}
@@ -1101,6 +1143,21 @@ T_CLIENTE_FORM = """{% extends "base" %}{% block contenuto %}
     {% if lead %}<input type="hidden" name="lead_id" value="{{ lead.id }}">{% endif %}
     <input type="file" name="file" accept=".pdf" required>
     <button class="btn ambra" type="submit">Estrai dalla visura</button>
+  </form>
+  {% else %}
+  <p style="color:#6b7b8c">Richiede ANTHROPIC_API_KEY, non ancora configurata.</p>
+  {% endif %}
+</div></div>
+{% endif %}
+
+{% if cliente.id %}
+<div class="riquadro" style="margin-bottom:20px"><div class="corpo">
+  <h2 style="margin-top:0">Cerca informazioni online</h2>
+  {% if anthropic_ok %}
+  <p style="color:#6b7b8c">Cerca sul web telefono, email, PEC e indirizzo mancanti — non tocca i campi già
+  compilati. Controlla sempre prima di salvare.</p>
+  <form method="post" action="/crm/clienti/{{ cliente.id }}/cerca-online">
+    <button class="btn ambra" type="submit">Cerca online</button>
   </form>
   {% else %}
   <p style="color:#6b7b8c">Richiede ANTHROPIC_API_KEY, non ancora configurata.</p>
@@ -2138,7 +2195,7 @@ def nuovo_cliente_da_visura():
                      consulenti=SessionLocale.query(Utente).order_by(Utente.nome).all())
 
     for campo in ("ragione_sociale", "piva", "codice_fiscale", "ateco", "citta", "provincia",
-                  "regione", "referente", "ruolo_referente", "titolari_effettivi"):
+                  "regione", "pec", "referente", "ruolo_referente", "titolari_effettivi"):
         valore = (dati.get(campo) or "").strip()
         if valore:
             setattr(cliente, campo, valore)
@@ -2211,6 +2268,52 @@ def modifica_cliente_form(cid):
     if not c:
         abort(404)
     return rendi("cliente_form", titolo="Modifica cliente", pagina="clienti", cliente=c,
+                 anthropic_ok=anthropic_configurato(),
+                 consulenti=SessionLocale.query(Utente).order_by(Utente.nome).all())
+
+
+@crm.post("/clienti/<int:cid>/cerca-online")
+def cerca_online_cliente(cid):
+    c = SessionLocale.get(Cliente, cid)
+    if not c:
+        abort(404)
+    if not anthropic_configurato():
+        avvisa("La ricerca online non è configurata: manca ANTHROPIC_API_KEY.", "ko")
+        return redirect(f"/crm/clienti/{cid}/modifica")
+    try:
+        trovato = cerca_cliente_online(c)
+    except Exception as errore:
+        avvisa(f"Ricerca non riuscita: {errore}", "ko")
+        return redirect(f"/crm/clienti/{cid}/modifica")
+
+    # Non committo: aggiorno l'oggetto solo in memoria per farlo vedere nel
+    # modulo di modifica. Se l'utente non salva, la sessione si chiude a fine
+    # richiesta e questi valori non toccati non finiscono mai sul database.
+    trovati = []
+    mappa_campi = {
+        "telefono": "telefono", "email": "email", "pec": "pec",
+        "citta": "citta", "provincia": "provincia",
+    }
+    for chiave_ricerca, campo_cliente in mappa_campi.items():
+        valore = (trovato.get(chiave_ricerca) or "").strip()
+        if valore and not getattr(c, campo_cliente):   # non sovrascrivo dati già presenti
+            setattr(c, campo_cliente, valore)
+            trovati.append(campo_cliente)
+    sito_trovato = (trovato.get("sito") or "").strip()
+    indirizzo_trovato = (trovato.get("indirizzo") or "").strip()
+    note_ricerca = []
+    if sito_trovato: note_ricerca.append(f"Sito trovato online: {sito_trovato}")
+    if indirizzo_trovato: note_ricerca.append(f"Indirizzo trovato online: {indirizzo_trovato}")
+    if note_ricerca:
+        c.note = ((c.note + "\n") if c.note else "") + "\n".join(note_ricerca)
+
+    if trovati or note_ricerca:
+        avvisa(f"Trovati online: {', '.join(trovati) if trovati else 'sito/indirizzo in nota'}. Controlla e salva.")
+    else:
+        avvisa("Nessuna informazione nuova trovata online.", "ko")
+
+    return rendi("cliente_form", titolo="Modifica cliente", pagina="clienti", cliente=c,
+                 anthropic_ok=anthropic_configurato(), da_ricerca=bool(trovati or note_ricerca),
                  consulenti=SessionLocale.query(Utente).order_by(Utente.nome).all())
 
 
