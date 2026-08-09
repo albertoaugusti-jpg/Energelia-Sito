@@ -1635,8 +1635,40 @@ def _chiave_sessione():
     return hashlib.sha256(("energelia-crm|" + DB_URL).encode()).hexdigest()
 
 
+def _allinea_colonne():
+    """create_all() crea solo le tabelle che mancano, non aggiunge colonne
+    a quelle già esistenti. Qui confrontiamo il modello con il database reale
+    e aggiungiamo da soli le colonne mancanti, senza toccare i dati già presenti."""
+    from sqlalchemy import inspect, text
+    ispettore = inspect(engine)
+    tipo_sql = {
+        "VARCHAR": lambda c: f"VARCHAR({c.type.length})" if getattr(c.type, "length", None) else "VARCHAR",
+        "TEXT": lambda c: "TEXT",
+        "INTEGER": lambda c: "INTEGER",
+        "NUMERIC": lambda c: f"NUMERIC({c.type.precision},{c.type.scale})",
+        "DATE": lambda c: "DATE",
+        "DATETIME": lambda c: "TIMESTAMP",
+        "BOOLEAN": lambda c: "BOOLEAN",
+    }
+    with engine.begin() as conn:
+        for tabella in Base.metadata.sorted_tables:
+            if not ispettore.has_table(tabella.name):
+                continue
+            colonne_presenti = {c["name"] for c in ispettore.get_columns(tabella.name)}
+            for colonna in tabella.columns:
+                if colonna.name in colonne_presenti:
+                    continue
+                nome_tipo = colonna.type.__class__.__name__.upper()
+                costruttore = tipo_sql.get(nome_tipo, lambda c: "TEXT")
+                conn.execute(text(
+                    f'ALTER TABLE {tabella.name} ADD COLUMN {colonna.name} {costruttore(colonna)}'
+                ))
+                print(f"[crm] Aggiunta colonna {tabella.name}.{colonna.name}")
+
+
 def prepara_database():
     Base.metadata.create_all(engine)
+    _allinea_colonne()
     if SessionLocale.query(func.count(Utente.id)).scalar() == 0:
         SessionLocale.add(Utente(nome="Alberto Augusti", email=ADMIN_EMAIL.lower(),
                                  password_hash=hash_pw(ADMIN_PASSWORD), ruolo="admin"))
