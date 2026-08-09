@@ -47,6 +47,7 @@ from sqlalchemy import (create_engine, Column, Integer, String, Text, Date, Date
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker, scoped_session
 
 import openpyxl
+import pdfplumber
 from openpyxl.styles import Font, PatternFill, Alignment
 
 # --------------------------------------------------------------------------
@@ -72,6 +73,10 @@ SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
 SMTP_USER = os.environ.get("SMTP_USER", "")
 SMTP_PASS = os.environ.get("SMTP_PASS", "")
+
+# Chiave separata per il repository bandi (diversa da quella dell'Offertatore desktop).
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+ANTHROPIC_MODELLO = "claude-sonnet-5"
 
 engine = create_engine(DB_URL, pool_pre_ping=True, pool_recycle=280,
                        connect_args={"check_same_thread": False} if DB_URL.startswith("sqlite") else {})
@@ -175,6 +180,7 @@ class Pratica(Base):
     id = Column(Integer, primary_key=True)
     codice = Column(String(20), unique=True, index=True)
     cliente_id = Column(Integer, ForeignKey("crm_clienti.id"), nullable=False)
+    bando_id = Column(Integer, ForeignKey("crm_bandi.id"))   # da quale bando del repository nasce, se c'è
     nome_bando = Column(String(255), nullable=False)
     ente = Column(String(160))
     tipologia = Column(String(60))
@@ -203,6 +209,7 @@ class Pratica(Base):
     cliente = relationship("Cliente", back_populates="pratiche")
     attivita = relationship("Attivita", back_populates="pratica")
     conto_incasso = relationship("ContoBancario")
+    bando = relationship("Bando")
     voci_richiesta = relationship("VoceRichiesta", back_populates="pratica",
                                   order_by="VoceRichiesta.ordine", cascade="all, delete-orphan")
 
@@ -311,6 +318,36 @@ class VoceRichiesta(Base):
     documento = relationship("Documento")
 
 
+class Bando(Base):
+    """Repository dei bandi: si crea a mano o caricando la scheda PDF (che
+    un'IA legge e smonta nei campi). Da qui si genera una pratica già
+    precompilata, e — a richiesta — una guida di compilazione scaricabile
+    e un approfondimento più lungo della scheda base."""
+    __tablename__ = "crm_bandi"
+    id = Column(Integer, primary_key=True)
+    nome = Column(String(255), nullable=False, index=True)
+    ente = Column(String(200))
+    tipologia = Column(String(60))
+    dotazione = Column(Numeric(14, 2))
+    perc_contributo = Column(Numeric(6, 2))
+    contributo_max = Column(Numeric(14, 2))
+    importo_max_testo = Column(String(200))   # es. "30k linea A / 40k linea B"
+    data_apertura = Column(Date)
+    data_scadenza = Column(Date)
+    chi_puo_partecipare = Column(Text)
+    cosa_finanziabile = Column(Text)
+    spese_non_ammissibili = Column(Text)
+    criteri = Column(Text)
+    fasi_tempi = Column(Text)
+    come_presentare = Column(Text)
+    perche_interessante = Column(Text)
+    criticita = Column(Text)
+    testo_originale = Column(Text)            # testo grezzo della scheda caricata, per rileggerlo
+    guida_compilazione = Column(Text)         # generata dall'IA, nullable finché non richiesta
+    approfondimento = Column(Text)            # generato dall'IA, nullable finché non richiesto
+    creato_il = Column(DateTime, default=dt.datetime.utcnow)
+
+
 # --------------------------------------------------------------------------
 # UTILITÀ
 # --------------------------------------------------------------------------
@@ -358,6 +395,109 @@ def invia_email(destinatario, oggetto, corpo, rispondi_a=None, nome_mittente="En
         return True, ""
     except Exception as errore:
         return False, str(errore)
+
+
+def anthropic_configurato():
+    return bool(ANTHROPIC_API_KEY)
+
+
+def _anthropic_chiama(system, messaggio, max_token=2000):
+    """Una chiamata semplice all'API Messages. Solleva eccezione se qualcosa
+    va storto — chi la usa decide come mostrarlo (avvisa/log)."""
+    r = requests.post(
+        "https://api.anthropic.com/v1/messages",
+        headers={
+            "x-api-key": ANTHROPIC_API_KEY,
+            "anthropic-version": "2023-06-01",
+            "content-type": "application/json",
+        },
+        json={
+            "model": ANTHROPIC_MODELLO,
+            "max_tokens": max_token,
+            "system": system,
+            "messages": [{"role": "user", "content": messaggio}],
+        },
+        timeout=90,
+    )
+    r.raise_for_status()
+    blocchi = r.json().get("content", [])
+    return "".join(b.get("text", "") for b in blocchi if b.get("type") == "text")
+
+
+def _estrai_testo_pdf(contenuto_bytes):
+    testo = []
+    with pdfplumber.open(io.BytesIO(contenuto_bytes)) as pdf:
+        for pagina in pdf.pages:
+            testo.append(pagina.extract_text() or "")
+    return "\n".join(testo).strip()
+
+
+SYSTEM_ESTRAI_BANDO = """Estrai i dati da una scheda di bando italiana (finanza agevolata).
+
+Rispondi ESCLUSIVAMENTE con un oggetto JSON, senza testo prima o dopo, con queste chiavi:
+nome, ente, tipologia, dotazione, perc_contributo, contributo_max, importo_max_testo,
+data_apertura, data_scadenza, chi_puo_partecipare, cosa_finanziabile, spese_non_ammissibili,
+criteri, fasi_tempi, come_presentare, perche_interessante, criticita
+
+Regole:
+- Se un dato non è presente o non sei sicuro, metti stringa vuota "". Non inventare.
+- "tipologia" è una di queste: Fondo perduto, Finanziamento agevolato, Credito d'imposta, Voucher, Misto.
+- "dotazione", "perc_contributo", "contributo_max": solo numeri (punto decimale, niente simboli),
+  o stringa vuota se non ricavabile con certezza. perc_contributo in punti percentuali (75, non 0.75).
+- "importo_max_testo": usalo quando il tetto non è un numero secco (es. "30k linea A / 40k linea B").
+- Le date in formato YYYY-MM-DD.
+- I campi discorsivi (chi_puo_partecipare, cosa_finanziabile, ecc.) sono sintesi in elenco puntato
+  testuale (righe con "- "), non frasi uniche.
+"""
+
+
+def estrai_bando_da_testo(testo_scheda):
+    if not (testo_scheda or "").strip():
+        raise ValueError("Il testo estratto dal PDF è vuoto: file scansionato o illeggibile.")
+    grezzo = _anthropic_chiama(SYSTEM_ESTRAI_BANDO, testo_scheda[:20000], max_token=2500)
+    grezzo = grezzo.strip()
+    if grezzo.startswith("```"):
+        grezzo = grezzo.split("\n", 1)[1].rsplit("```", 1)[0]
+    return json.loads(grezzo)
+
+
+SYSTEM_GUIDA_COMPILAZIONE = """Sei un consulente di finanza agevolata italiano di Energelia S.r.l.
+Scrivi una guida pratica alla compilazione della domanda per il bando che ti viene descritto,
+pensata per un piccolo imprenditore che deve presentarla da solo o con il vostro supporto.
+
+Struttura in sezioni con intestazioni chiare:
+1. Prima di iniziare — cosa procurarsi (documenti, credenziali SPID/CIE/CNS, dati aziendali)
+2. Passo per passo — come si compila, in ordine, con attenzione ai punti dove si sbaglia più spesso
+3. Errori da evitare — nello specifico di QUESTO bando, non generici
+4. Dopo l'invio — cosa aspettarsi (istruttoria, tempi, rendicontazione)
+
+Tono diretto e concreto, frasi brevi. Non ripetere la scheda del bando, dai per scontato che il
+lettore l'abbia già letta: questa è la guida operativa, non un riassunto del bando."""
+
+
+def genera_guida_compilazione(bando):
+    descrizione = (
+        f"Bando: {bando.nome}\nEnte: {bando.ente or '—'}\nTipologia: {bando.tipologia or '—'}\n"
+        f"Come si presenta: {bando.come_presentare or '—'}\nCriteri: {bando.criteri or '—'}\n"
+        f"Fasi e tempi: {bando.fasi_tempi or '—'}\nCriticità note: {bando.criticita or '—'}\n"
+        f"Testo originale della scheda:\n{(bando.testo_originale or '')[:15000]}"
+    )
+    return _anthropic_chiama(SYSTEM_GUIDA_COMPILAZIONE, descrizione, max_token=3000)
+
+
+SYSTEM_APPROFONDIMENTO = """Sei un consulente di finanza agevolata italiano di Energelia S.r.l.
+Scrivi un approfondimento più esteso e tecnico di questo bando rispetto alla scheda sintetica che
+già esiste — per un cliente che sta valutando se e come farne richiesta insieme a voi.
+
+Vai oltre i punti già coperti nella scheda base: casi limite, interazione con altri incentivi
+(cumulabilità), interpretazioni non ovvie dei requisiti, cosa chiedere prima di procedere.
+Se un punto non è chiaro dal testo della scheda, dillo esplicitamente invece di inventare.
+Tono diretto, niente fronzoli, frasi brevi."""
+
+
+def genera_approfondimento(bando):
+    descrizione = f"Bando: {bando.nome}\n\nTesto della scheda:\n{(bando.testo_originale or '')[:15000]}"
+    return _anthropic_chiama(SYSTEM_APPROFONDIMENTO, descrizione, max_token=3000)
 
 
 def _drive_token_accesso():
@@ -605,6 +745,7 @@ legend{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--
     <a href="/crm/attivita" class="{{ 'attivo' if pagina=='attivita' }}">Attività</a>
     <a href="/crm/lead" class="{{ 'attivo' if pagina=='lead' }}">Lead</a>
     <a href="/crm/documenti" class="{{ 'attivo' if pagina=='documenti' }}">Documenti</a>
+    <a href="/crm/bandi" class="{{ 'attivo' if pagina=='bandi' }}">Bandi</a>
     {% if utente.is_admin %}<a href="/crm/impostazioni" class="{{ 'attivo' if pagina=='impostazioni' }}">Impostazioni</a>{% endif %}
   </nav>
   <div class="utente">{{ utente.nome }} · <a href="/crm/esci">Esci</a></div>
@@ -1069,8 +1210,12 @@ T_PRATICHE = """{% extends "base" %}{% block contenuto %}
 
 T_PRATICA_FORM = """{% extends "base" %}{% block contenuto %}
 <h1>{{ 'Modifica pratica' if p.id else 'Nuova pratica' }}</h1>
-<p class="sottotitolo">{{ p.codice or 'Il codice viene assegnato al salvataggio.' }}</p>
+<p class="sottotitolo">
+  {{ p.codice or 'Il codice viene assegnato al salvataggio.' }}
+  {% if p.bando_id %}· precompilata dal bando <a href="/crm/bandi/{{ p.bando_id }}">{{ p.bando.nome if p.bando else '' }}</a>{% endif %}
+</p>
 <form method="post">
+{% if p.bando_id %}<input type="hidden" name="bando_id" value="{{ p.bando_id }}">{% endif %}
 <fieldset><legend>Bando</legend><div class="griglia g3">
   <label><span class="etichetta">Cliente *</span><select name="cliente_id" required><option value=""></option>
     {% for c in clienti %}<option value="{{ c.id }}" {{ 'selected' if p.cliente_id==c.id }}>{{ c.ragione_sociale }}</option>{% endfor %}</select></label>
@@ -1178,6 +1323,11 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   {% if a.utente %}<span>· {{ a.utente.nome }}</span>{% endif %}</div>
   <div>{{ a.testo }}</div></li>{% endfor %}
 </ul>{% else %}<div class="vuoto">Nessuna attività su questa pratica.</div>{% endif %}
+
+{% if p.bando and p.bando.approfondimento %}
+<h2>Approfondimento sul bando</h2>
+<div class="riquadro"><div class="corpo" style="white-space:pre-wrap">{{ p.bando.approfondimento }}</div></div>
+{% endif %}
 
 <h2>Richiesta al cliente per questa pratica</h2>
 <div class="riquadro"><div class="corpo">
@@ -1332,6 +1482,137 @@ T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
 {% else %}<div class="vuoto">{{ 'Niente da smistare al momento.' if solo_da_smistare else 'Nessun documento caricato finora.' }}</div>{% endif %}
 {% endblock %}"""
 
+T_BANDI = """{% extends "base" %}{% block contenuto %}
+<div class="testa"><div><h1>Bandi</h1>
+<p class="sottotitolo">{{ elenco|length }} nel repository · da qui nascono le pratiche già precompilate</p></div>
+<div><a class="btn" href="/crm/bandi/nuovo">Nuovo bando</a></div></div>
+
+<form class="filtri" method="get">
+  <input name="q" value="{{ q or '' }}" placeholder="Cerca nome o ente" style="min-width:260px">
+  <button class="btn" type="submit">Filtra</button>
+</form>
+
+{% if not configurato %}
+<div class="vuoto" style="margin-bottom:16px">L'estrazione da PDF e la generazione di guide/approfondimenti richiedono
+ANTHROPIC_API_KEY, non ancora configurata. Puoi comunque creare bandi a mano.</div>
+{% endif %}
+
+{% if elenco %}
+<div class="tabella scorri"><table>
+<thead><tr><th>Nome</th><th>Ente</th><th>Tipologia</th><th>Contributo max</th><th>Scadenza</th><th></th></tr></thead><tbody>
+{% for b in elenco %}<tr>
+  <td><a href="/crm/bandi/{{ b.id }}">{{ b.nome }}</a></td>
+  <td>{{ b.ente or '—' }}</td>
+  <td>{{ b.tipologia or '—' }}</td>
+  <td>{{ b.importo_max_testo or euro(b.contributo_max) }}</td>
+  <td>{{ data_it(b.data_scadenza) }}</td>
+  <td class="num"><a class="btn chiaro" href="/crm/pratiche/nuova?bando={{ b.id }}">Crea pratica</a></td>
+</tr>{% endfor %}</tbody></table></div>
+{% else %}<div class="vuoto">Nessun bando nel repository ancora.</div>{% endif %}
+{% endblock %}"""
+
+T_BANDO_FORM = """{% extends "base" %}{% block contenuto %}
+<h1>{{ 'Modifica ' ~ b.nome if b.id else 'Nuovo bando' }}</h1>
+
+{% if not b.id %}
+<div class="riquadro" style="margin-bottom:20px"><div class="corpo">
+  <h2 style="margin-top:0">Carica una scheda PDF</h2>
+  {% if configurato %}
+  <p style="color:#6b7b8c">Un'IA legge la scheda e prova a compilare i campi da sola — controlli e correggi prima di salvare.</p>
+  <form method="post" action="/crm/bandi/nuovo-da-pdf" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <input type="file" name="file" accept=".pdf" required>
+    <button class="btn ambra" type="submit">Estrai dal PDF</button>
+  </form>
+  {% else %}
+  <p style="color:#6b7b8c">Richiede ANTHROPIC_API_KEY, non ancora configurata. Compila i campi a mano qui sotto.</p>
+  {% endif %}
+</div></div>
+<p class="sottotitolo">— oppure compila a mano —</p>
+{% endif %}
+
+<form method="post">
+<fieldset><legend>Dati principali</legend><div class="griglia g3">
+  <label><span class="etichetta">Nome *</span><input name="nome" required value="{{ b.nome or '' }}"></label>
+  <label><span class="etichetta">Ente</span><input name="ente" value="{{ b.ente or '' }}"></label>
+  <label><span class="etichetta">Tipologia</span><select name="tipologia"><option value="">—</option>
+    {% for t in tipologie %}<option {{ 'selected' if b.tipologia==t }}>{{ t }}</option>{% endfor %}</select></label>
+  <label><span class="etichetta">Dotazione €</span><input name="dotazione" inputmode="decimal" value="{{ b.dotazione or '' }}"></label>
+  <label><span class="etichetta">% contributo</span><input name="perc_contributo" inputmode="decimal" value="{{ b.perc_contributo or '' }}"></label>
+  <label><span class="etichetta">Contributo max €</span><input name="contributo_max" inputmode="decimal" value="{{ b.contributo_max or '' }}"></label>
+  <label><span class="etichetta">Importo max (testo libero)</span><input name="importo_max_testo" value="{{ b.importo_max_testo or '' }}" placeholder="Es. 30k linea A / 40k linea B"></label>
+  <label><span class="etichetta">Apertura</span><input name="data_apertura" type="date" value="{{ b.data_apertura.isoformat() if b.data_apertura else '' }}"></label>
+  <label><span class="etichetta">Scadenza</span><input name="data_scadenza" type="date" value="{{ b.data_scadenza.isoformat() if b.data_scadenza else '' }}"></label>
+</div></fieldset>
+<fieldset><legend>Scheda discorsiva</legend>
+  <label><span class="etichetta">Chi può partecipare</span><textarea name="chi_puo_partecipare">{{ b.chi_puo_partecipare or '' }}</textarea></label>
+  <label><span class="etichetta">Cosa è finanziabile</span><textarea name="cosa_finanziabile">{{ b.cosa_finanziabile or '' }}</textarea></label>
+  <label><span class="etichetta">Spese non ammissibili</span><textarea name="spese_non_ammissibili">{{ b.spese_non_ammissibili or '' }}</textarea></label>
+  <label><span class="etichetta">Criteri di valutazione</span><textarea name="criteri">{{ b.criteri or '' }}</textarea></label>
+  <label><span class="etichetta">Fasi e tempi</span><textarea name="fasi_tempi">{{ b.fasi_tempi or '' }}</textarea></label>
+  <label><span class="etichetta">Come presentare</span><textarea name="come_presentare">{{ b.come_presentare or '' }}</textarea></label>
+  <label><span class="etichetta">Perché è interessante</span><textarea name="perche_interessante">{{ b.perche_interessante or '' }}</textarea></label>
+  <label><span class="etichetta">Criticità</span><textarea name="criticita">{{ b.criticita or '' }}</textarea></label>
+</fieldset>
+<button class="btn" type="submit">Salva</button>
+</form>
+{% endblock %}"""
+
+T_BANDO = """{% extends "base" %}{% block contenuto %}
+<div class="testa"><div><h1>{{ b.nome }}</h1>
+<p class="sottotitolo">{{ b.ente or '—' }}{% if b.tipologia %} · {{ b.tipologia }}{% endif %}</p></div>
+<div><a class="btn chiaro" href="/crm/bandi/{{ b.id }}/modifica">Modifica</a>
+<a class="btn" href="/crm/pratiche/nuova?bando={{ b.id }}">Crea pratica per un cliente</a></div></div>
+
+<div class="griglia g4" style="margin-bottom:20px">
+  <div class="kpi"><div class="etichetta">Dotazione</div><div class="valore" style="font-size:19px">{{ euro(b.dotazione) }}</div></div>
+  <div class="kpi"><div class="etichetta">% contributo</div><div class="valore" style="font-size:19px">{{ (b.perc_contributo|string ~ ' %') if b.perc_contributo else '—' }}</div></div>
+  <div class="kpi"><div class="etichetta">Contributo max</div><div class="valore" style="font-size:19px">{{ b.importo_max_testo or euro(b.contributo_max) }}</div></div>
+  <div class="kpi"><div class="etichetta">Scadenza</div><div class="valore" style="font-size:19px">{{ data_it(b.data_scadenza) }}</div></div>
+</div>
+
+<div class="griglia g2">
+<div>
+  <h2 style="margin-top:0">Chi può partecipare</h2><p style="white-space:pre-wrap">{{ b.chi_puo_partecipare or '—' }}</p>
+  <h2>Cosa è finanziabile</h2><p style="white-space:pre-wrap">{{ b.cosa_finanziabile or '—' }}</p>
+  <h2>Spese non ammissibili</h2><p style="white-space:pre-wrap">{{ b.spese_non_ammissibili or '—' }}</p>
+  <h2>Criteri di valutazione</h2><p style="white-space:pre-wrap">{{ b.criteri or '—' }}</p>
+</div>
+<div>
+  <h2 style="margin-top:0">Fasi e tempi</h2><p style="white-space:pre-wrap">{{ b.fasi_tempi or '—' }}</p>
+  <h2>Come presentare</h2><p style="white-space:pre-wrap">{{ b.come_presentare or '—' }}</p>
+  <h2>Perché è interessante</h2><p style="white-space:pre-wrap">{{ b.perche_interessante or '—' }}</p>
+  <h2>Criticità</h2><p style="white-space:pre-wrap">{{ b.criticita or '—' }}</p>
+</div>
+</div>
+
+<h2>Guida alla compilazione</h2>
+<div class="riquadro"><div class="corpo">
+{% if b.guida_compilazione %}
+  <p style="white-space:pre-wrap">{{ b.guida_compilazione }}</p>
+  <a class="btn chiaro" href="/crm/bandi/{{ b.id }}/guida.txt">Scarica la guida</a>
+  <form method="post" action="/crm/bandi/{{ b.id }}/guida" style="display:inline"><button class="btn chiaro" type="submit">Rigenera</button></form>
+{% elif configurato %}
+  <p style="margin-top:0;color:#6b7b8c">Non ancora generata.</p>
+  <form method="post" action="/crm/bandi/{{ b.id }}/guida"><button class="btn ambra" type="submit">Genera guida di compilazione</button></form>
+{% else %}
+  <p style="margin-top:0;color:#6b7b8c">Richiede ANTHROPIC_API_KEY, non ancora configurata.</p>
+{% endif %}
+</div></div>
+
+<h2>Approfondimento</h2>
+<div class="riquadro"><div class="corpo">
+{% if b.approfondimento %}
+  <p style="white-space:pre-wrap">{{ b.approfondimento }}</p>
+  <form method="post" action="/crm/bandi/{{ b.id }}/approfondisci" style="display:inline"><button class="btn chiaro" type="submit">Rigenera</button></form>
+{% elif configurato %}
+  <p style="margin-top:0;color:#6b7b8c">Non ancora generato. Compare nella scheda di ogni pratica nata da questo bando.</p>
+  <form method="post" action="/crm/bandi/{{ b.id }}/approfondisci"><button class="btn ambra" type="submit">Genera approfondimento</button></form>
+{% else %}
+  <p style="margin-top:0;color:#6b7b8c">Richiede ANTHROPIC_API_KEY, non ancora configurata.</p>
+{% endif %}
+</div></div>
+{% endblock %}"""
+
 T_IMPOSTAZIONI = """{% extends "base" %}{% block contenuto %}
 <h1>Impostazioni</h1><p class="sottotitolo">Solo gli amministratori vedono questa pagina.</p>
 
@@ -1416,7 +1697,7 @@ env = Environment(loader=DictLoader({
     "pratica_form": T_PRATICA_FORM, "pratica": T_PRATICA, "attivita": T_ATTIVITA,
     "impostazioni": T_IMPOSTAZIONI, "lead": T_LEAD, "carica_pubblico": T_CARICA_PUBBLICO,
     "richiesta_pubblica": T_RICHIESTA_PUBBLICA,
-    "documenti": T_DOCUMENTI,
+    "documenti": T_DOCUMENTI, "bandi": T_BANDI, "bando_form": T_BANDO_FORM, "bando": T_BANDO,
 }), autoescape=select_autoescape(["html"]))
 
 
@@ -1819,6 +2100,9 @@ def lista_pratiche():
 
 def _leggi_pratica(form, p):
     p.cliente_id = int(form.get("cliente_id"))
+    bando = s(form.get("bando_id"))
+    if bando:
+        p.bando_id = int(bando)
     p.nome_bando = s(form.get("nome_bando"))
     p.ente = s(form.get("ente"))
     p.tipologia = s(form.get("tipologia"))
@@ -1850,6 +2134,19 @@ def nuova_pratica_form():
     cliente = request.args.get("cliente", "")
     if cliente:
         p.cliente_id = int(cliente)
+    bando_id = request.args.get("bando", "")
+    if bando_id:
+        bando = SessionLocale.get(Bando, int(bando_id))
+        if bando:
+            p.bando_id = bando.id
+            p.nome_bando = bando.nome
+            p.ente = bando.ente
+            p.tipologia = bando.tipologia
+            p.perc_contributo = bando.perc_contributo
+            p.importo_max = bando.importo_max_testo or (
+                f"{bando.contributo_max:.0f} €" if bando.contributo_max else None)
+            p.data_apertura = bando.data_apertura
+            p.data_scadenza = bando.data_scadenza
     return rendi("pratica_form", titolo="Nuova pratica", pagina="pratiche", p=p,
                  clienti=SessionLocale.query(Cliente).order_by(Cliente.ragione_sociale).all(),
                  conti=SessionLocale.query(ContoBancario).filter(
@@ -1924,6 +2221,171 @@ def elimina_voce_richiesta(vid):
         SessionLocale.commit()
         return redirect(f"/crm/pratiche/{pid}")
     return redirect("/crm/pratiche")
+
+
+# ------------------------------------------------------------------ bandi
+
+def _leggi_bando(form, b):
+    b.nome = s(form.get("nome"))
+    b.ente = s(form.get("ente"))
+    b.tipologia = s(form.get("tipologia"))
+    b.dotazione = n(form.get("dotazione"))
+    b.perc_contributo = n(form.get("perc_contributo"))
+    b.contributo_max = n(form.get("contributo_max"))
+    b.importo_max_testo = s(form.get("importo_max_testo"))
+    b.data_apertura = d(form.get("data_apertura"))
+    b.data_scadenza = d(form.get("data_scadenza"))
+    b.chi_puo_partecipare = s(form.get("chi_puo_partecipare"))
+    b.cosa_finanziabile = s(form.get("cosa_finanziabile"))
+    b.spese_non_ammissibili = s(form.get("spese_non_ammissibili"))
+    b.criteri = s(form.get("criteri"))
+    b.fasi_tempi = s(form.get("fasi_tempi"))
+    b.come_presentare = s(form.get("come_presentare"))
+    b.perche_interessante = s(form.get("perche_interessante"))
+    b.criticita = s(form.get("criticita"))
+
+
+@crm.get("/bandi")
+def lista_bandi():
+    q = request.args.get("q", "")
+    query = SessionLocale.query(Bando)
+    if q:
+        like = f"%{q}%"
+        query = query.filter(or_(Bando.nome.ilike(like), Bando.ente.ilike(like)))
+    elenco = query.order_by(Bando.nome).all()
+    return rendi("bandi", titolo="Bandi", pagina="bandi", elenco=elenco, q=q,
+                 configurato=anthropic_configurato())
+
+
+@crm.get("/bandi/nuovo")
+def nuovo_bando_form():
+    return rendi("bando_form", titolo="Nuovo bando", pagina="bandi", b=Bando(),
+                 configurato=anthropic_configurato(), tipologie=TIPOLOGIE)
+
+
+@crm.post("/bandi/nuovo")
+def nuovo_bando():
+    if not s(request.form.get("nome")):
+        avvisa("Serve almeno il nome del bando.", "ko")
+        return redirect("/crm/bandi/nuovo")
+    b = Bando()
+    _leggi_bando(request.form, b)
+    SessionLocale.add(b)
+    SessionLocale.commit()
+    avvisa(f"Bando \"{b.nome}\" salvato.")
+    return redirect(f"/crm/bandi/{b.id}")
+
+
+@crm.get("/bandi/<int:bid>")
+def scheda_bando(bid):
+    b = SessionLocale.get(Bando, bid)
+    if not b:
+        abort(404)
+    return rendi("bando", titolo=b.nome, pagina="bandi", b=b, configurato=anthropic_configurato())
+
+
+@crm.get("/bandi/<int:bid>/modifica")
+def modifica_bando_form(bid):
+    b = SessionLocale.get(Bando, bid)
+    if not b:
+        abort(404)
+    return rendi("bando_form", titolo="Modifica bando", pagina="bandi", b=b,
+                 configurato=anthropic_configurato(), tipologie=TIPOLOGIE)
+
+
+@crm.post("/bandi/<int:bid>/modifica")
+def modifica_bando(bid):
+    b = SessionLocale.get(Bando, bid)
+    if not b:
+        abort(404)
+    _leggi_bando(request.form, b)
+    SessionLocale.commit()
+    avvisa("Modifiche salvate.")
+    return redirect(f"/crm/bandi/{b.id}")
+
+
+@crm.post("/bandi/nuovo-da-pdf")
+def nuovo_bando_da_pdf():
+    if not anthropic_configurato():
+        avvisa("L'estrazione automatica non è configurata: manca ANTHROPIC_API_KEY.", "ko")
+        return redirect("/crm/bandi/nuovo")
+    caricato = request.files.get("file")
+    if not caricato or not caricato.filename:
+        avvisa("Scegli un PDF da caricare.", "ko")
+        return redirect("/crm/bandi/nuovo")
+    try:
+        testo = _estrai_testo_pdf(caricato.read())
+        dati = estrai_bando_da_testo(testo)
+    except Exception as errore:
+        avvisa(f"Estrazione non riuscita: {errore}", "ko")
+        return redirect("/crm/bandi/nuovo")
+
+    b = Bando(testo_originale=testo)
+    for campo in ("nome", "ente", "tipologia", "importo_max_testo", "chi_puo_partecipare",
+                  "cosa_finanziabile", "spese_non_ammissibili", "criteri", "fasi_tempi",
+                  "come_presentare", "perche_interessante", "criticita"):
+        valore = (dati.get(campo) or "").strip()
+        if valore:
+            setattr(b, campo, valore)
+    for campo in ("dotazione", "perc_contributo", "contributo_max"):
+        valore = n(dati.get(campo))
+        if valore is not None:
+            setattr(b, campo, valore)
+    for campo in ("data_apertura", "data_scadenza"):
+        valore = d(dati.get(campo))
+        if valore:
+            setattr(b, campo, valore)
+    if not b.nome:
+        b.nome = caricato.filename.rsplit(".", 1)[0]
+
+    SessionLocale.add(b)
+    SessionLocale.commit()
+    avvisa(f"Bando \"{b.nome}\" estratto dalla scheda. Controlla i campi prima di usarlo.")
+    return redirect(f"/crm/bandi/{b.id}/modifica")
+
+
+@crm.post("/bandi/<int:bid>/guida")
+def genera_guida(bid):
+    b = SessionLocale.get(Bando, bid)
+    if not b:
+        abort(404)
+    if not anthropic_configurato():
+        avvisa("La generazione guide non è configurata: manca ANTHROPIC_API_KEY.", "ko")
+        return redirect(f"/crm/bandi/{bid}")
+    try:
+        b.guida_compilazione = genera_guida_compilazione(b)
+        SessionLocale.commit()
+        avvisa("Guida generata.")
+    except Exception as errore:
+        avvisa(f"Generazione non riuscita: {errore}", "ko")
+    return redirect(f"/crm/bandi/{bid}")
+
+
+@crm.post("/bandi/<int:bid>/approfondisci")
+def approfondisci_bando(bid):
+    b = SessionLocale.get(Bando, bid)
+    if not b:
+        abort(404)
+    if not anthropic_configurato():
+        avvisa("L'approfondimento non è configurato: manca ANTHROPIC_API_KEY.", "ko")
+        return redirect(f"/crm/bandi/{bid}")
+    try:
+        b.approfondimento = genera_approfondimento(b)
+        SessionLocale.commit()
+        avvisa("Approfondimento generato.")
+    except Exception as errore:
+        avvisa(f"Generazione non riuscita: {errore}", "ko")
+    return redirect(f"/crm/bandi/{bid}")
+
+
+@crm.get("/bandi/<int:bid>/guida.txt")
+def scarica_guida(bid):
+    b = SessionLocale.get(Bando, bid)
+    if not b or not b.guida_compilazione:
+        abort(404)
+    buffer = io.BytesIO(b.guida_compilazione.encode("utf-8"))
+    nome_file = f"Guida_{b.nome}".replace(" ", "_").replace("/", "-") + ".txt"
+    return send_file(buffer, as_attachment=True, download_name=nome_file, mimetype="text/plain")
 
 
 @crm.get("/pratiche/<int:pid>/modifica")
