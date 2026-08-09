@@ -1165,7 +1165,7 @@ T_CLIENTE_FORM = """{% extends "base" %}{% block contenuto %}
 </div></div>
 {% endif %}
 
-<form method="post">
+<form method="post" action="{{ ('/crm/clienti/' ~ cliente.id ~ '/modifica') if cliente.id else '/crm/clienti/nuovo' }}">
 {% if lead %}<input type="hidden" name="lead_id" value="{{ lead.id }}">{% endif %}
 <fieldset><legend>Azienda</legend><div class="griglia g3">
   <label><span class="etichetta">Ragione sociale *</span><input name="ragione_sociale" required value="{{ cliente.ragione_sociale or '' }}"></label>
