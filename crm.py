@@ -34,6 +34,9 @@ import datetime as dt
 from decimal import Decimal, InvalidOperation
 
 import requests
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from flask import (Blueprint, request, session, redirect, url_for,
                    Response, send_file, abort)
@@ -63,6 +66,12 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 GOOGLE_REFRESH_TOKEN = os.environ.get("GOOGLE_REFRESH_TOKEN")
 GOOGLE_CARTELLA_MADRE = os.environ.get("GOOGLE_DRIVE_CARTELLA_MADRE")
+
+# Stesso SMTP già usato dal sito per le notifiche lead — nessuna variabile nuova.
+SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+SMTP_USER = os.environ.get("SMTP_USER", "")
+SMTP_PASS = os.environ.get("SMTP_PASS", "")
 
 engine = create_engine(DB_URL, pool_pre_ping=True, pool_recycle=280,
                        connect_args={"check_same_thread": False} if DB_URL.startswith("sqlite") else {})
@@ -319,6 +328,33 @@ def verifica_pw(password: str, stored: str) -> bool:
 
 def drive_configurato():
     return bool(GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET and GOOGLE_REFRESH_TOKEN and GOOGLE_CARTELLA_MADRE)
+
+
+def smtp_configurato():
+    return bool(SMTP_USER and SMTP_PASS)
+
+
+def invia_email(destinatario, oggetto, corpo, rispondi_a=None, nome_mittente="Energelia"):
+    """Manda dalla casella del sito (SMTP_USER), ma con Reply-To sull'utente che
+    ha cliccato 'Invia' — così una risposta del cliente arriva a lui, non alla
+    casella condivisa. Ritorna (True, '') o (False, messaggio d'errore)."""
+    if not smtp_configurato():
+        return False, "L'invio email non è configurato su questo sito."
+    try:
+        msg = MIMEMultipart()
+        msg["From"] = f"{nome_mittente} <{SMTP_USER}>"
+        msg["To"] = destinatario
+        msg["Subject"] = oggetto
+        if rispondi_a:
+            msg["Reply-To"] = rispondi_a
+        msg.attach(MIMEText(corpo, "plain", "utf-8"))
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=15) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASS)
+            server.send_message(msg)
+        return True, ""
+    except Exception as errore:
+        return False, str(errore)
 
 
 def _drive_token_accesso():
@@ -925,6 +961,10 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
       this.textContent='Copiato!'; setTimeout(()=>this.textContent='Copia link', 1500);
     ">Copia link</button>
   </div>
+  <form method="post" action="/crm/clienti/{{ c.id }}/invia-link" class="griglia g2" style="margin-top:10px">
+    <input type="email" name="destinatario" required placeholder="Email del cliente" value="{{ c.email or '' }}">
+    <button class="btn ambra" type="submit">Invia via email</button>
+  </form>
 </div></div>
 
 {% if documenti %}
@@ -1137,6 +1177,10 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
       this.textContent='Copiato!'; setTimeout(()=>this.textContent='Copia link', 1500);
     ">Copia link</button>
   </div>
+  <form method="post" action="/crm/pratiche/{{ p.id }}/invia-link" class="griglia g2" style="margin-top:10px">
+    <input type="email" name="destinatario" required placeholder="Email del cliente" value="{{ p.cliente.email or '' }}">
+    <button class="btn ambra" type="submit">Invia via email</button>
+  </form>
 </div></div>
 
 {% if p.voci_richiesta %}
@@ -1676,6 +1720,27 @@ def scheda_cliente(cid):
     return rendi("cliente", titolo=c.ragione_sociale, pagina="clienti", c=c, documenti=documenti)
 
 
+@crm.post("/clienti/<int:cid>/invia-link")
+def invia_link_cliente(cid):
+    c = SessionLocale.get(Cliente, cid)
+    destinatario = s(request.form.get("destinatario"))
+    if not c or not destinatario:
+        avvisa("Serve un indirizzo email valido.", "ko")
+        return redirect(f"/crm/clienti/{cid}")
+    io_stesso = utente_corrente()
+    link = f"{request.url_root.rstrip('/')}/crm/carica/{c.token_caricamento}"
+    corpo = (
+        f"Buongiorno,\n\n"
+        f"può caricare i documenti che ci servono per {c.ragione_sociale} da questo link, "
+        f"anche in più volte e senza un ordine preciso:\n\n{link}\n\n"
+        f"Grazie,\n{io_stesso.nome}\nEnergelia S.r.l."
+    )
+    ok, errore = invia_email(destinatario, f"Documenti per {c.ragione_sociale}", corpo,
+                             rispondi_a=io_stesso.email, nome_mittente="Energelia")
+    avvisa("Email inviata." if ok else f"Invio non riuscito: {errore}", "ok" if ok else "ko")
+    return redirect(f"/crm/clienti/{cid}")
+
+
 @crm.get("/clienti/<int:cid>/modifica")
 def modifica_cliente_form(cid):
     c = SessionLocale.get(Cliente, cid)
@@ -1784,6 +1849,27 @@ def scheda_pratica(pid):
         p.token_caricamento = secrets.token_urlsafe(24)
         SessionLocale.commit()
     return rendi("pratica", titolo=p.nome_bando, pagina="pratiche", p=p)
+
+
+@crm.post("/pratiche/<int:pid>/invia-link")
+def invia_link_pratica(pid):
+    p = SessionLocale.get(Pratica, pid)
+    destinatario = s(request.form.get("destinatario"))
+    if not p or not destinatario:
+        avvisa("Serve un indirizzo email valido.", "ko")
+        return redirect(f"/crm/pratiche/{pid}")
+    io_stesso = utente_corrente()
+    link = f"{request.url_root.rstrip('/')}/crm/richiesta/{p.token_caricamento}"
+    corpo = (
+        f"Buongiorno,\n\n"
+        f"per la pratica \"{p.nome_bando}\" ci servono alcuni documenti. Può caricarli da questo link, "
+        f"anche in più volte:\n\n{link}\n\n"
+        f"Grazie,\n{io_stesso.nome}\nEnergelia S.r.l."
+    )
+    ok, errore = invia_email(destinatario, f"Documenti per {p.nome_bando}", corpo,
+                             rispondi_a=io_stesso.email, nome_mittente="Energelia")
+    avvisa("Email inviata." if ok else f"Invio non riuscito: {errore}", "ok" if ok else "ko")
+    return redirect(f"/crm/pratiche/{pid}")
 
 
 @crm.post("/pratiche/<int:pid>/voci/nuova")
