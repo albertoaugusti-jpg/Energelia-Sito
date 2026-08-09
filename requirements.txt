@@ -1,6 +1,6 @@
 aiohappyeyeballs==2.6.1
-aiohttp==3.13.3
 aiohttp-retry==2.9.1
+aiohttp==3.13.3
 aiosignal==1.4.0
 annotated-types==0.7.0
 anyio==4.11.0
@@ -13,8 +13,8 @@ distro==1.9.0
 dnspython==2.8.0
 email-validator==2.3.0
 feedparser==6.0.11
-Flask==3.1.2
 Flask-SQLAlchemy==3.1.1
+Flask==3.1.2
 frozenlist==1.8.0
 greenlet==3.3.2
 gunicorn==23.0.0
@@ -28,6 +28,7 @@ jiter==0.11.0
 MarkupSafe==3.0.2
 multidict==6.7.1
 openai==1.109.1
+openpyxl==3.1.5
 packaging==25.0
 propcache==0.4.1
 psycopg2-binary==2.9.11
