@@ -837,6 +837,17 @@ T_CLIENTI = """{% extends "base" %}{% block contenuto %}
   {% if q or canale or consulente %}<a class="btn chiaro" href="/crm/clienti">Azzera</a>{% endif %}
 </form>
 
+{% if utente.is_admin %}
+<details class="riquadro" style="margin-bottom:16px"><summary style="cursor:pointer;padding:14px 16px;font-weight:700;color:#1f4e78">Importa clienti da file (.xlsx o .csv)</summary>
+<div class="corpo" style="padding-top:0">
+  <p style="color:#6b7b8c">Il file .xlsx col foglio "Pratiche" importa anche le pratiche insieme ai clienti; un .csv importa solo i clienti.</p>
+  <form method="post" action="/crm/importa" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <input type="file" name="file" accept=".xlsx,.csv" required>
+    <button class="btn ambra" type="submit">Importa</button>
+  </form>
+</div></details>
+{% endif %}
+
 {% if elenco %}
 <div class="tabella scorri"><table>
 <thead><tr><th>Codice</th><th>Ragione sociale</th><th>Sede</th><th>Referente</th>
@@ -1243,6 +1254,18 @@ T_LEAD = """{% extends "base" %}{% block contenuto %}
   <button class="btn" type="submit">Filtra</button>
   {% if q or stato or fonte %}<a class="btn chiaro" href="/crm/lead">Azzera</a>{% endif %}
 </form>
+
+{% if utente.is_admin %}
+<details class="riquadro" style="margin-bottom:16px"><summary style="cursor:pointer;padding:14px 16px;font-weight:700;color:#1f4e78">Importa lead da scraping (.xlsx o .csv)</summary>
+<div class="corpo" style="padding-top:0">
+  <p style="color:#6b7b8c">Carica l'output di uno scraper così com'è: riconosce da sé le colonne e salta le righe separatore.</p>
+  <form method="post" action="/crm/lead/importa" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <input name="fonte" placeholder="Etichetta di questo giro, es. Umbria Energia" style="min-width:240px">
+    <input type="file" name="file" accept=".xlsx,.csv" required>
+    <button class="btn ambra" type="submit">Importa</button>
+  </form>
+</div></details>
+{% endif %}
 
 {% if elenco %}
 <div class="tabella scorri"><table>
@@ -2036,6 +2059,49 @@ def stato_lead(lid):
     return redirect(request.referrer or "/crm/lead")
 
 
+class _CellaFoglio:
+    __slots__ = ("value", "column")
+    def __init__(self, value, column):
+        self.value = value
+        self.column = column
+
+
+class _FoglioCSV:
+    """Fa sembrare un CSV un foglio openpyxl (stessa interfaccia minima:
+    max_row, ws[riga], ws.cell(riga, colonna)), così le funzioni di import
+    scritte per gli xlsx leggono un CSV senza saperlo — nessuna duplicazione."""
+    def __init__(self, righe):
+        self.righe = righe
+        self.max_row = len(righe)
+
+    def __getitem__(self, indice_riga):
+        riga = self.righe[indice_riga - 1] if 1 <= indice_riga <= len(self.righe) else []
+        return [_CellaFoglio(v, i + 1) for i, v in enumerate(riga)]
+
+    def cell(self, riga, colonna):
+        r = self.righe[riga - 1] if 1 <= riga <= len(self.righe) else []
+        valore = r[colonna - 1] if 1 <= colonna <= len(r) else None
+        return _CellaFoglio(valore, colonna)
+
+
+def _leggi_csv(contenuto_bytes):
+    """Prova utf-8 (con o senza BOM), poi latin-1. Riconosce da sé ; o , come separatore."""
+    for codifica in ("utf-8-sig", "utf-8", "latin-1"):
+        try:
+            testo = contenuto_bytes.decode(codifica)
+            break
+        except UnicodeDecodeError:
+            continue
+    else:
+        testo = contenuto_bytes.decode("utf-8", errors="replace")
+    try:
+        delimitatore = csv.Sniffer().sniff(testo[:2000], delimiters=";,").delimiter
+    except csv.Error:
+        delimitatore = ";" if testo[:2000].count(";") >= testo[:2000].count(",") else ","
+    righe = [riga for riga in csv.reader(io.StringIO(testo), delimiter=delimitatore)]
+    return _FoglioCSV(righe)
+
+
 INTESTAZIONI_LEAD = {
     "nome": "nome", "ragione sociale": "nome",
     "tipo (maps)": "tipo", "tipo": "tipo",
@@ -2062,16 +2128,20 @@ def importa_lead():
         return redirect("/crm/")
     caricato = request.files.get("file")
     if not caricato or not caricato.filename:
-        avvisa("Scegli un file .xlsx da caricare.", "ko")
-        return redirect("/crm/impostazioni")
+        avvisa("Scegli un file .xlsx o .csv da caricare.", "ko")
+        return redirect(request.referrer or "/crm/impostazioni")
+    contenuto = caricato.read()
     try:
-        wb = openpyxl.load_workbook(io.BytesIO(caricato.read()), data_only=True)
+        if caricato.filename.lower().endswith(".csv"):
+            ws = _leggi_csv(contenuto)
+        else:
+            wb = openpyxl.load_workbook(io.BytesIO(contenuto), data_only=True)
+            ws = wb[wb.sheetnames[0]]
     except Exception as errore:
         avvisa(f"Il file non è leggibile: {errore}", "ko")
-        return redirect("/crm/impostazioni")
+        return redirect(request.referrer or "/crm/impostazioni")
 
     fonte = s(request.form.get("fonte")) or caricato.filename.rsplit(".", 1)[0]
-    ws = wb[wb.sheetnames[0]]
 
     # Trovo la riga di intestazione vera cercando fra le prime righe quella
     # che matcha più etichette conosciute — gli scraper mettono titolo e
@@ -2087,7 +2157,7 @@ def importa_lead():
             riga_intestazione, colonne = indice_riga, trovate
     if not riga_intestazione or "nome" not in colonne:
         avvisa("Non trovo una colonna 'Nome' nel file: controlla che sia un export dello scraper.", "ko")
-        return redirect("/crm/impostazioni")
+        return redirect(request.referrer or "/crm/impostazioni")
 
     esistenti = {(n.lower(), ind or "") for n, ind in
                  SessionLocale.query(Lead.nome, Lead.indirizzo).all()}
@@ -2124,7 +2194,7 @@ def importa_lead():
 
     SessionLocale.commit()
     avvisa(f"Importati {nuovi} lead da \"{fonte}\".")
-    return redirect("/crm/impostazioni")
+    return redirect(request.referrer or "/crm/impostazioni")
 
 
 # ------------------------------------------------------------- impostazioni
@@ -2248,19 +2318,26 @@ def importa():
         return redirect("/crm/")
     caricato = request.files.get("file")
     if not caricato or not caricato.filename:
-        avvisa("Scegli un file .xlsx da caricare.", "ko")
-        return redirect("/crm/impostazioni")
+        avvisa("Scegli un file .xlsx o .csv da caricare.", "ko")
+        return redirect(request.referrer or "/crm/impostazioni")
+    e_csv = caricato.filename.lower().endswith(".csv")
+    contenuto = caricato.read()
     try:
-        wb = openpyxl.load_workbook(io.BytesIO(caricato.read()), data_only=True)
+        if e_csv:
+            ws_clienti = _leggi_csv(contenuto)
+            fogli = {"Clienti": ws_clienti}   # un CSV ha un solo "foglio": niente Pratiche
+        else:
+            wb = openpyxl.load_workbook(io.BytesIO(contenuto), data_only=True)
+            fogli = {nome: wb[nome] for nome in wb.sheetnames}
     except Exception as errore:
         avvisa(f"Il file non è leggibile: {errore}", "ko")
-        return redirect("/crm/impostazioni")
+        return redirect(request.referrer or "/crm/impostazioni")
 
     nuovi_clienti = nuove_pratiche = 0
     per_codice = {}
 
-    if "Clienti" in wb.sheetnames:
-        ws = wb["Clienti"]
+    if "Clienti" in fogli:
+        ws = fogli["Clienti"]
         col = _mappa(ws, INTESTAZIONI_CLIENTI)
         for riga in range(5, ws.max_row + 1):
             ragione = ws.cell(riga, col.get("ragione_sociale", 2)).value
@@ -2289,8 +2366,8 @@ def importa():
             per_codice[codice_xlsx] = c
             nuovi_clienti += 1
 
-    if "Pratiche" in wb.sheetnames:
-        ws = wb["Pratiche"]
+    if "Pratiche" in fogli:
+        ws = fogli["Pratiche"]
         col = _mappa(ws, INTESTAZIONI_PRATICHE)
         for riga in range(5, ws.max_row + 1):
             codice_cliente = str(ws.cell(riga, 2).value or "").strip()
@@ -2328,7 +2405,7 @@ def importa():
 
     SessionLocale.commit()
     avvisa(f"Importati {nuovi_clienti} clienti e {nuove_pratiche} pratiche.")
-    return redirect("/crm/impostazioni")
+    return redirect(request.referrer or "/crm/impostazioni")
 
 
 @crm.get("/esporta.xlsx")
