@@ -154,6 +154,7 @@ class Cliente(Base):
     codice_sdi = Column(String(10))             # fatturazione elettronica
     intestatario_conto = Column(String(255))    # se diverso dalla ragione sociale
     email_fatturazione = Column(String(200))
+    titolari_effettivi = Column(Text)   # nomi, non la composizione societaria completa
     token_caricamento = Column(String(64), unique=True, index=True)  # link pubblico di upload
     google_cartella_id = Column(String(120))                         # cartella Drive di questo cliente
     consulente_id = Column(Integer, ForeignKey("crm_utenti.id"))
@@ -498,6 +499,33 @@ Tono diretto, niente fronzoli, frasi brevi."""
 def genera_approfondimento(bando):
     descrizione = f"Bando: {bando.nome}\n\nTesto della scheda:\n{(bando.testo_originale or '')[:15000]}"
     return _anthropic_chiama(SYSTEM_APPROFONDIMENTO, descrizione, max_token=3000)
+
+
+SYSTEM_ESTRAI_VISURA = """Estrai dati anagrafici da una visura camerale italiana.
+
+Rispondi ESCLUSIVAMENTE con un oggetto JSON, senza testo prima o dopo, con queste chiavi:
+ragione_sociale, piva, codice_fiscale, ateco, citta, provincia, regione,
+referente, ruolo_referente, titolari_effettivi
+
+Regole:
+- Se un dato non è presente o non sei sicuro, metti stringa vuota "". Non inventare.
+- "referente" è il nome del legale rappresentante (chi ha i poteri di firma), non un socio qualunque.
+- "ruolo_referente" per il legale rappresentante è di norma "Legale rappresentante" o la carica esatta
+  se diversa (es. "Amministratore Unico", "Presidente CdA").
+- "titolari_effettivi": SOLO i nomi delle persone fisiche indicate come titolari effettivi, uno per
+  riga con "- " davanti. NON includere l'elenco completo della compagine societaria, le quote di
+  partecipazione o altri soci che non sono titolari effettivi: quella parte va ignorata del tutto.
+- "citta"/"provincia"/"regione" si riferiscono alla sede legale.
+"""
+
+
+def estrai_visura_da_testo(testo_visura):
+    if not (testo_visura or "").strip():
+        raise ValueError("Il testo estratto dal PDF è vuoto: file scansionato o illeggibile.")
+    grezzo = _anthropic_chiama(SYSTEM_ESTRAI_VISURA, testo_visura[:20000], max_token=1500).strip()
+    if grezzo.startswith("```"):
+        grezzo = grezzo.split("\n", 1)[1].rsplit("```", 1)[0]
+    return json.loads(grezzo)
 
 
 def _drive_token_accesso():
@@ -869,8 +897,8 @@ button:hover{background:#143453}
     {% if v.tipo_risposta == 'testo' %}
       <textarea name="voce_{{ v.id }}">{{ v.valore_testo or '' }}</textarea>
     {% else %}
-      {% if v.compilata %}<p class="gia-ricevuto">Già ricevuto — carica di nuovo solo se vuoi sostituirlo.</p>{% endif %}
-      <input type="file" name="voce_{{ v.id }}">
+      {% if v.compilata %}<p class="gia-ricevuto">Già ricevuto — puoi caricarne altri per questa voce.</p>{% endif %}
+      <input type="file" name="voce_{{ v.id }}" multiple>
     {% endif %}
   </div>
 {% endfor %}
@@ -1016,7 +1044,26 @@ T_CLIENTE_FORM = """{% extends "base" %}{% block contenuto %}
 <p class="sottotitolo">
   {{ cliente.codice or 'Il codice viene assegnato al salvataggio.' }}
   {% if lead %}· precompilato dal lead <strong>{{ lead.nome }}</strong>{% endif %}
+  {% if da_visura %}· campi anagrafici presi dalla visura caricata{% endif %}
 </p>
+
+{% if not cliente.id %}
+<div class="riquadro" style="margin-bottom:20px"><div class="corpo">
+  <h2 style="margin-top:0">Carica la visura camerale (facoltativo)</h2>
+  {% if anthropic_ok %}
+  <p style="color:#6b7b8c">Precompila ragione sociale, P.IVA, sede e legale rappresentante. Non tocca la
+  composizione societaria: solo legale rappresentante ed eventuali titolari effettivi.</p>
+  <form method="post" action="/crm/clienti/nuovo-da-visura" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    {% if lead %}<input type="hidden" name="lead_id" value="{{ lead.id }}">{% endif %}
+    <input type="file" name="file" accept=".pdf" required>
+    <button class="btn ambra" type="submit">Estrai dalla visura</button>
+  </form>
+  {% else %}
+  <p style="color:#6b7b8c">Richiede ANTHROPIC_API_KEY, non ancora configurata.</p>
+  {% endif %}
+</div></div>
+{% endif %}
+
 <form method="post">
 {% if lead %}<input type="hidden" name="lead_id" value="{{ lead.id }}">{% endif %}
 <fieldset><legend>Azienda</legend><div class="griglia g3">
@@ -1042,6 +1089,7 @@ T_CLIENTE_FORM = """{% extends "base" %}{% block contenuto %}
   <label><span class="etichetta">Intestatario conto (se diverso)</span><input name="intestatario_conto" value="{{ cliente.intestatario_conto or '' }}"></label>
   <label><span class="etichetta">IBAN del cliente</span><input name="iban" value="{{ cliente.iban or '' }}" placeholder="Dove riceve l'accredito del bando"></label>
   <label><span class="etichetta">Email di fatturazione</span><input name="email_fatturazione" type="email" value="{{ cliente.email_fatturazione or '' }}"></label>
+  <label><span class="etichetta">Titolari effettivi</span><input name="titolari_effettivi" value="{{ cliente.titolari_effettivi or '' }}" placeholder="Un nome per riga"></label>
 </div></fieldset>
 <fieldset><legend>Gestione</legend><div class="griglia g3">
   <label><span class="etichetta">Consulente Energelia</span><select name="consulente_id"><option value=""></option>
@@ -1077,6 +1125,7 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
   <dt>IBAN cliente</dt><dd>{{ c.iban or '—' }}</dd>
   <dt>Intestatario conto</dt><dd>{{ c.intestatario_conto or '—' }}</dd>
   <dt>Email fatturazione</dt><dd>{{ c.email_fatturazione or '—' }}</dd>
+  <dt>Titolari effettivi</dt><dd style="white-space:pre-wrap">{{ c.titolari_effettivi or '—' }}</dd>
   <dt>Consulente</dt><dd>{{ c.consulente.nome if c.consulente else '—' }}</dd>
   <dt>Canale</dt><dd>{{ c.canale or '—' }}</dd>
   <dt>Primo contatto</dt><dd>{{ data_it(c.data_primo_contatto) }}</dd>
@@ -1214,6 +1263,18 @@ T_PRATICA_FORM = """{% extends "base" %}{% block contenuto %}
   {{ p.codice or 'Il codice viene assegnato al salvataggio.' }}
   {% if p.bando_id %}· precompilata dal bando <a href="/crm/bandi/{{ p.bando_id }}">{{ p.bando.nome if p.bando else '' }}</a>{% endif %}
 </p>
+{% if not p.id and bandi %}
+<div class="riquadro" style="margin-bottom:16px"><div class="corpo">
+  <label><span class="etichetta">Precompila da un bando salvato (facoltativo)</span>
+  <select onchange="
+    var parametri = new URLSearchParams(window.location.search);
+    if (this.value) { parametri.set('bando', this.value); } else { parametri.delete('bando'); }
+    window.location = '/crm/pratiche/nuova?' + parametri.toString();
+  "><option value="">— compila a mano —</option>
+    {% for bd in bandi %}<option value="{{ bd.id }}" {{ 'selected' if p.bando_id==bd.id }}>{{ bd.nome }}</option>{% endfor %}
+  </select></label>
+</div></div>
+{% endif %}
 <form method="post">
 {% if p.bando_id %}<input type="hidden" name="bando_id" value="{{ p.bando_id }}">{% endif %}
 <fieldset><legend>Bando</legend><div class="griglia g3">
@@ -1836,8 +1897,8 @@ def invia_richiesta(token):
                 v.valore_testo = valore
                 v.compilata = True
         else:
-            f = request.files.get(f"voce_{v.id}")
-            if f and f.filename:
+            file_caricati = [f for f in request.files.getlist(f"voce_{v.id}") if f and f.filename]
+            for f in file_caricati:
                 try:
                     cartella_id = _drive_cartella_cliente(p.cliente)
                     risultato = _drive_carica_file(cartella_id, f.filename, f.read(), f.mimetype)
@@ -1848,7 +1909,8 @@ def invia_richiesta(token):
                         caricato_da="cliente", stato="assegnato")
                     SessionLocale.add(doc)
                     SessionLocale.flush()
-                    v.documento_id = doc.id
+                    if not v.documento_id:      # il link della voce punta al primo file; gli altri
+                        v.documento_id = doc.id  # restano comunque visibili tra i documenti della pratica
                     v.compilata = True
                 except Exception as errore:
                     print(f"[crm] Errore caricamento voce '{v.etichetta}' pratica {p.codice}: {errore}")
@@ -1965,6 +2027,7 @@ def _leggi_cliente(form, cliente):
     cliente.intestatario_conto = s(form.get("intestatario_conto"))
     cliente.iban = (s(form.get("iban")) or "").upper().replace(" ", "") or None
     cliente.email_fatturazione = s(form.get("email_fatturazione"))
+    cliente.titolari_effettivi = s(form.get("titolari_effettivi"))
     cid = s(form.get("consulente_id"))
     cliente.consulente_id = int(cid) if cid else None
     cliente.canale = s(form.get("canale"))
@@ -1992,6 +2055,53 @@ def nuovo_cliente_form():
             if lead.fonte: note.append(f"Da lead — {lead.fonte}")
             cliente.note = "\n".join(note) or None
     return rendi("cliente_form", titolo="Nuovo cliente", pagina="clienti", cliente=cliente, lead=lead,
+                 anthropic_ok=anthropic_configurato(),
+                 consulenti=SessionLocale.query(Utente).order_by(Utente.nome).all())
+
+
+@crm.post("/clienti/nuovo-da-visura")
+def nuovo_cliente_da_visura():
+    lead = None
+    lead_id = s(request.form.get("lead_id"))
+    if lead_id:
+        lead = SessionLocale.get(Lead, int(lead_id))
+
+    if not anthropic_configurato():
+        avvisa("L'estrazione dalla visura non è configurata: manca ANTHROPIC_API_KEY.", "ko")
+        return redirect(f"/crm/clienti/nuovo?lead={lead_id}" if lead_id else "/crm/clienti/nuovo")
+
+    caricato = request.files.get("file")
+    if not caricato or not caricato.filename:
+        avvisa("Scegli un PDF da caricare.", "ko")
+        return redirect(f"/crm/clienti/nuovo?lead={lead_id}" if lead_id else "/crm/clienti/nuovo")
+
+    cliente = Cliente()
+    # Se arriva da un lead, parto dagli stessi dati che avresti visto senza la visura.
+    if lead:
+        cliente.ragione_sociale = lead.nome
+        cliente.telefono = lead.cellulare or lead.telefono
+        cliente.email = lead.email
+        cliente.pec = lead.pec
+        cliente.canale = "Scrapping"
+
+    try:
+        testo = _estrai_testo_pdf(caricato.read())
+        dati = estrai_visura_da_testo(testo)
+    except Exception as errore:
+        avvisa(f"Estrazione non riuscita: {errore}", "ko")
+        return rendi("cliente_form", titolo="Nuovo cliente", pagina="clienti", cliente=cliente, lead=lead,
+                     anthropic_ok=anthropic_configurato(),
+                     consulenti=SessionLocale.query(Utente).order_by(Utente.nome).all())
+
+    for campo in ("ragione_sociale", "piva", "codice_fiscale", "ateco", "citta", "provincia",
+                  "regione", "referente", "ruolo_referente", "titolari_effettivi"):
+        valore = (dati.get(campo) or "").strip()
+        if valore:
+            setattr(cliente, campo, valore)
+
+    avvisa("Dati presi dalla visura: controlla i campi prima di salvare.")
+    return rendi("cliente_form", titolo="Nuovo cliente", pagina="clienti", cliente=cliente, lead=lead,
+                 anthropic_ok=anthropic_configurato(), da_visura=True,
                  consulenti=SessionLocale.query(Utente).order_by(Utente.nome).all())
 
 
@@ -2149,6 +2259,7 @@ def nuova_pratica_form():
             p.data_scadenza = bando.data_scadenza
     return rendi("pratica_form", titolo="Nuova pratica", pagina="pratiche", p=p,
                  clienti=SessionLocale.query(Cliente).order_by(Cliente.ragione_sociale).all(),
+                 bandi=SessionLocale.query(Bando).order_by(Bando.nome).all(),
                  conti=SessionLocale.query(ContoBancario).filter(
                      ContoBancario.attivo.is_(True)).order_by(ContoBancario.nome).all())
 
