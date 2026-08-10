@@ -374,12 +374,37 @@ class Trattativa(Base):
     note = Column(Text)
     creato_il = Column(DateTime, default=dt.datetime.utcnow)
 
+    # Scheda speculare a Cliente: si arricchisce nel tempo mentre la trattativa
+    # è aperta. Solo alla vittoria questi campi diventano davvero il Cliente
+    # (nuovo, o aggiornano quello già esistente se la trattativa partiva da lì).
+    ragione_sociale = Column(String(255))
+    piva = Column(String(40))
+    codice_fiscale = Column(String(16))
+    ateco = Column(String(40))
+    dimensione = Column(String(20))
+    citta = Column(String(120))
+    provincia = Column(String(10))
+    regione = Column(String(60))
+    referente = Column(String(160))
+    ruolo_referente = Column(String(120))
+    telefono = Column(String(60))
+    email = Column(String(200))
+    pec = Column(String(200))
+    codice_sdi = Column(String(10))
+    intestatario_conto = Column(String(255))
+    iban = Column(String(34))
+    email_fatturazione = Column(String(200))
+    titolari_effettivi = Column(Text)
+    canale = Column(String(40))
+
     lead = relationship("Lead")
     cliente = relationship("Cliente")
     bandi = relationship("Bando", secondary=crm_trattativa_bandi)
 
     @property
     def soggetto_nome(self):
+        if self.ragione_sociale:
+            return self.ragione_sociale
         if self.cliente:
             return self.cliente.ragione_sociale
         if self.lead:
@@ -1897,15 +1922,54 @@ T_TRATTATIVA_FORM = """{% extends "base" %}{% block contenuto %}
 
 T_TRATTATIVA = """{% extends "base" %}{% block contenuto %}
 <div class="testa"><div><h1>{{ tr.soggetto_nome }}</h1>
-<p class="sottotitolo">{{ 'Cliente' if tr.cliente_id else 'Lead' }} · stato: {{ tr.stato }}</p></div>
+<p class="sottotitolo">{{ 'Nato da cliente' if tr.cliente_id else 'Nato da lead' }} · stato: {{ tr.stato }}</p></div>
 <div>
   {% if tr.stato == 'aperta' %}
+  <a class="btn chiaro" href="/crm/trattative/{{ tr.id }}/modifica">Modifica scheda</a>
   <form method="post" action="/crm/trattative/{{ tr.id }}/vinta" style="display:inline"><button class="btn" type="submit">Segna vinta</button></form>
   <form method="post" action="/crm/trattative/{{ tr.id }}/persa" style="display:inline"><button class="btn chiaro" type="submit">Segna persa</button></form>
   {% elif tr.stato == 'persa' %}
   <form method="post" action="/crm/trattative/{{ tr.id }}/ripesca" style="display:inline"><button class="btn ambra" type="submit">Ripesca</button></form>
   {% endif %}
 </div></div>
+
+<dl class="dettaglio">
+  <dt>Ragione sociale</dt><dd>{{ tr.ragione_sociale or '—' }}</dd>
+  <dt>P.IVA / CF</dt><dd>{{ tr.piva or tr.codice_fiscale or '—' }}</dd>
+  <dt>ATECO</dt><dd>{{ tr.ateco or '—' }}</dd>
+  <dt>Sede</dt><dd>{{ tr.citta or '—' }}{% if tr.provincia %} ({{ tr.provincia }}){% endif %}</dd>
+  <dt>Referente</dt><dd>{{ tr.referente or '—' }}{% if tr.ruolo_referente %} · {{ tr.ruolo_referente }}{% endif %}</dd>
+  <dt>Telefono</dt><dd>{{ tr.telefono or '—' }}</dd>
+  <dt>Email</dt><dd>{{ tr.email or '—' }}</dd>
+  <dt>PEC</dt><dd>{{ tr.pec or '—' }}</dd>
+  <dt>IBAN</dt><dd>{{ tr.iban or '—' }}</dd>
+  <dt>Titolari effettivi</dt><dd style="white-space:pre-wrap">{{ tr.titolari_effettivi or '—' }}</dd>
+</dl>
+
+{% if tr.stato == 'aperta' %}
+<div class="riquadro" style="margin:20px 0"><div class="corpo">
+  <h2 style="margin-top:0">Carica la visura camerale (facoltativo)</h2>
+  {% if anthropic_ok %}
+  <p style="color:#6b7b8c">Precompila la scheda qui sopra. Non tocca la composizione societaria: solo
+  legale rappresentante ed eventuali titolari effettivi.</p>
+  <form method="post" action="/crm/trattative/{{ tr.id }}/visura" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <input type="file" name="file" accept=".pdf" required>
+    <button class="btn ambra" type="submit">Estrai dalla visura</button>
+  </form>
+  {% else %}<p style="color:#6b7b8c">Richiede ANTHROPIC_API_KEY, non ancora configurata.</p>{% endif %}
+</div></div>
+
+<div class="riquadro" style="margin-bottom:20px"><div class="corpo">
+  <h2 style="margin-top:0">Carica la scheda di un bando</h2>
+  {% if anthropic_ok %}
+  <p style="color:#6b7b8c">Va anche nel repository Bandi, non solo qui: la trattativa lo collega, non lo duplica.</p>
+  <form method="post" action="/crm/trattative/{{ tr.id }}/bando-da-pdf" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <input type="file" name="file" accept=".pdf" required>
+    <button class="btn ambra" type="submit">Estrai e collega</button>
+  </form>
+  {% else %}<p style="color:#6b7b8c">Richiede ANTHROPIC_API_KEY, non ancora configurata.</p>{% endif %}
+</div></div>
+{% endif %}
 
 <h2>Bandi collegati</h2>
 {% if tr.bandi %}<ul>{% for b in tr.bandi %}<li><a href="/crm/bandi/{{ b.id }}">{{ b.nome }}</a></li>{% endfor %}</ul>
@@ -1915,6 +1979,43 @@ T_TRATTATIVA = """{% extends "base" %}{% block contenuto %}
 
 {% if tr.cliente %}<p><a href="/crm/clienti/{{ tr.cliente.id }}">Vai alla scheda cliente</a></p>{% endif %}
 {% if tr.lead %}<p><a href="/crm/lead">Vai alla lista lead</a></p>{% endif %}
+{% endblock %}"""
+
+T_TRATTATIVA_MODIFICA = """{% extends "base" %}{% block contenuto %}
+<h1>Modifica scheda — {{ tr.soggetto_nome }}</h1>
+<p class="sottotitolo">
+  {{ 'Nato da cliente' if tr.cliente_id else 'Nato da lead' }}
+  {% if da_visura %}· campi presi dalla visura caricata, controlla prima di salvare{% endif %}
+</p>
+<form method="post" action="/crm/trattative/{{ tr.id }}/modifica">
+<fieldset><legend>Azienda</legend><div class="griglia g3">
+  <label><span class="etichetta">Ragione sociale</span><input name="ragione_sociale" value="{{ tr.ragione_sociale or '' }}"></label>
+  <label><span class="etichetta">Partita IVA</span><input name="piva" value="{{ tr.piva or '' }}"></label>
+  <label><span class="etichetta">Codice Fiscale</span><input name="codice_fiscale" value="{{ tr.codice_fiscale or '' }}"></label>
+  <label><span class="etichetta">ATECO</span><input name="ateco" value="{{ tr.ateco or '' }}"></label>
+  <label><span class="etichetta">Dimensione</span><input name="dimensione" value="{{ tr.dimensione or '' }}"></label>
+  <label><span class="etichetta">Città</span><input name="citta" value="{{ tr.citta or '' }}"></label>
+  <label><span class="etichetta">Provincia</span><input name="provincia" value="{{ tr.provincia or '' }}" maxlength="2"></label>
+  <label><span class="etichetta">Regione</span><input name="regione" value="{{ tr.regione or '' }}"></label>
+  <label><span class="etichetta">Canale</span><input name="canale" value="{{ tr.canale or '' }}"></label>
+</div></fieldset>
+<fieldset><legend>Referente</legend><div class="griglia g3">
+  <label><span class="etichetta">Nome</span><input name="referente" value="{{ tr.referente or '' }}"></label>
+  <label><span class="etichetta">Ruolo</span><input name="ruolo_referente" value="{{ tr.ruolo_referente or '' }}"></label>
+  <label><span class="etichetta">Telefono</span><input name="telefono" value="{{ tr.telefono or '' }}"></label>
+  <label><span class="etichetta">Email</span><input name="email" type="email" value="{{ tr.email or '' }}"></label>
+  <label><span class="etichetta">PEC</span><input name="pec" type="email" value="{{ tr.pec or '' }}"></label>
+</div></fieldset>
+<fieldset><legend>Dati economici</legend><div class="griglia g3">
+  <label><span class="etichetta">Codice SDI</span><input name="codice_sdi" value="{{ tr.codice_sdi or '' }}"></label>
+  <label><span class="etichetta">Intestatario conto</span><input name="intestatario_conto" value="{{ tr.intestatario_conto or '' }}"></label>
+  <label><span class="etichetta">IBAN</span><input name="iban" value="{{ tr.iban or '' }}"></label>
+  <label><span class="etichetta">Email fatturazione</span><input name="email_fatturazione" type="email" value="{{ tr.email_fatturazione or '' }}"></label>
+  <label><span class="etichetta">Titolari effettivi</span><input name="titolari_effettivi" value="{{ tr.titolari_effettivi or '' }}" placeholder="Un nome per riga"></label>
+</div></fieldset>
+<fieldset><legend>Note</legend><textarea name="note">{{ tr.note or '' }}</textarea></fieldset>
+<button class="btn" type="submit">Salva</button>
+</form>
 {% endblock %}"""
 
 T_IMPOSTAZIONI = """{% extends "base" %}{% block contenuto %}
@@ -2003,6 +2104,7 @@ env = Environment(loader=DictLoader({
     "richiesta_pubblica": T_RICHIESTA_PUBBLICA,
     "documenti": T_DOCUMENTI, "bandi": T_BANDI, "bando_form": T_BANDO_FORM, "bando": T_BANDO,
     "trattative": T_TRATTATIVE, "trattativa_form": T_TRATTATIVA_FORM, "trattativa": T_TRATTATIVA,
+    "trattativa_modifica": T_TRATTATIVA_MODIFICA,
 }), autoescape=select_autoescape(["html"]))
 
 
@@ -3138,6 +3240,9 @@ def nuova_trattativa_form():
                  bandi=SessionLocale.query(Bando).order_by(Bando.nome).all())
 
 
+CAMPI_SPECULARI_TRATTATIVA = ['ragione_sociale', 'piva', 'codice_fiscale', 'ateco', 'dimensione', 'citta', 'provincia', 'regione', 'referente', 'ruolo_referente', 'telefono', 'email', 'pec', 'codice_sdi', 'intestatario_conto', 'iban', 'email_fatturazione', 'titolari_effettivi', 'canale']
+
+
 @crm.post("/trattative/nuova")
 def nuova_trattativa():
     lead_id = s(request.form.get("lead_id"))
@@ -3149,6 +3254,22 @@ def nuova_trattativa():
     tr = Trattativa(lead_id=int(lead_id) if lead_id else None,
                     cliente_id=int(cliente_id) if cliente_id else None,
                     note=s(request.form.get("note")), stato="aperta")
+
+    # Precompilo la scheda: dati minimi se parte da un lead, copia integrale se parte da un cliente.
+    if tr.lead_id:
+        lead = SessionLocale.get(Lead, tr.lead_id)
+        if lead:
+            tr.ragione_sociale = lead.nome
+            tr.telefono = lead.cellulare or lead.telefono
+            tr.email = lead.email
+            tr.pec = lead.pec
+            tr.canale = "Scrapping"
+    elif tr.cliente_id:
+        cliente = SessionLocale.get(Cliente, tr.cliente_id)
+        if cliente:
+            for campo in CAMPI_SPECULARI_TRATTATIVA:
+                setattr(tr, campo, getattr(cliente, campo))
+
     id_bandi = [int(x) for x in request.form.getlist("bando_ids") if x]
     if id_bandi:
         tr.bandi = SessionLocale.query(Bando).filter(Bando.id.in_(id_bandi)).all()
@@ -3164,7 +3285,106 @@ def scheda_trattativa(tid):
     tr = SessionLocale.get(Trattativa, tid)
     if not tr:
         abort(404)
-    return rendi("trattativa", titolo=tr.soggetto_nome, pagina="trattative", tr=tr)
+    return rendi("trattativa", titolo=tr.soggetto_nome, pagina="trattative", tr=tr,
+                 anthropic_ok=anthropic_configurato())
+
+
+@crm.get("/trattative/<int:tid>/modifica")
+def modifica_trattativa_form(tid):
+    tr = SessionLocale.get(Trattativa, tid)
+    if not tr:
+        abort(404)
+    return rendi("trattativa_modifica", titolo="Modifica scheda", pagina="trattative", tr=tr)
+
+
+@crm.post("/trattative/<int:tid>/modifica")
+def modifica_trattativa(tid):
+    tr = SessionLocale.get(Trattativa, tid)
+    if not tr:
+        abort(404)
+    for campo in CAMPI_SPECULARI_TRATTATIVA:
+        if campo == "titolari_effettivi":
+            continue   # gestito sotto: qui il form manda una stringa su una riga sola
+        setattr(tr, campo, s(request.form.get(campo)))
+    tr.titolari_effettivi = s(request.form.get("titolari_effettivi"))
+    tr.note = s(request.form.get("note"))
+    SessionLocale.commit()
+    avvisa("Scheda aggiornata.")
+    return redirect(f"/crm/trattative/{tr.id}")
+
+
+@crm.post("/trattative/<int:tid>/visura")
+def visura_trattativa(tid):
+    tr = SessionLocale.get(Trattativa, tid)
+    if not tr:
+        abort(404)
+    if not anthropic_configurato():
+        avvisa("L'estrazione dalla visura non è configurata: manca ANTHROPIC_API_KEY.", "ko")
+        return redirect(f"/crm/trattative/{tid}")
+    caricato = request.files.get("file")
+    if not caricato or not caricato.filename:
+        avvisa("Scegli un PDF da caricare.", "ko")
+        return redirect(f"/crm/trattative/{tid}")
+    try:
+        testo = _estrai_testo_pdf(caricato.read())
+        dati = estrai_visura_da_testo(testo)
+    except Exception as errore:
+        avvisa(f"Estrazione non riuscita: {errore}", "ko")
+        return redirect(f"/crm/trattative/{tid}")
+
+    for campo in ("ragione_sociale", "piva", "codice_fiscale", "ateco", "citta", "provincia",
+                  "regione", "pec", "referente", "ruolo_referente", "titolari_effettivi"):
+        valore = (dati.get(campo) or "").strip()
+        if valore:
+            setattr(tr, campo, valore)
+    SessionLocale.commit()
+    avvisa("Dati presi dalla visura: controlla la scheda.")
+    return redirect(f"/crm/trattative/{tid}/modifica")
+
+
+@crm.post("/trattative/<int:tid>/bando-da-pdf")
+def bando_da_pdf_trattativa(tid):
+    tr = SessionLocale.get(Trattativa, tid)
+    if not tr:
+        abort(404)
+    if not anthropic_configurato():
+        avvisa("L'estrazione automatica non è configurata: manca ANTHROPIC_API_KEY.", "ko")
+        return redirect(f"/crm/trattative/{tid}")
+    caricato = request.files.get("file")
+    if not caricato or not caricato.filename:
+        avvisa("Scegli un PDF da caricare.", "ko")
+        return redirect(f"/crm/trattative/{tid}")
+    try:
+        testo = _estrai_testo_pdf(caricato.read())
+        dati = estrai_bando_da_testo(testo)
+    except Exception as errore:
+        avvisa(f"Estrazione non riuscita: {errore}", "ko")
+        return redirect(f"/crm/trattative/{tid}")
+
+    b = Bando(testo_originale=testo)
+    for campo in ("nome", "ente", "tipologia", "importo_max_testo", "chi_puo_partecipare",
+                  "cosa_finanziabile", "spese_non_ammissibili", "criteri", "fasi_tempi",
+                  "come_presentare", "perche_interessante", "criticita"):
+        valore = (dati.get(campo) or "").strip()
+        if valore:
+            setattr(b, campo, valore)
+    for campo in ("dotazione", "perc_contributo", "contributo_max"):
+        valore = n(dati.get(campo))
+        if valore is not None:
+            setattr(b, campo, valore)
+    for campo in ("data_apertura", "data_scadenza"):
+        valore = d(dati.get(campo))
+        if valore:
+            setattr(b, campo, valore)
+    if not b.nome:
+        b.nome = caricato.filename.rsplit(".", 1)[0]
+
+    SessionLocale.add(b)
+    SessionLocale.flush()
+    tr.bandi.append(b)
+    SessionLocale.commit()
+    avvisa(f"Bando \"{b.nome}\" estratto e collegato — anche nel repository Bandi, controlla i campi.")
+    return redirect(f"/crm/trattative/{tid}")
 
 
 @crm.post("/trattative/<int:tid>/vinta")
@@ -3177,11 +3397,21 @@ def vinci_trattativa(tid):
         return redirect(f"/crm/trattative/{tid}")
 
     cliente_id = tr.cliente_id
-    if not cliente_id and tr.lead:
+    if cliente_id:
+        # La trattativa partiva da un cliente già esistente: la scheda che avete
+        # arricchito qui sopra aggiorna davvero il suo record.
+        c = SessionLocale.get(Cliente, cliente_id)
+        for campo in CAMPI_SPECULARI_TRATTATIVA:
+            valore = getattr(tr, campo)
+            if valore:
+                setattr(c, campo, valore)
+    elif tr.lead:
         lead = tr.lead
-        c = Cliente(codice=prossimo_codice(SessionLocale, Cliente, "CL"),
-                    ragione_sociale=lead.nome, telefono=lead.cellulare or lead.telefono,
-                    email=lead.email, pec=lead.pec, canale="Scrapping")
+        c = Cliente(codice=prossimo_codice(SessionLocale, Cliente, "CL"))
+        for campo in CAMPI_SPECULARI_TRATTATIVA:
+            setattr(c, campo, getattr(tr, campo))
+        if not c.ragione_sociale:
+            c.ragione_sociale = lead.nome
         SessionLocale.add(c)
         SessionLocale.flush()
         lead.stato = "convertito"
