@@ -902,7 +902,7 @@ button:hover{background:#143453}
 <label for="email">Email</label><input id="email" name="email" type="email" required autofocus>
 <label for="password">Password</label>
 <div class="campo-pw"><input id="password" name="password" type="password" required>
-<button type="button" class="occhio" onclick="mostraPw('password')" aria-label="Mostra password">occhio</button></div>
+<button type="button" class="occhio" onclick="mostraPw('password')" aria-label="Mostra password">👁</button></div>
 <button type="submit">Accedi</button>
 </form>
 <script>
@@ -1795,7 +1795,7 @@ T_IMPOSTAZIONI = """{% extends "base" %}{% block contenuto %}
   <label><span class="etichetta">Email</span><input name="email" type="email" required></label>
   <label><span class="etichetta">Password</span>
   <div class="campo-pw"><input id="pw-nuovo" name="password" type="password" required minlength="8">
-  <button type="button" class="occhio" onclick="mostraPw('pw-nuovo')" aria-label="Mostra password">occhio</button></div></label>
+  <button type="button" class="occhio" onclick="mostraPw('pw-nuovo')" aria-label="Mostra password">👁</button></div></label>
   <label><span class="etichetta">Ruolo</span><select name="ruolo">
     {% for r in ruoli %}<option>{{ r }}</option>{% endfor %}</select></label>
 </div><button class="btn" type="submit">Crea utente</button></div></form>
@@ -1823,10 +1823,10 @@ T_IMPOSTAZIONI = """{% extends "base" %}{% block contenuto %}
 <form method="post" action="/crm/password" class="riquadro"><div class="corpo"><div class="griglia g2">
   <label><span class="etichetta">Password attuale</span>
   <div class="campo-pw"><input id="pw-attuale" name="attuale" type="password" required>
-  <button type="button" class="occhio" onclick="mostraPw('pw-attuale')" aria-label="Mostra password">occhio</button></div></label>
+  <button type="button" class="occhio" onclick="mostraPw('pw-attuale')" aria-label="Mostra password">👁</button></div></label>
   <label><span class="etichetta">Nuova password</span>
   <div class="campo-pw"><input id="pw-nuova" name="nuova" type="password" required minlength="8">
-  <button type="button" class="occhio" onclick="mostraPw('pw-nuova')" aria-label="Mostra password">occhio</button></div></label>
+  <button type="button" class="occhio" onclick="mostraPw('pw-nuova')" aria-label="Mostra password">👁</button></div></label>
 </div><button class="btn" type="submit">Aggiorna password</button></div></form>
 
 <h2>Importa dal foglio Excel</h2>
