@@ -765,7 +765,7 @@ flex-shrink: 0;
 #shield-logo {
   position: absolute;
   top: 22px;
-  left: 28px;
+  right: 28px;
   display: block;
   text-decoration: none;
   transition: transform 0.3s ease;
@@ -819,57 +819,13 @@ flex-shrink: 0;
   #shield-logo-img { animation: none; }
 }
 @media (max-width: 575.98px) {
-  #shield-logo { top: 14px; left: 12px; }
+  #shield-logo { top: 14px; right: 12px; }
   #shield-logo-img { width: 80px; }
 }
 </style>
 <!-- ==================== FINE SHIELD LOGO ==================== -->
 
-<style>
-/* Riposizionamento logo: fascia dedicata, allineato a destra (28px dal bordo), niente sovrapposizioni con l'immagine hero */
-#shield-logo-wrap {
-  position: relative !important;
-  z-index: 1100 !important;
-  height: 130px !important;
-  overflow: visible !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  background: #ffffff !important;
-}
-#shield-logo-wrap #shield-logo-link,
-#shield-logo-wrap #shield-logo {
-  position: relative !important;
-  top: auto !important;
-  left: auto !important;
-  right: auto !important;
-  display: inline-flex !important;
-  margin: 0 28px 0 0 !important;
-  z-index: 1100 !important;
-  text-decoration: none !important;
-}
-#shield-logo-wrap #shield-logo-container {
-  display: block !important;
-  position: relative !important;
-}
-#shield-logo-img {
-  width: 120px !important;
-  height: 120px !important;
-  object-fit: contain !important;
-  background-color: #0c1e4a !important;
-  border-radius: 12px !important;
-  border: 4px solid #ffffff !important;
-  box-shadow: 0 0 0 6px rgba(255,255,255,0.16), 0 14px 40px rgba(0,0,0,0.65) !important;
-  display: block !important;
-  position: relative !important;
-}
-@media (max-width: 575.98px) {
-  #shield-logo-wrap { height: 90px !important; }
-  #shield-logo-wrap #shield-logo-link,
-  #shield-logo-wrap #shield-logo { margin: 0 14px 0 0 !important; }
-  #shield-logo-img { width: 80px !important; height: 80px !important; border-radius: 10px !important; border-width: 3px !important; }
-}
-</style>
+
 
 
         <!-- Carousel Start -->
@@ -877,7 +833,7 @@ flex-shrink: 0;
      style="
        /* QUI REGOLI TUTTO */
        --bg-img: url('img/CTA Energelia.png');
-       --overlay: rgba(0, 0, 0, 0.28);
+       --overlay: rgba(0, 0, 0, 0);
        --h4-color: #ffffff;
        --h4-size: 1rem;
        --h1-color: #ffffff;
@@ -915,27 +871,7 @@ flex-shrink: 0;
         <div class="row g-4 align-items-center">
           <div class="col-lg-12 animated fadeInUp">
             <div class="text-center">
-              <h1 id="heroRotator" class="display-1 mb-4 text-uppercase"
-                  style="
-                    color: var(--h1-color);
-                    font-size: var(--h1-size);
-                    text-shadow: 0 3px 6px rgba(0,0,0,0.6);
-                    line-height: 1.15;
-                    letter-spacing: 2px;
-                    min-height: 4em;
-                  ">
-                <span class="hero-rotator-slot hero-rotator-active">TROVARE UN BANDO NON CONCLUDE IL NOSTRO LAVORO,<br><span style="color: #d4af37;">FARLO DIVENTARE FINANZA PER I CLIENTI È IL NOSTRO APPRODO</span></span>
-              </h1>
-              <p class="mb-5 mx-auto"
-                 style="
-                   color: var(--p-color);
-                   font-size: var(--p-size);
-                   line-height: 1.6;
-                   max-width: 700px;
-                   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
-                 ">
-                Energelia Srl supporta le imprese a trovare finanza agevolata, bandi e incentivi.
-              </p>
+              
             </div>
           </div>
         </div>
