@@ -656,6 +656,15 @@ def _drive_carica_file(cartella_id, nome_file, contenuto, mimetype):
     return r.json()
 
 
+def _drive_elimina_file(google_file_id):
+    token = _drive_token_accesso()
+    r = requests.delete(
+        f"https://www.googleapis.com/drive/v3/files/{google_file_id}",
+        headers={"Authorization": f"Bearer {token}"}, timeout=30)
+    if r.status_code not in (200, 204, 404):   # 404 = già sparito da Drive, va bene lo stesso
+        r.raise_for_status()
+
+
 def prossimo_codice(db, modello, prefisso):
     ultimo = db.query(func.max(modello.codice)).scalar()
     n = 1
@@ -1288,6 +1297,10 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
         {% for p in c.pratiche %}<option value="{{ p.id }}">{{ p.nome_bando }}</option>{% endfor %}</select>
       <button class="btn chiaro" type="submit">Ok</button>
     </form>{% endif %}
+    <form method="post" action="/crm/documenti/{{ doc.id }}/elimina" style="display:inline"
+      onsubmit="return confirm('Eliminare {{ doc.nome_file }}? Viene tolto anche da Drive.');">
+      <button class="btn chiaro" type="submit" title="Elimina">🗑</button>
+    </form>
   </td>
 </tr>{% endfor %}</tbody></table></div>
 {% else %}<div class="vuoto">Nessun documento caricato finora.</div>{% endif %}
@@ -1639,6 +1652,10 @@ T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
       <button class="btn chiaro" type="submit">Ok</button>
     </form>
     {% elif doc.stato != 'assegnato' %}<span class="nota">Il cliente non ha ancora pratiche</span>{% endif %}
+    <form method="post" action="/crm/documenti/{{ doc.id }}/elimina" style="display:inline"
+      onsubmit="return confirm('Eliminare {{ doc.nome_file }}? Viene tolto anche da Drive.');">
+      <button class="btn chiaro" type="submit" title="Elimina">🗑</button>
+    </form>
   </td>
 </tr>{% endfor %}</tbody></table></div>
 {% else %}<div class="vuoto">{{ 'Niente da smistare al momento.' if solo_da_smistare else 'Nessun documento caricato finora.' }}</div>{% endif %}
@@ -2729,6 +2746,30 @@ def assegna_documento(did):
         doc.stato = "assegnato"
         SessionLocale.commit()
         avvisa(f"{doc.nome_file} assegnato.")
+    return redirect(request.referrer or "/crm/documenti")
+
+
+@crm.post("/documenti/<int:did>/elimina")
+def elimina_documento(did):
+    doc = SessionLocale.get(Documento, did)
+    if not doc:
+        return redirect(request.referrer or "/crm/documenti")
+
+    nome = doc.nome_file
+    if doc.google_file_id and drive_configurato():
+        try:
+            _drive_elimina_file(doc.google_file_id)
+        except Exception as errore:
+            print(f"[crm] Non riesco a togliere {nome} da Drive (proseguo comunque): {errore}")
+
+    # Se una voce di una richiesta puntava a questo file, sgancio il collegamento
+    # invece di lasciare un riferimento rotto.
+    for voce in SessionLocale.query(VoceRichiesta).filter_by(documento_id=doc.id).all():
+        voce.documento_id = None
+
+    SessionLocale.delete(doc)
+    SessionLocale.commit()
+    avvisa(f"{nome} eliminato.")
     return redirect(request.referrer or "/crm/documenti")
 
 
