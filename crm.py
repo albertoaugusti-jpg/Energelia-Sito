@@ -43,7 +43,7 @@ from flask import (Blueprint, request, session, redirect, url_for,
 from jinja2 import Environment, DictLoader, select_autoescape
 
 from sqlalchemy import (create_engine, Column, Integer, String, Text, Date, DateTime,
-                        Numeric, Boolean, ForeignKey, func, or_)
+                        Numeric, Boolean, ForeignKey, Table, func, or_)
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker, scoped_session
 
 import openpyxl
@@ -348,6 +348,43 @@ class Bando(Base):
     guida_compilazione = Column(Text)         # generata dall'IA, nullable finché non richiesta
     approfondimento = Column(Text)            # generato dall'IA, nullable finché non richiesto
     creato_il = Column(DateTime, default=dt.datetime.utcnow)
+
+
+# Tabella ponte: una trattativa può riguardare più bandi contemporaneamente.
+crm_trattativa_bandi = Table(
+    "crm_trattativa_bandi", Base.metadata,
+    Column("trattativa_id", Integer, ForeignKey("crm_trattative.id"), primary_key=True),
+    Column("bando_id", Integer, ForeignKey("crm_bandi.id"), primary_key=True),
+)
+
+
+class Trattativa(Base):
+    """Un'opportunità commerciale non ancora concreta — su un Lead che si
+    sta corteggiando, o su un Cliente già firmato a cui si propone un nuovo
+    bando. Mai entrambi insieme: o l'uno o l'altro.
+    Esito positivo: se nasce da un lead lo converte in cliente; in ogni caso
+    crea una pratica per ciascun bando collegato alla trattativa.
+    Esito negativo: finisce nel cestello "perse", da cui si può "ripescare"
+    aprendo una trattativa NUOVA sulla stessa persona (la storia resta)."""
+    __tablename__ = "crm_trattative"
+    id = Column(Integer, primary_key=True)
+    lead_id = Column(Integer, ForeignKey("crm_lead.id"))
+    cliente_id = Column(Integer, ForeignKey("crm_clienti.id"))
+    stato = Column(String(10), default="aperta")   # aperta / vinta / persa
+    note = Column(Text)
+    creato_il = Column(DateTime, default=dt.datetime.utcnow)
+
+    lead = relationship("Lead")
+    cliente = relationship("Cliente")
+    bandi = relationship("Bando", secondary=crm_trattativa_bandi)
+
+    @property
+    def soggetto_nome(self):
+        if self.cliente:
+            return self.cliente.ragione_sociale
+        if self.lead:
+            return self.lead.nome
+        return "—"
 
 
 # --------------------------------------------------------------------------
@@ -868,6 +905,7 @@ legend{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--
     <a href="/crm/lead" class="{{ 'attivo' if pagina=='lead' }}">Lead</a>
     <a href="/crm/documenti" class="{{ 'attivo' if pagina=='documenti' }}">Documenti</a>
     <a href="/crm/bandi" class="{{ 'attivo' if pagina=='bandi' }}">Bandi</a>
+    <a href="/crm/trattative" class="{{ 'attivo' if pagina=='trattative' }}">Trattative</a>
     {% if utente.is_admin %}<a href="/crm/impostazioni" class="{{ 'attivo' if pagina=='impostazioni' }}">Impostazioni</a>{% endif %}
   </nav>
   <div class="utente">{{ utente.nome }} · <a href="/crm/esci">Esci</a></div>
@@ -1220,6 +1258,7 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
 <p class="sottotitolo">{{ c.codice }}{% if c.citta %} · {{ c.citta }}{% if c.provincia %} ({{ c.provincia }}){% endif %}{% endif %}
 {% if c.dimensione %} · {{ c.dimensione }} impresa{% endif %}</p></div>
 <div><a class="btn chiaro" href="/crm/clienti/{{ c.id }}/modifica">Modifica</a>
+<a class="btn chiaro" href="/crm/trattative/nuova?cliente={{ c.id }}">Avvia trattativa</a>
 <a class="btn" href="/crm/pratiche/nuova?cliente={{ c.id }}">Nuova pratica</a></div></div>
 
 <div class="griglia g2">
@@ -1611,6 +1650,7 @@ T_LEAD = """{% extends "base" %}{% block contenuto %}
     {% if l.stato == 'convertito' %}<a class="btn chiaro" href="/crm/clienti/{{ l.cliente_id }}">Vedi cliente</a>
     {% else %}
     <a class="btn chiaro" href="/crm/clienti/nuovo?lead={{ l.id }}">Converti</a>
+    <a class="btn chiaro" href="/crm/trattative/nuova?lead={{ l.id }}">Avvia trattativa</a>
     <form method="post" action="/crm/lead/{{ l.id }}/stato" style="display:inline">
       <input type="hidden" name="stato" value="{{ 'scartato' if l.stato != 'scartato' else 'nuovo' }}">
       <button class="btn chiaro" type="submit">{{ 'Scarta' if l.stato != 'scartato' else 'Ripristina' }}</button>
@@ -1792,6 +1832,91 @@ T_BANDO = """{% extends "base" %}{% block contenuto %}
 </div></div>
 {% endblock %}"""
 
+T_TRATTATIVE = """{% extends "base" %}{% block contenuto %}
+<div class="testa"><div><h1>Trattative</h1>
+<p class="sottotitolo">{{ elenco|length }} {{ stato_filtro }}</p></div>
+<div><a class="btn" href="/crm/trattative/nuova">Nuova trattativa</a></div></div>
+
+<form class="filtri" method="get">
+  <select name="stato" onchange="this.form.submit()">
+    <option value="aperta" {{ 'selected' if stato_filtro=='aperta' }}>Aperte</option>
+    <option value="vinta" {{ 'selected' if stato_filtro=='vinta' }}>Vinte</option>
+    <option value="persa" {{ 'selected' if stato_filtro=='persa' }}>Perse (cestello)</option>
+  </select>
+</form>
+
+{% if elenco %}
+<div class="tabella scorri"><table>
+<thead><tr><th>Soggetto</th><th>Tipo</th><th>Bandi</th><th></th></tr></thead><tbody>
+{% for tr in elenco %}<tr>
+  <td><a href="/crm/trattative/{{ tr.id }}">{{ tr.soggetto_nome }}</a></td>
+  <td>{{ 'Cliente' if tr.cliente_id else 'Lead' }}</td>
+  <td>{{ tr.bandi|map(attribute='nome')|join(', ') or '—' }}</td>
+  <td class="num">
+    {% if tr.stato == 'aperta' %}
+    <form method="post" action="/crm/trattative/{{ tr.id }}/vinta" style="display:inline"><button class="btn chiaro" type="submit">Vinta</button></form>
+    <form method="post" action="/crm/trattative/{{ tr.id }}/persa" style="display:inline"><button class="btn chiaro" type="submit">Persa</button></form>
+    {% elif tr.stato == 'persa' %}
+    <form method="post" action="/crm/trattative/{{ tr.id }}/ripesca" style="display:inline"><button class="btn ambra" type="submit">Ripesca</button></form>
+    {% endif %}
+  </td>
+</tr>{% endfor %}</tbody></table></div>
+{% else %}<div class="vuoto">Nessuna trattativa {{ stato_filtro }}.</div>{% endif %}
+{% endblock %}"""
+
+T_TRATTATIVA_FORM = """{% extends "base" %}{% block contenuto %}
+<h1>Nuova trattativa</h1>
+<form method="post">
+{% if lead %}
+  <input type="hidden" name="lead_id" value="{{ lead.id }}">
+  <p class="sottotitolo">Lead: <strong>{{ lead.nome }}</strong></p>
+{% elif cliente %}
+  <input type="hidden" name="cliente_id" value="{{ cliente.id }}">
+  <p class="sottotitolo">Cliente: <strong>{{ cliente.ragione_sociale }}</strong></p>
+{% else %}
+  <fieldset><legend>Soggetto</legend>
+  <label><span class="etichetta">Cliente</span><select name="cliente_id"><option value="">— nessuno —</option>
+    {% for c in clienti %}<option value="{{ c.id }}">{{ c.ragione_sociale }}</option>{% endfor %}</select></label>
+  <p class="nota">Per avviarla su un lead, apri la sua scheda dalla lista Lead e clicca "Avvia trattativa" —
+  con migliaia di lead non li elenchiamo tutti qui.</p>
+  </fieldset>
+{% endif %}
+<fieldset><legend>Bandi collegati (facoltativo, anche più di uno)</legend>
+  {% for b in bandi %}
+  <label style="display:block;font-weight:400;margin-bottom:6px">
+    <input type="checkbox" name="bando_ids" value="{{ b.id }}" style="width:auto;display:inline"> {{ b.nome }}
+  </label>
+  {% else %}<p class="nota">Nessun bando nel repository ancora.</p>{% endfor %}
+</fieldset>
+<fieldset><legend>Note</legend>
+  <textarea name="note" placeholder="Su cosa state trattando, prossimi passi..."></textarea>
+</fieldset>
+<button class="btn" type="submit">Crea trattativa</button>
+</form>
+{% endblock %}"""
+
+T_TRATTATIVA = """{% extends "base" %}{% block contenuto %}
+<div class="testa"><div><h1>{{ tr.soggetto_nome }}</h1>
+<p class="sottotitolo">{{ 'Cliente' if tr.cliente_id else 'Lead' }} · stato: {{ tr.stato }}</p></div>
+<div>
+  {% if tr.stato == 'aperta' %}
+  <form method="post" action="/crm/trattative/{{ tr.id }}/vinta" style="display:inline"><button class="btn" type="submit">Segna vinta</button></form>
+  <form method="post" action="/crm/trattative/{{ tr.id }}/persa" style="display:inline"><button class="btn chiaro" type="submit">Segna persa</button></form>
+  {% elif tr.stato == 'persa' %}
+  <form method="post" action="/crm/trattative/{{ tr.id }}/ripesca" style="display:inline"><button class="btn ambra" type="submit">Ripesca</button></form>
+  {% endif %}
+</div></div>
+
+<h2>Bandi collegati</h2>
+{% if tr.bandi %}<ul>{% for b in tr.bandi %}<li><a href="/crm/bandi/{{ b.id }}">{{ b.nome }}</a></li>{% endfor %}</ul>
+{% else %}<div class="vuoto">Nessun bando collegato.</div>{% endif %}
+
+{% if tr.note %}<h2>Note</h2><p style="white-space:pre-wrap">{{ tr.note }}</p>{% endif %}
+
+{% if tr.cliente %}<p><a href="/crm/clienti/{{ tr.cliente.id }}">Vai alla scheda cliente</a></p>{% endif %}
+{% if tr.lead %}<p><a href="/crm/lead">Vai alla lista lead</a></p>{% endif %}
+{% endblock %}"""
+
 T_IMPOSTAZIONI = """{% extends "base" %}{% block contenuto %}
 <h1>Impostazioni</h1><p class="sottotitolo">Solo gli amministratori vedono questa pagina.</p>
 
@@ -1877,6 +2002,7 @@ env = Environment(loader=DictLoader({
     "impostazioni": T_IMPOSTAZIONI, "lead": T_LEAD, "carica_pubblico": T_CARICA_PUBBLICO,
     "richiesta_pubblica": T_RICHIESTA_PUBBLICA,
     "documenti": T_DOCUMENTI, "bandi": T_BANDI, "bando_form": T_BANDO_FORM, "bando": T_BANDO,
+    "trattative": T_TRATTATIVE, "trattativa_form": T_TRATTATIVA_FORM, "trattativa": T_TRATTATIVA,
 }), autoescape=select_autoescape(["html"]))
 
 
@@ -2402,6 +2528,24 @@ def _leggi_pratica(form, p):
     p.note = s(form.get("note"))
 
 
+def _pratica_da_bando(bando, cliente_id=None):
+    """Crea (senza salvare) una Pratica precompilata con i campi del bando —
+    riusata sia dal form Nuova pratica sia dall'esito positivo di una trattativa."""
+    p = Pratica(fase="Analisi fattibilità", priorita="Media")
+    if cliente_id:
+        p.cliente_id = cliente_id
+    p.bando_id = bando.id
+    p.nome_bando = bando.nome
+    p.ente = bando.ente
+    p.tipologia = bando.tipologia
+    p.perc_contributo = bando.perc_contributo
+    p.importo_max = bando.importo_max_testo or (
+        f"{bando.contributo_max:.0f} €" if bando.contributo_max else None)
+    p.data_apertura = bando.data_apertura
+    p.data_scadenza = bando.data_scadenza
+    return p
+
+
 @crm.get("/pratiche/nuova")
 def nuova_pratica_form():
     p = Pratica(fase="Analisi fattibilità", priorita="Media")
@@ -2412,15 +2556,7 @@ def nuova_pratica_form():
     if bando_id:
         bando = SessionLocale.get(Bando, int(bando_id))
         if bando:
-            p.bando_id = bando.id
-            p.nome_bando = bando.nome
-            p.ente = bando.ente
-            p.tipologia = bando.tipologia
-            p.perc_contributo = bando.perc_contributo
-            p.importo_max = bando.importo_max_testo or (
-                f"{bando.contributo_max:.0f} €" if bando.contributo_max else None)
-            p.data_apertura = bando.data_apertura
-            p.data_scadenza = bando.data_scadenza
+            p = _pratica_da_bando(bando, p.cliente_id)
     return rendi("pratica_form", titolo="Nuova pratica", pagina="pratiche", p=p,
                  clienti=SessionLocale.query(Cliente).order_by(Cliente.ragione_sociale).all(),
                  bandi=SessionLocale.query(Bando).order_by(Bando.nome).all(),
@@ -2972,6 +3108,126 @@ def importa_lead():
     SessionLocale.commit()
     avvisa(f"Importati {nuovi} lead da \"{fonte}\".")
     return redirect(request.referrer or "/crm/impostazioni")
+
+
+# ------------------------------------------------------------ trattative
+
+@crm.get("/trattative")
+def lista_trattative():
+    stato = request.args.get("stato", "aperta")
+    if stato not in ("aperta", "vinta", "persa"):
+        stato = "aperta"
+    elenco = (SessionLocale.query(Trattativa).filter_by(stato=stato)
+              .order_by(Trattativa.creato_il.desc()).all())
+    return rendi("trattative", titolo="Trattative", pagina="trattative",
+                 elenco=elenco, stato_filtro=stato)
+
+
+@crm.get("/trattative/nuova")
+def nuova_trattativa_form():
+    lead, cliente = None, None
+    lead_id = request.args.get("lead", "")
+    cliente_id = request.args.get("cliente", "")
+    if lead_id:
+        lead = SessionLocale.get(Lead, int(lead_id))
+    elif cliente_id:
+        cliente = SessionLocale.get(Cliente, int(cliente_id))
+    return rendi("trattativa_form", titolo="Nuova trattativa", pagina="trattative",
+                 lead=lead, cliente=cliente,
+                 clienti=SessionLocale.query(Cliente).order_by(Cliente.ragione_sociale).all(),
+                 bandi=SessionLocale.query(Bando).order_by(Bando.nome).all())
+
+
+@crm.post("/trattative/nuova")
+def nuova_trattativa():
+    lead_id = s(request.form.get("lead_id"))
+    cliente_id = s(request.form.get("cliente_id"))
+    if not lead_id and not cliente_id:
+        avvisa("Serve un lead o un cliente per aprire una trattativa.", "ko")
+        return redirect("/crm/trattative/nuova")
+
+    tr = Trattativa(lead_id=int(lead_id) if lead_id else None,
+                    cliente_id=int(cliente_id) if cliente_id else None,
+                    note=s(request.form.get("note")), stato="aperta")
+    id_bandi = [int(x) for x in request.form.getlist("bando_ids") if x]
+    if id_bandi:
+        tr.bandi = SessionLocale.query(Bando).filter(Bando.id.in_(id_bandi)).all()
+
+    SessionLocale.add(tr)
+    SessionLocale.commit()
+    avvisa("Trattativa aperta.")
+    return redirect(f"/crm/trattative/{tr.id}")
+
+
+@crm.get("/trattative/<int:tid>")
+def scheda_trattativa(tid):
+    tr = SessionLocale.get(Trattativa, tid)
+    if not tr:
+        abort(404)
+    return rendi("trattativa", titolo=tr.soggetto_nome, pagina="trattative", tr=tr)
+
+
+@crm.post("/trattative/<int:tid>/vinta")
+def vinci_trattativa(tid):
+    tr = SessionLocale.get(Trattativa, tid)
+    if not tr:
+        abort(404)
+    if tr.stato != "aperta":
+        avvisa("Questa trattativa non è più aperta.", "ko")
+        return redirect(f"/crm/trattative/{tid}")
+
+    cliente_id = tr.cliente_id
+    if not cliente_id and tr.lead:
+        lead = tr.lead
+        c = Cliente(codice=prossimo_codice(SessionLocale, Cliente, "CL"),
+                    ragione_sociale=lead.nome, telefono=lead.cellulare or lead.telefono,
+                    email=lead.email, pec=lead.pec, canale="Scrapping")
+        SessionLocale.add(c)
+        SessionLocale.flush()
+        lead.stato = "convertito"
+        lead.cliente_id = c.id
+        cliente_id = c.id
+        tr.cliente_id = c.id
+
+    pratiche_create = 0
+    for bando in tr.bandi:
+        p = _pratica_da_bando(bando, cliente_id)
+        p.codice = prossimo_codice(SessionLocale, Pratica, "PR")
+        SessionLocale.add(p)
+        SessionLocale.flush()   # senza questo, il prossimo prossimo_codice() non vede la pratica appena creata
+        pratiche_create += 1
+
+    tr.stato = "vinta"
+    SessionLocale.commit()
+    if pratiche_create:
+        avvisa(f"Trattativa vinta: create {pratiche_create} pratiche.")
+    else:
+        avvisa("Trattativa vinta. Nessun bando era collegato: crea la pratica a mano dalla scheda cliente.")
+    return redirect(f"/crm/clienti/{cliente_id}")
+
+
+@crm.post("/trattative/<int:tid>/persa")
+def perdi_trattativa(tid):
+    tr = SessionLocale.get(Trattativa, tid)
+    if not tr:
+        abort(404)
+    if tr.stato == "aperta":
+        tr.stato = "persa"
+        SessionLocale.commit()
+        avvisa("Trattativa segnata come persa.")
+    return redirect(request.referrer or "/crm/trattative")
+
+
+@crm.post("/trattative/<int:tid>/ripesca")
+def ripesca_trattativa(tid):
+    vecchia = SessionLocale.get(Trattativa, tid)
+    if not vecchia:
+        abort(404)
+    nuova = Trattativa(lead_id=vecchia.lead_id, cliente_id=vecchia.cliente_id, stato="aperta")
+    SessionLocale.add(nuova)
+    SessionLocale.commit()
+    avvisa(f"Ripescato {vecchia.soggetto_nome}: nuova trattativa aperta, scegli i bandi.")
+    return redirect(f"/crm/trattative/{nuova.id}")
 
 
 # ------------------------------------------------------------- impostazioni
