@@ -400,6 +400,9 @@ class Trattativa(Base):
     lead = relationship("Lead")
     cliente = relationship("Cliente")
     bandi = relationship("Bando", secondary=crm_trattativa_bandi)
+    attivita = relationship("AttivitaTrattativa", back_populates="trattativa",
+                            cascade="all, delete-orphan",
+                            order_by="AttivitaTrattativa.data.desc(), AttivitaTrattativa.id.desc()")
 
     @property
     def soggetto_nome(self):
@@ -410,6 +413,23 @@ class Trattativa(Base):
         if self.lead:
             return self.lead.nome
         return "—"
+
+
+class AttivitaTrattativa(Base):
+    """Diario di contatto della trattativa — stesso concetto e stesso stile
+    dell'Attivita su Cliente/Pratica, ma senza richiedere un cliente_id: una
+    trattativa nata da un lead non ha ancora un cliente vero finché non vince."""
+    __tablename__ = "crm_attivita_trattativa"
+    id = Column(Integer, primary_key=True)
+    trattativa_id = Column(Integer, ForeignKey("crm_trattative.id"), nullable=False)
+    data = Column(Date, default=dt.date.today, nullable=False)
+    tipo = Column(String(40), default="Nota")
+    testo = Column(Text, nullable=False)
+    utente_id = Column(Integer, ForeignKey("crm_utenti.id"))
+    creato_il = Column(DateTime, default=dt.datetime.utcnow)
+
+    trattativa = relationship("Trattativa", back_populates="attivita")
+    utente = relationship("Utente")
 
 
 # --------------------------------------------------------------------------
@@ -1947,6 +1967,28 @@ T_TRATTATIVA = """{% extends "base" %}{% block contenuto %}
 </dl>
 
 {% if tr.stato == 'aperta' %}
+<h2>Registra un contatto</h2>
+<form method="post" action="/crm/trattative/{{ tr.id }}/attivita/nuova" class="riquadro"><div class="corpo">
+  <div class="griglia g3">
+    <label><span class="etichetta">Data</span><input name="data" type="date" value="{{ oggi_iso }}"></label>
+    <label><span class="etichetta">Tipo</span><select name="tipo">
+      {% for t in tipi %}<option>{{ t }}</option>{% endfor %}</select></label>
+  </div>
+  <label><span class="etichetta">Cosa è successo</span><textarea name="testo" required
+    placeholder="Es. Chiamato Mario il 12 maggio: valuta l'offerta, richiama lui entro venerdì."></textarea></label>
+  <button class="btn" type="submit">Registra</button>
+</div></form>
+{% endif %}
+
+<h2>Diario ({{ tr.attivita|length }})</h2>
+{% if tr.attivita %}<ul class="diario">
+{% for a in tr.attivita %}<li>
+  <div class="capo"><span class="tipo">{{ a.tipo }}</span><span>{{ data_it(a.data) }}</span>
+  {% if a.utente %}<span>· {{ a.utente.nome }}</span>{% endif %}</div>
+  <div>{{ a.testo }}</div></li>{% endfor %}
+</ul>{% else %}<div class="vuoto">Il diario è vuoto. La prima nota che registri finisce qui.</div>{% endif %}
+
+{% if tr.stato == 'aperta' %}
 <div class="riquadro" style="margin:20px 0"><div class="corpo">
   <h2 style="margin-top:0">Carica la visura camerale (facoltativo)</h2>
   {% if anthropic_ok %}
@@ -3311,6 +3353,26 @@ def modifica_trattativa(tid):
     SessionLocale.commit()
     avvisa("Scheda aggiornata.")
     return redirect(f"/crm/trattative/{tr.id}")
+
+
+@crm.post("/trattative/<int:tid>/attivita/nuova")
+def nuova_attivita_trattativa(tid):
+    tr = SessionLocale.get(Trattativa, tid)
+    if not tr:
+        abort(404)
+    testo = s(request.form.get("testo"))
+    if not testo:
+        avvisa("L'attività ha bisogno di un testo.", "ko")
+        return redirect(f"/crm/trattative/{tid}")
+    SessionLocale.add(AttivitaTrattativa(
+        trattativa_id=tid,
+        data=d(request.form.get("data")) or dt.date.today(),
+        tipo=s(request.form.get("tipo")) or "Nota",
+        testo=testo,
+        utente_id=utente_corrente().id))
+    SessionLocale.commit()
+    avvisa("Attività registrata.")
+    return redirect(f"/crm/trattative/{tid}")
 
 
 @crm.post("/trattative/<int:tid>/visura")
