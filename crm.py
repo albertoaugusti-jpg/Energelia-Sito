@@ -1477,7 +1477,7 @@ T_PRATICA_FORM = """{% extends "base" %}{% block contenuto %}
   </select></label>
 </div></div>
 {% endif %}
-<form method="post">
+<form method="post" action="{{ ('/crm/pratiche/' ~ p.id ~ '/modifica') if p.id else '/crm/pratiche/nuova' }}">
 {% if p.bando_id %}<input type="hidden" name="bando_id" value="{{ p.bando_id }}">{% endif %}
 <fieldset><legend>Bando</legend><div class="griglia g3">
   <label><span class="etichetta">Cliente *</span><select name="cliente_id" required><option value=""></option>
@@ -1806,7 +1806,7 @@ T_BANDO_FORM = """{% extends "base" %}{% block contenuto %}
 <p class="sottotitolo">— oppure compila a mano —</p>
 {% endif %}
 
-<form method="post">
+<form method="post" action="{{ ('/crm/bandi/' ~ b.id ~ '/modifica') if b.id else '/crm/bandi/nuovo' }}">
 <fieldset><legend>Dati principali</legend><div class="griglia g3">
   <label><span class="etichetta">Nome *</span><input name="nome" required value="{{ b.nome or '' }}"></label>
   <label><span class="etichetta">Ente</span><input name="ente" value="{{ b.ente or '' }}"></label>
@@ -1923,7 +1923,7 @@ T_TRATTATIVE = """{% extends "base" %}{% block contenuto %}
 
 T_TRATTATIVA_FORM = """{% extends "base" %}{% block contenuto %}
 <h1>Nuova trattativa</h1>
-<form method="post">
+<form method="post" action="/crm/trattative/nuova">
 {% if lead %}
   <input type="hidden" name="lead_id" value="{{ lead.id }}">
   <p class="sottotitolo">Lead: <strong>{{ lead.nome }}</strong></p>
