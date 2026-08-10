@@ -659,6 +659,25 @@ Regole:
 """
 
 
+def testo_campo_ia(valore):
+    """L'IA a volte non rispetta lo schema alla lettera — un campo pensato per
+    essere una riga di testo torna come lista (es. uno statuto elenca i soci
+    fondatori invece del solo legale rappresentante) o un numero. Qui riduco
+    qualsiasi cosa arrivi a una stringa pulita, senza mai far esplodere la
+    pagina per un tipo inatteso."""
+    if valore is None:
+        return ""
+    if isinstance(valore, str):
+        return valore.strip()
+    if isinstance(valore, (list, tuple)):
+        pezzi = [testo_campo_ia(elemento) for elemento in valore]
+        return "\n".join(f"- {p}" if not p.startswith("-") else p for p in pezzi if p)
+    if isinstance(valore, dict):
+        pezzi = [testo_campo_ia(v) for v in valore.values()]
+        return ", ".join(p for p in pezzi if p)
+    return str(valore).strip()
+
+
 def estrai_visura_da_testo(testo_visura):
     if not (testo_visura or "").strip():
         raise ValueError("Il testo estratto dal PDF è vuoto: file scansionato o illeggibile.")
@@ -2514,7 +2533,7 @@ def nuovo_cliente_da_visura():
 
     for campo in ("ragione_sociale", "piva", "codice_fiscale", "ateco", "citta", "provincia",
                   "regione", "pec", "referente", "ruolo_referente", "titolari_effettivi"):
-        valore = (dati.get(campo) or "").strip()
+        valore = testo_campo_ia(dati.get(campo))
         if valore:
             setattr(cliente, campo, valore)
 
@@ -2613,12 +2632,12 @@ def cerca_online_cliente(cid):
         "citta": "citta", "provincia": "provincia",
     }
     for chiave_ricerca, campo_cliente in mappa_campi.items():
-        valore = (trovato.get(chiave_ricerca) or "").strip()
+        valore = testo_campo_ia(trovato.get(chiave_ricerca))
         if valore and not getattr(c, campo_cliente):   # non sovrascrivo dati già presenti
             setattr(c, campo_cliente, valore)
             trovati.append(campo_cliente)
-    sito_trovato = (trovato.get("sito") or "").strip()
-    indirizzo_trovato = (trovato.get("indirizzo") or "").strip()
+    sito_trovato = testo_campo_ia(trovato.get("sito"))
+    indirizzo_trovato = testo_campo_ia(trovato.get("indirizzo"))
     note_ricerca = []
     if sito_trovato: note_ricerca.append(f"Sito trovato online: {sito_trovato}")
     if indirizzo_trovato: note_ricerca.append(f"Indirizzo trovato online: {indirizzo_trovato}")
@@ -2942,7 +2961,7 @@ def nuovo_bando_da_pdf():
     for campo in ("nome", "ente", "tipologia", "importo_max_testo", "chi_puo_partecipare",
                   "cosa_finanziabile", "spese_non_ammissibili", "criteri", "fasi_tempi",
                   "come_presentare", "perche_interessante", "criticita"):
-        valore = (dati.get(campo) or "").strip()
+        valore = testo_campo_ia(dati.get(campo))
         if valore:
             setattr(b, campo, valore)
     for campo in ("dotazione", "perc_contributo", "contributo_max"):
@@ -3498,7 +3517,7 @@ def visura_trattativa(tid):
 
     for campo in ("ragione_sociale", "piva", "codice_fiscale", "ateco", "citta", "provincia",
                   "regione", "pec", "referente", "ruolo_referente", "titolari_effettivi"):
-        valore = (dati.get(campo) or "").strip()
+        valore = testo_campo_ia(dati.get(campo))
         if valore:
             setattr(tr, campo, valore)
     SessionLocale.commit()
@@ -3529,7 +3548,7 @@ def bando_da_pdf_trattativa(tid):
     for campo in ("nome", "ente", "tipologia", "importo_max_testo", "chi_puo_partecipare",
                   "cosa_finanziabile", "spese_non_ammissibili", "criteri", "fasi_tempi",
                   "come_presentare", "perche_interessante", "criticita"):
-        valore = (dati.get(campo) or "").strip()
+        valore = testo_campo_ia(dati.get(campo))
         if valore:
             setattr(b, campo, valore)
     for campo in ("dotazione", "perc_contributo", "contributo_max"):
