@@ -1304,7 +1304,11 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
 {% if c.dimensione %} · {{ c.dimensione }} impresa{% endif %}</p></div>
 <div><a class="btn chiaro" href="/crm/clienti/{{ c.id }}/modifica">Modifica</a>
 <a class="btn chiaro" href="/crm/trattative/nuova?cliente={{ c.id }}">Avvia trattativa</a>
-<a class="btn" href="/crm/pratiche/nuova?cliente={{ c.id }}">Nuova pratica</a></div></div>
+<a class="btn" href="/crm/pratiche/nuova?cliente={{ c.id }}">Nuova pratica</a>
+<form method="post" action="/crm/clienti/{{ c.id }}/elimina" style="display:inline"
+  onsubmit="return confirm('Sei sicuro di voler cancellare {{ c.ragione_sociale }}? Vengono cancellate anche tutte le sue pratiche e i documenti caricati. Non si può annullare.');">
+  <button class="btn chiaro" type="submit" style="color:#c0392b;border-color:#f2c4bd">Elimina</button>
+</form></div></div>
 
 <div class="griglia g2">
 <div><dl class="dettaglio">
@@ -1521,7 +1525,11 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 <div class="testa"><div><h1>{{ p.nome_bando }}</h1>
 <p class="sottotitolo">{{ p.codice }} · <a href="/crm/clienti/{{ p.cliente_id }}">{{ p.cliente.ragione_sociale }}</a>
 {% if p.ente %} · {{ p.ente }}{% endif %}</p></div>
-<div><a class="btn chiaro" href="/crm/pratiche/{{ p.id }}/modifica">Modifica</a></div></div>
+<div><a class="btn chiaro" href="/crm/pratiche/{{ p.id }}/modifica">Modifica</a>
+<form method="post" action="/crm/pratiche/{{ p.id }}/elimina" style="display:inline"
+  onsubmit="return confirm('Sei sicuro di voler cancellare la pratica {{ p.nome_bando }}? Non si può annullare.');">
+  <button class="btn chiaro" type="submit" style="color:#c0392b;border-color:#f2c4bd">Elimina</button>
+</form></div></div>
 
 <div class="griglia g4" style="margin-bottom:20px">
   <div class="kpi"><div class="etichetta">Fase</div>
@@ -1699,6 +1707,10 @@ T_LEAD = """{% extends "base" %}{% block contenuto %}
     <form method="post" action="/crm/lead/{{ l.id }}/stato" style="display:inline">
       <input type="hidden" name="stato" value="{{ 'scartato' if l.stato != 'scartato' else 'nuovo' }}">
       <button class="btn chiaro" type="submit">{{ 'Scarta' if l.stato != 'scartato' else 'Ripristina' }}</button>
+    </form>
+    <form method="post" action="/crm/lead/{{ l.id }}/elimina" style="display:inline"
+      onsubmit="return confirm('Sei sicuro di voler cancellare {{ l.nome }}? Non si può annullare.');">
+      <button class="btn chiaro" type="submit" style="color:#c0392b;border-color:#f2c4bd">Elimina</button>
     </form>
     {% endif %}
   </td>
@@ -1920,10 +1932,13 @@ T_TRATTATIVA_FORM = """{% extends "base" %}{% block contenuto %}
   <p class="sottotitolo">Cliente: <strong>{{ cliente.ragione_sociale }}</strong></p>
 {% else %}
   <fieldset><legend>Soggetto</legend>
-  <label><span class="etichetta">Cliente</span><select name="cliente_id"><option value="">— nessuno —</option>
+  <label><span class="etichetta">Cliente già esistente</span><select name="cliente_id"><option value="">— nessuno —</option>
     {% for c in clienti %}<option value="{{ c.id }}">{{ c.ragione_sociale }}</option>{% endfor %}</select></label>
   <p class="nota">Per avviarla su un lead, apri la sua scheda dalla lista Lead e clicca "Avvia trattativa" —
   con migliaia di lead non li elenchiamo tutti qui.</p>
+  <p class="nota">— oppure, se è un soggetto nuovo che non esiste ancora da nessuna parte —</p>
+  <label><span class="etichetta">Ragione sociale (soggetto da zero)</span>
+    <input name="ragione_sociale" placeholder="Es. Trattoria da Mario"></label>
   </fieldset>
 {% endif %}
 <fieldset><legend>Bandi collegati (facoltativo, anche più di uno)</legend>
@@ -1951,6 +1966,10 @@ T_TRATTATIVA = """{% extends "base" %}{% block contenuto %}
   {% elif tr.stato == 'persa' %}
   <form method="post" action="/crm/trattative/{{ tr.id }}/ripesca" style="display:inline"><button class="btn ambra" type="submit">Ripesca</button></form>
   {% endif %}
+  <form method="post" action="/crm/trattative/{{ tr.id }}/elimina" style="display:inline"
+    onsubmit="return confirm('Sei sicuro di voler cancellare questa trattativa su {{ tr.soggetto_nome }}? Il diario dei contatti va perso. Non si può annullare.');">
+    <button class="btn chiaro" type="submit" style="color:#c0392b;border-color:#f2c4bd">Elimina</button>
+  </form>
 </div></div>
 
 <dl class="dettaglio">
@@ -2615,6 +2634,38 @@ def modifica_cliente(cid):
     return redirect(f"/crm/clienti/{c.id}")
 
 
+@crm.post("/clienti/<int:cid>/elimina")
+def elimina_cliente(cid):
+    c = SessionLocale.get(Cliente, cid)
+    if not c:
+        return redirect("/crm/clienti")
+    nome = c.ragione_sociale
+
+    # I documenti (a differenza di quelli di una pratica) qui vanno cancellati
+    # per davvero: il campo cliente_id è obbligatorio, non c'è dove sganciarli.
+    for doc in SessionLocale.query(Documento).filter_by(cliente_id=c.id).all():
+        if doc.google_file_id and drive_configurato():
+            try:
+                _drive_elimina_file(doc.google_file_id)
+            except Exception as errore:
+                print(f"[crm] Non riesco a togliere {doc.nome_file} da Drive (proseguo comunque): {errore}")
+        for voce in SessionLocale.query(VoceRichiesta).filter_by(documento_id=doc.id).all():
+            voce.documento_id = None
+        SessionLocale.delete(doc)
+
+    # Lead e trattative collegate restano, solo sganciate — la loro storia non sparisce.
+    for lead in SessionLocale.query(Lead).filter_by(cliente_id=c.id).all():
+        lead.cliente_id = None
+        lead.stato = "nuovo"
+    for tr in SessionLocale.query(Trattativa).filter_by(cliente_id=c.id).all():
+        tr.cliente_id = None
+
+    SessionLocale.delete(c)   # pratiche, voci_richiesta e attività seguono via cascade
+    SessionLocale.commit()
+    avvisa(f"Cliente \"{nome}\" eliminato, con tutte le sue pratiche.")
+    return redirect("/crm/clienti")
+
+
 # ----------------------------------------------------------------- pratiche
 
 @crm.get("/pratiche")
@@ -2965,6 +3016,28 @@ def modifica_pratica(pid):
     return redirect(f"/crm/pratiche/{p.id}")
 
 
+@crm.post("/pratiche/<int:pid>/elimina")
+def elimina_pratica(pid):
+    p = SessionLocale.get(Pratica, pid)
+    if not p:
+        return redirect("/crm/pratiche")
+    cliente_id, nome = p.cliente_id, p.nome_bando
+
+    # I documenti caricati restano (sono file veri su Drive): li stacco dalla
+    # pratica e li rimando al cestello invece di cancellarli.
+    for doc in SessionLocale.query(Documento).filter_by(pratica_id=p.id).all():
+        doc.pratica_id = None
+        doc.stato = "da_smistare"
+    # Le attività restano sul cliente: le stacco solo dalla pratica.
+    for a in SessionLocale.query(Attivita).filter_by(pratica_id=p.id).all():
+        a.pratica_id = None
+
+    SessionLocale.delete(p)   # le voci_richiesta seguono via cascade
+    SessionLocale.commit()
+    avvisa(f"Pratica \"{nome}\" eliminata.")
+    return redirect(f"/crm/clienti/{cliente_id}")
+
+
 # ----------------------------------------------------------------- attività
 
 @crm.get("/attivita")
@@ -3110,6 +3183,19 @@ def stato_lead(lid):
     if l and nuovo_stato in STATI_LEAD:
         l.stato = nuovo_stato
         SessionLocale.commit()
+    return redirect(request.referrer or "/crm/lead")
+
+
+@crm.post("/lead/<int:lid>/elimina")
+def elimina_lead(lid):
+    l = SessionLocale.get(Lead, lid)
+    if not l:
+        return redirect(request.referrer or "/crm/lead")
+    for tr in SessionLocale.query(Trattativa).filter_by(lead_id=l.id).all():
+        tr.lead_id = None   # la trattativa ha già la sua scheda, resta leggibile da sola
+    SessionLocale.delete(l)
+    SessionLocale.commit()
+    avvisa(f"{l.nome} eliminato.")
     return redirect(request.referrer or "/crm/lead")
 
 
@@ -3289,15 +3375,17 @@ CAMPI_SPECULARI_TRATTATIVA = ['ragione_sociale', 'piva', 'codice_fiscale', 'atec
 def nuova_trattativa():
     lead_id = s(request.form.get("lead_id"))
     cliente_id = s(request.form.get("cliente_id"))
-    if not lead_id and not cliente_id:
-        avvisa("Serve un lead o un cliente per aprire una trattativa.", "ko")
+    ragione_sociale_nuova = s(request.form.get("ragione_sociale"))
+    if not lead_id and not cliente_id and not ragione_sociale_nuova:
+        avvisa("Serve un lead, un cliente, o almeno una ragione sociale per partire da zero.", "ko")
         return redirect("/crm/trattative/nuova")
 
     tr = Trattativa(lead_id=int(lead_id) if lead_id else None,
                     cliente_id=int(cliente_id) if cliente_id else None,
                     note=s(request.form.get("note")), stato="aperta")
 
-    # Precompilo la scheda: dati minimi se parte da un lead, copia integrale se parte da un cliente.
+    # Precompilo la scheda: dati minimi se parte da un lead, copia integrale se parte
+    # da un cliente, solo il nome se è un soggetto nuovo che non esiste ancora da nessuna parte.
     if tr.lead_id:
         lead = SessionLocale.get(Lead, tr.lead_id)
         if lead:
@@ -3311,6 +3399,8 @@ def nuova_trattativa():
         if cliente:
             for campo in CAMPI_SPECULARI_TRATTATIVA:
                 setattr(tr, campo, getattr(cliente, campo))
+    elif ragione_sociale_nuova:
+        tr.ragione_sociale = ragione_sociale_nuova
 
     id_bandi = [int(x) for x in request.form.getlist("bando_ids") if x]
     if id_bandi:
@@ -3480,6 +3570,16 @@ def vinci_trattativa(tid):
         lead.cliente_id = c.id
         cliente_id = c.id
         tr.cliente_id = c.id
+    else:
+        # Trattativa nata da zero, senza lead né cliente di partenza: il cliente
+        # nasce direttamente dalla scheda che avete compilato qui.
+        c = Cliente(codice=prossimo_codice(SessionLocale, Cliente, "CL"))
+        for campo in CAMPI_SPECULARI_TRATTATIVA:
+            setattr(c, campo, getattr(tr, campo))
+        SessionLocale.add(c)
+        SessionLocale.flush()
+        cliente_id = c.id
+        tr.cliente_id = c.id
 
     pratiche_create = 0
     for bando in tr.bandi:
@@ -3520,6 +3620,18 @@ def ripesca_trattativa(tid):
     SessionLocale.commit()
     avvisa(f"Ripescato {vecchia.soggetto_nome}: nuova trattativa aperta, scegli i bandi.")
     return redirect(f"/crm/trattative/{nuova.id}")
+
+
+@crm.post("/trattative/<int:tid>/elimina")
+def elimina_trattativa(tid):
+    tr = SessionLocale.get(Trattativa, tid)
+    if not tr:
+        return redirect("/crm/trattative")
+    nome = tr.soggetto_nome
+    SessionLocale.delete(tr)   # diario e collegamenti ai bandi seguono via cascade
+    SessionLocale.commit()
+    avvisa(f"Trattativa su {nome} eliminata.")
+    return redirect("/crm/trattative")
 
 
 # ------------------------------------------------------------- impostazioni
