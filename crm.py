@@ -587,11 +587,18 @@ Regole:
 def estrai_bando_da_testo(testo_scheda):
     if not (testo_scheda or "").strip():
         raise ValueError("Il testo estratto dal PDF è vuoto: file scansionato o illeggibile.")
-    grezzo = _anthropic_chiama(SYSTEM_ESTRAI_BANDO, testo_scheda[:20000], max_token=2500)
+    # 4000 invece di 2500: una scheda ricca di sezioni discorsive può superare
+    # facilmente il limite più basso, troncando il JSON a metà e rendendolo illeggibile.
+    grezzo = _anthropic_chiama(SYSTEM_ESTRAI_BANDO, testo_scheda[:20000], max_token=4000)
     grezzo = grezzo.strip()
     if grezzo.startswith("```"):
         grezzo = grezzo.split("\n", 1)[1].rsplit("```", 1)[0]
-    return json.loads(grezzo)
+    try:
+        return json.loads(grezzo)
+    except json.JSONDecodeError:
+        raise ValueError(
+            "La risposta si è interrotta a metà (scheda molto lunga): riprova, di solito la seconda volta va."
+        )
 
 
 SYSTEM_GUIDA_COMPILAZIONE = """Sei un consulente di finanza agevolata italiano di Energelia S.r.l.
@@ -655,10 +662,15 @@ Regole:
 def estrai_visura_da_testo(testo_visura):
     if not (testo_visura or "").strip():
         raise ValueError("Il testo estratto dal PDF è vuoto: file scansionato o illeggibile.")
-    grezzo = _anthropic_chiama(SYSTEM_ESTRAI_VISURA, testo_visura[:20000], max_token=1500).strip()
+    grezzo = _anthropic_chiama(SYSTEM_ESTRAI_VISURA, testo_visura[:20000], max_token=2000).strip()
     if grezzo.startswith("```"):
         grezzo = grezzo.split("\n", 1)[1].rsplit("```", 1)[0]
-    return json.loads(grezzo)
+    try:
+        return json.loads(grezzo)
+    except json.JSONDecodeError:
+        raise ValueError(
+            "La risposta si è interrotta a metà: riprova, di solito la seconda volta va."
+        )
 
 
 SYSTEM_CERCA_CLIENTE = """Trova informazioni pubbliche di contatto su un'azienda italiana usando la
