@@ -781,7 +781,7 @@
   <div class="header-carousel-item hero-eu"
        role="img"
        aria-label="Il Parlamento europeo al tramonto con le bandiere degli Stati membri"
-       style="--hero-eu-img: url('{{ url_for('static', filename='img/Foto principale senza testo.png') }}');">
+       style="background-image: url('{{ url_for('static', filename='img/Foto principale senza testo.png') }}'); background-size: cover; background-position: 50% 50%; background-repeat: no-repeat; background-color: #050a15;">
 
     <div class="hero-eu-scrim" aria-hidden="true"></div>
 
@@ -815,11 +815,6 @@
   min-height: 82svh;
   display: flex;
   align-items: center;
-  background-color: #050a15;
-  background-image: var(--hero-eu-img);
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 /* Fallback per i browser senza supporto svh (Safari < 15.4, Android vecchi) */
 @supports not (height: 1svh) {
@@ -933,7 +928,7 @@
 @media (max-width: 767.98px) {
   .hero-eu {
     min-height: 72svh;
-    background-position: 64% 50%;
+    background-position: 64% 50% !important;
   }
   .hero-eu-caption { padding: 95px 0 45px; }
   .hero-eu-kicker { font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 0.9rem; }
