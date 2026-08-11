@@ -778,8 +778,13 @@
 
         <!-- ==================== HERO ENERGELIA — FASE 1 (senza immagine) ==================== -->
 <section id="eh-hero">
+  <img id="eh-img"
+       src="/static/img/Foto%20principale%20senza%20testo.png"
+       alt="Il Parlamento europeo al tramonto con le bandiere degli Stati membri">
+  <div id="eh-veil"></div>
+
   <div id="eh-inner">
-    <p id="eh-kicker">ENERGELIA — BANDI E INCENTIVI · V2</p>
+    <p id="eh-kicker">ENERGELIA — BANDI E INCENTIVI · V3</p>
 
     <h1 id="eh-title">
       <span id="eh-slot">I fondi ci sono.<br><b>Bisogna sapere dove cercarli.</b></span>
@@ -806,6 +811,26 @@
   justify-content: center;
   overflow: hidden;
   background: linear-gradient(160deg, #050a15 0%, #0a1530 45%, #12244d 100%);
+}
+#eh-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  z-index: 0;
+  display: block;
+}
+#eh-veil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(5,10,21,0.55) 0%, rgba(5,10,21,0.15) 38%, rgba(5,10,21,0.72) 100%);
 }
 #eh-inner {
   position: relative;
@@ -881,6 +906,7 @@
 
 @media (max-width: 767.98px) {
   #eh-hero { min-height: 520px; }
+  #eh-img { object-position: 64% 50%; }
   #eh-inner { padding: 95px 16px 55px; }
   #eh-kicker { font-size: 0.7rem; letter-spacing: 2px; }
   #eh-title { min-height: 3.6em; margin-bottom: 1.6rem; }
