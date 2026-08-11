@@ -469,74 +469,101 @@
       
 {% include 'life-insurance-website-template/partials/navbar.html' %}
 
-
-<!-- ==================== BANNER RETE ENERCUBICA ==================== -->
-<a href="/rete-enercubica" class="banner-enercubica" aria-label="Energelia aderisce a Enercubica Rete di Impresa">
-<div class="container banner-enercubica-inner">
-<img src="{{ url_for('static', filename='img/logo enercubica hd.png') }}" alt="Enercubica Rete di Impresa" class="banner-enercubica-logo">
-<div class="banner-enercubica-text">
-<strong>Aderiamo al Contratto di Rete</strong>
-<span>Enercubica — Rete di Impresa: l'ecosistema di partner che affianca Energelia.</span>
-</div>
-<span class="banner-enercubica-cta">Scopri di più <i class="fas fa-arrow-right ms-1"></i></span>
-</div>
-</a>
+<!-- ====================  SHIELD LOGO (deborda navbar → CTA)  ==================== -->
 <style>
-.banner-enercubica {
-display: block;
-background: linear-gradient(90deg, #0a1530 0%, #1a5276 100%);
-border-bottom: 3px solid #d4af37;
-text-decoration: none;
-color: #fff;
-transition: background 0.25s ease;
-}
-.banner-enercubica:hover {
-background: linear-gradient(90deg, #10265c 0%, #1f6694 100%);
-color: #fff;
-}
-.banner-enercubica-inner {
-display: flex;
-align-items: center;
-gap: 18px;
-padding: 14px 0;
-flex-wrap: wrap;
-}
-.banner-enercubica-logo {
-width: 46px;
-height: 46px;
-border-radius: 50%;
-background: #fff;
-padding: 3px;
-object-fit: contain;
-flex-shrink: 0;
-}
-.banner-enercubica-text {
-display: flex;
-flex-direction: column;
-line-height: 1.3;
-flex: 1 1 auto;
-}
-.banner-enercubica-text strong {
-font-size: 1rem;
-font-weight: 700;
-}
-.banner-enercubica-text span {
-font-size: 0.85rem;
-color: rgba(255,255,255,0.8);
-}
-.banner-enercubica-cta {
-font-weight: 700;
-font-size: 0.9rem;
-color: #f4d03f;
-white-space: nowrap;
-flex-shrink: 0;
-}
-@media (max-width: 575.98px) {
-.banner-enercubica-text span { display: none; }
-.banner-enercubica-inner { padding: 10px 0; gap: 12px; }
-}
+  #shield-logo-wrap {
+    position: relative;
+    z-index: 1100;
+    height: 0;
+    overflow: visible;
+  }
+  #shield-logo-link {
+    position: absolute;
+    top: -70px;
+    left: 28px;
+    display: block;
+    z-index: 1100;
+    text-decoration: none;
+  }
+  #shield-logo-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    background-color: #0c1e4a;
+    border-radius: 12px;
+    border: 4px solid #ffffff;
+    box-shadow:
+      0 0 0 6px rgba(255,255,255,0.16),
+      0 14px 40px rgba(0,0,0,0.65);
+    display: block;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease;
+  }
+  /* Alone dorato pulsante dietro il logo */
+  #shield-logo-link::before {
+    content: '';
+    position: absolute;
+    inset: -16px;
+    border-radius: 22px;
+    background: radial-gradient(ellipse at center,
+      rgba(244, 208, 63, 0.55) 0%,
+      rgba(212, 175, 55, 0.25) 45%,
+      rgba(212, 175, 55, 0) 75%);
+    z-index: 1;
+    pointer-events: none;
+    animation: logo-glow-pulse 3.4s ease-in-out infinite;
+  }
+  @keyframes logo-glow-pulse {
+    0%, 100% { transform: scale(0.96); opacity: 0.55; }
+    50%      { transform: scale(1.06); opacity: 0.95; }
+  }
+  /* Shimmer obliquo che attraversa il logo */
+  #shield-logo-link::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border-radius: 10px;
+    background: linear-gradient(115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.28) 48%,
+      rgba(255, 255, 255, 0.42) 50%,
+      rgba(255, 255, 255, 0.28) 52%,
+      transparent 70%);
+    background-size: 250% 100%;
+    background-position: 200% 0;
+    z-index: 3;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    animation: logo-shimmer 5.5s ease-in-out infinite;
+  }
+  @keyframes logo-shimmer {
+    0%, 85%, 100% { background-position: 200% 0; opacity: 0; }
+    90%           { opacity: 1; }
+    95%           { background-position: -50% 0; opacity: 1; }
+  }
+  #shield-logo-link:hover #shield-logo-img {
+    transform: scale(1.05);
+  }
+  @media (max-width: 575.98px) {
+    #shield-logo-link { top: -46px; left: 14px; }
+    #shield-logo-img  { width: 80px; height: 80px; border-radius: 10px; border-width: 3px; }
+    #shield-logo-link::before { inset: -10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #shield-logo-link::before,
+    #shield-logo-link::after { animation: none; }
+  }
 </style>
-<!-- ==================== FINE BANNER RETE ENERCUBICA ==================== -->
+<div id="shield-logo-wrap">
+  <a id="shield-logo-link" href="/" aria-label="Energelia — Home">
+    <img id="shield-logo-img" src="img/logo-hq.png" alt="Logo Energelia">
+  </a>
+</div>
+<!-- ====================  FINE SHIELD LOGO  ==================== -->
 
 
 <style>
@@ -747,250 +774,220 @@ flex-shrink: 0;
         <!-- Modal Search End -->
 
 
-        <!-- ==================== SHIELD LOGO (overlay su hero, non copre banner) ==================== -->
-<div id="shield-logo-wrap">
-  <a href="/" id="shield-logo" aria-label="Energelia Home">
-    <div id="shield-logo-container">
-      <img src="{{ url_for('static', filename='img/logo-hq.png') }}" alt="Logo Energelia" id="shield-logo-img">
-    </div>
-  </a>
-</div>
-<style>
-#shield-logo-wrap {
-  position: relative;
-  height: 0;
-  z-index: 200;
-  overflow: visible;
-}
-#shield-logo {
-  position: absolute;
-  top: 22px;
-  right: 28px;
-  display: block;
-  text-decoration: none;
-  transition: transform 0.3s ease;
-}
-#shield-logo:hover { transform: scale(1.08); }
-/* Contenitore con overflow:hidden per clippare il riflesso */
-#shield-logo-container {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-}
-#shield-logo-img {
-  width: 130px;
-  height: auto;
-  display: block;
-  animation: logo-glow 5s ease-in-out infinite;
-}
-/* Striscia luminosa diagonale — effetto riflesso superficie lucida */
-#shield-logo-container::after {
-  content: '';
-  position: absolute;
-  top: -100%;
-  left: -130%;
-  width: 55%;
-  height: 300%;
-  background: linear-gradient(
-    105deg,
-    rgba(255,255,255,0)    20%,
-    rgba(255,255,255,0.52) 50%,
-    rgba(255,255,255,0)    80%
-  );
-  transform: skewX(-12deg);
-  animation: shine-sweep 5s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes shine-sweep {
-  0%   { left: -130%; opacity: 0; }
-  6%   { opacity: 1; }
-  40%  { left: 165%; opacity: 1; }
-  42%  { opacity: 0; }
-  100% { left: 165%; opacity: 0; }
-}
-/* Leggero bagliore dorato sincronizzato col picco del riflesso */
-@keyframes logo-glow {
-  0%, 100% { filter: brightness(1.00) drop-shadow(0 0 2px rgba(212,175,55,0.20)); }
-  22%       { filter: brightness(1.18) drop-shadow(0 0 10px rgba(212,175,55,0.55)); }
-  24%       { filter: brightness(1.00) drop-shadow(0 0 2px rgba(212,175,55,0.20)); }
-}
-@media (prefers-reduced-motion: reduce) {
-  #shield-logo-container::after { animation: none; display: none; }
-  #shield-logo-img { animation: none; }
-}
-@media (max-width: 575.98px) {
-  #shield-logo { top: 14px; right: 12px; }
-  #shield-logo-img { width: 80px; }
-}
-</style>
-<!-- ==================== FINE SHIELD LOGO ==================== -->
-
-
-
+        <!-- Shield Logo: vuoto qui, viene reso subito dopo la navbar (vedi sopra) -->
 
         <!-- Carousel Start -->
-<div class="header-carousel owl-carousel"
-     style="
-       /* QUI REGOLI TUTTO */
-       --bg-img: url('img/CTA Energelia.png');
-       --overlay: rgba(0, 0, 0, 0);
-       --h4-color: #ffffff;
-       --h4-size: 1rem;
-       --h1-color: #ffffff;
-       --h1-size: 1.85rem;
-       --p-color: #dddddd;
-       --p-size: 1.05rem;
-       --btn1-bg: #ffffff;
-       --btn1-color: #333333;
-       --btn2-bg: #002244;
-       --btn2-color: #ffffff;
-       --padding-vertical: 30px;
-       --padding-top-extra: 110px;
-     ">
-  <div class="header-carousel-item" style="
-      background:
-        linear-gradient(var(--overlay), var(--overlay)),
-        var(--bg-img) center/cover no-repeat;
-      position: relative;
-      overflow: hidden;
-    ">
-    <!-- Effetto onde del mare (il fascio del faro è già nell'immagine, non lo sovrapponiamo) -->
-    <div class="hero-fx" aria-hidden="true">
-      <svg class="hero-wave hero-wave-back" viewBox="0 0 1440 80" preserveAspectRatio="none">
-        <path d="M0,40 C240,10 480,70 720,40 C960,10 1200,70 1440,40 L1440,80 L0,80 Z"
-              fill="rgba(212,175,55,0.10)"/>
-      </svg>
-      <svg class="hero-wave hero-wave-front" viewBox="0 0 1440 60" preserveAspectRatio="none">
-        <path d="M0,30 C180,5 360,55 720,30 C1080,5 1260,55 1440,30 L1440,60 L0,60 Z"
-              fill="rgba(255,255,255,0.06)"/>
-      </svg>
-    </div>
+<div class="header-carousel owl-carousel">
+  <div class="header-carousel-item hero-eu"
+       role="img"
+       aria-label="Il Parlamento europeo al tramonto con le bandiere degli Stati membri"
+       style="--hero-eu-img: url('{{ url_for('static', filename='img/Foto_principale_senza_testo.png') }}');">
 
-    <div class="carousel-caption" style="padding: calc(var(--padding-vertical) + var(--padding-top-extra, 0px)) 0 var(--padding-vertical) 0; position: relative; z-index: 3;">
+    <div class="hero-eu-scrim" aria-hidden="true"></div>
+
+    <div class="carousel-caption hero-eu-caption">
       <div class="container">
-        <div class="row g-4 align-items-center">
-          <div class="col-lg-12 animated fadeInUp">
-            <div class="text-center">
-              
-            </div>
-          </div>
+        <p class="hero-eu-kicker">ENERGELIA — BANDI E INCENTIVI</p>
+
+        <h1 class="hero-eu-title" id="heroEuRotator" aria-live="polite">
+          <span class="hero-eu-slot">I fondi ci sono.<br><span class="gold">Bisogna sapere dove cercarli.</span></span>
+        </h1>
+
+        <div class="hero-eu-actions">
+          <button type="button" class="hero-eu-btn hero-eu-btn-gold" onclick="openConsultationPopup()">
+            <i class="fas fa-paper-plane me-2"></i>Richiedi consulenza gratuita
+          </button>
+          <a class="hero-eu-btn hero-eu-btn-ghost" href="https://italbandi.com" target="_blank" rel="noopener"
+             onclick="if(typeof gtag==='function'){gtag('event','click_italbandi_hero',{'event_category':'CTA','event_label':'hero_italbandi'});}">
+            <i class="fas fa-search me-2"></i>Cerca su ItalBandi
+          </a>
         </div>
       </div>
     </div>
   </div>
+</div>
 
 <style>
-/* ===== HERO FX: fascio del faro + onde ===== */
-.hero-fx {
+/* ===== HERO EUROPA — immagine senza testo + claim rotanti in HTML ===== */
+.hero-eu {
+  position: relative;
+  overflow: hidden;
+  min-height: 82svh;
+  display: flex;
+  align-items: center;
+  background-color: #050a15;
+  background-image: var(--hero-eu-img);
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+/* Fallback per i browser senza supporto svh (Safari < 15.4, Android vecchi) */
+@supports not (height: 1svh) {
+  .hero-eu { min-height: 620px; }
+}
+.hero-eu-scrim {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  overflow: hidden;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(5,10,21,0.58) 0%, rgba(5,10,21,0.18) 38%, rgba(5,10,21,0.74) 100%),
+    radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0) 72%);
 }
-/* (Rimosso il fascio CSS: usiamo solo quello già dipinto nell'immagine) */
-.hero-wave {
-  position: absolute;
-  left: 0;
-  width: 200%;
-  height: 70px;
-  pointer-events: none;
+.hero-eu-caption {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  top: auto;
+  padding: 130px 0 60px;
+  text-align: center;
 }
-.hero-wave-back {
-  bottom: 0;
-  animation: wave-move-slow 18s ease-in-out infinite alternate;
+.hero-eu-kicker {
+  color: #f4d03f;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 1.1rem;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.75);
 }
-.hero-wave-front {
-  bottom: 0;
-  height: 50px;
-  animation: wave-move-fast 11s ease-in-out infinite alternate;
+.hero-eu-title {
+  color: #ffffff;
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: clamp(1.55rem, 4.2vw, 3rem);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: 0.3px;
+  text-shadow: 0 3px 16px rgba(0,0,0,0.8);
+  margin: 0 auto 2rem;
+  max-width: 920px;
+  min-height: 2.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: none;
 }
-@keyframes wave-move-slow {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-6%); }
+.hero-eu-title .gold { color: #f4d03f; }
+.hero-eu-slot {
+  display: block;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
-@keyframes wave-move-fast {
-  from { transform: translateX(-3%); }
-  to   { transform: translateX(3%); }
+.hero-eu-slot.is-out { opacity: 0; transform: translateY(-10px); }
+.hero-eu-slot.is-in  { opacity: 0; transform: translateY(10px); }
+
+.hero-eu-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.hero-eu-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 32px;
+  border-radius: 50px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+.hero-eu-btn-gold {
+  background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
+  color: #0a1530;
+  box-shadow: 0 10px 30px rgba(212,175,55,0.4);
+}
+.hero-eu-btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 38px rgba(212,175,55,0.55);
+  color: #0a1530;
+}
+.hero-eu-btn-ghost {
+  background: rgba(255,255,255,0.10);
+  color: #ffffff;
+  border: 2px solid rgba(255,255,255,0.45);
+}
+.hero-eu-btn-ghost:hover {
+  background: rgba(255,255,255,0.20);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+.hero-eu-btn:focus-visible {
+  outline: 3px solid #f4d03f;
+  outline-offset: 3px;
 }
 
-/* ===== Rotatore claim ===== */
-.hero-rotator-slot {
-  display: block;
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  opacity: 1;
-  transform: translateY(0);
+/* --- Tablet --- */
+@media (max-width: 991.98px) {
+  .hero-eu { min-height: 76svh; }
+  .hero-eu-caption { padding: 110px 0 50px; }
+  .hero-eu-title { min-height: 3em; }
 }
-.hero-rotator-slot.is-leaving {
-  opacity: 0;
-  transform: translateY(-12px);
-}
-.hero-rotator-slot.is-entering {
-  opacity: 0;
-  transform: translateY(12px);
+
+/* --- Mobile: qui il testo prima spariva perche' era dentro l'immagine --- */
+@media (max-width: 767.98px) {
+  .hero-eu {
+    min-height: 72svh;
+    background-position: 64% 50%;
+  }
+  .hero-eu-caption { padding: 95px 0 45px; }
+  .hero-eu-kicker { font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 0.9rem; }
+  .hero-eu-title {
+    min-height: 3.6em;
+    margin-bottom: 1.6rem;
+    padding: 0 6px;
+  }
+  .hero-eu-actions { padding: 0 14px; }
+  .hero-eu-btn { width: 100%; padding: 14px 20px; font-size: 0.95rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-wave-back,
-  .hero-wave-front { animation: none; }
-  .hero-rotator-slot { transition: none; }
+  .hero-eu-slot { transition: none; }
 }
-
 </style>
 
 <script>
-(function() {
-  var slot = document.querySelector('#heroRotator .hero-rotator-slot');
+(function () {
+  var slot = document.querySelector('#heroEuRotator .hero-eu-slot');
   if (!slot) return;
 
   var claims = [
-    'TROVARE UN BANDO NON CONCLUDE IL NOSTRO LAVORO,<br><span style="color:#d4af37;">FARLO DIVENTARE FINANZA PER I CLIENTI È IL NOSTRO APPRODO</span>',
-    'NAVIGHIAMO TRA BANDI E INCENTIVI<br><span style="color:#d4af37;">PER PORTARE LE IMPRESE A DESTINAZIONE DAL 2006</span>',
-    'OGNI AZIENDA HA IL SUO BANDO,<br><span style="color:#d4af37;">NOI LO TROVIAMO E LO TRASFORMIAMO IN FINANZIAMENTO</span>',
-    'NEL MARE DEI BANDI SERVE UN FARO,<br><span style="color:#d4af37;">ENERGELIA È QUELLA LUCE PER LE IMPRESE ITALIANE</span>'
+    'I fondi ci sono.<br><span class="gold">Bisogna sapere dove cercarli.</span>',
+    'ItalBandi trova le opportunit&agrave;.<br><span class="gold">Energelia gestisce il progetto.</span>',
+    'Dal 2006 al fianco delle imprese italiane:<br><span class="gold">dal bando all\'erogazione.</span>'
   ];
 
   var idx = 0;
+  var paused = false;
+
   function rotate() {
+    if (paused || document.hidden) return;
     idx = (idx + 1) % claims.length;
-    slot.classList.add('is-leaving');
-    setTimeout(function() {
+    slot.classList.add('is-out');
+    setTimeout(function () {
       slot.innerHTML = claims[idx];
-      slot.classList.remove('is-leaving');
-      slot.classList.add('is-entering');
-      // forziamo il reflow per applicare la transizione di entrata
+      slot.classList.remove('is-out');
+      slot.classList.add('is-in');
       void slot.offsetWidth;
-      slot.classList.remove('is-entering');
-    }, 700);
+      slot.classList.remove('is-in');
+    }, 600);
   }
-  setInterval(rotate, 6500);
+
+  var hero = document.querySelector('.hero-eu');
+  if (hero) {
+    hero.addEventListener('mouseenter', function () { paused = true; });
+    hero.addEventListener('mouseleave', function () { paused = false; });
+  }
+
+  setInterval(rotate, 5500);
 })();
 </script>
-
-
-</div>
 <!-- Carousel End -->
-
-
-<!-- ============================================== -->
-<!-- SEZIONE VIDEO PRESENTAZIONE                    -->
-<!-- ============================================== -->
-<section style="background:#0a1530; padding:60px 0;">
-  <div class="container">
-    <div style="text-align:center; margin-bottom:32px;">
-      <span style="color:#cc0000; font-size:0.85rem; font-weight:700; letter-spacing:2px; text-transform:uppercase;">Come funziona</span>
-      <h2 style="color:#fff; font-size:2rem; font-weight:700; margin:10px 0 0;">Scopri i nostri servizi in 30 secondi</h2>
-    </div>
-    <div style="max-width:860px; margin:0 auto; border-radius:16px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.5); aspect-ratio:16/9;">
-      <iframe src="https://www.youtube.com/embed/LgFVIyP-c4E?rel=0&modestbranding=1"
-        style="width:100%; height:100%; display:block; border:0;"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen loading="lazy" title="Presentazione Energelia">
-      </iframe>
-    </div>
-  </div>
-</section>
-<!-- ============================================== -->
 
 <!-- ============================================== -->
 <!-- SEZIONE PERCORSO 10 TAPPE + PROFILI CLIENTI    -->
@@ -2938,74 +2935,6 @@ flex-shrink: 0;
 </style>
 
 
-
-
-<!-- ====================  BANNER ITALBANDI  ==================== -->
-<section class="italbandi-banner-section">
-  <a href="https://italbandi.com" target="_blank" rel="noopener noreferrer" class="italbandi-banner-link" title="Vai su ItalBandi.com">
-    <div class="container">
-      <div class="italbandi-banner-inner">
-        <img src="{{ url_for('static', filename='img/logo_ItalBandi.png') }}" alt="ItalBandi" class="italbandi-banner-logo">
-        <div class="italbandi-banner-text">
-          <p class="italbandi-banner-subtitle">Il portale dei bandi per la tua impresa</p>
-          <span class="italbandi-banner-cta">Scopri i tuoi bandi &rarr;</span>
-        </div>
-      </div>
-    </div>
-  </a>
-</section>
-<style>
-.italbandi-banner-section {
-  background: linear-gradient(135deg, #0a1530 0%, #1a2a50 60%, #0c1e3a 100%);
-  padding: 0;
-  border-top: 3px solid #cc0000;
-  border-bottom: 3px solid #cc0000;
-}
-.italbandi-banner-link {
-  display: block;
-  text-decoration: none;
-  transition: background 0.3s ease;
-  padding: 32px 0;
-}
-.italbandi-banner-link:hover {
-  background: rgba(255,255,255,0.04);
-}
-.italbandi-banner-inner {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  justify-content: center;
-}
-.italbandi-banner-logo {
-  height: 80px;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
-}
-.italbandi-banner-text {
-  text-align: left;
-}
-.italbandi-banner-subtitle {
-  color: rgba(255,255,255,0.75);
-  font-size: 0.95rem;
-  margin: 0 0 8px;
-  letter-spacing: 0.3px;
-}
-.italbandi-banner-cta {
-  color: #fff;
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid #cc0000;
-  padding-bottom: 2px;
-}
-@media (max-width: 576px) {
-  .italbandi-banner-inner { flex-direction: column; gap: 16px; text-align: center; }
-  .italbandi-banner-text { text-align: center; }
-  .italbandi-banner-logo { height: 60px; }
-}
-</style>
-<!-- ==================== FINE BANNER ITALBANDI ==================== -->
 
 <!-- ====================  CTA RICERCA BANDI  ==================== -->
 <section class="cta-ricerca-bandi" aria-label="Ricerca bandi personalizzata">
