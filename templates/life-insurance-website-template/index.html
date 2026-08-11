@@ -776,218 +776,155 @@
 
         <!-- Shield Logo: vuoto qui, viene reso subito dopo la navbar (vedi sopra) -->
 
-        <!-- Carousel Start -->
-<div class="header-carousel owl-carousel">
-  <div class="header-carousel-item hero-eu"
-       role="img"
-       aria-label="Il Parlamento europeo al tramonto con le bandiere degli Stati membri"
-       style="--hero-eu-img: url('{{ url_for('static', filename='img/Foto_principale_senza_testo.png') }}');">
+        <!-- ==================== HERO ENERGELIA — FASE 1 (senza immagine) ==================== -->
+<section id="eh-hero">
+  <div id="eh-inner">
+    <p id="eh-kicker">ENERGELIA — BANDI E INCENTIVI · V2</p>
 
-    <div class="hero-eu-scrim" aria-hidden="true"></div>
+    <h1 id="eh-title">
+      <span id="eh-slot">I fondi ci sono.<br><b>Bisogna sapere dove cercarli.</b></span>
+    </h1>
 
-    <div class="carousel-caption hero-eu-caption">
-      <div class="container">
-        <p class="hero-eu-kicker">ENERGELIA — BANDI E INCENTIVI</p>
-
-        <h1 class="hero-eu-title" id="heroEuRotator" aria-live="polite">
-          <span class="hero-eu-slot">I fondi ci sono.<br><span class="gold">Bisogna sapere dove cercarli.</span></span>
-        </h1>
-
-        <div class="hero-eu-actions">
-          <button type="button" class="hero-eu-btn hero-eu-btn-gold" onclick="openConsultationPopup()">
-            <i class="fas fa-paper-plane me-2"></i>Richiedi consulenza gratuita
-          </button>
-          <a class="hero-eu-btn hero-eu-btn-ghost" href="https://italbandi.com" target="_blank" rel="noopener"
-             onclick="if(typeof gtag==='function'){gtag('event','click_italbandi_hero',{'event_category':'CTA','event_label':'hero_italbandi'});}">
-            <i class="fas fa-search me-2"></i>Cerca su ItalBandi
-          </a>
-        </div>
-      </div>
+    <div id="eh-actions">
+      <button type="button" id="eh-btn-gold" onclick="openConsultationPopup()">
+        Richiedi consulenza gratuita
+      </button>
+      <a id="eh-btn-ghost" href="https://italbandi.com" target="_blank" rel="noopener">
+        Cerca su ItalBandi
+      </a>
     </div>
   </div>
-</div>
+</section>
 
 <style>
-/* ===== HERO EUROPA — immagine senza testo + claim rotanti in HTML ===== */
-.hero-eu {
+#eh-hero {
   position: relative;
-  overflow: hidden;
-  min-height: 82svh;
+  width: 100%;
+  min-height: 620px;
   display: flex;
   align-items: center;
-  background-color: #050a15;
-  background-image: var(--hero-eu-img);
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(160deg, #050a15 0%, #0a1530 45%, #12244d 100%);
 }
-/* Fallback per i browser senza supporto svh (Safari < 15.4, Android vecchi) */
-@supports not (height: 1svh) {
-  .hero-eu { min-height: 620px; }
-}
-.hero-eu-scrim {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background:
-    linear-gradient(180deg, rgba(5,10,21,0.58) 0%, rgba(5,10,21,0.18) 38%, rgba(5,10,21,0.74) 100%),
-    radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0) 72%);
-}
-.hero-eu-caption {
+#eh-inner {
   position: relative;
   z-index: 3;
   width: 100%;
-  left: auto;
-  right: auto;
-  bottom: auto;
-  top: auto;
-  padding: 130px 0 60px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 120px 20px 70px;
   text-align: center;
 }
-.hero-eu-kicker {
+#eh-kicker {
   color: #f4d03f;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 3px;
-  margin-bottom: 1.1rem;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.75);
+  margin: 0 0 1.1rem;
 }
-.hero-eu-title {
+#eh-title {
   color: #ffffff;
   font-family: 'Source Serif 4', Georgia, serif;
   font-size: clamp(1.55rem, 4.2vw, 3rem);
   font-weight: 700;
-  line-height: 1.22;
-  letter-spacing: 0.3px;
-  text-shadow: 0 3px 16px rgba(0,0,0,0.8);
+  line-height: 1.25;
   margin: 0 auto 2rem;
-  max-width: 920px;
-  min-height: 2.6em;
+  max-width: 900px;
+  min-height: 2.7em;
   display: flex;
   align-items: center;
   justify-content: center;
-  text-transform: none;
+  text-shadow: 0 3px 16px rgba(0,0,0,0.8);
 }
-.hero-eu-title .gold { color: #f4d03f; }
-.hero-eu-slot {
+#eh-title b { color: #f4d03f; font-weight: 700; }
+#eh-slot {
   display: block;
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-.hero-eu-slot.is-out { opacity: 0; transform: translateY(-10px); }
-.hero-eu-slot.is-in  { opacity: 0; transform: translateY(10px); }
-
-.hero-eu-actions {
+#eh-slot.eh-out { opacity: 0; transform: translateY(-10px); }
+#eh-slot.eh-in  { opacity: 0; transform: translateY(10px); }
+#eh-actions {
   display: flex;
   gap: 14px;
   justify-content: center;
   flex-wrap: wrap;
 }
-.hero-eu-btn {
+#eh-btn-gold, #eh-btn-ghost {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 15px 32px;
   border-radius: 50px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', Arial, sans-serif;
   font-weight: 700;
   font-size: 1rem;
   text-decoration: none;
-  border: none;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
-.hero-eu-btn-gold {
+#eh-btn-gold {
   background: linear-gradient(135deg, #f4d03f 0%, #d4af37 100%);
   color: #0a1530;
+  border: none;
   box-shadow: 0 10px 30px rgba(212,175,55,0.4);
 }
-.hero-eu-btn-gold:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 38px rgba(212,175,55,0.55);
-  color: #0a1530;
-}
-.hero-eu-btn-ghost {
+#eh-btn-gold:hover { transform: translateY(-2px); box-shadow: 0 15px 38px rgba(212,175,55,0.55); }
+#eh-btn-ghost {
   background: rgba(255,255,255,0.10);
   color: #ffffff;
   border: 2px solid rgba(255,255,255,0.45);
 }
-.hero-eu-btn-ghost:hover {
-  background: rgba(255,255,255,0.20);
-  color: #ffffff;
-  transform: translateY(-2px);
-}
-.hero-eu-btn:focus-visible {
-  outline: 3px solid #f4d03f;
-  outline-offset: 3px;
-}
+#eh-btn-ghost:hover { background: rgba(255,255,255,0.20); color: #ffffff; transform: translateY(-2px); }
+#eh-btn-gold:focus-visible, #eh-btn-ghost:focus-visible { outline: 3px solid #f4d03f; outline-offset: 3px; }
 
-/* --- Tablet --- */
-@media (max-width: 991.98px) {
-  .hero-eu { min-height: 76svh; }
-  .hero-eu-caption { padding: 110px 0 50px; }
-  .hero-eu-title { min-height: 3em; }
-}
-
-/* --- Mobile: qui il testo prima spariva perche' era dentro l'immagine --- */
 @media (max-width: 767.98px) {
-  .hero-eu {
-    min-height: 72svh;
-    background-position: 64% 50%;
-  }
-  .hero-eu-caption { padding: 95px 0 45px; }
-  .hero-eu-kicker { font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 0.9rem; }
-  .hero-eu-title {
-    min-height: 3.6em;
-    margin-bottom: 1.6rem;
-    padding: 0 6px;
-  }
-  .hero-eu-actions { padding: 0 14px; }
-  .hero-eu-btn { width: 100%; padding: 14px 20px; font-size: 0.95rem; }
+  #eh-hero { min-height: 520px; }
+  #eh-inner { padding: 95px 16px 55px; }
+  #eh-kicker { font-size: 0.7rem; letter-spacing: 2px; }
+  #eh-title { min-height: 3.6em; margin-bottom: 1.6rem; }
+  #eh-btn-gold, #eh-btn-ghost { width: 100%; padding: 14px 20px; font-size: 0.95rem; }
 }
-
 @media (prefers-reduced-motion: reduce) {
-  .hero-eu-slot { transition: none; }
+  #eh-slot { transition: none; }
 }
 </style>
 
 <script>
 (function () {
-  var slot = document.querySelector('#heroEuRotator .hero-eu-slot');
+  var slot = document.getElementById('eh-slot');
   if (!slot) return;
 
   var claims = [
-    'I fondi ci sono.<br><span class="gold">Bisogna sapere dove cercarli.</span>',
-    'ItalBandi trova le opportunit&agrave;.<br><span class="gold">Energelia gestisce il progetto.</span>',
-    'Dal 2006 al fianco delle imprese italiane:<br><span class="gold">dal bando all\'erogazione.</span>'
+    'I fondi ci sono.<br><b>Bisogna sapere dove cercarli.</b>',
+    'ItalBandi trova le opportunit&agrave;.<br><b>Energelia gestisce il progetto.</b>',
+    'Dal 2006 al fianco delle imprese italiane:<br><b>dal bando all\'erogazione.</b>'
   ];
 
   var idx = 0;
   var paused = false;
+  var hero = document.getElementById('eh-hero');
 
-  function rotate() {
-    if (paused || document.hidden) return;
-    idx = (idx + 1) % claims.length;
-    slot.classList.add('is-out');
-    setTimeout(function () {
-      slot.innerHTML = claims[idx];
-      slot.classList.remove('is-out');
-      slot.classList.add('is-in');
-      void slot.offsetWidth;
-      slot.classList.remove('is-in');
-    }, 600);
-  }
-
-  var hero = document.querySelector('.hero-eu');
   if (hero) {
     hero.addEventListener('mouseenter', function () { paused = true; });
     hero.addEventListener('mouseleave', function () { paused = false; });
   }
 
-  setInterval(rotate, 5500);
+  setInterval(function () {
+    if (paused || document.hidden) return;
+    idx = (idx + 1) % claims.length;
+    slot.className = 'eh-out';
+    setTimeout(function () {
+      slot.innerHTML = claims[idx];
+      slot.className = 'eh-in';
+      void slot.offsetWidth;
+      slot.className = '';
+    }, 600);
+  }, 5500);
 })();
 </script>
-<!-- Carousel End -->
+<!-- ==================== FINE HERO ENERGELIA ==================== -->
 
 <!-- ============================================== -->
 <!-- SEZIONE PERCORSO 10 TAPPE + PROFILI CLIENTI    -->
