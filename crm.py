@@ -102,6 +102,45 @@ PRIORITA = ["Alta", "Media", "Bassa"]
 DIMENSIONI = ["Micro", "Piccola", "Media", "Grande"]
 TIPI_ATTIVITA = ["Chiamata", "Email", "Riunione", "Documenti", "Nota"]
 STATI_LEAD = ["nuovo", "contattato", "scartato", "convertito"]
+
+# Stessa mappa usata in Energelia_Gestione_Lead.html (REGIONE_PER_PROVINCIA), portata qui
+# per poter filtrare i lead per regione: la provincia è l'unico dato salvato, la regione
+# si ricava, non è una colonna a parte.
+REGIONE_PER_PROVINCIA = {
+    "TO": "Piemonte", "CN": "Piemonte", "AT": "Piemonte", "AL": "Piemonte", "NO": "Piemonte",
+    "VC": "Piemonte", "BI": "Piemonte", "VB": "Piemonte",
+    "AO": "Valle d'Aosta",
+    "MI": "Lombardia", "BG": "Lombardia", "BS": "Lombardia", "CO": "Lombardia", "CR": "Lombardia",
+    "LC": "Lombardia", "LO": "Lombardia", "MN": "Lombardia", "PV": "Lombardia", "SO": "Lombardia",
+    "VA": "Lombardia", "MB": "Lombardia",
+    "TN": "Trentino-Alto Adige", "BZ": "Trentino-Alto Adige",
+    "VE": "Veneto", "VR": "Veneto", "VI": "Veneto", "TV": "Veneto", "BL": "Veneto", "PD": "Veneto", "RO": "Veneto",
+    "TS": "Friuli-Venezia Giulia", "UD": "Friuli-Venezia Giulia", "PN": "Friuli-Venezia Giulia", "GO": "Friuli-Venezia Giulia",
+    "GE": "Liguria", "SV": "Liguria", "IM": "Liguria", "SP": "Liguria",
+    "BO": "Emilia-Romagna", "MO": "Emilia-Romagna", "PR": "Emilia-Romagna", "RE": "Emilia-Romagna",
+    "FE": "Emilia-Romagna", "RA": "Emilia-Romagna", "FC": "Emilia-Romagna", "RN": "Emilia-Romagna", "PC": "Emilia-Romagna",
+    "FI": "Toscana", "SI": "Toscana", "PI": "Toscana", "LU": "Toscana", "AR": "Toscana", "LI": "Toscana",
+    "PT": "Toscana", "GR": "Toscana", "MS": "Toscana", "PO": "Toscana",
+    "PG": "Umbria", "TR": "Umbria",
+    "AN": "Marche", "PU": "Marche", "MC": "Marche", "AP": "Marche", "FM": "Marche",
+    "RM": "Lazio", "LT": "Lazio", "FR": "Lazio", "VT": "Lazio", "RI": "Lazio",
+    "AQ": "Abruzzo", "CH": "Abruzzo", "PE": "Abruzzo", "TE": "Abruzzo",
+    "CB": "Molise", "IS": "Molise",
+    "NA": "Campania", "SA": "Campania", "CE": "Campania", "AV": "Campania", "BN": "Campania",
+    "BA": "Puglia", "LE": "Puglia", "TA": "Puglia", "FG": "Puglia", "BR": "Puglia", "BT": "Puglia",
+    "PZ": "Basilicata", "MT": "Basilicata",
+    "CZ": "Calabria", "CS": "Calabria", "RC": "Calabria", "KR": "Calabria", "VV": "Calabria",
+    "PA": "Sicilia", "CT": "Sicilia", "ME": "Sicilia", "SR": "Sicilia", "TP": "Sicilia",
+    "AG": "Sicilia", "CL": "Sicilia", "RG": "Sicilia", "EN": "Sicilia",
+    "CA": "Sardegna", "SS": "Sardegna", "NU": "Sardegna", "OR": "Sardegna", "SU": "Sardegna",
+    "OT": "Sardegna", "VS": "Sardegna", "CI": "Sardegna", "OG": "Sardegna",
+}
+
+
+def regione_di(provincia):
+    if not provincia:
+        return None
+    return REGIONE_PER_PROVINCIA.get(provincia.upper(), "Altro")
 RUOLI = ["admin", "consulente"]
 
 # --------------------------------------------------------------------------
@@ -1702,10 +1741,12 @@ T_LEAD = """{% extends "base" %}{% block contenuto %}
     {% for x in stati_lead %}<option {{ 'selected' if stato==x }}>{{ x }}</option>{% endfor %}</select>
   <select name="fonte"><option value="">Tutte le fonti</option>
     {% for x in fonti %}<option {{ 'selected' if fonte==x }}>{{ x }}</option>{% endfor %}</select>
+  <select name="regione"><option value="">Tutte le regioni</option>
+    {% for x in regioni %}<option {{ 'selected' if regione==x }}>{{ x }}</option>{% endfor %}</select>
   <select name="provincia"><option value="">Tutte le province</option>
     {% for x in province %}<option {{ 'selected' if provincia==x }}>{{ x }}</option>{% endfor %}</select>
   <button class="btn" type="submit">Filtra</button>
-  {% if q or stato or fonte %}<a class="btn chiaro" href="/crm/lead">Azzera</a>{% endif %}
+  {% if q or stato or fonte or provincia or regione %}<a class="btn chiaro" href="/crm/lead">Azzera</a>{% endif %}
 </form>
 
 {% if utente.is_admin %}
@@ -3165,6 +3206,7 @@ def lista_lead():
     stato = request.args.get("stato", "")
     fonte = request.args.get("fonte", "")
     provincia = request.args.get("provincia", "")
+    regione = request.args.get("regione", "")
     try:
         pagina_n = max(1, int(request.args.get("pagina", 1)))
     except ValueError:
@@ -3182,6 +3224,10 @@ def lista_lead():
         query = query.filter(Lead.fonte == fonte)
     if provincia:
         query = query.filter(Lead.provincia == provincia)
+    if regione:
+        # La regione non è una colonna salvata: filtro su tutte le province che vi appartengono.
+        province_della_regione = [p for p, r in REGIONE_PER_PROVINCIA.items() if r == regione]
+        query = query.filter(Lead.provincia.in_(province_della_regione))
 
     totale = query.count()
     pagine_tot = max(1, (totale + PER_PAGINA - 1) // PER_PAGINA)
@@ -3193,15 +3239,18 @@ def lista_lead():
              .distinct().order_by(Lead.fonte).all()]
     province = [r[0] for r in SessionLocale.query(Lead.provincia).filter(Lead.provincia.isnot(None))
                 .distinct().order_by(Lead.provincia).all()]
+    regioni = sorted({regione_di(p) for p in province if regione_di(p)})
 
     parti_query = []
     if q: parti_query.append(f"q={q}")
     if stato: parti_query.append(f"stato={stato}")
     if fonte: parti_query.append(f"fonte={fonte}")
     if provincia: parti_query.append(f"provincia={provincia}")
+    if regione: parti_query.append(f"regione={regione}")
 
     return rendi("lead", titolo="Lead", pagina="lead", elenco=elenco, totale=totale,
                  q=q, stato=stato, fonte=fonte, fonti=fonti, provincia=provincia, province=province,
+                 regione=regione, regioni=regioni,
                  stati_lead=STATI_LEAD,
                  pagina_n=pagina_n, pagine_tot=pagine_tot,
                  query_senza_pagina="&".join(parti_query))
