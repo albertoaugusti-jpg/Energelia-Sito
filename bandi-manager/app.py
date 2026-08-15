@@ -17,7 +17,7 @@ from typing import Optional
 
 from flask import (
     Flask, render_template, request, redirect, url_for, flash,
-    send_from_directory, abort
+    send_from_directory, abort, jsonify
 )
 from werkzeug.utils import secure_filename
 
@@ -25,6 +25,7 @@ from parser import (
     Bando, read_bandi, write_bandi, slugify,
     CTA_MODAL, CTA_REPORT, CTA_LINK, STATI,
 )
+from pdf_extract import extract_bando_da_pdf
 
 
 # ----------------- Path setup -----------------
@@ -253,6 +254,25 @@ def sposta(slug, direzione):
 def anteprima_img(filename):
     """Serve immagini dalla cartella img/ del sito per anteprima."""
     return send_from_directory(str(IMG_DIR), filename)
+
+
+@app.route("/api/estrai-pdf", methods=["POST"])
+def estrai_pdf():
+    """Legge un PDF report caricato e prova a estrarre i campi del bando.
+
+    Risposta JSON: {"ok": true, "campi": {...}} oppure {"ok": false, "errore": "..."}.
+    I campi restano comunque tutti modificabili a mano nel form.
+    """
+    pdf = request.files.get("pdf")
+    if not pdf or not pdf.filename:
+        return jsonify({"ok": False, "errore": "Nessun file ricevuto."}), 400
+    if not pdf.filename.lower().endswith(".pdf"):
+        return jsonify({"ok": False, "errore": "Il file deve essere un PDF."}), 400
+    try:
+        campi = extract_bando_da_pdf(pdf.stream)
+    except Exception as e:
+        return jsonify({"ok": False, "errore": f"Non sono riuscito a leggere il PDF: {e}"}), 422
+    return jsonify({"ok": True, "campi": campi})
 
 
 # ----------------- Avvio -----------------
