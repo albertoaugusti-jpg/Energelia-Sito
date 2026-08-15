@@ -120,6 +120,17 @@
 <div class="form-wrap">
   <form method="post" enctype="multipart/form-data" action="">
 
+    <div class="form-card" id="pdf-precompila-card" style="border-color: var(--accent); background: #fffdf5;">
+      <h2>Precompila da PDF</h2>
+      <div class="form-row full">
+        <div class="form-field">
+          <label>Carica il PDF report del bando per compilare automaticamente i campi qui sotto</label>
+          <input type="file" id="pdf_precompila" accept="application/pdf">
+          <div class="hint" id="pdf_precompila_status">Facoltativo. I campi restano comunque tutti modificabili prima di salvare.</div>
+        </div>
+      </div>
+    </div>
+
     <div class="form-card">
       <h2>1. Aspetto della card</h2>
 
@@ -369,6 +380,46 @@
       } else {
         preview.style.backgroundImage = '';
       }
+    });
+  }
+
+  // Precompila i campi del form leggendo un PDF report
+  const pdfInput = document.getElementById("pdf_precompila");
+  const pdfStatus = document.getElementById("pdf_precompila_status");
+  function setField(name, value) {
+    if (value === undefined || value === null) return;
+    const el2 = document.querySelector('[name="' + name + '"]');
+    if (el2) el2.value = value;
+  }
+  if (pdfInput) {
+    pdfInput.addEventListener("change", function () {
+      const file = pdfInput.files && pdfInput.files[0];
+      if (!file) return;
+      pdfStatus.textContent = "Leggo il PDF...";
+      const fd = new FormData();
+      fd.append("pdf", file);
+      fetch("/api/estrai-pdf", { method: "POST", body: fd })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (!data.ok) {
+            pdfStatus.textContent = "Non sono riuscito a leggere il PDF: " + (data.errore || "errore sconosciuto") + ". Compila pure a mano.";
+            return;
+          }
+          const c = data.campi || {};
+          setField("titolo_breve", c.titolo_breve);
+          setField("titolo", c.titolo);
+          setField("descrizione_breve", c.descrizione_breve);
+          setField("ente", c.ente);
+          setField("badge_testo", c.badge_testo);
+          setField("importo", c.importo);
+          setField("beneficiari", c.beneficiari);
+          setField("spese", c.spese);
+          setField("nota", c.nota);
+          pdfStatus.textContent = "Campi precompilati dal PDF. Controllali e correggi se serve prima di salvare.";
+        })
+        .catch(function () {
+          pdfStatus.textContent = "Errore di comunicazione con il server. Compila pure a mano.";
+        });
     });
   }
 
