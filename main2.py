@@ -23,6 +23,12 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 # Genera URL con https:// invece di http:// nei template
 app.config['PREFERRED_URL_SCHEME'] = 'https'
 
+from crm import init_crm
+init_crm(app)
+
+from simulatore_fv import simulatore_bp, init_simulatore_db
+app.register_blueprint(simulatore_bp)
+
 
 @app.before_request
 def enforce_https_in_production():
@@ -187,6 +193,7 @@ def init_db():
 
 
 init_db()
+init_simulatore_db()
 
 
 VALID_BANDI = {'isi_inail', 'parco_agrisolare', 'botteghe_entroterra'}
@@ -198,13 +205,13 @@ def save_lead():
     email = data.get('email', '').strip()
     phone = data.get('phone', '').strip()
     bando = data.get('bando', '').strip()
-    
+
     if not email or '@' not in email or len(email) > 255:
         return jsonify({'success': False, 'error': 'Email non valida'}), 400
-    
+
     if not bando or bando not in VALID_BANDI:
         return jsonify({'success': False, 'error': 'Bando non valido'}), 400
-    
+
     try:
         conn = get_db_connection()
         cur = conn.cursor()
@@ -237,13 +244,13 @@ def save_consultation():
     data = request.get_json(silent=True) or {}
     email = data.get('email', '').strip()
     phone = data.get('phone', '').strip()
-    
+
     if not email or '@' not in email or len(email) > 255:
         return jsonify({'success': False, 'error': 'Email non valida'}), 400
-    
+
     if not phone or len(phone) < 6 or len(phone) > 50:
         return jsonify({'success': False, 'error': 'Telefono non valido'}), 400
-    
+
     try:
         conn = get_db_connection()
         cur = conn.cursor()
@@ -310,7 +317,7 @@ def admin_dashboard():
 def admin_login():
     data = request.get_json(silent=True) or {}
     password = data.get('password', '')
-    
+
     if password == ADMIN_PASSWORD:
         return jsonify({'success': True, 'token': 'admin_authenticated'})
     return jsonify({'success': False, 'error': 'Password errata'}), 401
@@ -320,19 +327,19 @@ def get_all_leads():
     auth = request.headers.get('Authorization', '')
     if auth != 'Bearer admin_authenticated':
         return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
-    
+
     try:
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("""
-            SELECT id, email, phone, bando, tag, created_at 
-            FROM leads 
+            SELECT id, email, phone, bando, tag, created_at
+            FROM leads
             ORDER BY created_at DESC
         """)
         rows = cur.fetchall()
         cur.close()
         conn.close()
-        
+
         leads = []
         for row in rows:
             leads.append({
@@ -343,7 +350,7 @@ def get_all_leads():
                 'tag': row[4],
                 'created_at': row[5].isoformat() if row[5] else None
             })
-        
+
         return jsonify({'success': True, 'leads': leads})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
@@ -353,19 +360,19 @@ def get_all_consultations():
     auth = request.headers.get('Authorization', '')
     if auth != 'Bearer admin_authenticated':
         return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
-    
+
     try:
         conn = get_db_connection()
         cur = conn.cursor()
         cur.execute("""
-            SELECT id, email, phone, created_at 
-            FROM consultations 
+            SELECT id, email, phone, created_at
+            FROM consultations
             ORDER BY created_at DESC
         """)
         rows = cur.fetchall()
         cur.close()
         conn.close()
-        
+
         consultations = []
         for row in rows:
             consultations.append({
@@ -374,7 +381,7 @@ def get_all_consultations():
                 'phone': row[2],
                 'created_at': row[3].isoformat() if row[3] else None
             })
-        
+
         return jsonify({'success': True, 'consultations': consultations})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
@@ -384,14 +391,14 @@ def update_lead_tag(lead_id):
     auth = request.headers.get('Authorization', '')
     if auth != 'Bearer admin_authenticated':
         return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
-    
+
     data = request.get_json(silent=True) or {}
     tag = data.get('tag')
-    
+
     valid_tags = [None, '', 'da_richiamare', 'da_scrivere_whatsapp', 'contattato', 'interessato', 'non_interessato']
     if tag not in valid_tags:
         return jsonify({'success': False, 'error': 'Tag non valido'}), 400
-    
+
     try:
         conn = get_db_connection()
         cur = conn.cursor()
@@ -408,26 +415,26 @@ def get_admin_stats():
     auth = request.headers.get('Authorization', '')
     if auth != 'Bearer admin_authenticated':
         return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
-    
+
     try:
         conn = get_db_connection()
         cur = conn.cursor()
-        
+
         cur.execute("SELECT bando, COUNT(*) FROM leads GROUP BY bando")
         bando_stats = dict(cur.fetchall())
-        
+
         cur.execute("SELECT tag, COUNT(*) FROM leads WHERE tag IS NOT NULL GROUP BY tag")
         tag_stats = dict(cur.fetchall())
-        
+
         cur.execute("SELECT COUNT(*) FROM leads")
         total_leads = cur.fetchone()[0]
-        
+
         cur.execute("SELECT COUNT(*) FROM consultations")
         total_consultations = cur.fetchone()[0]
-        
+
         cur.close()
         conn.close()
-        
+
         return jsonify({
             'success': True,
             'stats': {
