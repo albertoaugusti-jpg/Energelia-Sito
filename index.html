@@ -2425,6 +2425,124 @@
 })();
 </script>
 
+<!-- ====================  CTA SIMULATORE FOTOVOLTAICO  ==================== -->
+<!-- Da incollare in index.html subito DOPO la chiusura di </section> di
+     "bandi-evidenza-section" (quella con id="bandi-evidenza") e PRIMA della
+     sezione testimonianze. Stesso schema visivo di "cta-ricerca-bandi", non
+     introduce nessuna dipendenza nuova. -->
+<section class="cta-simulatore-fv" aria-label="Simulatore fotovoltaico">
+  <div class="container">
+    <div class="cta-sfv-grid">
+      <div class="cta-sfv-text">
+        <span class="cta-sfv-badge">
+          <i class="fas fa-solar-panel me-2"></i>NOVITÀ
+        </span>
+        <h2 class="cta-sfv-title">
+          Quanto puoi risparmiare con il fotovoltaico?
+        </h2>
+        <p class="cta-sfv-sub">
+          Carica la bolletta della luce: calcoliamo noi la taglia dell'impianto, il risparmio annuo e i bandi attivi per la tua zona.
+        </p>
+        <ul class="cta-sfv-list">
+          <li><i class="fas fa-check-circle"></i>Bastano pochi secondi, nessun sopralluogo</li>
+          <li><i class="fas fa-check-circle"></i>Vantaggi GSE + eventuali bandi attivi nella tua zona</li>
+          <li><i class="fas fa-check-circle"></i>Se non hai la bolletta a portata di mano, puoi inserire i dati a mano</li>
+        </ul>
+      </div>
+      <div class="cta-sfv-action">
+        <a href="/simulatore-fotovoltaico" class="cta-sfv-btn"
+           onclick="if(typeof gtag==='function'){gtag('event','click_simulatore_fv',{'event_category':'CTA','event_label':'home_simulatore_fv'});}">
+          <i class="fas fa-bolt me-2"></i>Avvia il simulatore
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.cta-simulatore-fv {
+  position: relative;
+  color: #fff;
+  padding: 3.5rem 0;
+  overflow: hidden;
+  border-bottom: 4px solid #d4af37;
+  background: linear-gradient(135deg, #0a1530 0%, #1a5276 60%, #1f6694 100%);
+}
+.cta-simulatore-fv .container { position: relative; z-index: 1; }
+.cta-sfv-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+.cta-sfv-text { max-width: 640px; }
+.cta-sfv-badge {
+  display: inline-block;
+  background: rgba(212,175,55,0.18);
+  border: 1px solid rgba(212,175,55,0.5);
+  color: #f4d03f;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+}
+.cta-sfv-title {
+  font-family: 'Source Serif 4', 'Georgia', serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: #fff !important;
+}
+.cta-sfv-sub {
+  font-size: 1.02rem;
+  opacity: 0.92;
+  line-height: 1.55;
+  margin-bottom: 1.3rem;
+}
+.cta-sfv-list { list-style: none; padding: 0; margin: 0; }
+.cta-sfv-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5px 0;
+  font-size: 0.94rem;
+  color: rgba(255,255,255,0.92);
+}
+.cta-sfv-list i { color: #f4d03f; font-size: 1rem; margin-top: 3px; flex-shrink: 0; }
+.cta-sfv-action { text-align: center; }
+.cta-sfv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #d4af37, #f4d03f);
+  color: #0a1530;
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 18px 36px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 14px 34px rgba(212,175,55,0.4);
+  transition: all 0.25s ease;
+}
+.cta-sfv-btn:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(212,175,55,0.55); color: #0a1530; }
+
+@media (max-width: 991.98px) {
+  .cta-sfv-grid { grid-template-columns: 1fr; text-align: center; gap: 1.6rem; }
+  .cta-sfv-text { max-width: none; }
+  .cta-sfv-list { display: inline-block; text-align: left; }
+}
+@media (max-width: 575.98px) {
+  .cta-simulatore-fv { padding: 2.6rem 0; }
+  .cta-sfv-title { font-size: 1.5rem; }
+}
+</style>
+<!-- ====================  FINE CTA SIMULATORE FOTOVOLTAICO  ==================== -->
+
+
 
 <!-- ============================================== -->
 <!-- SEZIONE TESTIMONIANZE - Storie di Successo -->
