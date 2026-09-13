@@ -23,9 +23,6 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 # Genera URL con https:// invece di http:// nei template
 app.config['PREFERRED_URL_SCHEME'] = 'https'
 
-from crm import init_crm
-init_crm(app)
-
 
 @app.before_request
 def enforce_https_in_production():
