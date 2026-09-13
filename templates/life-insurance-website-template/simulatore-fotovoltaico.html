@@ -228,10 +228,16 @@
     font-size: 0.92rem;
   }
 
-  .sfv-result-hero { text-align: center; padding: 6px 0 22px; }
-  .sfv-result-hero .kwp { font-family: 'Source Serif 4', Georgia, serif; font-size: 2.8rem; font-weight: 700; color: #0a1530; }
-  .sfv-result-hero .kwp small { font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600; color: #5a6577; }
-  .sfv-result-hero .nota { font-size: 0.85rem; color: #8a94a3; margin-top: 6px; }
+  .sfv-result-hero {
+    text-align: center;
+    padding: 26px 20px 24px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
+    margin-bottom: 18px;
+  }
+  .sfv-result-hero .kwp { font-family: 'Source Serif 4', Georgia, serif; font-size: 2.8rem; font-weight: 700; color: #fff; }
+  .sfv-result-hero .kwp small { font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600; color: rgba(255,255,255,0.75); }
+  .sfv-result-hero .nota { font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-top: 6px; }
 
   .sfv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 480px) { .sfv-grid { grid-template-columns: 1fr; } }
@@ -239,6 +245,67 @@
   .sfv-stat { background: #f7f9fc; border-radius: 12px; padding: 16px; border-left: 3px solid #d4af37; }
   .sfv-stat .label { font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7689; margin-bottom: 4px; }
   .sfv-stat .value { font-size: 1.35rem; font-weight: 800; color: #0a1530; }
+  .sfv-stat .value small { font-size: 0.9rem; font-weight: 600; color: #6b7689; }
+
+  .sfv-breakdown {
+    background: #fff;
+    border: 1px solid #e5e8ee;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 18px 0;
+  }
+  .sfv-breakdown-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7689;
+    margin-bottom: 12px;
+  }
+  .sfv-breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid #f0f2f6;
+    font-size: 0.94rem;
+  }
+  .sfv-breakdown-row:last-child { border-bottom: none; }
+  .sfv-breakdown-row .voce { color: #455062; font-weight: 600; }
+  .sfv-breakdown-row .voce i { color: #d4af37; margin-right: 8px; width: 16px; text-align: center; }
+  .sfv-breakdown-row .importo { color: #0a1530; font-weight: 800; }
+  .sfv-breakdown-bar { height: 8px; border-radius: 5px; background: #eef1f6; overflow: hidden; display: flex; margin: 12px 0 4px; }
+  .sfv-breakdown-bar .seg-autoconsumo { background: linear-gradient(90deg, #d4af37, #f4d03f); }
+  .sfv-breakdown-bar .seg-immessa { background: #1a5276; }
+  .sfv-breakdown-legend { display: flex; gap: 18px; font-size: 0.76rem; color: #8a94a3; }
+  .sfv-breakdown-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .sfv-breakdown-legend .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+  .sfv-spiegazione { margin: 26px 0 6px; }
+  .sfv-spiega-card {
+    border: 1px solid #e5e8ee;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .sfv-spiega-card .icona {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.14);
+    color: #b8960c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+  .sfv-spiega-card .titolo { font-weight: 700; color: #0a1530; margin-bottom: 4px; font-size: 0.96rem; }
+  .sfv-spiega-card .testo { font-size: 0.87rem; color: #5a6577; line-height: 1.55; }
+  .sfv-spiega-card.sfv-spiega-fiscale { background: #f7f9fc; border-style: dashed; }
 
   .sfv-section-title {
     font-family: 'Source Serif 4', Georgia, serif;
@@ -350,14 +417,59 @@
       <div class="sfv-grid">
         <div class="sfv-stat">
           <div class="label">Produzione annua stimata</div>
-          <div class="value"><span id="sfv-produzione">--</span> kWh</div>
+          <div class="value"><span id="sfv-produzione">--</span> <small>kWh</small></div>
         </div>
         <div class="sfv-stat">
           <div class="label">Vantaggio annuo stimato*</div>
           <div class="value">&euro; <span id="sfv-vantaggio">--</span></div>
         </div>
       </div>
-      <p class="sfv-privacy-note">*Somma di risparmio da autoconsumo e ricavo da Ritiro Dedicato sull'energia immessa, scenario senza batteria di accumulo. Stima grossolana, non sostituisce un sopralluogo.</p>
+
+      <div class="sfv-breakdown">
+        <div class="sfv-breakdown-title">Come si compone il vantaggio annuo</div>
+        <div class="sfv-breakdown-row">
+          <span class="voce"><i class="fas fa-house-battery"></i>Risparmio da autoconsumo</span>
+          <span class="importo">&euro; <span id="sfv-risparmio-autoconsumo">--</span></span>
+        </div>
+        <div class="sfv-breakdown-row">
+          <span class="voce"><i class="fas fa-plug-circle-bolt"></i>Ricavo da Ritiro Dedicato (GSE)</span>
+          <span class="importo">&euro; <span id="sfv-ricavo-rid">--</span></span>
+        </div>
+        <div class="sfv-breakdown-bar">
+          <div class="seg-autoconsumo" id="sfv-bar-autoconsumo" style="width:50%"></div>
+          <div class="seg-immessa" id="sfv-bar-immessa" style="width:50%"></div>
+        </div>
+        <div class="sfv-breakdown-legend">
+          <span><span class="dot" style="background:#d4af37"></span>Energia autoconsumata</span>
+          <span><span class="dot" style="background:#1a5276"></span>Energia immessa in rete</span>
+        </div>
+      </div>
+      <p class="sfv-privacy-note">*Scenario senza batteria di accumulo. Stima grossolana, non sostituisce un sopralluogo.</p>
+
+      <div class="sfv-spiegazione">
+        <h3 class="sfv-section-title">Perché questo numero: i meccanismi che lo determinano</h3>
+        <div class="sfv-spiega-card">
+          <div class="icona"><i class="fas fa-house-battery"></i></div>
+          <div>
+            <div class="titolo" id="sfv-info-autoconsumo-titolo">Risparmio da autoconsumo</div>
+            <div class="testo" id="sfv-info-autoconsumo-testo"></div>
+          </div>
+        </div>
+        <div class="sfv-spiega-card">
+          <div class="icona"><i class="fas fa-plug-circle-bolt"></i></div>
+          <div>
+            <div class="titolo" id="sfv-info-rid-titolo">Ritiro Dedicato (GSE)</div>
+            <div class="testo" id="sfv-info-rid-testo"></div>
+          </div>
+        </div>
+        <div class="sfv-spiega-card sfv-spiega-fiscale">
+          <div class="icona"><i class="fas fa-file-invoice-dollar"></i></div>
+          <div>
+            <div class="titolo" id="sfv-info-fiscale-titolo">Ulteriori vantaggi fiscali</div>
+            <div class="testo" id="sfv-info-fiscale-testo"></div>
+          </div>
+        </div>
+      </div>
 
       <div id="sfv-bandi-wrap">
         <h3 class="sfv-section-title">Bandi e incentivi attivi per la tua zona</h3>
@@ -520,8 +632,35 @@
             document.getElementById('sfv-kwp').textContent = dim.kwp_proposto;
             document.getElementById('sfv-produzione').textContent = dim.produzione_annua_kwh_stimata.toLocaleString('it-IT');
 
-            var vantaggio = data.vantaggi_ordinari.senza_batteria.vantaggio_annuo_totale_eur;
+            var scenario = data.vantaggi_ordinari.senza_batteria;
+            var vantaggio = scenario.vantaggio_annuo_totale_eur;
             document.getElementById('sfv-vantaggio').textContent = vantaggio.toLocaleString('it-IT');
+
+            var risparmioAutoconsumo = scenario.risparmio_autoconsumo_eur;
+            var ricavoRid = scenario.ricavo_ritiro_dedicato_eur;
+            document.getElementById('sfv-risparmio-autoconsumo').textContent = risparmioAutoconsumo.toLocaleString('it-IT');
+            document.getElementById('sfv-ricavo-rid').textContent = ricavoRid.toLocaleString('it-IT');
+
+            var quotaAutoconsumo = scenario.quota_autoconsumo || 0.35;
+            var pctAutoconsumo = Math.round(quotaAutoconsumo * 100);
+            document.getElementById('sfv-bar-autoconsumo').style.width = pctAutoconsumo + '%';
+            document.getElementById('sfv-bar-immessa').style.width = (100 - pctAutoconsumo) + '%';
+
+            if (data.info_normativa) {
+              var info = data.info_normativa;
+              if (info.autoconsumo) {
+                document.getElementById('sfv-info-autoconsumo-titolo').textContent = info.autoconsumo.titolo;
+                document.getElementById('sfv-info-autoconsumo-testo').textContent = info.autoconsumo.testo;
+              }
+              if (info.ritiro_dedicato) {
+                document.getElementById('sfv-info-rid-titolo').textContent = info.ritiro_dedicato.titolo;
+                document.getElementById('sfv-info-rid-testo').textContent = info.ritiro_dedicato.testo;
+              }
+              if (info.vantaggi_fiscali) {
+                document.getElementById('sfv-info-fiscale-titolo').textContent = info.vantaggi_fiscali.titolo;
+                document.getElementById('sfv-info-fiscale-testo').textContent = info.vantaggi_fiscali.testo;
+              }
+            }
 
             var nota = 'Stima grossolana';
             if (dim.limitato_da_potenza_impegnata) {
