@@ -101,8 +101,45 @@ QUOTA_AUTOCONSUMO_SENZA_BATTERIA = 0.35
 QUOTA_AUTOCONSUMO_CON_BATTERIA = 0.65
 
 # Prezzo di ritiro dedicato stimato (€/kWh) applicato all'energia immessa in
-# rete, cautelativo/indicativo: va confrontato con i prezzi GME/RID reali.
-PREZZO_RITIRO_DEDICATO_STIMATO = 0.10
+# rete. Il GSE paga il maggiore tra Prezzo Zonale Orario (PZO, media 2026
+# indicativamente ~0,12-0,13 €/kWh) e Prezzo Minimo Garantito (PMG 2026 per
+# fotovoltaico: 0,0475 €/kWh, fino a 1.500.000 kWh/anno). Usiamo qui una stima
+# cautelativa vicina alla media PZO: va confrontata con i prezzi reali GME/GSE
+# del periodo, che variano nel tempo.
+PREZZO_RITIRO_DEDICATO_STIMATO = 0.11
+
+# Testi informativi statici sui meccanismi che determinano il vantaggio annuo,
+# mostrati in chiaro nella pagina risultati. Aggiornare se cambia la normativa
+# (fonti: pagine GSE Ritiro Dedicato, delibera ARERA 78/2025/R/efr su chiusura
+# Scambio sul Posto ai nuovi impianti, guide fiscali 2026 su detrazioni FV).
+INFO_NORMATIVA = {
+    'autoconsumo': {
+        'titolo': 'Risparmio da autoconsumo',
+        'testo': ("L'energia che l'impianto produce e che usi subito (o quasi subito) in casa o "
+                  "in azienda non la paghi più al fornitore: il risparmio si calcola valorizzando "
+                  "quell'energia al prezzo medio che oggi paghi in bolletta."),
+    },
+    'ritiro_dedicato': {
+        'titolo': 'Ritiro Dedicato (GSE)',
+        'testo': ("L'energia prodotta e non autoconsumata viene immessa in rete e venduta al GSE "
+                  "tramite il servizio di Ritiro Dedicato. Il GSE paga il maggiore tra il Prezzo "
+                  "Zonale Orario (il prezzo di mercato dell'energia nella tua zona, variabile "
+                  "nel tempo) e un Prezzo Minimo Garantito fissato ogni anno, così da tutelare il "
+                  "produttore anche quando i prezzi di mercato scendono. Dal 2025 lo Scambio sul "
+                  "Posto non è più attivabile per i nuovi impianti: per chi installa oggi il "
+                  "meccanismo di riferimento è il Ritiro Dedicato."),
+    },
+    'vantaggi_fiscali': {
+        'titolo': 'Ulteriori vantaggi fiscali (non inclusi nel numero sopra)',
+        'testo': ("A seconda della tua situazione possono aggiungersi: detrazione IRPEF 50% "
+                  "sull'abitazione principale per impianti fino a 20 kW (ripartita in 10 rate "
+                  "annuali), detrazione 36% per le altre unità immobiliari, IVA agevolata al 10% "
+                  "su acquisto e installazione (4% su nuove costruzioni), e per le imprese il "
+                  "Conto Termico 3.0 come misura di accompagnamento. Non li includiamo nella "
+                  "stima del vantaggio annuo perché dipendono dalla tua situazione specifica: "
+                  "se rientri tra i possibili beneficiari te ne parliamo in fase di valutazione."),
+    },
+}
 
 # Prezzo medio bolletta di fallback (€/kWh) se non lo ricaviamo dai dati.
 PREZZO_MEDIO_FALLBACK = 0.25
@@ -405,6 +442,7 @@ def analizza():
         'dimensionamento': dimensionamento,
         'vantaggi_ordinari': vantaggi,
         'bandi_correlati': bandi,
+        'info_normativa': INFO_NORMATIVA,
     })
 
 

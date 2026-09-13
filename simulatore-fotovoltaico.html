@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="it">
+
+    <head>
+        <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('consent', 'default', {
+            'ad_storage': 'denied',
+            'analytics_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'wait_for_update': 500
+          });
+          try {
+            if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
+              gtag('consent', 'update', {
+                'ad_storage': 'granted',
+                'analytics_storage': 'granted',
+                'ad_user_data': 'granted',
+                'ad_personalization': 'granted'
+              });
+            }
+          } catch(e) {}
+        </script>
+
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-VL6MKDTQXH"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-VL6MKDTQXH');
+        </script>
+        <!-- Google Ads -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17893109593"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-17893109593');
+        </script>
+
+        <meta charset="utf-8">
+        <title>Simulatore Fotovoltaico | Energelia</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="simulatore fotovoltaico, dimensionamento impianto solare, GSE, bandi fotovoltaico" name="keywords">
+        <meta content="Carica la bolletta della luce: in pochi secondi ottieni una stima di taglia impianto, risparmio annuo e bandi attivi per la tua zona." name="description">
+
+        <!-- Google Web Fonts - Stile Istituzionale -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+        <link href="{{ url_for('static', filename='lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+        <!-- Favicon Energelia -->
+        <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+<style>
+  /* ===== Simulatore fotovoltaico — stile coerente con il tema Energelia (navy #0a1530 / oro #d4af37) ===== */
+  .sfv-page { background: #f7f9fc; padding-bottom: 40px; }
+
+  .sfv-hero {
+    position: relative;
+    color: #fff;
+    padding: 130px 0 60px;
+    text-align: center;
+    background-image: url('{{ url_for("static", filename="img/simulatore-fotovoltaico-hero.png") }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .sfv-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: linear-gradient(135deg, rgba(10,21,48,0.88) 0%, rgba(26,82,118,0.78) 60%, rgba(31,102,148,0.72) 100%);
+  }
+  .sfv-hero .container { position: relative; z-index: 1; }
+  .sfv-hero-badge {
+    display: inline-block;
+    background: rgba(212,175,55,0.18);
+    border: 1px solid rgba(212,175,55,0.5);
+    color: #f4d03f;
+    padding: 6px 18px;
+    border-radius: 30px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .sfv-hero h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+    margin: 0 0 0.8rem;
+  }
+  .sfv-hero p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.05rem;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .sfv-container { max-width: 760px; margin: -34px auto 0; padding: 0 16px 60px; position: relative; z-index: 2; }
+
+  .sfv-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 20px 50px rgba(10,21,48,0.12);
+    margin-bottom: 22px;
+    border: 1px solid rgba(10,21,48,0.05);
+  }
+
+  .sfv-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+  .sfv-tab {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: 30px;
+    border: 1.5px solid #d6dde7;
+    background: #f7f9fc;
+    color: #0a1530;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  .sfv-tab.active { background: linear-gradient(135deg, #0a1530, #1a5276); color: #fff; border-color: #0a1530; }
+
+  .sfv-dropzone {
+    border: 2px dashed #cbd5e0;
+    border-radius: 14px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .sfv-dropzone.dragover { border-color: #d4af37; background: #fffaf0; }
+  .sfv-dropzone i { font-size: 2rem; color: #d4af37; margin-bottom: 10px; display: block; }
+  .sfv-dropzone p { margin: 6px 0; color: #455062; }
+  .sfv-dropzone .sfv-file-name { font-weight: 700; color: #0a1530; }
+
+  .sfv-field { margin-bottom: 14px; }
+  .sfv-field label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #5a6577;
+    margin-bottom: 5px;
+  }
+  .sfv-field input, .sfv-field select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid #d6dde7;
+    border-radius: 10px;
+    font-size: 0.98rem;
+    color: #0a1530;
+    background: #f7f9fc;
+    transition: all 0.2s ease;
+  }
+  .sfv-field input:focus {
+    outline: none;
+    border-color: #1a5276;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(26,82,118,0.12);
+  }
+
+  .sfv-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #d4af37, #f4d03f);
+    color: #0a1530;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 26px rgba(212,175,55,0.35);
+  }
+  .sfv-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(212,175,55,0.5); }
+  .sfv-btn:disabled { opacity: 0.65; cursor: default; transform: none; }
+  .sfv-btn-secondary {
+    background: transparent;
+    color: #0a1530;
+    border: 1.5px solid #0a1530;
+    box-shadow: none;
+  }
+  .sfv-btn-secondary:hover:not(:disabled) { background: #0a1530; color: #fff; box-shadow: none; }
+
+  .sfv-hidden { display: none !important; }
+
+  .sfv-error {
+    background: #fdecea;
+    color: #b3261e;
+    border: 1px solid #f5c2bd;
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    font-size: 0.92rem;
+  }
+
+  .sfv-result-hero {
+    text-align: center;
+    padding: 26px 20px 24px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
+    margin-bottom: 18px;
+  }
+  .sfv-result-hero .kwp { font-family: 'Source Serif 4', Georgia, serif; font-size: 2.8rem; font-weight: 700; color: #fff; }
+  .sfv-result-hero .kwp small { font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600; color: rgba(255,255,255,0.75); }
+  .sfv-result-hero .nota { font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-top: 6px; }
+
+  .sfv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .sfv-grid { grid-template-columns: 1fr; } }
+
+  .sfv-stat { background: #f7f9fc; border-radius: 12px; padding: 16px; border-left: 3px solid #d4af37; }
+  .sfv-stat .label { font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #6b7689; margin-bottom: 4px; }
+  .sfv-stat .value { font-size: 1.35rem; font-weight: 800; color: #0a1530; }
+  .sfv-stat .value small { font-size: 0.9rem; font-weight: 600; color: #6b7689; }
+
+  .sfv-breakdown {
+    background: #fff;
+    border: 1px solid #e5e8ee;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin: 18px 0;
+  }
+  .sfv-breakdown-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7689;
+    margin-bottom: 12px;
+  }
+  .sfv-breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid #f0f2f6;
+    font-size: 0.94rem;
+  }
+  .sfv-breakdown-row:last-child { border-bottom: none; }
+  .sfv-breakdown-row .voce { color: #455062; font-weight: 600; }
+  .sfv-breakdown-row .voce i { color: #d4af37; margin-right: 8px; width: 16px; text-align: center; }
+  .sfv-breakdown-row .importo { color: #0a1530; font-weight: 800; }
+  .sfv-breakdown-bar { height: 8px; border-radius: 5px; background: #eef1f6; overflow: hidden; display: flex; margin: 12px 0 4px; }
+  .sfv-breakdown-bar .seg-autoconsumo { background: linear-gradient(90deg, #d4af37, #f4d03f); }
+  .sfv-breakdown-bar .seg-immessa { background: #1a5276; }
+  .sfv-breakdown-legend { display: flex; gap: 18px; font-size: 0.76rem; color: #8a94a3; }
+  .sfv-breakdown-legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .sfv-breakdown-legend .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+
+  .sfv-spiegazione { margin: 26px 0 6px; }
+  .sfv-spiega-card {
+    border: 1px solid #e5e8ee;
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .sfv-spiega-card .icona {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.14);
+    color: #b8960c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+  .sfv-spiega-card .titolo { font-weight: 700; color: #0a1530; margin-bottom: 4px; font-size: 0.96rem; }
+  .sfv-spiega-card .testo { font-size: 0.87rem; color: #5a6577; line-height: 1.55; }
+  .sfv-spiega-card.sfv-spiega-fiscale { background: #f7f9fc; border-style: dashed; }
+
+  .sfv-section-title {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 26px 0 12px;
+    color: #0a1530;
+  }
+
+  .sfv-bando { border: 1px solid #e5e8ee; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+  .sfv-bando .titolo { font-weight: 700; color: #0a1530; margin-bottom: 3px; }
+  .sfv-bando .stato { font-size: 0.8rem; color: #1e7e3a; font-weight: 600; }
+  .sfv-bando a { color: #b8960c; text-decoration: none; font-size: 0.87rem; font-weight: 600; }
+
+  .sfv-privacy-note { font-size: 0.76rem; color: #8a94a3; margin-top: 10px; }
+
+  .sfv-spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2.5px solid rgba(10,21,48,0.25);
+    border-top-color: #0a1530;
+    border-radius: 50%;
+    animation: sfv-spin .8s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes sfv-spin { to { transform: rotate(360deg); } }
+</style>
+    </head>
+
+    <body>
+
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+{% include 'life-insurance-website-template/partials/navbar.html' %}
+
+<div class="sfv-page">
+
+  <header class="sfv-hero">
+    <div class="container">
+      <span class="sfv-hero-badge"><i class="fas fa-solar-panel me-2"></i>SIMULATORE FOTOVOLTAICO</span>
+      <h1>Quanto puoi risparmiare con il fotovoltaico?</h1>
+      <p>Carica la bolletta della luce: in pochi secondi hai una stima di taglia impianto, risparmio annuo e bandi attivi per la tua zona.</p>
+    </div>
+  </header>
+
+  <main class="sfv-container">
+
+    <!-- STEP 1: input -->
+    <section id="sfv-step-input" class="sfv-card">
+      <div class="sfv-tabs">
+        <div class="sfv-tab active" data-tab="bolletta"><i class="fas fa-file-invoice me-2"></i>Carica la bolletta</div>
+        <div class="sfv-tab" data-tab="manuale"><i class="fas fa-keyboard me-2"></i>Inserisci i dati a mano</div>
+      </div>
+
+      <div id="sfv-error-box" class="sfv-error sfv-hidden"></div>
+
+      <!-- Tab bolletta -->
+      <div id="sfv-tab-bolletta">
+        <div class="sfv-dropzone" id="sfv-dropzone">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p><strong>Trascina qui il PDF della bolletta</strong></p>
+          <p>oppure clicca per selezionarlo</p>
+          <p class="sfv-file-name sfv-hidden" id="sfv-file-name"></p>
+          <input type="file" id="sfv-file-input" accept="application/pdf" class="sfv-hidden">
+        </div>
+        <p class="sfv-privacy-note">Il file viene usato solo per estrarre i dati di consumo necessari alla simulazione.</p>
+      </div>
+
+      <!-- Tab manuale -->
+      <div id="sfv-tab-manuale" class="sfv-hidden">
+        <div class="sfv-field">
+          <label for="m-consumo">Consumo annuo (kWh)</label>
+          <input type="number" id="m-consumo" placeholder="es. 29000">
+        </div>
+        <div class="sfv-field">
+          <label for="m-spesa">Spesa annua in bolletta (&euro;, facoltativo)</label>
+          <input type="number" id="m-spesa" placeholder="es. 9700">
+        </div>
+        <div class="sfv-field">
+          <label for="m-potenza">Potenza impegnata (kW, facoltativo)</label>
+          <input type="number" id="m-potenza" placeholder="es. 30">
+        </div>
+        <div class="sfv-field">
+          <label for="m-provincia">Provincia (sigla)</label>
+          <input type="text" id="m-provincia" maxlength="2" placeholder="es. GE">
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top: 20px;">
+        <button class="sfv-btn" id="sfv-analizza-btn"><i class="fas fa-bolt me-2"></i>Calcola la mia simulazione</button>
+      </div>
+    </section>
+
+    <!-- STEP 2: risultato -->
+    <section id="sfv-step-risultato" class="sfv-card sfv-hidden">
+
+      <div class="sfv-result-hero">
+        <div class="kwp"><span id="sfv-kwp">--</span> <small>kWp indicativi</small></div>
+        <div class="nota" id="sfv-kwp-nota"></div>
+      </div>
+
+      <div class="sfv-grid">
+        <div class="sfv-stat">
+          <div class="label">Produzione annua stimata</div>
+          <div class="value"><span id="sfv-produzione">--</span> <small>kWh</small></div>
+        </div>
+        <div class="sfv-stat">
+          <div class="label">Vantaggio annuo stimato*</div>
+          <div class="value">&euro; <span id="sfv-vantaggio">--</span></div>
+        </div>
+      </div>
+
+      <div class="sfv-breakdown">
+        <div class="sfv-breakdown-title">Come si compone il vantaggio annuo</div>
+        <div class="sfv-breakdown-row">
+          <span class="voce"><i class="fas fa-house-battery"></i>Risparmio da autoconsumo</span>
+          <span class="importo">&euro; <span id="sfv-risparmio-autoconsumo">--</span></span>
+        </div>
+        <div class="sfv-breakdown-row">
+          <span class="voce"><i class="fas fa-plug-circle-bolt"></i>Ricavo da Ritiro Dedicato (GSE)</span>
+          <span class="importo">&euro; <span id="sfv-ricavo-rid">--</span></span>
+        </div>
+        <div class="sfv-breakdown-bar">
+          <div class="seg-autoconsumo" id="sfv-bar-autoconsumo" style="width:50%"></div>
+          <div class="seg-immessa" id="sfv-bar-immessa" style="width:50%"></div>
+        </div>
+        <div class="sfv-breakdown-legend">
+          <span><span class="dot" style="background:#d4af37"></span>Energia autoconsumata</span>
+          <span><span class="dot" style="background:#1a5276"></span>Energia immessa in rete</span>
+        </div>
+      </div>
+      <p class="sfv-privacy-note">*Scenario senza batteria di accumulo. Stima grossolana, non sostituisce un sopralluogo.</p>
+
+      <div class="sfv-spiegazione">
+        <h3 class="sfv-section-title">Perché questo numero: i meccanismi che lo determinano</h3>
+        <div class="sfv-spiega-card">
+          <div class="icona"><i class="fas fa-house-battery"></i></div>
+          <div>
+            <div class="titolo" id="sfv-info-autoconsumo-titolo">Risparmio da autoconsumo</div>
+            <div class="testo" id="sfv-info-autoconsumo-testo"></div>
+          </div>
+        </div>
+        <div class="sfv-spiega-card">
+          <div class="icona"><i class="fas fa-plug-circle-bolt"></i></div>
+          <div>
+            <div class="titolo" id="sfv-info-rid-titolo">Ritiro Dedicato (GSE)</div>
+            <div class="testo" id="sfv-info-rid-testo"></div>
+          </div>
+        </div>
+        <div class="sfv-spiega-card sfv-spiega-fiscale">
+          <div class="icona"><i class="fas fa-file-invoice-dollar"></i></div>
+          <div>
+            <div class="titolo" id="sfv-info-fiscale-titolo">Ulteriori vantaggi fiscali</div>
+            <div class="testo" id="sfv-info-fiscale-testo"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="sfv-bandi-wrap">
+        <h3 class="sfv-section-title">Bandi e incentivi attivi per la tua zona</h3>
+        <div id="sfv-bandi-list"></div>
+      </div>
+
+      <h3 class="sfv-section-title">Vuoi il dettaglio e una valutazione da un consulente?</h3>
+      <div class="sfv-field">
+        <label for="l-email">Email</label>
+        <input type="email" id="l-email" required>
+      </div>
+      <div class="sfv-field">
+        <label for="l-phone">Telefono (facoltativo)</label>
+        <input type="tel" id="l-phone">
+      </div>
+      <button class="sfv-btn" id="sfv-invia-lead-btn"><i class="fas fa-paper-plane me-2"></i>Ricevi la valutazione completa</button>
+
+      <div id="sfv-lead-ok" class="sfv-hidden" style="margin-top:14px; color:#1e7e3a; font-weight:700;">
+        <i class="fas fa-check-circle me-2"></i>Richiesta inviata. Ti contatteremo a breve.
+      </div>
+
+      <div style="margin-top:20px;">
+        <button class="sfv-btn sfv-btn-secondary" id="sfv-ricomincia-btn">Rifai la simulazione</button>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+{% include 'life-insurance-website-template/partials/footer.html' %}
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary btn-lg-square rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/counterup/counterup.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/lightbox/js/lightbox.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
+        <!-- Template Javascript -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+        <!-- Simulatore fotovoltaico: logica wizard -->
+        <script>
+        (function () {
+          var tabBolletta = document.querySelector('[data-tab="bolletta"]');
+          var tabManuale = document.querySelector('[data-tab="manuale"]');
+          var wrapBolletta = document.getElementById('sfv-tab-bolletta');
+          var wrapManuale = document.getElementById('sfv-tab-manuale');
+          var tabAttivo = 'bolletta';
+
+          tabBolletta.addEventListener('click', function () { attivaTab('bolletta'); });
+          tabManuale.addEventListener('click', function () { attivaTab('manuale'); });
+
+          function attivaTab(tab) {
+            tabAttivo = tab;
+            tabBolletta.classList.toggle('active', tab === 'bolletta');
+            tabManuale.classList.toggle('active', tab === 'manuale');
+            wrapBolletta.classList.toggle('sfv-hidden', tab !== 'bolletta');
+            wrapManuale.classList.toggle('sfv-hidden', tab !== 'manuale');
+          }
+
+          var dropzone = document.getElementById('sfv-dropzone');
+          var fileInput = document.getElementById('sfv-file-input');
+          var fileNameEl = document.getElementById('sfv-file-name');
+          var fileSelezionato = null;
+
+          dropzone.addEventListener('click', function () { fileInput.click(); });
+          fileInput.addEventListener('change', function () {
+            if (fileInput.files.length) impostaFile(fileInput.files[0]);
+          });
+          dropzone.addEventListener('dragover', function (e) {
+            e.preventDefault();
+            dropzone.classList.add('dragover');
+          });
+          dropzone.addEventListener('dragleave', function () {
+            dropzone.classList.remove('dragover');
+          });
+          dropzone.addEventListener('drop', function (e) {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            if (e.dataTransfer.files.length) impostaFile(e.dataTransfer.files[0]);
+          });
+
+          function impostaFile(file) {
+            fileSelezionato = file;
+            fileNameEl.textContent = file.name;
+            fileNameEl.classList.remove('sfv-hidden');
+          }
+
+          var errorBox = document.getElementById('sfv-error-box');
+          function mostraErrore(msg) {
+            errorBox.textContent = msg;
+            errorBox.classList.remove('sfv-hidden');
+          }
+          function nascondiErrore() {
+            errorBox.classList.add('sfv-hidden');
+          }
+
+          var analizzaBtn = document.getElementById('sfv-analizza-btn');
+          var stepInput = document.getElementById('sfv-step-input');
+          var stepRisultato = document.getElementById('sfv-step-risultato');
+          var ultimaSimulazione = null;
+
+          analizzaBtn.addEventListener('click', function () {
+            nascondiErrore();
+
+            var formData = new FormData();
+
+            if (tabAttivo === 'bolletta') {
+              if (!fileSelezionato) {
+                mostraErrore('Seleziona prima il PDF della bolletta.');
+                return;
+              }
+              formData.append('bolletta', fileSelezionato);
+            } else {
+              var consumo = document.getElementById('m-consumo').value;
+              if (!consumo) {
+                mostraErrore('Inserisci almeno il consumo annuo in kWh.');
+                return;
+              }
+              formData.append('consumo_annuo_kwh', consumo);
+              formData.append('spesa_annua_eur', document.getElementById('m-spesa').value);
+              formData.append('potenza_impegnata_kw', document.getElementById('m-potenza').value);
+              formData.append('provincia', document.getElementById('m-provincia').value);
+            }
+
+            analizzaBtn.disabled = true;
+            analizzaBtn.innerHTML = '<span class="sfv-spinner"></span>Sto leggendo i dati...';
+
+            fetch('/api/simulatore-fv/analizza', { method: 'POST', body: formData })
+              .then(function (r) { return r.json().then(function (data) { return { ok: r.ok, data: data }; }); })
+              .then(function (res) {
+                analizzaBtn.disabled = false;
+                analizzaBtn.innerHTML = '<i class="fas fa-bolt me-2"></i>Calcola la mia simulazione';
+
+                if (!res.ok || !res.data.success) {
+                  mostraErrore(res.data.error || 'Si è verificato un errore, riprova.');
+                  return;
+                }
+                mostraRisultato(res.data);
+              })
+              .catch(function () {
+                analizzaBtn.disabled = false;
+                analizzaBtn.innerHTML = '<i class="fas fa-bolt me-2"></i>Calcola la mia simulazione';
+                mostraErrore('Errore di comunicazione con il server, riprova.');
+              });
+          });
+
+          function mostraRisultato(data) {
+            ultimaSimulazione = data;
+
+            var dim = data.dimensionamento;
+            document.getElementById('sfv-kwp').textContent = dim.kwp_proposto;
+            document.getElementById('sfv-produzione').textContent = dim.produzione_annua_kwh_stimata.toLocaleString('it-IT');
+
+            var scenario = data.vantaggi_ordinari.senza_batteria;
+            var vantaggio = scenario.vantaggio_annuo_totale_eur;
+            document.getElementById('sfv-vantaggio').textContent = vantaggio.toLocaleString('it-IT');
+
+            var risparmioAutoconsumo = scenario.risparmio_autoconsumo_eur;
+            var ricavoRid = scenario.ricavo_ritiro_dedicato_eur;
+            document.getElementById('sfv-risparmio-autoconsumo').textContent = risparmioAutoconsumo.toLocaleString('it-IT');
+            document.getElementById('sfv-ricavo-rid').textContent = ricavoRid.toLocaleString('it-IT');
+
+            var quotaAutoconsumo = scenario.quota_autoconsumo || 0.35;
+            var pctAutoconsumo = Math.round(quotaAutoconsumo * 100);
+            document.getElementById('sfv-bar-autoconsumo').style.width = pctAutoconsumo + '%';
+            document.getElementById('sfv-bar-immessa').style.width = (100 - pctAutoconsumo) + '%';
+
+            if (data.info_normativa) {
+              var info = data.info_normativa;
+              if (info.autoconsumo) {
+                document.getElementById('sfv-info-autoconsumo-titolo').textContent = info.autoconsumo.titolo;
+                document.getElementById('sfv-info-autoconsumo-testo').textContent = info.autoconsumo.testo;
+              }
+              if (info.ritiro_dedicato) {
+                document.getElementById('sfv-info-rid-titolo').textContent = info.ritiro_dedicato.titolo;
+                document.getElementById('sfv-info-rid-testo').textContent = info.ritiro_dedicato.testo;
+              }
+              if (info.vantaggi_fiscali) {
+                document.getElementById('sfv-info-fiscale-titolo').textContent = info.vantaggi_fiscali.titolo;
+                document.getElementById('sfv-info-fiscale-testo').textContent = info.vantaggi_fiscali.testo;
+              }
+            }
+
+            var nota = 'Stima grossolana';
+            if (dim.limitato_da_potenza_impegnata) {
+              nota += ' (taglia limitata dalla potenza impegnata in bolletta)';
+            }
+            document.getElementById('sfv-kwp-nota').textContent = nota;
+
+            var bandiWrap = document.getElementById('sfv-bandi-wrap');
+            var bandiList = document.getElementById('sfv-bandi-list');
+            bandiList.innerHTML = '';
+            if (data.bandi_correlati && data.bandi_correlati.length) {
+              data.bandi_correlati.forEach(function (b) {
+                var div = document.createElement('div');
+                div.className = 'sfv-bando';
+                div.innerHTML =
+                  '<div class="titolo">' + escapeHtml(b.titolo) + '</div>' +
+                  '<div class="stato">' + escapeHtml(b.scadenza_testo) + '</div>' +
+                  (b.url ? '<a href="' + escapeHtml(b.url) + '" target="_blank" rel="noopener">Scopri di più su ItalBandi &rarr;</a>' : '');
+                bandiList.appendChild(div);
+              });
+              bandiWrap.classList.remove('sfv-hidden');
+            } else {
+              bandiWrap.classList.add('sfv-hidden');
+            }
+
+            stepInput.classList.add('sfv-hidden');
+            stepRisultato.classList.remove('sfv-hidden');
+            document.getElementById('sfv-lead-ok').classList.add('sfv-hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+
+          function escapeHtml(s) {
+            var d = document.createElement('div');
+            d.textContent = s || '';
+            return d.innerHTML;
+          }
+
+          document.getElementById('sfv-invia-lead-btn').addEventListener('click', function () {
+            var email = document.getElementById('l-email').value.trim();
+            if (!email || email.indexOf('@') === -1) {
+              alert('Inserisci un indirizzo email valido.');
+              return;
+            }
+            var phone = document.getElementById('l-phone').value.trim();
+            var btn = this;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="sfv-spinner"></span>Invio...';
+
+            fetch('/api/simulatore-fv/lead', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: email, phone: phone, simulazione: ultimaSimulazione })
+            })
+              .then(function (r) { return r.json(); })
+              .then(function (data) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Ricevi la valutazione completa';
+                if (data.success) {
+                  document.getElementById('sfv-lead-ok').classList.remove('sfv-hidden');
+                  if (typeof gtag === 'function') {
+                    gtag('event', 'lead_simulatore_fv', { 'event_category': 'CTA', 'event_label': 'simulatore_fotovoltaico' });
+                  }
+                } else {
+                  alert(data.error || 'Errore, riprova.');
+                }
+              })
+              .catch(function () {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>Ricevi la valutazione completa';
+                alert('Errore di comunicazione con il server, riprova.');
+              });
+          });
+
+          document.getElementById('sfv-ricomincia-btn').addEventListener('click', function () {
+            stepRisultato.classList.add('sfv-hidden');
+            stepInput.classList.remove('sfv-hidden');
+            fileSelezionato = null;
+            fileNameEl.classList.add('sfv-hidden');
+            fileInput.value = '';
+          });
+        })();
+        </script>
+
+    </body>
+
+</html>
