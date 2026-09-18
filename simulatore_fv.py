@@ -27,10 +27,23 @@ NON VERIFICATO — da controllare con un caso reale prima di fidarsi ciecamente:
 - il rapporto kWp / potenza impegnata usato come tetto (RAPPORTO_MAX_KWP_SU_POTENZA_IMPEGNATA)
 - i coefficienti di producibilità specifica per macro-area (PRODUCIBILITA_KWH_KWP)
 - il prezzo di ritiro dedicato usato per stimare il ricavo sull'energia immessa
+- le curve di producibilità mensile (stime indicative, non dati PVGIS puntuali sul sito)
 - il nome esatto dell'attributo Algolia per un filtro geografico stretto (qui la
   regione è usata come testo di ricerca libero, non come facetFilter dedicato,
   perché non ho la conferma dello schema esatto dell'indice ceu_searchable_posts
   su questo campo)
+
+AGGIORNAMENTO 18/09/2026 (Alberto): Energelia non ha clienti privati/residenziali,
+solo aziende (Microbusiness). Di conseguenza:
+- la vecchia quota di autoconsumo fissa al 35% (pensata per un profilo di consumo
+  domestico serale) è stata alzata al 55%, come già fatto nell'Offertatore FV
+  desktop per lo stesso motivo: un'azienda consuma tipicamente nelle ore diurne,
+  proprio quando il fotovoltaico produce.
+- soprattutto, la quota fissa resta ora solo un FALLBACK: il metodo di
+  riferimento è calcola_vantaggi_mensili, che confronta mese per mese la
+  produzione stimata con lo storico di consumo reale (da bolletta, o costruito
+  distribuendo il consumo annuo sui 12 mesi se lo storico manca) — stesso
+  principio e stesse curve di producibilità già validate nell'Offertatore FV.
 """
 
 import os
@@ -96,17 +109,23 @@ NOMI_REGIONE_PER_SIGLA = {
 # impianti spropositati rispetto al punto di prelievo. Da tarare con Alberto.
 RAPPORTO_MAX_KWP_SU_POTENZA_IMPEGNATA = 1.3
 
-# Quote di autoconsumo indicative (grossolane) per impianti senza/con batteria.
-QUOTA_AUTOCONSUMO_SENZA_BATTERIA = 0.35
+# Quota di autoconsumo "senza batteria" usata solo come FALLBACK quando manca
+# uno storico di consumo mensile da cui calcolare il vantaggio mese per mese
+# (vedi calcola_vantaggi_mensili, il metodo di riferimento). Alzata dal 35%
+# al 55%: Energelia non ha clienti privati/residenziali (consumo serale), solo
+# aziende che consumano tipicamente nelle ore diurne, proprio quando il
+# fotovoltaico produce — lo stesso motivo per cui l'Offertatore FV desktop usa
+# 55% per il Microbusiness.
+QUOTA_AUTOCONSUMO_SENZA_BATTERIA = 0.55
 QUOTA_AUTOCONSUMO_CON_BATTERIA = 0.65
 
 # Prezzo di ritiro dedicato stimato (€/kWh) applicato all'energia immessa in
 # rete. Il GSE paga il maggiore tra Prezzo Zonale Orario (PZO, media 2026
 # indicativamente ~0,12-0,13 €/kWh) e Prezzo Minimo Garantito (PMG 2026 per
-# fotovoltaico: 0,0475 €/kWh, fino a 1.500.000 kWh/anno). Usiamo qui una stima
-# cautelativa vicina alla media PZO: va confrontata con i prezzi reali GME/GSE
-# del periodo, che variano nel tempo.
-PREZZO_RITIRO_DEDICATO_STIMATO = 0.11
+# fotovoltaico: 0,0475 €/kWh, fino a 1.500.000 kWh/anno). Allineato a 0,10
+# €/kWh, lo stesso valore usato nell'Offertatore FV desktop (era 0,11 qui,
+# discrepanza minore senza una ragione specifica).
+PREZZO_RITIRO_DEDICATO_STIMATO = 0.10
 
 # Testi informativi statici sui meccanismi che determinano il vantaggio annuo,
 # mostrati in chiaro nella pagina risultati. Aggiornare se cambia la normativa
@@ -204,7 +223,16 @@ markdown) con questi campi, usa null se un dato non è presente nel testo:
   "indirizzo_fornitura": <stringa, indirizzo completo del punto di fornitura>,
   "provincia": <sigla provincia a 2 lettere dedotta dall'indirizzo, es. GE, MI>,
   "tipologia_cliente": <"domestico" oppure "altri usi/business", dedotto dal testo>,
-  "prezzo_medio_kwh_eur": <numero, prezzo medio euro/kWh se calcolabile>
+  "prezzo_medio_kwh_eur": <numero, prezzo medio euro/kWh se calcolabile>,
+  "mese_bolletta": <stringa "MM/AAAA" del periodo fatturato dalla bolletta corrente, es. "06/2026">,
+  "consumo_mese_kwh": <numero, consumo del solo mese fatturato dalla bolletta corrente (non l'annuo)>,
+  "prezzo_energia_kwh_eur": <numero, SOLO la componente "spesa per vendita energia elettrica"/materia prima al kWh, esclusi rete, accise, IVA>,
+  "prezzo_rete_kwh_eur": <numero, SOLO la componente "spesa per la rete e oneri generali di sistema" al kWh, esclusa l'energia>,
+  "accisa_kwh_eur": <numero, aliquota dell'imposta erariale di consumo (accisa) al kWh, se riportata esplicitamente>,
+  "aliquota_iva_pct": <numero, aliquota IVA applicata in bolletta, es. 22 o 10>,
+  "storico_consumo_mensile": [<lista di oggetti {{"mese": "MM/AAAA", "kwh": numero}} per ogni mese storico
+      riportato in bolletta (tabella "consumi ultimi N mesi" o simile), il più completo possibile;
+      lista vuota [] se la bolletta non riporta uno storico mensile>]
 }}
 """
 
@@ -298,9 +326,9 @@ def dimensiona_impianto(consumo_annuo_kwh, potenza_impegnata_kw, provincia):
 
 
 def calcola_vantaggi_ordinari(produzione_annua_kwh, prezzo_medio_kwh_eur):
-    """Vantaggi 'ordinari' GSE: risparmio da autoconsumo (valorizzato al prezzo
-    pieno pagato in bolletta) + ricavo da Ritiro Dedicato sull'eccedenza immessa
-    (valorizzato a un prezzo cautelativo, più basso del prezzo di acquisto)."""
+    """Metodo VECCHIO, a quota fissa annua: usato ora solo come ultima
+    risorsa quando manca perfino il consumo annuo per costruire uno storico
+    mensile (vedi calcola_vantaggi_mensili, il metodo di riferimento)."""
     prezzo = prezzo_medio_kwh_eur or PREZZO_MEDIO_FALLBACK
 
     risultati = {}
@@ -315,6 +343,141 @@ def calcola_vantaggi_ordinari(produzione_annua_kwh, prezzo_medio_kwh_eur):
             'risparmio_autoconsumo_eur': round(risparmio_autoconsumo),
             'ricavo_ritiro_dedicato_eur': round(ricavo_ritiro_dedicato),
             'vantaggio_annuo_totale_eur': round(risparmio_autoconsumo + ricavo_ritiro_dedicato),
+            'metodo': 'quota_fissa',
+        }
+    return risultati
+
+
+# ---------------------------------------------------------------------------
+# Metodo di riferimento: calcolo mese per mese sul consumo reale da bolletta
+#
+# Stessa logica, stesse curve e stesse costanti già validate nell'Offertatore
+# FV desktop (offerta_fv.py) il 18/09/2026: un impianto ben dimensionato deve
+# fare in modo che, quando c'è sole, tutto quello che produce venga
+# autoconsumato. Invece di una quota fissa di autoconsumo uguale tutto l'anno,
+# si confronta mese per mese la produzione stimata (curva di producibilità
+# stagionale) con il consumo reale di quel mese (storico da bolletta, o
+# costruito se manca): quello che l'impianto produce e che nel mese resta
+# sotto il consumo viene autoconsumato, quello che eccede viene ceduto col
+# Ritiro Dedicato.
+# Approssimazione nota: si confrontano i totali mensili, non i profili orari
+# infragiornalieri, quindi si assume che produzione e consumo dello stesso
+# mese si sovrappongano nel tempo — ragionevole per un'azienda che consuma di
+# giorno (il caso di tutti i clienti Energelia, che non ha clienti privati).
+# ---------------------------------------------------------------------------
+
+# Curve di producibilità mensile (quota della produzione annua per mese),
+# stima indicativa per un tetto ben orientato: il Nord ha un'escursione
+# stagionale più marcata (inverni più bui) di centro/sud. Sono percentuali
+# indicative, non dati PVGIS puntuali sul sito specifico: da affinare se in
+# futuro si vuole più precisione.
+CURVA_PRODUCIBILITA_MENSILE = {
+    'nord':   {1: .045, 2: .060, 3: .090, 4: .105, 5: .120, 6: .125,
+               7: .130, 8: .115, 9: .090, 10: .065, 11: .040, 12: .035},
+    'centro': {1: .055, 2: .065, 3: .085, 4: .095, 5: .110, 6: .115,
+               7: .120, 8: .110, 9: .090, 10: .070, 11: .050, 12: .045},
+    'sud':    {1: .060, 2: .070, 3: .085, 4: .090, 5: .105, 6: .110,
+               7: .115, 8: .105, 9: .090, 10: .075, 11: .055, 12: .050},
+}
+
+# Quota dell'eccedenza mensile che una batteria di taglia tipica riesce a
+# spostare su autoconsumo serale invece di cederla in rete: stima di primo
+# taglio, non calcolata su una capacità di accumulo specifica.
+BATTERIA_QUOTA_ECCEDENZA_RECUPERATA = 0.70
+
+# Aliquota IVA standard per utenze "altri usi"/business e accisa media
+# stimata quando la bolletta non riporta il dettaglio: usate solo come
+# fallback in calcola_prezzo_evitato_kwh.
+ALIQUOTA_IVA_ENERGIA_BUSINESS = 0.22
+ACCISA_EUR_KWH_STIMATA = 0.0125
+
+
+def _curva_normalizzata(macro_area_scelta):
+    curva = CURVA_PRODUCIBILITA_MENSILE.get(macro_area_scelta, CURVA_PRODUCIBILITA_MENSILE['centro'])
+    totale = sum(curva.values())
+    return {mese: quota / totale for mese, quota in curva.items()}
+
+
+def calcola_prezzo_evitato_kwh(prezzo_energia_kwh_eur=None, prezzo_rete_kwh_eur=None,
+                               accisa_kwh_eur=None, aliquota_iva=None,
+                               prezzo_medio_kwh_eur=None):
+    """Prezzo pieno risparmiato per ogni kWh autoconsumato (non prelevato
+    dalla rete): energia + rete/oneri + accisa, IVA inclusa. Se non abbiamo
+    il dettaglio della bolletta usiamo il prezzo medio inserito a mano come
+    approssimazione (probabilmente per difetto, perché di solito non include
+    accisa e IVA)."""
+    if prezzo_energia_kwh_eur is not None or prezzo_rete_kwh_eur is not None:
+        ante_iva = (prezzo_energia_kwh_eur or 0) + (prezzo_rete_kwh_eur or 0) + \
+                   (accisa_kwh_eur if accisa_kwh_eur is not None else ACCISA_EUR_KWH_STIMATA)
+        return ante_iva * (1 + (aliquota_iva if aliquota_iva is not None else ALIQUOTA_IVA_ENERGIA_BUSINESS))
+    return prezzo_medio_kwh_eur or PREZZO_MEDIO_FALLBACK
+
+
+def costruisci_storico_consumo_mensile(consumo_annuo_kwh, storico_bolletta=None):
+    """Ritorna un dizionario {1..12: kWh} con il consumo mese per mese.
+
+    Se la bolletta fornisce uno storico (lista di {'mese': 'MM/AAAA' o
+    'MM/AA', 'kwh': numero}) lo usiamo, mappando ogni voce sul mese di
+    calendario (1-12) e tenendo, in caso di doppioni sullo stesso mese, la
+    voce più recente. Se lo storico manca, lo ARERA impone comunque che sia
+    in bolletta, ma non tutti i fornitori lo mettono con lo stesso dettaglio:
+    in quel caso lo costruiamo noi, distribuendo il consumo annuo in parti
+    uguali sui 12 mesi (fallback grossolano, meglio di niente)."""
+    storico = {}
+    if storico_bolletta:
+        for voce in storico_bolletta:
+            mese_raw = str(voce.get('mese', '')).strip()
+            kwh = voce.get('kwh')
+            if not mese_raw or kwh is None:
+                continue
+            try:
+                mese_num = int(mese_raw.split('/')[0])
+            except (ValueError, IndexError):
+                continue
+            if 1 <= mese_num <= 12:
+                storico[mese_num] = kwh  # l'ultima voce letta per quel mese vince
+    if len(storico) >= 12:
+        return {m: storico[m] for m in range(1, 13)}
+    if not consumo_annuo_kwh:
+        return {m: 0 for m in range(1, 13)}
+    consumo_mensile_medio = consumo_annuo_kwh / 12
+    return {m: consumo_mensile_medio for m in range(1, 13)}
+
+
+def calcola_vantaggi_mensili(produzione_annua_kwh, macro_area_scelta, storico_consumo_mensile,
+                             prezzo_evitato_kwh_eur, fonte_storico='stimato',
+                             prezzo_ritiro_dedicato=None):
+    """Metodo di riferimento per il vantaggio economico: confronta mese per
+    mese produzione stimata e consumo reale (o stimato) invece di applicare
+    una quota di autoconsumo fissa uguale tutto l'anno. Ritorna lo stesso
+    formato di calcola_vantaggi_ordinari (chiavi senza_batteria/con_batteria)
+    così il resto del programma (route /analizza, salvataggio lead) funziona
+    senza modifiche."""
+    prezzo_ritiro_dedicato = prezzo_ritiro_dedicato or PREZZO_RITIRO_DEDICATO_STIMATO
+    curva = _curva_normalizzata(macro_area_scelta)
+    risultati = {}
+    for label, quota_recupero_batteria in (('senza_batteria', 0.0),
+                                           ('con_batteria', BATTERIA_QUOTA_ECCEDENZA_RECUPERATA)):
+        autoconsumo_totale = 0.0
+        eccedenza_totale = 0.0
+        for mese in range(1, 13):
+            produzione_mese = produzione_annua_kwh * curva.get(mese, 0)
+            consumo_mese = storico_consumo_mensile.get(mese, 0) or 0
+            autoconsumo_diretto = min(produzione_mese, consumo_mese)
+            eccedenza_mese = max(produzione_mese - consumo_mese, 0)
+            recuperata_da_batteria = eccedenza_mese * quota_recupero_batteria
+            autoconsumo_totale += autoconsumo_diretto + recuperata_da_batteria
+            eccedenza_totale += eccedenza_mese - recuperata_da_batteria
+        risparmio_autoconsumo = autoconsumo_totale * prezzo_evitato_kwh_eur
+        ricavo_ritiro_dedicato = eccedenza_totale * prezzo_ritiro_dedicato
+        risultati[label] = {
+            'quota_autoconsumo': (round(autoconsumo_totale / produzione_annua_kwh, 3)
+                                  if produzione_annua_kwh else 0),
+            'risparmio_autoconsumo_eur': round(risparmio_autoconsumo),
+            'ricavo_ritiro_dedicato_eur': round(ricavo_ritiro_dedicato),
+            'vantaggio_annuo_totale_eur': round(risparmio_autoconsumo + ricavo_ritiro_dedicato),
+            'metodo': 'mensile',
+            'fonte_storico_consumo': fonte_storico,
         }
     return risultati
 
@@ -429,10 +592,25 @@ def analizza():
     provincia = dati_bolletta.get('provincia') or ''
 
     dimensionamento = dimensiona_impianto(consumo, potenza_impegnata, provincia)
-    vantaggi = calcola_vantaggi_ordinari(
-        dimensionamento['produzione_annua_kwh_stimata'],
-        dati_bolletta.get('prezzo_medio_kwh_eur')
-    )
+
+    # Metodo di riferimento: mese per mese sullo storico di consumo (reale se
+    # la bolletta lo riporta, altrimenti costruito distribuendo il consumo
+    # annuo sui 12 mesi). Il prezzo evitato usa il dettaglio energia/rete/
+    # accisa/IVA della bolletta quando disponibile, altrimenti il prezzo
+    # medio inserito/estratto.
+    storico_bolletta = dati_bolletta.get('storico_consumo_mensile') or []
+    fonte_storico = 'bolletta' if len(storico_bolletta) >= 12 else 'stimato'
+    storico_mensile = costruisci_storico_consumo_mensile(consumo, storico_bolletta)
+    prezzo_evitato = calcola_prezzo_evitato_kwh(
+        prezzo_energia_kwh_eur=dati_bolletta.get('prezzo_energia_kwh_eur'),
+        prezzo_rete_kwh_eur=dati_bolletta.get('prezzo_rete_kwh_eur'),
+        accisa_kwh_eur=dati_bolletta.get('accisa_kwh_eur'),
+        aliquota_iva=(dati_bolletta['aliquota_iva_pct'] / 100) if dati_bolletta.get('aliquota_iva_pct') else None,
+        prezzo_medio_kwh_eur=dati_bolletta.get('prezzo_medio_kwh_eur'))
+    vantaggi = calcola_vantaggi_mensili(
+        dimensionamento['produzione_annua_kwh_stimata'], dimensionamento['macro_area'],
+        storico_mensile, prezzo_evitato, fonte_storico=fonte_storico)
+
     bandi = cerca_bandi_correlati(provincia)
 
     return jsonify({
