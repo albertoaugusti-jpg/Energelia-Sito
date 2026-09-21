@@ -1747,6 +1747,7 @@ T_LEAD = """{% extends "base" %}{% block contenuto %}
     {% for x in province %}<option {{ 'selected' if provincia==x }}>{{ x }}</option>{% endfor %}</select>
   <button class="btn" type="submit">Filtra</button>
   {% if q or stato or fonte or provincia or regione %}<a class="btn chiaro" href="/crm/lead">Azzera</a>{% endif %}
+  <a class="btn chiaro" href="/crm/lead/esporta?{{ query_senza_pagina }}">Esporta CSV{% if q or stato or fonte or provincia or regione %} (filtrati){% endif %}</a>
 </form>
 
 {% if utente.is_admin %}
@@ -3254,6 +3255,55 @@ def lista_lead():
                  stati_lead=STATI_LEAD,
                  pagina_n=pagina_n, pagine_tot=pagine_tot,
                  query_senza_pagina="&".join(parti_query))
+
+
+@crm.get("/lead/esporta")
+def esporta_lead():
+    """Scarica in CSV tutti i lead che rispettano i filtri correnti (non solo
+    la pagina in vista): stessa logica di filtro di lista_lead, senza limit/offset."""
+    q = request.args.get("q", "")
+    stato = request.args.get("stato", "")
+    fonte = request.args.get("fonte", "")
+    provincia = request.args.get("provincia", "")
+    regione = request.args.get("regione", "")
+
+    query = SessionLocale.query(Lead)
+    if q:
+        like = f"%{q}%"
+        query = query.filter(or_(Lead.nome.ilike(like), Lead.email.ilike(like),
+                                 Lead.telefono.ilike(like), Lead.cellulare.ilike(like)))
+    if stato:
+        query = query.filter(Lead.stato == stato)
+    if fonte:
+        query = query.filter(Lead.fonte == fonte)
+    if provincia:
+        query = query.filter(Lead.provincia == provincia)
+    if regione:
+        province_della_regione = [p for p, r in REGIONE_PER_PROVINCIA.items() if r == regione]
+        query = query.filter(Lead.provincia.in_(province_della_regione))
+
+    elenco = query.order_by(Lead.creato_il.desc()).all()
+
+    buffer = io.StringIO()
+    buffer.write("﻿")  # BOM, così Excel apre gli accenti correttamente
+    scrittore = csv.writer(buffer, delimiter=";")
+    scrittore.writerow(["Nome", "Tipo", "Indirizzo", "Comune", "Provincia", "CAP",
+                         "Telefono", "Cellulare", "Email", "Altra email", "PEC", "Sito",
+                         "Fonte", "Stato", "Data"])
+    for l in elenco:
+        scrittore.writerow([
+            l.nome, l.tipo or "", l.indirizzo or "", l.comune or "", l.provincia or "", l.cap or "",
+            l.telefono or "", l.cellulare or "", l.email or "", l.altra_email or "", l.pec or "", l.sito or "",
+            l.fonte or "", l.stato or "",
+            l.creato_il.strftime("%d/%m/%Y %H:%M") if l.creato_il else "",
+        ])
+
+    nome_file = f"lead_{dt.datetime.now().strftime('%Y%m%d_%H%M')}.csv"
+    return Response(
+        buffer.getvalue().encode("utf-8"),
+        mimetype="text/csv; charset=utf-8",
+        headers={"Content-Disposition": f"attachment; filename={nome_file}"},
+    )
 
 
 @crm.post("/lead/<int:lid>/stato")
