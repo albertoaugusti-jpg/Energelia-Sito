@@ -311,6 +311,9 @@
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
                 <h2><i class="fas fa-file-download me-2"></i>Lead da Report</h2>
                 <div>
+                    <button class="btn-whatsapp" id="exportCsvBtn" onclick="exportLeadsCsv()" style="background: #0a1530; margin-right: 10px;">
+                        <i class="fas fa-file-export"></i> Esporta CSV
+                    </button>
                     <button class="btn-whatsapp" id="whatsappBtn" onclick="toggleWhatsappPanel()" disabled>
                         <i class="fab fa-whatsapp"></i> Invia WhatsApp
                         <span class="selected-count" id="selectedCount">0</span>
@@ -647,6 +650,47 @@ Può chiamarci al 010 7776530 o rispondere a questo messaggio per una consulenza
             `).join('');
 
             updateSelectedCount();
+        }
+
+        function exportLeadsCsv() {
+            const filtered = currentFilter === 'all'
+                ? allLeads
+                : allLeads.filter(l => l.bando === currentFilter);
+
+            if (filtered.length === 0) {
+                alert('Nessun lead da esportare per questo filtro');
+                return;
+            }
+
+            const escapeCsv = (val) => {
+                const s = (val === null || val === undefined) ? '' : String(val);
+                return '"' + s.replace(/"/g, '""') + '"';
+            };
+
+            const header = ['Email', 'Telefono', 'Bando', 'Data', 'Tag'];
+            const rows = filtered.map(l => [
+                l.email,
+                l.phone || '',
+                formatBando(l.bando),
+                formatDate(l.created_at),
+                l.tag || ''
+            ]);
+
+            const csvContent = [header, ...rows]
+                .map(row => row.map(escapeCsv).join(','))
+                .join('\r\n');
+
+            const blob = new Blob(['﻿' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const dateSuffix = new Date().toISOString().slice(0, 10);
+            const filterSuffix = currentFilter === 'all' ? 'tutti' : currentFilter;
+            link.href = url;
+            link.download = `lead_${filterSuffix}_${dateSuffix}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         }
 
         function renderConsultations() {
