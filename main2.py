@@ -23,6 +23,30 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 # Genera URL con https:// invece di http:// nei template
 app.config['PREFERRED_URL_SCHEME'] = 'https'
 
+# ==================== GOOGLE ANALYTICS ====================
+GA_SNIPPET = """<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-PNQNJG5LLV"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-PNQNJG5LLV');
+      </script>
+      """
+
+
+@app.after_request
+def inject_google_analytics(response):
+    if response.content_type and response.content_type.startswith('text/html'):
+        try:
+            body = response.get_data(as_text=True)
+            if '</head>' in body:
+                response.set_data(body.replace('</head>', GA_SNIPPET + '</head>', 1))
+        except Exception as e:
+            print(f"[analytics] errore iniezione GA: {e}")
+    return response
+
 from crm import init_crm
 init_crm(app)
 
