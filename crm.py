@@ -3368,7 +3368,6 @@ def rimanda_documento(did):
 
 
 @crm.post("/documenti/assegna-bulk")
-@login_required
 def assegna_documenti_bulk():
     """Assegna in bulk i documenti selezionati dalla scrivania."""
     payload = request.get_json(force=True, silent=True) or []
@@ -4096,7 +4095,6 @@ def cambia_password():
 
 
 @crm.post("/impostazioni/autorizza-collaboratori")
-@login_required
 def autorizza_collaboratori_drive():
     """Condivide la cartella Drive madre con Bruno e Antonio (una tantum)."""
     if not GOOGLE_CARTELLA_MADRE:
