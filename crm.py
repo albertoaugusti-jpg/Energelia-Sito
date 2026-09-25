@@ -1479,12 +1479,24 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
   <td>{% if doc.stato == 'assegnato' %}<span class="pill ok">→ {{ doc.pratica.nome_bando if doc.pratica else 'assegnato' }}</span>
       {% else %}<span class="pill">da smistare</span>{% endif %}</td>
   <td class="num">
-    {% if doc.stato != 'assegnato' and c.pratiche %}
-    <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline-flex;gap:6px">
-      <select name="pratica_id" required><option value="">Assegna a…</option>
-        {% for p in c.pratiche %}<option value="{{ p.id }}">{{ p.nome_bando }}</option>{% endfor %}</select>
-      <button class="btn chiaro" type="submit">Ok</button>
-    </form>{% endif %}
+    {% if doc.stato != 'assegnato' %}
+      {% if c.pratiche %}
+      <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline-flex;gap:6px;margin-bottom:4px">
+        <select name="pratica_id"><option value="">Smista a pratica…</option>
+          {% for p in c.pratiche %}<option value="{{ p.id }}">{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}</select>
+        <button class="btn chiaro" type="submit">Ok</button>
+      </form><br>
+      {% endif %}
+      <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline">
+        <input type="hidden" name="pratica_id" value="">
+        <button class="btn chiaro" type="submit">✓ Ricevuto</button>
+      </form>
+    {% else %}
+      <span class="pill ok">{{ '→ ' ~ doc.pratica.nome_bando if doc.pratica else '✓ ricevuto' }}</span>
+      <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
+        <button class="btn chiaro" type="submit" style="font-size:11px">↩ scrivania</button>
+      </form>
+    {% endif %}
     <form method="post" action="/crm/documenti/{{ doc.id }}/elimina" style="display:inline"
       onsubmit="return confirm('Eliminare {{ doc.nome_file }}? Viene tolto anche da Drive.');">
       <button class="btn chiaro" type="submit" title="Elimina">🗑</button>
@@ -1869,18 +1881,32 @@ T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
       {% else %}<span class="pill">da smistare</span>{% endif %}</td>
   <td class="num">
     {% if doc.stato != 'assegnato' %}
+    <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
       {% set prat = pratiche_per_cliente.get(doc.cliente_id, []) %}
       {% if prat %}
-      <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline-flex;gap:6px">
-        <select name="pratica_id" required><option value="">Smista a pratica…</option>
-          {% for p in prat %}<option value="{{ p.id }}">{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}</select>
-        <button class="btn chiaro" type="submit">Ok</button>
-      </form>
-      {% else %}<span class="nota">Nessuna pratica aperta</span>{% endif %}
-    {% else %}<span class="pill ok">→ {{ doc.pratica.nome_bando if doc.pratica else 'assegnato' }}</span>
-      <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
-        <button class="btn chiaro" type="submit" title="Rimanda in scrivania" style="font-size:11px">↩ scrivania</button>
-      </form>
+      <select name="pratica_id" style="font-size:12px"><option value="">Nessuna pratica</option>
+        {% for p in prat %}<option value="{{ p.id }}">{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}
+      </select>
+      {% endif %}
+      <div style="display:flex;gap:5px;align-items:center">
+        <button class="btn" type="submit" style="white-space:nowrap">
+          → {{ doc.cliente.ragione_sociale if doc.cliente else 'cliente' }}
+        </button>
+        <span class="nota" style="font-size:11px">oppure</span>
+        <select name="nuovo_cliente_id" style="font-size:12px" onchange="this.form.submit()">
+          <option value="">Assegna a?</option>
+          {% for cl in tutti_clienti %}
+          <option value="{{ cl.id }}" {% if cl.id == doc.cliente_id %}style="font-weight:bold"{% endif %}>
+            {{ cl.ragione_sociale }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+    </form>
+    {% else %}<span class="pill ok">{{ '→ ' ~ doc.pratica.nome_bando if doc.pratica else '→ ' ~ (doc.cliente.ragione_sociale if doc.cliente else 'cliente') }}</span>
+    <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
+      <button class="btn chiaro" type="submit" style="font-size:11px">↩ scrivania</button>
+    </form>
     {% endif %}
     <form method="post" action="/crm/documenti/{{ doc.id }}/elimina" style="display:inline"
       onsubmit="return confirm('Eliminare {{ doc.nome_file }}? Viene tolto anche da Drive.');">
@@ -3245,21 +3271,29 @@ def lista_documenti():
     if cliente_ids:
         for p in SessionLocale.query(Pratica).filter(Pratica.cliente_id.in_(cliente_ids)).order_by(Pratica.codice).all():
             pratiche_per_cliente.setdefault(p.cliente_id, []).append(p)
+    tutti_clienti = SessionLocale.query(Cliente).order_by(Cliente.ragione_sociale).all()
     return rendi("documenti", titolo="Documenti", pagina="documenti",
                  elenco=elenco, solo_da_smistare=solo_da_smistare,
                  configurato=drive_configurato(),
-                 pratiche_per_cliente=pratiche_per_cliente)
+                 pratiche_per_cliente=pratiche_per_cliente,
+                 tutti_clienti=tutti_clienti)
 
 
 @crm.post("/documenti/<int:did>/assegna")
 def assegna_documento(did):
     doc = SessionLocale.get(Documento, did)
+    if not doc:
+        return redirect(request.referrer or "/crm/documenti")
+    # Eventuale override cliente (assegna a cliente diverso da quello suggerito)
+    nuovo_cliente_id = s(request.form.get("nuovo_cliente_id"))
+    if nuovo_cliente_id:
+        doc.cliente_id = int(nuovo_cliente_id)
     pid = s(request.form.get("pratica_id"))
-    if doc and pid:
-        doc.pratica_id = int(pid)
-        doc.stato = "assegnato"
-        SessionLocale.commit()
-        avvisa(f"{doc.nome_file} assegnato.")
+    doc.pratica_id = int(pid) if pid else None
+    doc.stato = "assegnato"
+    SessionLocale.commit()
+    cliente_nome = doc.cliente.ragione_sociale if doc.cliente else ""
+    avvisa(f"{doc.nome_file} assegnato a {cliente_nome}.")
     return redirect(request.referrer or "/crm/documenti")
 
 
