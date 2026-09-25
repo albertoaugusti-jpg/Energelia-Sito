@@ -395,6 +395,41 @@ class Bando(Base):
     creato_il = Column(DateTime, default=dt.datetime.utcnow)
 
 
+class RigaDocPratica(Base):
+    """Una riga del workflow documenti a 3 colonne di una pratica.
+    Col1=modulo vuoto, Col2=compilato da inviare al cliente, Col3=firmato dal cliente."""
+    __tablename__ = "crm_righe_doc_pratica"
+    id = Column(Integer, primary_key=True)
+    pratica_id = Column(Integer, ForeignKey("crm_pratiche.id"), nullable=False, index=True)
+    etichetta = Column(String(80), default="Documento")
+    ordine = Column(Integer, default=0)
+    # Colonna 1 — modulo vuoto
+    mod_nome = Column(String(255))
+    mod_google_id = Column(String(100))
+    # Colonna 2 — compilato
+    comp_nome = Column(String(255))
+    comp_google_id = Column(String(100))
+    # Colonna 3 — firmato dal cliente (FK a Documento dalla scrivania)
+    firmato_doc_id = Column(Integer, ForeignKey("crm_documenti.id"), nullable=True)
+    pratica = relationship("Pratica", backref="righe_doc")
+    firmato_doc = relationship("Documento", foreign_keys=[firmato_doc_id])
+
+
+class BandoAllegato(Base):
+    """Documento ufficiale allegato a un bando (PDF del bando, allegati, istruzioni…).
+    L'etichetta è generata automaticamente dal nome file e può essere modificata."""
+    __tablename__ = "crm_bando_allegati"
+    id = Column(Integer, primary_key=True)
+    bando_id = Column(Integer, ForeignKey("crm_bandi.id"), nullable=False, index=True)
+    nome_file = Column(String(255), nullable=False)
+    etichetta = Column(String(80))
+    google_file_id = Column(String(100))
+    link_drive = Column(String(500))
+    dimensione_byte = Column(Integer)
+    caricato_il = Column(DateTime, default=dt.datetime.utcnow)
+    bando = relationship("Bando", backref="allegati")
+
+
 # Tabella ponte: una trattativa può riguardare più bandi contemporaneamente.
 crm_trattativa_bandi = Table(
     "crm_trattativa_bandi", Base.metadata,
@@ -802,6 +837,23 @@ def _drive_token_accesso():
     }, timeout=15)
     r.raise_for_status()
     return r.json()["access_token"]
+
+
+def _etichetta_da_nome(nome_file):
+    """Genera un'etichetta di 1-3 parole dal nome del file."""
+    import re as _re
+    base = nome_file.rsplit(".", 1)[0] if "." in nome_file else nome_file
+    base = _re.sub(r"[_\-]+", " ", base)
+    parole = [p for p in base.split() if not _re.fullmatch(r"\d{4}", p)]
+    parole = [p.capitalize() for p in parole if len(p) > 1][:3]
+    return " ".join(parole) if parole else base[:40].capitalize()
+
+
+def _token_download_pratica(pid):
+    """Token deterministico per il link di download compilati (senza colonna DB aggiuntiva)."""
+    import hmac as _hmac, hashlib as _hl
+    segreto = os.environ.get("CRM_SECRET_KEY", "energelia-crm").encode()
+    return _hmac.new(segreto, f"dl-{pid}".encode(), _hl.sha256).hexdigest()[:32]
 
 
 def _drive_cartella_cliente(cliente):
@@ -1746,8 +1798,77 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 </div></div>
 
 <h2>Documenti della pratica</h2>
+<div class="tabella scorri" style="margin-bottom:8px"><table>
+<thead><tr>
+  <th style="width:24px"></th>
+  <th>Documento</th>
+  <th style="text-align:center">① Modulo vuoto</th>
+  <th style="text-align:center">② Compilato</th>
+  <th style="text-align:center">③ Firmato dal cliente</th>
+</tr></thead><tbody>
+{% for r in p.righe_doc|sort(attribute='ordine') %}
+<tr>
+  <td style="font-size:11px;color:#aaa">{{ loop.index }}</td>
+  <td>
+    <span id="et-{{ r.id }}" contenteditable="true"
+      style="border-bottom:1px dashed #bbb;cursor:text;outline:none;padding:1px 3px"
+      onblur="salvaEtichettaRiga({{ r.id }}, this.innerText.trim())"
+      onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">{{ r.etichetta or 'Documento' }}</span>
+  </td>
+  <td style="text-align:center">
+    {% if r.mod_google_id %}
+      <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:12px">📄 {{ r.mod_nome }}</a>
+    {% else %}
+      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo" enctype="multipart/form-data" style="display:inline-flex;gap:4px;align-items:center">
+        <input type="file" name="file" style="font-size:11px;max-width:130px">
+        <button class="btn chiaro" type="submit" style="font-size:11px">↑</button>
+      </form>
+    {% endif %}
+  </td>
+  <td style="text-align:center">
+    {% if r.comp_google_id %}
+      <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/scarica" style="font-size:12px">📄 {{ r.comp_nome }}</a>
+    {% else %}
+      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato" enctype="multipart/form-data" style="display:inline-flex;gap:4px;align-items:center">
+        <input type="file" name="file" style="font-size:11px;max-width:130px">
+        <button class="btn chiaro" type="submit" style="font-size:11px">↑</button>
+      </form>
+    {% endif %}
+  </td>
+  <td style="text-align:center">
+    {% if r.firmato_doc %}
+      <a href="/crm/documenti/{{ r.firmato_doc_id }}/scarica" style="font-size:12px">✅ {{ r.firmato_doc.nome_file }}</a>
+    {% else %}
+      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato" style="display:inline-flex;gap:4px;align-items:center">
+        <select name="doc_id" style="font-size:11px">
+          <option value="">— da assegnare —</option>
+          {% for d in docs_liberi %}<option value="{{ d.id }}">{{ d.nome_file }}</option>{% endfor %}
+        </select>
+        <button class="btn chiaro" type="submit" style="font-size:11px">✓</button>
+      </form>
+    {% endif %}
+  </td>
+</tr>
+{% endfor %}
+</tbody></table></div>
+<div style="display:flex;gap:8px;margin-bottom:20px">
+  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/aggiungi">
+    <button class="btn chiaro" type="submit">+ Aggiungi riga</button>
+  </form>
+  {% if p.righe_doc %}
+  <div style="display:flex;align-items:center;gap:8px">
+    <input readonly value="{{ request.url_root.rstrip('/') }}/crm/pratica-download/{{ token_download }}"
+      style="font-size:12px;width:340px" id="link-dl">
+    <button type="button" class="btn chiaro" style="font-size:12px" onclick="
+      navigator.clipboard.writeText(document.getElementById('link-dl').value);
+      this.textContent='Copiato!';setTimeout(()=>this.textContent='Link download compilati',1500)
+    ">Link download compilati</button>
+  </div>
+  {% endif %}
+</div>
 {% if docs_pratica %}
-<div class="tabella scorri" style="margin-bottom:20px"><table>
+<details style="margin-bottom:20px"><summary style="cursor:pointer;color:#6b7b8c;font-size:13px">📥 {{ docs_pratica|length }} doc ricevuti non ancora assegnati a una riga</summary>
+<div class="tabella scorri" style="margin-top:8px"><table>
 <thead><tr><th>File</th><th>Caricato</th><th></th></tr></thead><tbody>
 {% for doc in docs_pratica %}<tr>
   <td>{% if doc.google_file_id %}<a href="/crm/documenti/{{ doc.id }}/scarica">{{ doc.nome_file }}</a>
@@ -1755,11 +1876,22 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   <td>{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
   <td class="num">
     <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
-      <button class="btn chiaro" type="submit">↩ Rimanda in scrivania</button>
+      <button class="btn chiaro" type="submit" style="font-size:11px">↩ Scrivania</button>
     </form>
   </td>
 </tr>{% endfor %}</tbody></table></div>
-{% else %}<div class="vuoto" style="margin-bottom:20px">Nessun documento assegnato a questa pratica.</div>{% endif %}
+</details>
+{% endif %}
+
+<script>
+function salvaEtichettaRiga(id, testo) {
+  if (!testo) return;
+  fetch('/crm/pratiche/{{ p.id }}/righe/' + id + '/etichetta', {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({etichetta: testo})
+  }).catch(e => console.error('Errore etichetta riga', e));
+}
+</script>
 
 <h2>Diario della pratica</h2>
 {% if p.attivita %}<ul class="diario">
@@ -2118,6 +2250,40 @@ T_BANDO = """{% extends "base" %}{% block contenuto %}
   <h2>Criticità</h2><p style="white-space:pre-wrap">{{ b.criticita or '—' }}</p>
 </div>
 </div>
+
+<h2>Documenti ufficiali</h2>
+<div class="riquadro"><div class="corpo">
+{% if b.allegati %}
+<table class="tabella" style="margin-bottom:12px"><thead><tr><th>Etichetta</th><th>File</th><th></th></tr></thead><tbody>
+{% for a in b.allegati %}
+<tr>
+  <td><span id="et-ba-{{ a.id }}" contenteditable="true"
+    style="border-bottom:1px dashed #bbb;cursor:text;outline:none;padding:1px 3px"
+    onblur="salvaBandoEt({{ a.id }}, this.innerText.trim())"
+    onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">{{ a.etichetta or a.nome_file }}</span></td>
+  <td><a href="/crm/bandi/{{ b.id }}/allegati/{{ a.id }}/scarica" style="font-size:13px">{{ a.nome_file }}</a></td>
+  <td><form method="post" action="/crm/bandi/{{ b.id }}/allegati/{{ a.id }}/elimina" style="display:inline"
+    onsubmit="return confirm('Eliminare {{ a.nome_file }}?')">
+    <button class="btn chiaro" type="submit" style="font-size:11px">🗑</button></form></td>
+</tr>{% endfor %}
+</tbody></table>
+{% else %}<p style="margin-top:0;color:#6b7b8c">Nessun documento caricato.</p>{% endif %}
+<form method="post" action="/crm/bandi/{{ b.id }}/allegati" enctype="multipart/form-data"
+      style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+  <input type="file" name="file" multiple style="font-size:13px">
+  <button class="btn ambra" type="submit">Carica</button>
+</form>
+</div></div>
+
+<script>
+function salvaBandoEt(id, testo) {
+  if (!testo) return;
+  fetch('/crm/bandi/{{ b.id }}/allegati/' + id + '/etichetta', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({etichetta: testo})
+  });
+}
+</script>
 
 <h2>Guida alla compilazione</h2>
 <div class="riquadro"><div class="corpo">
@@ -3048,8 +3214,127 @@ def scheda_pratica(pid):
     if not p.token_caricamento:
         p.token_caricamento = secrets.token_urlsafe(24)
         SessionLocale.commit()
-    docs = SessionLocale.query(Documento).filter_by(pratica_id=pid).order_by(Documento.creato_il.desc()).all()
-    return rendi("pratica", titolo=p.nome_bando, pagina="pratiche", p=p, docs_pratica=docs)
+    # Righe workflow: init 3 righe se non esistono ancora
+    if not p.righe_doc:
+        for i in range(3):
+            SessionLocale.add(RigaDocPratica(pratica_id=pid, etichetta="Documento", ordine=i))
+        SessionLocale.commit()
+        SessionLocale.expire(p)
+    # Docs assegnati alla pratica
+    tutti_docs = SessionLocale.query(Documento).filter_by(pratica_id=pid).order_by(Documento.creato_il.desc()).all()
+    # Doc già usati in col 3 di qualche riga
+    usati_ids = {r.firmato_doc_id for r in p.righe_doc if r.firmato_doc_id}
+    docs_liberi = [d for d in tutti_docs if d.id not in usati_ids]
+    docs_pratica = [d for d in tutti_docs if d.id not in usati_ids]
+    return rendi("pratica", titolo=p.nome_bando, pagina="pratiche", p=p,
+                 docs_pratica=docs_pratica, docs_liberi=docs_liberi,
+                 token_download=_token_download_pratica(pid))
+
+
+@crm.post("/pratiche/<int:pid>/righe/aggiungi")
+def aggiungi_riga_doc(pid):
+    ordine = SessionLocale.query(func.count(RigaDocPratica.id)).filter_by(pratica_id=pid).scalar()
+    SessionLocale.add(RigaDocPratica(pratica_id=pid, etichetta="Documento", ordine=ordine))
+    SessionLocale.commit()
+    return redirect(f"/crm/pratiche/{pid}")
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/etichetta")
+def aggiorna_etichetta_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    import json as _json
+    nuova = (request.get_json(force=True, silent=True) or {}).get("etichetta", "").strip()[:80]
+    if r and nuova:
+        r.etichetta = nuova
+        SessionLocale.commit()
+    return Response(_json.dumps({"ok": True}), mimetype="application/json")
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/modulo")
+def carica_modulo_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    f = request.files.get("file")
+    if not r or not f or not f.filename:
+        return redirect(f"/crm/pratiche/{pid}")
+    try:
+        ris = _drive_carica_file(GOOGLE_CARTELLA_MADRE, f.filename, f.read(), f.mimetype)
+        r.mod_nome = f.filename
+        r.mod_google_id = ris.get("id")
+        SessionLocale.commit()
+    except Exception as ex:
+        avvisa(f"Errore caricamento modulo: {ex}", "errore")
+    return redirect(f"/crm/pratiche/{pid}")
+
+
+@crm.get("/pratiche/<int:pid>/righe/<int:rid>/modulo/scarica")
+def scarica_modulo_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    if not r or not r.mod_google_id:
+        abort(404)
+    contenuto, mimetype, nome = _drive_scarica_file(r.mod_google_id)
+    return Response(contenuto, headers={"Content-Disposition": f'attachment; filename="{nome}"', "Content-Type": mimetype})
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/compilato")
+def carica_compilato_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    f = request.files.get("file")
+    if not r or not f or not f.filename:
+        return redirect(f"/crm/pratiche/{pid}")
+    try:
+        ris = _drive_carica_file(GOOGLE_CARTELLA_MADRE, f.filename, f.read(), f.mimetype)
+        r.comp_nome = f.filename
+        r.comp_google_id = ris.get("id")
+        SessionLocale.commit()
+    except Exception as ex:
+        avvisa(f"Errore caricamento compilato: {ex}", "errore")
+    return redirect(f"/crm/pratiche/{pid}")
+
+
+@crm.get("/pratiche/<int:pid>/righe/<int:rid>/compilato/scarica")
+def scarica_compilato_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    if not r or not r.comp_google_id:
+        abort(404)
+    contenuto, mimetype, nome = _drive_scarica_file(r.comp_google_id)
+    return Response(contenuto, headers={"Content-Disposition": f'attachment; filename="{nome}"', "Content-Type": mimetype})
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/firmato")
+def assegna_firmato_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    doc_id = request.form.get("doc_id")
+    if r and doc_id:
+        r.firmato_doc_id = int(doc_id)
+        SessionLocale.commit()
+        avvisa("Documento firmato assegnato.")
+    return redirect(f"/crm/pratiche/{pid}")
+
+
+@crm.get("/pratica-download/<token>")
+def pagina_download_compilati(token):
+    """Pagina pubblica: il cliente scarica i moduli compilati da firmare."""
+    from sqlalchemy.orm import joinedload as _jl
+    # Trova la pratica dal token deterministico
+    pratiche = SessionLocale.query(Pratica).all()
+    p = next((pr for pr in pratiche if _token_download_pratica(pr.id) == token), None)
+    if not p:
+        abort(404)
+    righe_con_compilato = [r for r in sorted(p.righe_doc, key=lambda x: x.ordine) if r.comp_google_id]
+    html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Documenti da firmare — {p.nome_bando}</title>
+<style>body{{font-family:system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 20px;color:#1a2e42}}
+h1{{font-size:22px}}p{{color:#5a6b7c}}a.btn{{display:inline-block;background:#1f4e78;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-size:14px;margin-top:6px}}
+.riga{{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-bottom:12px}}</style>
+</head><body>
+<h1>📄 {p.nome_bando}</h1>
+<p>Scarica i documenti, firmali e rispediscili come indicato.</p>
+{''.join(f"""<div class="riga"><strong>{r.etichetta or r.comp_nome}</strong><br>
+<a class="btn" href="/crm/pratiche/{p.id}/righe/{r.id}/compilato/scarica">⬇ Scarica {r.comp_nome}</a></div>"""
+for r in righe_con_compilato) if righe_con_compilato else '<p>Nessun documento disponibile al momento.</p>'}
+</body></html>"""
+    return Response(html, mimetype="text/html")
 
 
 @crm.post("/pratiche/<int:pid>/invia-link")
@@ -3261,6 +3546,68 @@ def scarica_guida(bid):
     buffer = io.BytesIO(b.guida_compilazione.encode("utf-8"))
     nome_file = f"Guida_{b.nome}".replace(" ", "_").replace("/", "-") + ".txt"
     return send_file(buffer, as_attachment=True, download_name=nome_file, mimetype="text/plain")
+
+
+@crm.post("/bandi/<int:bid>/allegati")
+def carica_allegato_bando(bid):
+    b = SessionLocale.get(Bando, bid)
+    if not b:
+        abort(404)
+    if not drive_configurato():
+        avvisa("Drive non configurato: impossibile caricare.", "errore")
+        return redirect(f"/crm/bandi/{bid}")
+    for f in request.files.getlist("file"):
+        if not f or not f.filename:
+            continue
+        try:
+            ris = _drive_carica_file(GOOGLE_CARTELLA_MADRE, f.filename, f.read(), f.mimetype)
+            SessionLocale.add(BandoAllegato(
+                bando_id=bid, nome_file=f.filename,
+                etichetta=_etichetta_da_nome(f.filename),
+                google_file_id=ris.get("id"),
+                link_drive=ris.get("webViewLink"),
+                dimensione_byte=int(ris.get("size") or 0),
+            ))
+        except Exception as ex:
+            avvisa(f"Errore caricamento '{f.filename}': {ex}", "errore")
+    SessionLocale.commit()
+    return redirect(f"/crm/bandi/{bid}")
+
+
+@crm.get("/bandi/<int:bid>/allegati/<int:aid>/scarica")
+def scarica_allegato_bando(bid, aid):
+    a = SessionLocale.get(BandoAllegato, aid)
+    if not a or not a.google_file_id:
+        abort(404)
+    contenuto, mimetype, nome = _drive_scarica_file(a.google_file_id)
+    return Response(contenuto, headers={"Content-Disposition": f'attachment; filename="{nome}"', "Content-Type": mimetype})
+
+
+@crm.post("/bandi/<int:bid>/allegati/<int:aid>/etichetta")
+def aggiorna_etichetta_allegato(bid, aid):
+    a = SessionLocale.get(BandoAllegato, aid)
+    import json as _json
+    nuova = (request.get_json(force=True, silent=True) or {}).get("etichetta", "").strip()[:80]
+    if a and nuova:
+        a.etichetta = nuova
+        SessionLocale.commit()
+    return Response(_json.dumps({"ok": True}), mimetype="application/json")
+
+
+@crm.post("/bandi/<int:bid>/allegati/<int:aid>/elimina")
+def elimina_allegato_bando(bid, aid):
+    a = SessionLocale.get(BandoAllegato, aid)
+    if not a:
+        return redirect(f"/crm/bandi/{bid}")
+    if a.google_file_id and drive_configurato():
+        try:
+            _drive_elimina_file(a.google_file_id)
+        except Exception as ex:
+            print(f"[crm] Errore Drive allegato bando: {ex}")
+    SessionLocale.delete(a)
+    SessionLocale.commit()
+    avvisa("Documento eliminato.")
+    return redirect(f"/crm/bandi/{bid}")
 
 
 @crm.get("/pratiche/<int:pid>/modifica")
