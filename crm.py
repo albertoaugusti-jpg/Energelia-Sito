@@ -866,6 +866,27 @@ def _drive_elimina_file(google_file_id):
         r.raise_for_status()
 
 
+def _drive_scarica_file(google_file_id):
+    """Scarica il contenuto di un file da Drive e restituisce (bytes, mimetype, filename)."""
+    token = _drive_token_accesso()
+    # Prima prendi metadati (nome e mimeType)
+    meta = requests.get(
+        f"https://www.googleapis.com/drive/v3/files/{google_file_id}",
+        headers={"Authorization": f"Bearer {token}"},
+        params={"fields": "name,mimeType"},
+        timeout=15).json()
+    nome = meta.get("name", "file")
+    mimetype = meta.get("mimeType", "application/octet-stream")
+    # Poi scarica il contenuto
+    r = requests.get(
+        f"https://www.googleapis.com/drive/v3/files/{google_file_id}",
+        headers={"Authorization": f"Bearer {token}"},
+        params={"alt": "media"},
+        timeout=60)
+    r.raise_for_status()
+    return r.content, mimetype, nome
+
+
 def prossimo_codice(db, modello, prefisso):
     ultimo = db.query(func.max(modello.codice)).scalar()
     n = 1
@@ -1492,7 +1513,7 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
 <div class="tabella scorri"><table>
 <thead><tr><th>File</th><th>Caricato</th><th>Stato</th><th></th></tr></thead><tbody>
 {% for doc in documenti %}<tr>
-  <td>{% if doc.link_drive %}<a href="{{ doc.link_drive }}" target="_blank">{{ doc.nome_file }}</a>
+  <td>{% if doc.google_file_id %}<a href="/crm/documenti/{{ doc.id }}/scarica">{{ doc.nome_file }}</a>
       {% else %}{{ doc.nome_file }}{% endif %}</td>
   <td>{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
   <td>{% if doc.stato == 'assegnato' %}<span class="pill ok">→ {{ doc.pratica.nome_bando if doc.pratica else 'assegnato' }}</span>
@@ -1719,7 +1740,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 <div class="tabella scorri" style="margin-bottom:20px"><table>
 <thead><tr><th>File</th><th>Caricato</th><th></th></tr></thead><tbody>
 {% for doc in docs_pratica %}<tr>
-  <td>{% if doc.link_drive %}<a href="{{ doc.link_drive }}" target="_blank">{{ doc.nome_file }}</a>
+  <td>{% if doc.google_file_id %}<a href="/crm/documenti/{{ doc.id }}/scarica">{{ doc.nome_file }}</a>
       {% else %}{{ doc.nome_file }}{% endif %}</td>
   <td>{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
   <td class="num">
@@ -1768,8 +1789,8 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   <td>{{ v.etichetta }}</td>
   <td>{{ 'Caricamento file' if v.tipo_risposta == 'file' else 'Testo libero' }}</td>
   <td>{% if v.compilata %}
-        {% if v.tipo_risposta == 'file' and v.documento and v.documento.link_drive %}
-          <a href="{{ v.documento.link_drive }}" target="_blank">✓ ricevuto</a>
+        {% if v.tipo_risposta == 'file' and v.documento and v.documento.google_file_id %}
+          <a href="/crm/documenti/{{ v.documento.id }}/scarica">✓ ricevuto</a>
         {% elif v.tipo_risposta == 'testo' %}<span class="pill ok">✓ {{ v.valore_testo[:60] }}{{ '…' if v.valore_testo and v.valore_testo|length > 60 }}</span>
         {% else %}<span class="pill ok">✓ ricevuto</span>{% endif %}
       {% else %}<span class="pill">in attesa</span>{% endif %}</td>
@@ -1893,7 +1914,7 @@ T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
 </tr></thead><tbody>
 {% for doc in elenco %}<tr data-doc-id="{{ doc.id }}" data-cliente-id="{{ doc.cliente_id }}">
   <td><input type="checkbox" class="doc-check" value="{{ doc.id }}" onchange="aggiornaBottone()"></td>
-  <td>{% if doc.link_drive %}<a href="{{ doc.link_drive }}" target="_blank">{{ doc.nome_file }}</a>
+  <td>{% if doc.google_file_id %}<a href="/crm/documenti/{{ doc.id }}/scarica">{{ doc.nome_file }}</a>
       {% else %}{{ doc.nome_file }}{% endif %}</td>
   <td><a href="/crm/clienti/{{ doc.cliente_id }}">{{ doc.cliente.ragione_sociale }}</a></td>
   <td>{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
@@ -3364,6 +3385,25 @@ def rimanda_documento(did):
         SessionLocale.commit()
         avvisa(f"{doc.nome_file} rimandato in scrivania.")
     return redirect(request.referrer or "/crm/documenti")
+
+
+@crm.get("/documenti/<int:did>/scarica")
+def scarica_documento(did):
+    doc = SessionLocale.get(Documento, did)
+    if not doc or not doc.google_file_id:
+        return "File non trovato.", 404
+    try:
+        contenuto, mimetype, nome = _drive_scarica_file(doc.google_file_id)
+    except Exception as ex:
+        return f"Errore download Drive: {ex}", 502
+    from flask import Response
+    return Response(
+        contenuto,
+        headers={
+            "Content-Disposition": f'attachment; filename="{nome}"',
+            "Content-Type": mimetype,
+        }
+    )
 
 
 @crm.post("/documenti/assegna-bulk")
