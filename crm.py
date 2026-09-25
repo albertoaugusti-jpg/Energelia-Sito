@@ -838,6 +838,25 @@ def _drive_carica_file(cartella_id, nome_file, contenuto, mimetype):
     return r.json()
 
 
+COLLABORATORI_EMAIL = ["b.legger965@gmail.com", "antonio.castagnaro@gmail.com"]
+
+
+def _drive_autorizza_collaboratori():
+    """Condivide la cartella madre Drive con tutti i collaboratori (viewer).
+    Basta eseguirla una volta: i file nuovi ereditano i permessi della cartella."""
+    token = _drive_token_accesso()
+    risultati = []
+    for email in COLLABORATORI_EMAIL:
+        r = requests.post(
+            f"https://www.googleapis.com/drive/v3/files/{GOOGLE_CARTELLA_MADRE}/permissions",
+            headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+            json={"type": "user", "role": "reader", "emailAddress": email},
+            params={"sendNotificationEmail": "false"},
+            timeout=15)
+        risultati.append((email, r.status_code, r.text[:100]))
+    return risultati
+
+
 def _drive_elimina_file(google_file_id):
     token = _drive_token_accesso()
     r = requests.delete(
@@ -2334,6 +2353,16 @@ T_IMPOSTAZIONI = """{% extends "base" %}{% block contenuto %}
 <h2>Esporta</h2>
 <p><a class="btn chiaro" href="/crm/esporta.xlsx">Scarica tutto in Excel</a>
 <a class="btn chiaro" href="/crm/esporta.csv">Clienti in CSV</a></p>
+
+<h2>Accesso collaboratori a Google Drive</h2>
+<div class="riquadro"><div class="corpo">
+  <p style="margin-top:0;color:#6b7b8c">Condivide la cartella Drive principale con Bruno (b.legger965@gmail.com)
+  e Antonio (antonio.castagnaro@gmail.com) come <em>visualizzatori</em>. I file nuovi vengono ereditati automaticamente.
+  Basta premere una volta sola.</p>
+  <form method="post" action="/crm/impostazioni/autorizza-collaboratori">
+    <button class="btn ambra" type="submit">Autorizza Bruno e Antonio su Drive</button>
+  </form>
+</div></div>
 {% endblock %}"""
 
 env = Environment(loader=DictLoader({
@@ -4012,6 +4041,26 @@ def cambia_password():
         u.password_hash = hash_pw(nuova)
         SessionLocale.commit()
         avvisa("Password aggiornata.")
+    return redirect("/crm/impostazioni")
+
+
+@crm.post("/impostazioni/autorizza-collaboratori")
+@login_required
+def autorizza_collaboratori_drive():
+    """Condivide la cartella Drive madre con Bruno e Antonio (una tantum)."""
+    if not GOOGLE_CARTELLA_MADRE:
+        avvisa("GOOGLE_CARTELLA_MADRE non configurata.", "errore")
+        return redirect("/crm/impostazioni")
+    try:
+        risultati = _drive_autorizza_collaboratori()
+        ok = [e for e, status, _ in risultati if status in (200, 201)]
+        err = [e for e, status, _ in risultati if status not in (200, 201)]
+        if ok:
+            avvisa(f"Cartella Drive condivisa con: {', '.join(ok)}.")
+        if err:
+            avvisa(f"Errore per: {', '.join(err)}.", "errore")
+    except Exception as ex:
+        avvisa(f"Errore Drive: {ex}", "errore")
     return redirect("/crm/impostazioni")
 
 
