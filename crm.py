@@ -253,6 +253,9 @@ class Pratica(Base):
     attivita = relationship("Attivita", back_populates="pratica")
     conto_incasso = relationship("ContoBancario")
     bando = relationship("Bando")
+    documenti = relationship("Documento", back_populates="pratica",
+                             foreign_keys="Documento.pratica_id",
+                             order_by="Documento.creato_il.desc()")
     voci_richiesta = relationship("VoceRichiesta", back_populates="pratica",
                                   order_by="VoceRichiesta.ordine", cascade="all, delete-orphan")
 
@@ -339,7 +342,8 @@ class Documento(Base):
     creato_il = Column(DateTime, default=dt.datetime.utcnow)
 
     cliente = relationship("Cliente")
-    pratica = relationship("Pratica")
+    pratica = relationship("Pratica", back_populates="documenti",
+                           foreign_keys=[pratica_id])
 
 
 class VoceRichiesta(Base):
@@ -1679,6 +1683,22 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 </div></form>
 </div></div>
 
+<h2>Documenti della pratica</h2>
+{% if docs_pratica %}
+<div class="tabella scorri" style="margin-bottom:20px"><table>
+<thead><tr><th>File</th><th>Caricato</th><th></th></tr></thead><tbody>
+{% for doc in docs_pratica %}<tr>
+  <td>{% if doc.link_drive %}<a href="{{ doc.link_drive }}" target="_blank">{{ doc.nome_file }}</a>
+      {% else %}{{ doc.nome_file }}{% endif %}</td>
+  <td>{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
+  <td class="num">
+    <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
+      <button class="btn chiaro" type="submit">↩ Rimanda in scrivania</button>
+    </form>
+  </td>
+</tr>{% endfor %}</tbody></table></div>
+{% else %}<div class="vuoto" style="margin-bottom:20px">Nessun documento assegnato a questa pratica.</div>{% endif %}
+
 <h2>Diario della pratica</h2>
 {% if p.attivita %}<ul class="diario">
 {% for a in p.attivita|sort(attribute='data', reverse=true) %}<li>
@@ -1848,13 +1868,20 @@ T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
   <td>{% if doc.stato == 'assegnato' %}<span class="pill ok">→ {{ doc.pratica.nome_bando if doc.pratica else 'assegnato' }}</span>
       {% else %}<span class="pill">da smistare</span>{% endif %}</td>
   <td class="num">
-    {% if doc.stato != 'assegnato' and doc.cliente.pratiche %}
-    <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline-flex;gap:6px">
-      <select name="pratica_id" required><option value="">Assegna a…</option>
-        {% for p in doc.cliente.pratiche %}<option value="{{ p.id }}">{{ p.nome_bando }}</option>{% endfor %}</select>
-      <button class="btn chiaro" type="submit">Ok</button>
-    </form>
-    {% elif doc.stato != 'assegnato' %}<span class="nota">Il cliente non ha ancora pratiche</span>{% endif %}
+    {% if doc.stato != 'assegnato' %}
+      {% set prat = pratiche_per_cliente.get(doc.cliente_id, []) %}
+      {% if prat %}
+      <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline-flex;gap:6px">
+        <select name="pratica_id" required><option value="">Smista a pratica…</option>
+          {% for p in prat %}<option value="{{ p.id }}">{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}</select>
+        <button class="btn chiaro" type="submit">Ok</button>
+      </form>
+      {% else %}<span class="nota">Nessuna pratica aperta</span>{% endif %}
+    {% else %}<span class="pill ok">→ {{ doc.pratica.nome_bando if doc.pratica else 'assegnato' }}</span>
+      <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
+        <button class="btn chiaro" type="submit" title="Rimanda in scrivania" style="font-size:11px">↩ scrivania</button>
+      </form>
+    {% endif %}
     <form method="post" action="/crm/documenti/{{ doc.id }}/elimina" style="display:inline"
       onsubmit="return confirm('Eliminare {{ doc.nome_file }}? Viene tolto anche da Drive.');">
       <button class="btn chiaro" type="submit" title="Elimina">🗑</button>
@@ -2906,7 +2933,8 @@ def scheda_pratica(pid):
     if not p.token_caricamento:
         p.token_caricamento = secrets.token_urlsafe(24)
         SessionLocale.commit()
-    return rendi("pratica", titolo=p.nome_bando, pagina="pratiche", p=p)
+    docs = SessionLocale.query(Documento).filter_by(pratica_id=pid).order_by(Documento.creato_il.desc()).all()
+    return rendi("pratica", titolo=p.nome_bando, pagina="pratiche", p=p, docs_pratica=docs)
 
 
 @crm.post("/pratiche/<int:pid>/invia-link")
@@ -3211,9 +3239,16 @@ def lista_documenti():
     if solo_da_smistare:
         query = query.filter(Documento.stato == "da_smistare")
     elenco = query.order_by(Documento.creato_il.desc()).limit(200).all()
+    # Precarica le pratiche per ciascun cliente presente nella lista
+    cliente_ids = list({d.cliente_id for d in elenco if d.cliente_id})
+    pratiche_per_cliente = {}
+    if cliente_ids:
+        for p in SessionLocale.query(Pratica).filter(Pratica.cliente_id.in_(cliente_ids)).order_by(Pratica.codice).all():
+            pratiche_per_cliente.setdefault(p.cliente_id, []).append(p)
     return rendi("documenti", titolo="Documenti", pagina="documenti",
                  elenco=elenco, solo_da_smistare=solo_da_smistare,
-                 configurato=drive_configurato())
+                 configurato=drive_configurato(),
+                 pratiche_per_cliente=pratiche_per_cliente)
 
 
 @crm.post("/documenti/<int:did>/assegna")
@@ -3225,6 +3260,17 @@ def assegna_documento(did):
         doc.stato = "assegnato"
         SessionLocale.commit()
         avvisa(f"{doc.nome_file} assegnato.")
+    return redirect(request.referrer or "/crm/documenti")
+
+
+@crm.post("/documenti/<int:did>/rimanda")
+def rimanda_documento(did):
+    doc = SessionLocale.get(Documento, did)
+    if doc:
+        doc.pratica_id = None
+        doc.stato = "da_smistare"
+        SessionLocale.commit()
+        avvisa(f"{doc.nome_file} rimandato in scrivania.")
     return redirect(request.referrer or "/crm/documenti")
 
 
