@@ -3331,7 +3331,7 @@ h1{{font-size:22px}}p{{color:#5a6b7c}}a.btn{{display:inline-block;background:#1f
 <h1>📄 {p.nome_bando}</h1>
 <p>Scarica i documenti, firmali e rispediscili come indicato.</p>
 {''.join(f"""<div class="riga"><strong>{r.etichetta or r.comp_nome}</strong><br>
-<a class="btn" href="/crm/pratiche/{p.id}/righe/{r.id}/compilato/scarica">⬇ Scarica {r.comp_nome}</a></div>"""
+<a class="btn" href="/crm/pratiche/{p.id}/righe/{r.id}/compilato/scarica">Scarica {r.comp_nome}</a></div>"""
 for r in righe_con_compilato) if righe_con_compilato else '<p>Nessun documento disponibile al momento.</p>'}
 </body></html>"""
     return Response(html, mimetype="text/html")
