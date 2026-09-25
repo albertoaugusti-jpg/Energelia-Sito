@@ -1825,15 +1825,22 @@ T_LEAD = """{% extends "base" %}{% block contenuto %}
 T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
 <div class="testa"><div><h1>Documenti</h1>
 <p class="sottotitolo">{{ elenco|length }} file{{ ' da smistare' if solo_da_smistare else '' }}</p></div>
-<div>{% if solo_da_smistare %}<a class="btn chiaro" href="/crm/documenti?tutti=1">Mostra tutti</a>
-{% else %}<a class="btn chiaro" href="/crm/documenti">Solo da smistare</a>{% endif %}</div></div>
+<div style="display:flex;gap:8px;align-items:center">
+  <button type="button" class="btn" id="btn-notifica" style="display:none" onclick="notificaSelezionati()">Notifica collaboratori</button>
+  {% if solo_da_smistare %}<a class="btn chiaro" href="/crm/documenti?tutti=1">Mostra tutti</a>
+  {% else %}<a class="btn chiaro" href="/crm/documenti">Solo da smistare</a>{% endif %}
+</div></div>
 
 {% if not configurato %}
 <div class="vuoto">Il caricamento da Google Drive non è ancora configurato.</div>
 {% elif elenco %}
 <div class="tabella scorri"><table>
-<thead><tr><th>File</th><th>Cliente</th><th>Caricato</th><th>Stato</th><th></th></tr></thead><tbody>
+<thead><tr>
+  <th style="width:32px"><input type="checkbox" id="sel-tutti" onchange="toggleTutti(this)" title="Seleziona tutti"></th>
+  <th>File</th><th>Cliente</th><th>Caricato</th><th>Stato</th><th></th>
+</tr></thead><tbody>
 {% for doc in elenco %}<tr>
+  <td><input type="checkbox" class="doc-check" value="{{ doc.id }}" onchange="aggiornaBottone()"></td>
   <td>{% if doc.link_drive %}<a href="{{ doc.link_drive }}" target="_blank">{{ doc.nome_file }}</a>
       {% else %}{{ doc.nome_file }}{% endif %}</td>
   <td><a href="/crm/clienti/{{ doc.cliente_id }}">{{ doc.cliente.ragione_sociale }}</a></td>
@@ -1854,6 +1861,26 @@ T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
     </form>
   </td>
 </tr>{% endfor %}</tbody></table></div>
+<script>
+function toggleTutti(cb) {
+  document.querySelectorAll('.doc-check').forEach(c => c.checked = cb.checked);
+  aggiornaBottone();
+}
+function aggiornaBottone() {
+  const n = document.querySelectorAll('.doc-check:checked').length;
+  const btn = document.getElementById('btn-notifica');
+  btn.style.display = n > 0 ? '' : 'none';
+  btn.textContent = 'Notifica Bruno & Antonio (' + n + ' file)';
+}
+function notificaSelezionati() {
+  const ids = [...document.querySelectorAll('.doc-check:checked')].map(c => c.value);
+  if (!ids.length) return;
+  const f = document.createElement('form');
+  f.method = 'post'; f.action = '/crm/documenti/notifica';
+  ids.forEach(id => { const i = document.createElement('input'); i.type='hidden'; i.name='doc_ids'; i.value=id; f.appendChild(i); });
+  document.body.appendChild(f); f.submit();
+}
+</script>
 {% else %}<div class="vuoto">{{ 'Niente da smistare al momento.' if solo_da_smistare else 'Nessun documento caricato finora.' }}</div>{% endif %}
 {% endblock %}"""
 
@@ -3199,6 +3226,38 @@ def assegna_documento(did):
         SessionLocale.commit()
         avvisa(f"{doc.nome_file} assegnato.")
     return redirect(request.referrer or "/crm/documenti")
+
+
+@crm.post("/documenti/notifica")
+def notifica_documenti():
+    ids = request.form.getlist("doc_ids")
+    if not ids:
+        avvisa("Seleziona almeno un documento.")
+        return redirect("/crm/documenti")
+    docs = SessionLocale.query(Documento).filter(Documento.id.in_([int(i) for i in ids])).all()
+    righe = []
+    for doc in docs:
+        cliente = doc.cliente.ragione_sociale if doc.cliente else "–"
+        link = doc.link_drive or "(link non disponibile)"
+        righe.append(f"• {doc.nome_file}  ({cliente})\n  {link}")
+    n = len(docs)
+    corpo = (
+        f"Ciao,\n\nti condivido {n} document{'o' if n == 1 else 'i'} caricati dai clienti:\n\n"
+        + "\n\n".join(righe)
+        + "\n\nPuoi aprirli direttamente dai link sopra.\n\nEnergelia CRM"
+    )
+    oggetto = f"Documenti da revisionare – {n} file"
+    COLLABORATORI = ["b.legger965@gmail.com", "antonio.castagnaro@gmail.com"]
+    errori = []
+    for email_dest in COLLABORATORI:
+        ok, err = invia_email(email_dest, oggetto, corpo, nome_mittente="Energelia CRM")
+        if not ok:
+            errori.append(f"{email_dest}: {err}")
+    if errori:
+        avvisa("Email non inviata a: " + "; ".join(errori))
+    else:
+        avvisa(f"Email inviata a Bruno e Antonio con {n} document{'o' if n == 1 else 'i'}.")
+    return redirect("/crm/documenti")
 
 
 @crm.post("/documenti/<int:did>/elimina")
