@@ -3314,26 +3314,38 @@ def assegna_firmato_riga(pid, rid):
 @crm.get("/pratica-download/<token>")
 def pagina_download_compilati(token):
     """Pagina pubblica: il cliente scarica i moduli compilati da firmare."""
-    from sqlalchemy.orm import joinedload as _jl
-    # Trova la pratica dal token deterministico
     pratiche = SessionLocale.query(Pratica).all()
     p = next((pr for pr in pratiche if _token_download_pratica(pr.id) == token), None)
     if not p:
         abort(404)
     righe_con_compilato = [r for r in sorted(p.righe_doc, key=lambda x: x.ordine) if r.comp_google_id]
-    html = f"""<!doctype html><html lang="it"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Documenti da firmare — {p.nome_bando}</title>
-<style>body{{font-family:system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 20px;color:#1a2e42}}
-h1{{font-size:22px}}p{{color:#5a6b7c}}a.btn{{display:inline-block;background:#1f4e78;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-size:14px;margin-top:6px}}
-.riga{{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-bottom:12px}}</style>
-</head><body>
-<h1>📄 {p.nome_bando}</h1>
-<p>Scarica i documenti, firmali e rispediscili come indicato.</p>
-{''.join(f"""<div class="riga"><strong>{r.etichetta or r.comp_nome}</strong><br>
-<a class="btn" href="/crm/pratiche/{p.id}/righe/{r.id}/compilato/scarica">Scarica {r.comp_nome}</a></div>"""
-for r in righe_con_compilato) if righe_con_compilato else '<p>Nessun documento disponibile al momento.</p>'}
-</body></html>"""
+    # Costruisco le righe HTML senza nested f-string (Python 3.11 non le supporta)
+    righe_html = ""
+    for r in righe_con_compilato:
+        label = r.etichetta or r.comp_nome or "Documento"
+        nome = r.comp_nome or "file"
+        url = "/crm/pratiche/" + str(p.id) + "/righe/" + str(r.id) + "/compilato/scarica"
+        righe_html += (
+            '<div class="riga"><strong>' + label + "</strong><br>"
+            + '<a class="btn" href="' + url + '">Scarica ' + nome + "</a></div>"
+        )
+    if not righe_html:
+        righe_html = "<p>Nessun documento disponibile al momento.</p>"
+    nome_bando = p.nome_bando or ""
+    html = (
+        "<!doctype html><html lang='it'><head><meta charset='utf-8'>"
+        "<meta name='viewport' content='width=device-width,initial-scale=1'>"
+        "<title>Documenti da firmare - " + nome_bando + "</title>"
+        "<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 20px;color:#1a2e42}"
+        "h1{font-size:22px}p{color:#5a6b7c}"
+        "a.btn{display:inline-block;background:#1f4e78;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-size:14px;margin-top:6px}"
+        ".riga{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-bottom:12px}</style>"
+        "</head><body>"
+        "<h1>" + nome_bando + "</h1>"
+        "<p>Scarica i documenti, firmali e rispediscili come indicato.</p>"
+        + righe_html
+        + "</body></html>"
+    )
     return Response(html, mimetype="text/html")
 
 
