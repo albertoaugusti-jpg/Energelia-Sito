@@ -1519,28 +1519,38 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
   <td>{% if doc.stato == 'assegnato' %}<span class="pill ok">→ {{ doc.pratica.nome_bando if doc.pratica else 'assegnato' }}</span>
       {% else %}<span class="pill">da smistare</span>{% endif %}</td>
   <td class="num">
-    {% if doc.stato != 'assegnato' %}
-      {% if c.pratiche %}
-      <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline-flex;gap:6px;margin-bottom:4px">
-        <select name="pratica_id"><option value="">Smista a pratica…</option>
-          {% for p in c.pratiche %}<option value="{{ p.id }}">{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}</select>
-        <button class="btn chiaro" type="submit">Ok</button>
-      </form><br>
-      {% endif %}
-      <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline">
-        <input type="hidden" name="pratica_id" value="">
-        <button class="btn chiaro" type="submit">✓ Ricevuto</button>
-      </form>
+    {% if c.pratiche %}
+    <form method="post" action="/crm/documenti/{{ doc.id }}/gestisci-pratica"
+          style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+      <select name="pratica_id" style="font-size:12px">
+        <option value="">Pratica…</option>
+        {% for p in c.pratiche %}<option value="{{ p.id }}"
+          {% if doc.pratica_id == p.id %}selected{% endif %}>{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}
+      </select>
+      <div style="display:flex;gap:4px">
+        <button class="btn chiaro" name="azione" value="sposta" type="submit" style="font-size:11px">→ Sposta</button>
+        <button class="btn chiaro" name="azione" value="duplica" type="submit" style="font-size:11px">⊕ Duplica</button>
+        <button class="btn chiaro" name="azione" value="cancella" type="submit" style="font-size:11px"
+          onclick="return confirm('Eliminare {{ doc.nome_file }}?')">🗑 Cancella</button>
+      </div>
+    </form>
     {% else %}
+    {% if doc.stato == 'assegnato' %}
       <span class="pill ok">{{ '→ ' ~ doc.pratica.nome_bando if doc.pratica else '✓ ricevuto' }}</span>
       <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
         <button class="btn chiaro" type="submit" style="font-size:11px">↩ scrivania</button>
+      </form>
+    {% else %}
+      <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline">
+        <input type="hidden" name="pratica_id" value="">
+        <button class="btn chiaro" type="submit">✓ Ricevuto</button>
       </form>
     {% endif %}
     <form method="post" action="/crm/documenti/{{ doc.id }}/elimina" style="display:inline"
       onsubmit="return confirm('Eliminare {{ doc.nome_file }}? Viene tolto anche da Drive.');">
       <button class="btn chiaro" type="submit" title="Elimina">🗑</button>
     </form>
+    {% endif %}
   </td>
 </tr>{% endfor %}</tbody></table></div>
 {% else %}<div class="vuoto">Nessun documento caricato finora.</div>{% endif %}
@@ -3385,6 +3395,57 @@ def rimanda_documento(did):
         SessionLocale.commit()
         avvisa(f"{doc.nome_file} rimandato in scrivania.")
     return redirect(request.referrer or "/crm/documenti")
+
+
+@crm.post("/documenti/<int:did>/gestisci-pratica")
+def gestisci_pratica_documento(did):
+    doc = SessionLocale.get(Documento, did)
+    if not doc:
+        return redirect(request.referrer or "/crm/documenti")
+    azione = request.form.get("azione", "")
+    pid = request.form.get("pratica_id") or None
+    cliente_id = doc.cliente_id
+
+    if azione == "sposta":
+        if not pid:
+            avvisa("Seleziona una pratica di destinazione.", "errore")
+            return redirect(request.referrer or f"/crm/clienti/{cliente_id}")
+        doc.pratica_id = int(pid)
+        doc.stato = "assegnato"
+        SessionLocale.commit()
+        avvisa(f"{doc.nome_file} spostato sulla pratica.")
+
+    elif azione == "duplica":
+        if not pid:
+            avvisa("Seleziona una pratica di destinazione.", "errore")
+            return redirect(request.referrer or f"/crm/clienti/{cliente_id}")
+        copia = Documento(
+            cliente_id=doc.cliente_id,
+            pratica_id=int(pid),
+            nome_file=doc.nome_file,
+            google_file_id=doc.google_file_id,
+            link_drive=doc.link_drive,
+            caricato_da=doc.caricato_da,
+            stato="assegnato",
+        )
+        SessionLocale.add(copia)
+        SessionLocale.commit()
+        avvisa(f"{doc.nome_file} duplicato sulla pratica.")
+
+    elif azione == "cancella":
+        nome = doc.nome_file
+        if doc.google_file_id and drive_configurato():
+            try:
+                _drive_elimina_file(doc.google_file_id)
+            except Exception as ex:
+                print(f"[crm] Errore eliminazione Drive: {ex}")
+        for voce in SessionLocale.query(VoceRichiesta).filter_by(documento_id=doc.id).all():
+            voce.documento_id = None
+        SessionLocale.delete(doc)
+        SessionLocale.commit()
+        avvisa(f"{nome} eliminato.")
+
+    return redirect(request.referrer or f"/crm/clienti/{cliente_id}")
 
 
 @crm.get("/documenti/<int:did>/scarica")
