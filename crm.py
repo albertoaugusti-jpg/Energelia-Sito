@@ -3396,7 +3396,6 @@ def scarica_documento(did):
         contenuto, mimetype, nome = _drive_scarica_file(doc.google_file_id)
     except Exception as ex:
         return f"Errore download Drive: {ex}", 502
-    from flask import Response
     return Response(
         contenuto,
         headers={
@@ -3423,7 +3422,8 @@ def assegna_documenti_bulk():
         except (KeyError, ValueError, TypeError):
             continue
     SessionLocale.commit()
-    return jsonify({"ok": True, "assegnati": assegnati})
+    import json as _json
+    return Response(_json.dumps({"ok": True, "assegnati": assegnati}), mimetype="application/json")
 
 
 @crm.post("/documenti/notifica")
