@@ -1877,7 +1877,7 @@ T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
 <div class="testa"><div><h1>Documenti</h1>
 <p class="sottotitolo">{{ elenco|length }} file{{ ' da smistare' if solo_da_smistare else '' }}</p></div>
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-  <button type="button" class="btn ambra" id="btn-assegna" style="display:none" onclick="assegnaSelezionati()">Assegna selezionati</button>
+  <button type="button" class="btn ambra" id="btn-assegna" onclick="assegnaSelezionati()">✓ Assegna selezionati</button>
   <button type="button" class="btn chiaro" id="btn-notifica" style="display:none" onclick="notificaSelezionati()">Notifica collaboratori</button>
   {% if solo_da_smistare %}<a class="btn chiaro" href="/crm/documenti?tutti=1">Mostra tutti</a>
   {% else %}<a class="btn chiaro" href="/crm/documenti">Solo da smistare</a>{% endif %}
@@ -1940,12 +1940,11 @@ function toggleTutti(cb) {
 function aggiornaBottone() {
   const checked = document.querySelectorAll('.doc-check:checked');
   const n = checked.length;
-  const btnA = document.getElementById('btn-assegna');
   const btnN = document.getElementById('btn-notifica');
   btnN.style.display = n > 0 ? '' : 'none';
   btnN.textContent = 'Notifica collaboratori (' + n + ')';
-  btnA.style.display = n > 0 ? '' : 'none';
-  btnA.textContent = 'Assegna selezionati (' + n + ')';
+  const btnA = document.getElementById('btn-assegna');
+  btnA.textContent = n > 0 ? '✓ Assegna selezionati (' + n + ')' : '✓ Assegna selezionati';
 }
 function aggiornaDest(docId, nuovoClienteId) {
   // Aggiorna data-cliente-id sulla riga se l'utente cambia cliente
@@ -1954,7 +1953,7 @@ function aggiornaDest(docId, nuovoClienteId) {
 }
 function assegnaSelezionati() {
   const checked = [...document.querySelectorAll('.doc-check:checked')];
-  if (!checked.length) return;
+  if (!checked.length) { alert('Seleziona almeno un documento con la spunta.'); return; }
   const payload = checked.map(cb => {
     const docId = cb.value;
     const tr = cb.closest('tr');
