@@ -1876,8 +1876,9 @@ T_LEAD = """{% extends "base" %}{% block contenuto %}
 T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
 <div class="testa"><div><h1>Documenti</h1>
 <p class="sottotitolo">{{ elenco|length }} file{{ ' da smistare' if solo_da_smistare else '' }}</p></div>
-<div style="display:flex;gap:8px;align-items:center">
-  <button type="button" class="btn" id="btn-notifica" style="display:none" onclick="notificaSelezionati()">Notifica collaboratori</button>
+<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+  <button type="button" class="btn ambra" id="btn-assegna" style="display:none" onclick="assegnaSelezionati()">Assegna selezionati</button>
+  <button type="button" class="btn chiaro" id="btn-notifica" style="display:none" onclick="notificaSelezionati()">Notifica collaboratori</button>
   {% if solo_da_smistare %}<a class="btn chiaro" href="/crm/documenti?tutti=1">Mostra tutti</a>
   {% else %}<a class="btn chiaro" href="/crm/documenti">Solo da smistare</a>{% endif %}
 </div></div>
@@ -1888,9 +1889,9 @@ T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
 <div class="tabella scorri"><table>
 <thead><tr>
   <th style="width:32px"><input type="checkbox" id="sel-tutti" onchange="toggleTutti(this)" title="Seleziona tutti"></th>
-  <th>File</th><th>Cliente</th><th>Caricato</th><th>Stato</th><th></th>
+  <th>File</th><th>Cliente</th><th>Caricato</th><th>Stato</th><th>Destinazione</th>
 </tr></thead><tbody>
-{% for doc in elenco %}<tr>
+{% for doc in elenco %}<tr data-doc-id="{{ doc.id }}" data-cliente-id="{{ doc.cliente_id }}">
   <td><input type="checkbox" class="doc-check" value="{{ doc.id }}" onchange="aggiornaBottone()"></td>
   <td>{% if doc.link_drive %}<a href="{{ doc.link_drive }}" target="_blank">{{ doc.nome_file }}</a>
       {% else %}{{ doc.nome_file }}{% endif %}</td>
@@ -1900,28 +1901,26 @@ T_DOCUMENTI = """{% extends "base" %}{% block contenuto %}
       {% else %}<span class="pill">da smistare</span>{% endif %}</td>
   <td class="num">
     {% if doc.stato != 'assegnato' %}
-    <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
-      {% set prat = pratiche_per_cliente.get(doc.cliente_id, []) %}
-      {% if prat %}
-      <select name="pratica_id" style="font-size:12px"><option value="">Nessuna pratica</option>
-        {% for p in prat %}<option value="{{ p.id }}">{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}
-      </select>
-      {% endif %}
+    <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
       <div style="display:flex;gap:5px;align-items:center">
-        <button class="btn" type="submit" style="white-space:nowrap">
-          → {{ doc.cliente.ragione_sociale if doc.cliente else 'cliente' }}
-        </button>
-        <span class="nota" style="font-size:11px">oppure</span>
-        <select name="nuovo_cliente_id" style="font-size:12px" onchange="this.form.submit()">
-          <option value="">Assegna a?</option>
+        <span class="nota" style="font-size:11px">Cliente:</span>
+        <select id="dest-cl-{{ doc.id }}" style="font-size:12px" onchange="aggiornaDest({{ doc.id }}, this.value)">
           {% for cl in tutti_clienti %}
-          <option value="{{ cl.id }}" {% if cl.id == doc.cliente_id %}style="font-weight:bold"{% endif %}>
-            {{ cl.ragione_sociale }}
-          </option>
+          <option value="{{ cl.id }}" {% if cl.id == doc.cliente_id %}selected{% endif %}>{{ cl.ragione_sociale }}</option>
           {% endfor %}
         </select>
       </div>
-    </form>
+      {% set prat = pratiche_per_cliente.get(doc.cliente_id, []) %}
+      {% if prat %}
+      <div style="display:flex;gap:5px;align-items:center">
+        <span class="nota" style="font-size:11px">Pratica:</span>
+        <select id="dest-pr-{{ doc.id }}" style="font-size:12px">
+          <option value="">Nessuna pratica</option>
+          {% for p in prat %}<option value="{{ p.id }}">{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}
+        </select>
+      </div>
+      {% endif %}
+    </div>
     {% else %}<span class="pill ok">{{ '→ ' ~ doc.pratica.nome_bando if doc.pratica else '→ ' ~ (doc.cliente.ragione_sociale if doc.cliente else 'cliente') }}</span>
     <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
       <button class="btn chiaro" type="submit" style="font-size:11px">↩ scrivania</button>
@@ -1939,10 +1938,41 @@ function toggleTutti(cb) {
   aggiornaBottone();
 }
 function aggiornaBottone() {
-  const n = document.querySelectorAll('.doc-check:checked').length;
-  const btn = document.getElementById('btn-notifica');
-  btn.style.display = n > 0 ? '' : 'none';
-  btn.textContent = 'Notifica Bruno & Antonio (' + n + ' file)';
+  const checked = document.querySelectorAll('.doc-check:checked');
+  const n = checked.length;
+  const btnA = document.getElementById('btn-assegna');
+  const btnN = document.getElementById('btn-notifica');
+  btnN.style.display = n > 0 ? '' : 'none';
+  btnN.textContent = 'Notifica collaboratori (' + n + ')';
+  btnA.style.display = n > 0 ? '' : 'none';
+  btnA.textContent = 'Assegna selezionati (' + n + ')';
+}
+function aggiornaDest(docId, nuovoClienteId) {
+  // Aggiorna data-cliente-id sulla riga se l'utente cambia cliente
+  const tr = document.querySelector('tr[data-doc-id="' + docId + '"]');
+  if (tr) tr.dataset.clienteId = nuovoClienteId;
+}
+function assegnaSelezionati() {
+  const checked = [...document.querySelectorAll('.doc-check:checked')];
+  if (!checked.length) return;
+  const payload = checked.map(cb => {
+    const docId = cb.value;
+    const tr = cb.closest('tr');
+    const clienteSel = document.getElementById('dest-cl-' + docId);
+    const praticaSel = document.getElementById('dest-pr-' + docId);
+    const clienteId = clienteSel ? clienteSel.value : (tr ? tr.dataset.clienteId : '');
+    const praticaId = praticaSel ? praticaSel.value : '';
+    return { doc_id: docId, cliente_id: clienteId, pratica_id: praticaId };
+  }).filter(r => r.cliente_id);
+  if (!payload.length) { alert('Nessun documento con destinazione selezionata.'); return; }
+  fetch('/crm/documenti/assegna-bulk', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(r => r.json()).then(d => {
+    if (d.ok) location.reload();
+    else alert('Errore: ' + (d.errore || 'sconosciuto'));
+  }).catch(e => alert('Errore di rete: ' + e));
 }
 function notificaSelezionati() {
   const ids = [...document.querySelectorAll('.doc-check:checked')].map(c => c.value);
@@ -3335,6 +3365,27 @@ def rimanda_documento(did):
         SessionLocale.commit()
         avvisa(f"{doc.nome_file} rimandato in scrivania.")
     return redirect(request.referrer or "/crm/documenti")
+
+
+@crm.post("/documenti/assegna-bulk")
+@login_required
+def assegna_documenti_bulk():
+    """Assegna in bulk i documenti selezionati dalla scrivania."""
+    payload = request.get_json(force=True, silent=True) or []
+    assegnati = 0
+    for item in payload:
+        try:
+            doc = SessionLocale.get(Documento, int(item["doc_id"]))
+            if not doc:
+                continue
+            doc.cliente_id = int(item["cliente_id"])
+            doc.pratica_id = int(item["pratica_id"]) if item.get("pratica_id") else None
+            doc.stato = "assegnato"
+            assegnati += 1
+        except (KeyError, ValueError, TypeError):
+            continue
+    SessionLocale.commit()
+    return jsonify({"ok": True, "assegnati": assegnati})
 
 
 @crm.post("/documenti/notifica")
