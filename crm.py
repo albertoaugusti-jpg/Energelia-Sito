@@ -3655,8 +3655,16 @@ def assegna_modulo_da_bando(pid, rid):
     if not allegato or allegato.bando_id != p.bando_id:
         avvisa("Allegato non trovato.", "ko")
         return redirect("/crm/pratiche/" + str(pid))
-    r.mod_nome = allegato.nome_file
-    r.mod_google_id = allegato.google_file_id
+    # Copia fisica del file su Drive: cosi' eliminare il bando allegato non rompe la riga
+    try:
+        contenuto, mimetype, nome_file = _drive_scarica_file(allegato.google_file_id)
+        ris = _drive_carica_file(GOOGLE_CARTELLA_MADRE, allegato.nome_file, contenuto, mimetype)
+        r.mod_nome = allegato.nome_file
+        r.mod_google_id = ris.get("id")
+    except Exception as ex_copy:
+        print("[crm] assegna-da-bando copia fallita: " + str(ex_copy) + " — uso ID originale")
+        r.mod_nome = allegato.nome_file
+        r.mod_google_id = allegato.google_file_id
     if not r.etichetta or r.etichetta == "Documento":
         r.etichetta = allegato.etichetta or _etichetta_da_nome(allegato.nome_file)
     SessionLocale.commit()
