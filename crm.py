@@ -1560,48 +1560,67 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
 </div></div>
 
 {% if documenti %}
+{% if c.pratiche %}
+<div style="display:flex;justify-content:flex-end;margin-bottom:6px">
+  <button type="button" class="btn ambra" style="font-size:12px" onclick="duplicaTuttiDocs({{ c.id }})">
+    &#8853; Duplica tutti nelle pratiche selezionate
+  </button>
+</div>
+{% endif %}
 <div class="tabella scorri"><table>
-<thead><tr><th>File</th><th>Caricato</th><th>Stato</th><th></th></tr></thead><tbody>
+<thead><tr><th>File</th><th>Caricato</th><th>Stato</th>
+  {% if c.pratiche %}<th style="min-width:240px">Destinazione pratica</th>{% endif %}
+  <th style="width:36px"></th>
+</tr></thead><tbody>
 {% for doc in documenti %}<tr>
   <td>{% if doc.google_file_id %}<a href="/crm/documenti/{{ doc.id }}/scarica">{{ doc.nome_file }}</a>
       {% else %}{{ doc.nome_file }}{% endif %}</td>
-  <td>{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
-  <td>{% if doc.stato == 'assegnato' %}<span class="pill ok">→ {{ doc.pratica.nome_bando if doc.pratica else 'assegnato' }}</span>
+  <td style="font-size:12px;color:#64748b;white-space:nowrap">{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
+  <td>{% if doc.stato == 'assegnato' %}<span class="pill ok">&#8594; {{ doc.pratica.nome_bando if doc.pratica else 'assegnato' }}</span>
       {% else %}<span class="pill">da smistare</span>{% endif %}</td>
-  <td class="num">
-    {% if c.pratiche %}
-    <form method="post" action="/crm/documenti/{{ doc.id }}/gestisci-pratica"
-          style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
-      <select name="pratica_id" style="font-size:12px">
-        <option value="">Pratica…</option>
-        {% for p in c.pratiche %}<option value="{{ p.id }}"
-          {% if doc.pratica_id == p.id %}selected{% endif %}>{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}
-      </select>
-      <div style="display:flex;gap:4px">
-        <button class="btn chiaro" name="azione" value="duplica" type="submit" style="font-size:11px">&#8853; Duplica in pratica</button>
-        <button class="btn chiaro" name="azione" value="cancella" type="submit" style="font-size:11px;color:#dc2626"
-          onclick="return confirm('Eliminare questo documento?')">&#128465;</button>
-      </div>
-    </form>
-    {% else %}
-    {% if doc.stato == 'assegnato' %}
-      <span class="pill ok">{{ '→ ' ~ doc.pratica.nome_bando if doc.pratica else '✓ ricevuto' }}</span>
-      <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
-        <button class="btn chiaro" type="submit" style="font-size:11px">↩ scrivania</button>
-      </form>
-    {% else %}
-      <form method="post" action="/crm/documenti/{{ doc.id }}/assegna" style="display:inline">
-        <input type="hidden" name="pratica_id" value="">
-        <button class="btn chiaro" type="submit">✓ Ricevuto</button>
-      </form>
-    {% endif %}
-    <form method="post" action="/crm/documenti/{{ doc.id }}/elimina" style="display:inline"
-      onsubmit="return confirm('Eliminare {{ doc.nome_file }}? Viene tolto anche da Drive.');">
-      <button class="btn chiaro" type="submit" title="Elimina">🗑</button>
-    </form>
-    {% endif %}
+  {% if c.pratiche %}
+  <td>
+    <select class="doc-dest-select" data-doc-id="{{ doc.id }}" style="font-size:12px;width:100%">
+      <option value="">— Pratica destinazione —</option>
+      {% for p in c.pratiche %}<option value="{{ p.id }}"
+        {% if doc.pratica_id == p.id %}selected{% endif %}>{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}
+    </select>
+  </td>
+  {% endif %}
+  <td style="text-align:center">
+    <button type="button" class="btn chiaro" style="font-size:11px;padding:2px 6px;color:#dc2626"
+      title="Elimina documento"
+      onclick="if(confirm('Eliminare {{ doc.nome_file }}?')) eliminaDoc({{ doc.id }})">&#128465;</button>
   </td>
 </tr>{% endfor %}</tbody></table></div>
+<script>
+function duplicaTuttiDocs(cid) {
+  var selects = document.querySelectorAll('.doc-dest-select');
+  var form = document.createElement('form');
+  form.method = 'post';
+  form.action = '/crm/clienti/' + cid + '/documenti/duplica-tutti';
+  var count = 0;
+  selects.forEach(function(sel) {
+    if (sel.value) {
+      var d = document.createElement('input'); d.type='hidden'; d.name='doc_id'; d.value=sel.dataset.docId;
+      var p = document.createElement('input'); p.type='hidden'; p.name='pratica_id'; p.value=sel.value;
+      form.appendChild(d); form.appendChild(p);
+      count++;
+    }
+  });
+  if (!count) { alert('Seleziona almeno una destinazione in una delle righe.'); return; }
+  if (!confirm('Duplicare ' + count + ' documento/i nelle pratiche selezionate?')) return;
+  document.body.appendChild(form);
+  form.submit();
+}
+function eliminaDoc(did) {
+  var f = document.createElement('form');
+  f.method = 'post';
+  f.action = '/crm/documenti/' + did + '/elimina';
+  document.body.appendChild(f);
+  f.submit();
+}
+</script>
 {% else %}<div class="vuoto">Nessun documento caricato finora.</div>{% endif %}
 
 <h2>Pratiche ({{ c.pratiche|length }})</h2>
@@ -4105,6 +4124,46 @@ def rimanda_documento(did):
         SessionLocale.commit()
         avvisa(f"{doc.nome_file} rimandato in scrivania.")
     return redirect(request.referrer or "/crm/documenti")
+
+
+@crm.post("/clienti/<int:cid>/documenti/duplica-tutti")
+def duplica_tutti_documenti(cid):
+    c = SessionLocale.get(Cliente, cid)
+    if not c:
+        abort(404)
+    doc_ids = request.form.getlist("doc_id")
+    pratica_ids = request.form.getlist("pratica_id")
+    copiati = 0
+    errori = []
+    for did_s, pid_s in zip(doc_ids, pratica_ids):
+        try:
+            did = int(did_s)
+            pid = int(pid_s)
+        except (ValueError, TypeError):
+            continue
+        doc = SessionLocale.get(Documento, did)
+        pratica = SessionLocale.get(Pratica, pid)
+        if not doc or not pratica or pratica.cliente_id != cid:
+            errori.append(did_s)
+            continue
+        copia = Documento(
+            cliente_id=cid,
+            pratica_id=pid,
+            nome_file=doc.nome_file,
+            google_file_id=doc.google_file_id,
+            link_drive=doc.link_drive,
+            caricato_da=doc.caricato_da,
+            stato="assegnato",
+        )
+        SessionLocale.add(copia)
+        copiati += 1
+    if copiati:
+        SessionLocale.commit()
+    if errori:
+        avvisa(str(copiati) + " duplicati. Errori su " + str(len(errori)) + " documenti.", "ko")
+    else:
+        avvisa(str(copiati) + " documento/i duplicati nelle pratiche selezionate.")
+    return redirect("/crm/clienti/" + str(cid))
 
 
 @crm.post("/documenti/<int:did>/gestisci-pratica")
