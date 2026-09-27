@@ -1841,7 +1841,18 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
         </form>
       </div>
     {% else %}
-      <span style="font-size:11px;color:#94a3b8">— importa dal bando —</span>
+      {% if p.bando and p.bando.allegati %}
+      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/assegna-da-bando"
+            style="display:inline-flex;gap:4px;align-items:center;flex-wrap:wrap">
+        <select name="allegato_id" style="font-size:11px;max-width:160px">
+          <option value="">— scegli dal bando —</option>
+          {% for a in p.bando.allegati %}<option value="{{ a.id }}">{{ a.etichetta or a.nome_file }}</option>{% endfor %}
+        </select>
+        <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 8px">&#8595; Importa</button>
+      </form>
+      {% else %}
+      <span style="font-size:11px;color:#94a3b8">— nessun bando collegato —</span>
+      {% endif %}
     {% endif %}
   </td>
   <td style="text-align:center">
@@ -3498,6 +3509,32 @@ def carica_firmato_riga(pid, rid):
         avvisa("Documento firmato caricato.")
     except Exception as ex:
         avvisa("Errore caricamento firmato: " + str(ex), "errore")
+    return redirect("/crm/pratiche/" + str(pid))
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/modulo/assegna-da-bando")
+def assegna_modulo_da_bando(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    if not r:
+        abort(404)
+    p = SessionLocale.get(Pratica, pid)
+    if not p or not p.bando_id:
+        avvisa("Pratica senza bando collegato.", "ko")
+        return redirect("/crm/pratiche/" + str(pid))
+    aid_s = request.form.get("allegato_id", "").strip()
+    if not aid_s or not aid_s.isdigit():
+        avvisa("Seleziona un allegato dal bando.", "ko")
+        return redirect("/crm/pratiche/" + str(pid))
+    allegato = SessionLocale.get(AllegatoBando, int(aid_s))
+    if not allegato or allegato.bando_id != p.bando_id:
+        avvisa("Allegato non trovato.", "ko")
+        return redirect("/crm/pratiche/" + str(pid))
+    r.mod_nome = allegato.nome_file
+    r.mod_google_id = allegato.google_file_id
+    if not r.etichetta or r.etichetta == "Documento":
+        r.etichetta = allegato.etichetta or _etichetta_da_nome(allegato.nome_file)
+    SessionLocale.commit()
+    avvisa("Modulo importato: " + r.mod_nome)
     return redirect("/crm/pratiche/" + str(pid))
 
 
