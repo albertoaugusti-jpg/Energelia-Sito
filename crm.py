@@ -3420,10 +3420,10 @@ def scheda_pratica(pid):
     # Doc già usati in col 3 di qualche riga
     usati_ids = {r.firmato_doc_id for r in p.righe_doc if r.firmato_doc_id}
     docs_liberi = [d for d in tutti_docs if d.id not in usati_ids]
-    # Basket: doc firmati ricevuti dal cliente (non ancora assegnati a col3)
-    docs_firmati = [d for d in docs_liberi if d.caricato_da == "cliente"]
-    # Doc ricevuti generici (staff o senza origine cliente)
-    docs_pratica = [d for d in docs_liberi if d.caricato_da != "cliente"]
+    # Basket: doc firmati ricevuti via link di firma (non ancora assegnati a col3)
+    docs_firmati = [d for d in docs_liberi if d.caricato_da == "cliente_firma"]
+    # Doc ricevuti generici (tutto il resto)
+    docs_pratica = [d for d in docs_liberi if d.caricato_da != "cliente_firma"]
     return rendi("pratica", titolo=p.nome_bando, pagina="pratiche", p=p,
                  docs_pratica=docs_pratica, docs_liberi=docs_liberi,
                  docs_firmati=docs_firmati,
@@ -3824,7 +3824,7 @@ def scarica_firmati_zip(pid):
         abort(404)
     tutti_docs = SessionLocale.query(Documento).filter_by(pratica_id=pid).order_by(Documento.creato_il.desc()).all()
     usati_ids = {r.firmato_doc_id for r in p.righe_doc if r.firmato_doc_id}
-    docs_firmati = [d for d in tutti_docs if d.id not in usati_ids and d.caricato_da == "cliente"]
+    docs_firmati = [d for d in tutti_docs if d.id not in usati_ids and d.caricato_da == "cliente_firma"]
     buf = io.BytesIO()
     aggiunti = 0
     with zf.ZipFile(buf, "w", zf.ZIP_DEFLATED) as z:
@@ -3935,7 +3935,7 @@ def cliente_carica_firmato(token, rid):
             nome_file=f.filename,
             google_file_id=ris.get("id"),
             link_drive=ris.get("webViewLink"),
-            caricato_da="cliente",
+            caricato_da="cliente_firma",
             stato="assegnato",
         )
         SessionLocale.add(doc)
