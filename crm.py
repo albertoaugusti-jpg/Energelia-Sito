@@ -1802,6 +1802,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   <th style="text-align:center">① Modulo vuoto</th>
   <th style="text-align:center">② Compilato</th>
   <th style="text-align:center">③ Firmato dal cliente</th>
+  <th style="width:32px"></th>
 </tr></thead><tbody>
 {% for r in p.righe_doc|sort(attribute='ordine') %}
 <tr>
@@ -1862,6 +1863,12 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
       </form>
       {% endif %}
     {% endif %}
+  </td>
+  <td style="text-align:center">
+    <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/elimina-riga"
+          onsubmit="return confirm('Eliminare tutta la riga?')">
+      <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 6px;color:#dc2626" title="Elimina riga">&#128465;</button>
+    </form>
   </td>
 </tr>
 {% endfor %}
@@ -3465,6 +3472,28 @@ def rimuovi_firmato_riga(pid, rid):
         r.firmato_doc_id = None
         SessionLocale.commit()
         avvisa("Firmato rimosso dalla riga.")
+    return redirect("/crm/pratiche/" + str(pid))
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/elimina-riga")
+def elimina_riga_doc(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    if r:
+        # elimina file modulo da Drive se presente
+        if r.mod_google_id and drive_configurato():
+            try:
+                _drive_elimina_file(r.mod_google_id)
+            except Exception as ex:
+                print("[crm] elimina-riga mod Drive: " + str(ex))
+        # elimina file compilato da Drive se presente
+        if r.comp_google_id and drive_configurato():
+            try:
+                _drive_elimina_file(r.comp_google_id)
+            except Exception as ex:
+                print("[crm] elimina-riga comp Drive: " + str(ex))
+        SessionLocale.delete(r)
+        SessionLocale.commit()
+        avvisa("Riga eliminata.")
     return redirect("/crm/pratiche/" + str(pid))
 
 
