@@ -1931,7 +1931,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
       navigator.clipboard.writeText(document.getElementById('link-dl').value);
       this.textContent='Copiato!';setTimeout(()=>this.textContent='Link download compilati',1500)
     ">Link download compilati</button>
-    <a href="/crm/pratiche/{{ p.id }}/genera-brief" class="btn ambra" style="font-size:12px" download>&#128203; Genera brief Cowork</a>
+    <a href="/crm/pratiche/{{ p.id }}/genera-brief" class="btn ambra" style="font-size:12px" target="_blank" rel="noopener">&#128203; Genera brief Cowork</a>
     <span style="font-size:11px;color:#64748b">Il link mostra solo i file caricati in colonna &#9313;</span>
   </div>
   {% endif %}
@@ -3709,13 +3709,11 @@ def genera_brief_cowork(pid):
 
     testo = "\n".join(righe)
     nome_file = "brief_" + (p.codice or str(pid)) + ".txt"
-    return Response(
-        testo.encode("utf-8"),
-        headers={
-            "Content-Disposition": 'attachment; filename="' + nome_file + '"',
-            "Content-Type": "text/plain; charset=utf-8",
-        }
-    )
+    resp = Response(testo.encode("utf-8"), status=200)
+    resp.headers["Content-Disposition"] = 'attachment; filename="' + nome_file + '"'
+    resp.headers["Content-Type"] = "text/plain; charset=utf-8"
+    resp.headers["Cache-Control"] = "no-cache"
+    return resp
 
 
 @crm.get("/pratica-download/<token>")
