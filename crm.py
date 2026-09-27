@@ -1906,24 +1906,63 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   </div>
   {% endif %}
 </div>
+<!-- lightbox anteprima documenti -->
+<div id="doc-preview-overlay" onclick="if(event.target===this)chiudiPreview()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:8px;width:85vw;height:88vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.4)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #e2e8f0">
+      <span id="doc-preview-nome" style="font-size:13px;font-weight:600;color:#1e293b"></span>
+      <button onclick="chiudiPreview()" style="border:none;background:none;font-size:20px;cursor:pointer;color:#64748b;line-height:1">&#10005;</button>
+    </div>
+    <iframe id="doc-preview-frame" src="" style="flex:1;border:none;width:100%"></iframe>
+  </div>
+</div>
+
 {% if docs_pratica %}
-<details style="margin-bottom:20px"><summary style="cursor:pointer;color:#6b7b8c;font-size:13px">📥 {{ docs_pratica|length }} doc ricevuti non ancora assegnati a una riga</summary>
+<details style="margin-bottom:20px" open>
+<summary style="cursor:pointer;color:#6b7b8c;font-size:13px">&#128229; {{ docs_pratica|length }} doc ricevuti — clicca per anteprima, assegna alla riga se necessario</summary>
 <div class="tabella scorri" style="margin-top:8px"><table>
-<thead><tr><th>File</th><th>Caricato</th><th></th></tr></thead><tbody>
+<thead><tr><th>File</th><th>Caricato</th><th style="min-width:220px">Assegna a col&#9313; di riga</th></tr></thead><tbody>
 {% for doc in docs_pratica %}<tr>
-  <td>{% if doc.google_file_id %}<a href="/crm/documenti/{{ doc.id }}/scarica">{{ doc.nome_file }}</a>
-      {% else %}{{ doc.nome_file }}{% endif %}</td>
-  <td>{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
-  <td class="num">
-    <form method="post" action="/crm/documenti/{{ doc.id }}/rimanda" style="display:inline">
-      <button class="btn chiaro" type="submit" style="font-size:11px">↩ Scrivania</button>
+  <td>
+    {% if doc.google_file_id %}
+      <button type="button" onclick="apriPreview('{{ doc.google_file_id }}','{{ doc.nome_file }}')"
+        style="background:none;border:none;color:#2563eb;text-decoration:underline;cursor:pointer;font-size:14px;padding:0;text-align:left">{{ doc.nome_file }}</button>
+    {% else %}
+      <span style="font-size:13px">{{ doc.nome_file }}</span>
+    {% endif %}
+  </td>
+  <td style="font-size:12px;color:#64748b;white-space:nowrap">{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
+  <td>
+    {% if p.righe_doc %}
+    <form method="post" action="/crm/pratiche/{{ p.id }}/righe/0/firmato"
+          style="display:inline-flex;gap:4px;align-items:center">
+      <select style="font-size:11px"
+        onchange="this.form.action='/crm/pratiche/{{ p.id }}/righe/'+this.value+'/firmato'">
+        <option value="0">Scegli riga…</option>
+        {% for r in p.righe_doc|sort(attribute='ordine') %}
+        <option value="{{ r.id }}">{{ r.etichetta or 'Riga ' ~ loop.index }}</option>
+        {% endfor %}
+      </select>
+      <input type="hidden" name="doc_id" value="{{ doc.id }}">
+      <button class="btn chiaro" type="submit" style="font-size:11px" title="Assegna come Firmato">&#10003; col&#9313;</button>
     </form>
+    {% else %}<span style="font-size:11px;color:#aaa">nessuna riga</span>{% endif %}
   </td>
 </tr>{% endfor %}</tbody></table></div>
 </details>
 {% endif %}
 
 <script>
+function apriPreview(gid, nome) {
+  document.getElementById('doc-preview-nome').textContent = nome;
+  document.getElementById('doc-preview-frame').src = 'https://drive.google.com/file/d/' + gid + '/preview';
+  var ov = document.getElementById('doc-preview-overlay');
+  ov.style.display = 'flex';
+}
+function chiudiPreview() {
+  document.getElementById('doc-preview-overlay').style.display = 'none';
+  document.getElementById('doc-preview-frame').src = '';
+}
 function salvaEtichettaRiga(id, testo) {
   if (!testo) return;
   fetch('/crm/pratiche/{{ p.id }}/righe/' + id + '/etichetta', {
