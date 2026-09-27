@@ -1872,10 +1872,19 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
     <button class="btn chiaro" type="submit">+ Aggiungi riga</button>
   </form>
   {% if p.bando and p.bando.allegati %}
-  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/importa-bando">
-    <button class="btn chiaro" type="submit" title="Crea una riga per ogni allegato del bando '{{ p.bando.nome }}'">
-      &#8659; Importa moduli dal bando ({{ p.bando.allegati|length }})
-    </button>
+  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/importa-bando" style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap">
+    <div>
+      <div style="font-size:11px;color:#64748b;margin-bottom:4px">
+        Allegati del bando <strong>{{ p.bando.nome }}</strong> — Ctrl+click o Shift+click per selezionare più file
+      </div>
+      <select name="allegato_ids" multiple size="{{ [p.bando.allegati|length, 6]|min }}"
+        style="font-size:12px;min-width:280px;border:1px solid #cbd5e1;border-radius:6px;padding:4px">
+        {% for a in p.bando.allegati %}
+        <option value="{{ a.id }}">{{ a.etichetta or a.nome_file }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button class="btn chiaro" type="submit" style="align-self:flex-end">&#8659; Aggiungi selezionati</button>
   </form>
   {% endif %}
   {% if p.righe_doc %}
@@ -3303,9 +3312,15 @@ def importa_moduli_bando(pid):
     if not bando or not bando.allegati:
         avvisa("Il bando collegato non ha allegati da importare.", "ko")
         return redirect("/crm/pratiche/" + str(pid))
+    ids_selezionati = request.form.getlist("allegato_ids")
+    if not ids_selezionati:
+        avvisa("Seleziona almeno un documento dalla lista.", "ko")
+        return redirect("/crm/pratiche/" + str(pid))
+    ids_set = set(int(x) for x in ids_selezionati if x.isdigit())
+    allegati_scelti = [a for a in bando.allegati if a.id in ids_set]
     ordine_base = SessionLocale.query(func.count(RigaDocPratica.id)).filter_by(pratica_id=pid).scalar()
     importati = 0
-    for i, allegato in enumerate(bando.allegati):
+    for i, allegato in enumerate(allegati_scelti):
         riga = RigaDocPratica(
             pratica_id=pid,
             etichetta=allegato.etichetta or _etichetta_da_nome(allegato.nome_file),
@@ -3316,7 +3331,7 @@ def importa_moduli_bando(pid):
         SessionLocale.add(riga)
         importati += 1
     SessionLocale.commit()
-    avvisa("Importati " + str(importati) + " moduli dal bando.")
+    avvisa("Aggiunte " + str(importati) + " righe dalla selezione.")
     return redirect("/crm/pratiche/" + str(pid))
 
 
