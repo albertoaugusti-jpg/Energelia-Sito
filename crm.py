@@ -1867,13 +1867,14 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   </form>
   {% endif %}
   {% if p.righe_doc %}
-  <div style="display:flex;align-items:center;gap:8px">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
     <input readonly value="{{ request.url_root.rstrip('/') }}/crm/pratica-download/{{ token_download }}"
       style="font-size:12px;width:340px" id="link-dl">
     <button type="button" class="btn chiaro" style="font-size:12px" onclick="
       navigator.clipboard.writeText(document.getElementById('link-dl').value);
       this.textContent='Copiato!';setTimeout(()=>this.textContent='Link download compilati',1500)
     ">Link download compilati</button>
+    <a href="/crm/pratiche/{{ p.id }}/genera-brief" class="btn ambra" style="font-size:12px" download>&#128203; Genera brief Cowork</a>
   </div>
   {% endif %}
 </div>
@@ -3406,6 +3407,132 @@ def carica_firmato_riga(pid, rid):
     except Exception as ex:
         avvisa("Errore caricamento firmato: " + str(ex), "errore")
     return redirect("/crm/pratiche/" + str(pid))
+
+
+@crm.get("/pratiche/<int:pid>/genera-brief")
+def genera_brief_cowork(pid):
+    """Scarica un file .txt con tutti i dati formali della pratica, pronto da incollare in Cowork."""
+    p = SessionLocale.get(Pratica, pid)
+    if not p:
+        abort(404)
+    c = p.cliente
+    b = p.bando
+    base = "https://energelia.it/crm"
+    righe = []
+
+    righe.append("=" * 60)
+    righe.append("BRIEF PER COWORK — COMPILAZIONE MODULI BANDO")
+    righe.append("=" * 60)
+    righe.append("")
+    righe.append("ISTRUZIONI")
+    righe.append("-" * 40)
+    righe.append("Sei un assistente specializzato nella compilazione di")
+    righe.append("domande di contributo per conto di Energelia.")
+    righe.append("Hai accesso al gestionale tramite browser (energelia.it/crm).")
+    righe.append("Usa i dati qui sotto per compilare i moduli elencati.")
+    righe.append("Per i documenti con link: scaricali e leggili.")
+    righe.append("Per le sezioni di contenuto (descrizione progetto,")
+    righe.append("obiettivi, piano investimenti): chiedi all'utente.")
+    righe.append("")
+
+    righe.append("CLIENTE")
+    righe.append("-" * 40)
+    righe.append("Ragione sociale: " + (c.ragione_sociale or ""))
+    righe.append("P.IVA: " + (c.piva or ""))
+    righe.append("Codice fiscale: " + (c.codice_fiscale or ""))
+    indirizzo_parts = [x for x in [c.indirizzo if hasattr(c, "indirizzo") else None, c.cap if hasattr(c, "cap") else None, c.citta, c.provincia] if x]
+    if indirizzo_parts:
+        righe.append("Sede: " + ", ".join(indirizzo_parts))
+    righe.append("PEC: " + (c.pec or ""))
+    righe.append("Email: " + (c.email or ""))
+    righe.append("Telefono: " + (c.telefono or c.cellulare or ""))
+    righe.append("Legale rappresentante: " + (c.referente or "") + (" — " + c.ruolo_referente if c.ruolo_referente else ""))
+    righe.append("")
+
+    righe.append("PRATICA")
+    righe.append("-" * 40)
+    righe.append("Codice pratica: " + (p.codice or ""))
+    righe.append("Bando: " + (p.nome_bando or ""))
+    righe.append("Ente erogatore: " + (p.ente or ""))
+    righe.append("Tipologia: " + (p.tipologia or ""))
+    if p.perc_contributo:
+        righe.append("Contributo: " + str(p.perc_contributo) + "%")
+    if p.importo_richiesto:
+        righe.append("Importo richiesto: EUR " + str(p.importo_richiesto))
+    if p.importo_max:
+        righe.append("Importo massimo bando: " + str(p.importo_max))
+    if p.data_scadenza:
+        righe.append("Scadenza: " + p.data_scadenza.strftime("%d/%m/%Y"))
+    righe.append("Fase attuale: " + (p.fase or ""))
+    if p.note:
+        righe.append("Note: " + p.note)
+    righe.append("")
+
+    if b:
+        righe.append("BANDO — CONTESTO")
+        righe.append("-" * 40)
+        if b.chi_puo_partecipare:
+            righe.append("Chi puo partecipare: " + b.chi_puo_partecipare)
+        if b.cosa_finanziabile:
+            righe.append("Cosa finanzia: " + b.cosa_finanziabile)
+        if b.spese_non_ammissibili:
+            righe.append("Spese non ammissibili: " + b.spese_non_ammissibili)
+        if b.criteri:
+            righe.append("Criteri: " + b.criteri)
+        if b.fasi_tempi:
+            righe.append("Fasi e tempi: " + b.fasi_tempi)
+        righe.append("")
+
+    righe.append("MODULI DA COMPILARE")
+    righe.append("-" * 40)
+    righe_doc = sorted(p.righe_doc, key=lambda r: r.ordine)
+    if righe_doc:
+        for i, r in enumerate(righe_doc, 1):
+            label = r.etichetta or ("Documento " + str(i))
+            if r.mod_google_id:
+                url = base + "/pratiche/" + str(pid) + "/righe/" + str(r.id) + "/modulo/scarica"
+                righe.append(str(i) + ". " + label + " -> " + url)
+            else:
+                righe.append(str(i) + ". " + label + " (modulo vuoto non ancora caricato)")
+    else:
+        righe.append("Nessun modulo caricato.")
+    righe.append("")
+
+    tutti_docs = SessionLocale.query(Documento).filter_by(pratica_id=pid).order_by(Documento.creato_il.desc()).all()
+    if tutti_docs:
+        righe.append("DOCUMENTI DISPONIBILI (scrivania pratica)")
+        righe.append("-" * 40)
+        for doc in tutti_docs:
+            if doc.google_file_id:
+                url = base + "/documenti/" + str(doc.id) + "/scarica"
+                righe.append("- " + doc.nome_file + " -> " + url)
+            else:
+                righe.append("- " + doc.nome_file + " (file non disponibile)")
+        righe.append("")
+
+    docs_cliente = SessionLocale.query(Documento).filter_by(cliente_id=c.id).order_by(Documento.creato_il.desc()).limit(20).all()
+    docs_altri = [d for d in docs_cliente if d.pratica_id != pid and d.google_file_id]
+    if docs_altri:
+        righe.append("ALTRI DOCUMENTI DEL CLIENTE (scrivania generale)")
+        righe.append("-" * 40)
+        for doc in docs_altri:
+            url = base + "/documenti/" + str(doc.id) + "/scarica"
+            righe.append("- " + doc.nome_file + " -> " + url)
+        righe.append("")
+
+    righe.append("=" * 60)
+    righe.append("Fine brief — buon lavoro!")
+    righe.append("=" * 60)
+
+    testo = "\n".join(righe)
+    nome_file = "brief_" + (p.codice or str(pid)) + ".txt"
+    return Response(
+        testo.encode("utf-8"),
+        headers={
+            "Content-Disposition": 'attachment; filename="' + nome_file + '"',
+            "Content-Type": "text/plain; charset=utf-8",
+        }
+    )
 
 
 @crm.get("/pratica-download/<token>")
