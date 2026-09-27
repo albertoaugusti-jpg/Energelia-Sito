@@ -2081,6 +2081,19 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 {% endif %}
 
 <script>
+// Mantieni posizione di scroll dopo reload da form submit
+(function() {
+  var _k = 'pratica_scroll_{{ p.id }}';
+  var _y = sessionStorage.getItem(_k);
+  if (_y !== null) { window.scrollTo(0, parseInt(_y)); sessionStorage.removeItem(_k); }
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('form').forEach(function(f) {
+      f.addEventListener('submit', function() { sessionStorage.setItem(_k, window.scrollY); });
+    });
+  });
+  window._salvaScroll = function() { sessionStorage.setItem(_k, window.scrollY); };
+})();
+
 function apriPreview(gid, nome) {
   document.getElementById('doc-preview-nome').textContent = nome;
   document.getElementById('doc-preview-frame').src = 'https://drive.google.com/file/d/' + gid + '/preview';
