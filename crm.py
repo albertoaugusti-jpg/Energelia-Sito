@@ -1578,10 +1578,9 @@ T_CLIENTE = """{% extends "base" %}{% block contenuto %}
           {% if doc.pratica_id == p.id %}selected{% endif %}>{{ p.codice }} – {{ p.nome_bando }}</option>{% endfor %}
       </select>
       <div style="display:flex;gap:4px">
-        <button class="btn chiaro" name="azione" value="sposta" type="submit" style="font-size:11px">→ Sposta</button>
-        <button class="btn chiaro" name="azione" value="duplica" type="submit" style="font-size:11px">⊕ Duplica</button>
-        <button class="btn chiaro" name="azione" value="cancella" type="submit" style="font-size:11px"
-          onclick="return confirm('Eliminare {{ doc.nome_file }}?')">🗑 Cancella</button>
+        <button class="btn chiaro" name="azione" value="duplica" type="submit" style="font-size:11px">&#8853; Duplica in pratica</button>
+        <button class="btn chiaro" name="azione" value="cancella" type="submit" style="font-size:11px;color:#dc2626"
+          onclick="return confirm('Eliminare questo documento?')">&#128465;</button>
       </div>
     </form>
     {% else %}
@@ -4044,24 +4043,18 @@ def rimanda_documento(did):
 def gestisci_pratica_documento(did):
     doc = SessionLocale.get(Documento, did)
     if not doc:
-        return redirect(request.referrer or "/crm/documenti")
-    azione = request.form.get("azione", "")
-    pid = request.form.get("pratica_id") or None
+        avvisa("Documento non trovato.", "ko")
+        return redirect("/crm/documenti")
+    azione = request.form.get("azione", "").strip()
+    pid_raw = request.form.get("pratica_id", "").strip()
+    pid = pid_raw if pid_raw else None
     cliente_id = doc.cliente_id
+    dest = "/crm/clienti/" + str(cliente_id)
 
-    if azione == "sposta":
+    if azione == "duplica":
         if not pid:
-            avvisa("Seleziona una pratica di destinazione.", "errore")
-            return redirect(request.referrer or f"/crm/clienti/{cliente_id}")
-        doc.pratica_id = int(pid)
-        doc.stato = "assegnato"
-        SessionLocale.commit()
-        avvisa(f"{doc.nome_file} spostato sulla pratica.")
-
-    elif azione == "duplica":
-        if not pid:
-            avvisa("Seleziona una pratica di destinazione.", "errore")
-            return redirect(request.referrer or f"/crm/clienti/{cliente_id}")
+            avvisa("Seleziona prima una pratica di destinazione.", "ko")
+            return redirect(dest)
         copia = Documento(
             cliente_id=doc.cliente_id,
             pratica_id=int(pid),
@@ -4073,7 +4066,7 @@ def gestisci_pratica_documento(did):
         )
         SessionLocale.add(copia)
         SessionLocale.commit()
-        avvisa(f"{doc.nome_file} duplicato sulla pratica.")
+        avvisa(doc.nome_file + " duplicato sulla pratica.")
 
     elif azione == "cancella":
         nome = doc.nome_file
@@ -4081,14 +4074,17 @@ def gestisci_pratica_documento(did):
             try:
                 _drive_elimina_file(doc.google_file_id)
             except Exception as ex:
-                print(f"[crm] Errore eliminazione Drive: {ex}")
+                print("[crm] Errore eliminazione Drive: " + str(ex))
         for voce in SessionLocale.query(VoceRichiesta).filter_by(documento_id=doc.id).all():
             voce.documento_id = None
         SessionLocale.delete(doc)
         SessionLocale.commit()
-        avvisa(f"{nome} eliminato.")
+        avvisa(nome + " eliminato.")
 
-    return redirect(request.referrer or f"/crm/clienti/{cliente_id}")
+    else:
+        avvisa("Azione non riconosciuta: " + azione, "ko")
+
+    return redirect(dest)
 
 
 @crm.get("/documenti/<int:did>/scarica")
