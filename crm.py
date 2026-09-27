@@ -1855,10 +1855,17 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 </tr>
 {% endfor %}
 </tbody></table></div>
-<div style="display:flex;gap:8px;margin-bottom:20px">
+<div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center">
   <form method="post" action="/crm/pratiche/{{ p.id }}/righe/aggiungi">
     <button class="btn chiaro" type="submit">+ Aggiungi riga</button>
   </form>
+  {% if p.bando and p.bando.allegati %}
+  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/importa-bando">
+    <button class="btn chiaro" type="submit" title="Crea una riga per ogni allegato del bando '{{ p.bando.nome }}'">
+      &#8659; Importa moduli dal bando ({{ p.bando.allegati|length }})
+    </button>
+  </form>
+  {% endif %}
   {% if p.righe_doc %}
   <div style="display:flex;align-items:center;gap:8px">
     <input readonly value="{{ request.url_root.rstrip('/') }}/crm/pratica-download/{{ token_download }}"
@@ -3270,6 +3277,33 @@ def aggiungi_riga_doc(pid):
     SessionLocale.add(RigaDocPratica(pratica_id=pid, etichetta="Documento", ordine=ordine))
     SessionLocale.commit()
     return redirect(f"/crm/pratiche/{pid}")
+
+
+@crm.post("/pratiche/<int:pid>/righe/importa-bando")
+def importa_moduli_bando(pid):
+    p = SessionLocale.get(Pratica, pid)
+    if not p or not p.bando_id:
+        avvisa("Questa pratica non e' collegata a un bando.", "ko")
+        return redirect("/crm/pratiche/" + str(pid))
+    bando = SessionLocale.get(Bando, p.bando_id)
+    if not bando or not bando.allegati:
+        avvisa("Il bando collegato non ha allegati da importare.", "ko")
+        return redirect("/crm/pratiche/" + str(pid))
+    ordine_base = SessionLocale.query(func.count(RigaDocPratica.id)).filter_by(pratica_id=pid).scalar()
+    importati = 0
+    for i, allegato in enumerate(bando.allegati):
+        riga = RigaDocPratica(
+            pratica_id=pid,
+            etichetta=allegato.etichetta or _etichetta_da_nome(allegato.nome_file),
+            mod_nome=allegato.nome_file,
+            mod_google_id=allegato.google_file_id,
+            ordine=ordine_base + i,
+        )
+        SessionLocale.add(riga)
+        importati += 1
+    SessionLocale.commit()
+    avvisa("Importati " + str(importati) + " moduli dal bando.")
+    return redirect("/crm/pratiche/" + str(pid))
 
 
 @crm.post("/pratiche/<int:pid>/righe/<int:rid>/etichetta")
