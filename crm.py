@@ -1417,13 +1417,12 @@ T_CLIENTE_FORM = """{% extends "base" %}{% block contenuto %}
   {% if da_ricerca %}· contatti trovati con la ricerca online{% endif %}
 </p>
 
-{% if not cliente.id %}
 <div class="riquadro" style="margin-bottom:20px"><div class="corpo">
   <h2 style="margin-top:0">Carica la visura camerale (facoltativo)</h2>
   {% if anthropic_ok %}
   <p style="color:#6b7b8c">Precompila ragione sociale, P.IVA, sede e legale rappresentante. Non tocca la
   composizione societaria: solo legale rappresentante ed eventuali titolari effettivi.</p>
-  <form method="post" action="/crm/clienti/nuovo-da-visura" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+  <form method="post" action="{{ ('/crm/clienti/' ~ cliente.id ~ '/modifica-da-visura') if cliente.id else '/crm/clienti/nuovo-da-visura' }}" enctype="multipart/form-data" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
     {% if lead %}<input type="hidden" name="lead_id" value="{{ lead.id }}">{% endif %}
     <input type="file" name="file" accept=".pdf" required>
     <button class="btn ambra" type="submit">Estrai dalla visura</button>
@@ -1432,7 +1431,6 @@ T_CLIENTE_FORM = """{% extends "base" %}{% block contenuto %}
   <p style="color:#6b7b8c">Richiede ANTHROPIC_API_KEY, non ancora configurata.</p>
   {% endif %}
 </div></div>
-{% endif %}
 
 {% if cliente.id %}
 <div class="riquadro" style="margin-bottom:20px"><div class="corpo">
@@ -3060,6 +3058,35 @@ def cerca_online_cliente(cid):
 
     return rendi("cliente_form", titolo="Modifica cliente", pagina="clienti", cliente=c,
                  anthropic_ok=anthropic_configurato(), da_ricerca=bool(trovati or note_ricerca),
+                 consulenti=SessionLocale.query(Utente).order_by(Utente.nome).all())
+
+
+@crm.post("/clienti/<int:cid>/modifica-da-visura")
+def modifica_da_visura(cid):
+    c = SessionLocale.get(Cliente, cid)
+    if not c:
+        abort(404)
+    if not anthropic_configurato():
+        avvisa("L'estrazione dalla visura non e' configurata: manca ANTHROPIC_API_KEY.", "ko")
+        return redirect("/crm/clienti/" + str(cid) + "/modifica")
+    caricato = request.files.get("file")
+    if not caricato or not caricato.filename:
+        avvisa("Scegli un PDF da caricare.", "ko")
+        return redirect("/crm/clienti/" + str(cid) + "/modifica")
+    try:
+        testo = _estrai_testo_pdf(caricato.read())
+        dati = estrai_visura_da_testo(testo)
+    except Exception as errore:
+        avvisa("Estrazione non riuscita: " + str(errore), "ko")
+        return redirect("/crm/clienti/" + str(cid) + "/modifica")
+    for campo in ("ragione_sociale", "piva", "codice_fiscale", "ateco", "citta", "provincia",
+                  "regione", "pec", "referente", "ruolo_referente", "titolari_effettivi"):
+        valore = testo_campo_ia(dati.get(campo))
+        if valore:
+            setattr(c, campo, valore)
+    avvisa("Dati presi dalla visura: controlla i campi prima di salvare.")
+    return rendi("cliente_form", titolo="Modifica cliente", pagina="clienti", cliente=c,
+                 anthropic_ok=anthropic_configurato(), da_visura=True,
                  consulenti=SessionLocale.query(Utente).order_by(Utente.nome).all())
 
 
