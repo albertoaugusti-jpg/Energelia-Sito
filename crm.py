@@ -1814,219 +1814,250 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 </div></div>
 
 <h2>Documenti della pratica</h2>
-<div class="tabella scorri" style="margin-bottom:8px"><table>
-<thead><tr>
-  <th style="width:20px"><input type="checkbox" id="chk-all" title="Seleziona tutti" onclick="document.querySelectorAll('.chk-mod').forEach(c=>c.checked=this.checked)"></th>
-  <th style="width:24px"></th>
-  <th>Documento</th>
-  <th style="text-align:center">① Modulo vuoto</th>
-  <th style="text-align:center">② Compilato</th>
-  <th style="text-align:center">③ Firmato dal cliente</th>
-  <th style="width:32px"></th>
-</tr></thead><tbody>
-{% for r in p.righe_doc|sort(attribute='ordine') %}
-<tr>
-  <td style="text-align:center">
-    {% if r.mod_google_id %}<input type="checkbox" class="chk-mod" value="{{ r.id }}">{% endif %}
-  </td>
-  <td style="font-size:11px;color:#aaa">{{ loop.index }}</td>
-  <td>
-    <span id="et-{{ r.id }}" contenteditable="true"
-      style="border-bottom:1px dashed #bbb;cursor:text;outline:none;padding:1px 3px"
-      onblur="salvaEtichettaRiga({{ r.id }}, this.innerText.trim())"
-      onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">{{ r.etichetta or 'Documento' }}</span>
-  </td>
-  <td style="text-align:center">
-    {% if r.mod_google_id %}
-      <div style="display:inline-flex;gap:4px;align-items:center">
-        <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:12px">&#128196; {{ r.mod_nome }}</a>
-        <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/elimina" style="display:inline">
-          <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 6px;color:#dc2626" title="Rimuovi modulo">&#128465;</button>
-        </form>
-      </div>
-    {% else %}
-      {% if p.bando and p.bando.allegati %}
-      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/assegna-da-bando"
-            style="display:inline-flex;gap:4px;align-items:center;flex-wrap:wrap">
-        <select name="allegato_id" style="font-size:11px;max-width:160px">
-          <option value="">— scegli dal bando —</option>
-          {% for a in p.bando.allegati %}<option value="{{ a.id }}">{{ a.etichetta or a.nome_file }}</option>{% endfor %}
-        </select>
-        <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 8px">&#8595; Importa</button>
-      </form>
-      {% else %}
-      <span style="font-size:11px;color:#94a3b8">— nessun bando collegato —</span>
-      {% endif %}
-    {% endif %}
-  </td>
-  <td style="text-align:center">
-    {% if r.comp_google_id %}
-      <div style="display:inline-flex;gap:4px;align-items:center">
-        <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/scarica" style="font-size:12px">&#128196; {{ r.comp_nome }}</a>
-        <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/elimina" style="display:inline">
-          <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 6px;color:#dc2626" title="Rimuovi compilato">&#128465;</button>
-        </form>
-      </div>
-    {% else %}
-      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato" enctype="multipart/form-data" style="display:inline-flex;gap:4px;align-items:center">
-        <input type="file" name="file" style="font-size:11px;max-width:130px">
-        <button class="btn chiaro" type="submit" style="font-size:11px">&#8593;</button>
-      </form>
-    {% endif %}
-  </td>
-  <td style="text-align:center">
-    {% if r.firmato_doc %}
-      <div style="display:inline-flex;gap:4px;align-items:center">
-        <a href="/crm/documenti/{{ r.firmato_doc_id }}/scarica" style="font-size:12px">&#9989; {{ r.firmato_doc.nome_file }}</a>
-        <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato/rimuovi" style="display:inline">
-          <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 6px;color:#dc2626" title="Rimuovi firmato">&#128465;</button>
-        </form>
-      </div>
-    {% else %}
-      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato-upload" enctype="multipart/form-data" style="display:inline-flex;gap:4px;align-items:center">
-        <input type="file" name="file" style="font-size:11px;max-width:130px">
-        <button class="btn chiaro" type="submit" style="font-size:11px">&#8593;</button>
-      </form>
-      {% if docs_liberi %}
-      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato" style="display:inline-flex;gap:4px;align-items:center;margin-top:4px">
-        <select name="doc_id" style="font-size:11px">
-          <option value="">o assegna esistente</option>
-          {% for d in docs_liberi %}<option value="{{ d.id }}">{{ d.nome_file }}</option>{% endfor %}
-        </select>
-        <button class="btn chiaro" type="submit" style="font-size:11px">&#10003;</button>
-      </form>
-      {% endif %}
-    {% endif %}
-  </td>
-  <td style="text-align:center">
-    <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/elimina-riga"
-          onsubmit="return confirm('Eliminare tutta la riga?')">
-      <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 6px;color:#dc2626" title="Elimina riga">&#128465;</button>
-    </form>
-  </td>
-</tr>
-{% endfor %}
-</tbody></table></div>
-<div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center">
-  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/aggiungi">
-    <button class="btn chiaro" type="submit">+ Aggiungi riga</button>
-  </form>
-  <button type="button" class="btn chiaro" style="font-size:12px"
-    onclick="scaricaModuli({{ p.id }}, false)">&#8659; Scarica tutti i moduli vuoti</button>
-  <button type="button" class="btn chiaro" style="font-size:12px"
-    onclick="scaricaModuli({{ p.id }}, true)">&#8659; Scarica selezionati</button>
-  {% if p.bando and p.bando.allegati %}
-  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/importa-bando" style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap">
-    <div>
-      <div style="font-size:11px;color:#64748b;margin-bottom:4px">
-        Allegati del bando <strong>{{ p.bando.nome }}</strong> — Ctrl+click o Shift+click per selezionare più file
-      </div>
-      <select name="allegato_ids" multiple size="{{ [p.bando.allegati|length, 6]|min }}"
-        style="font-size:12px;min-width:280px;border:1px solid #cbd5e1;border-radius:6px;padding:4px">
-        {% for a in p.bando.allegati %}
-        <option value="{{ a.id }}">{{ a.etichetta or a.nome_file }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <button class="btn chiaro" type="submit" style="align-self:flex-end">&#8659; Aggiungi selezionati</button>
-  </form>
-  {% endif %}
-  {% if p.righe_doc %}
-  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-    <input readonly value="{{ request.url_root.rstrip('/') }}/crm/pratica-download/{{ token_download }}"
-      style="font-size:12px;width:340px" id="link-dl">
-    <button type="button" class="btn chiaro" style="font-size:12px" onclick="
-      navigator.clipboard.writeText(document.getElementById('link-dl').value);
-      this.textContent='Copiato!';setTimeout(()=>this.textContent='Link download compilati',1500)
-    ">Link download compilati</button>
-    <a href="/crm/pratiche/{{ p.id }}/genera-brief" class="btn ambra" style="font-size:12px" target="_blank" rel="noopener">&#128203; Genera brief Cowork</a>
-    <span style="font-size:11px;color:#64748b">Il link mostra solo i file caricati in colonna &#9313;</span>
-  </div>
-  {% endif %}
-</div>
-<!-- lightbox anteprima documenti -->
+
+<!-- lightbox anteprima Drive -->
 <div id="doc-preview-overlay" onclick="if(event.target===this)chiudiPreview()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center">
-  <div style="background:#fff;border-radius:8px;width:85vw;height:88vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.4)">
+  <div style="background:#fff;border-radius:8px;width:85vw;height:88vh;display:flex;flex-direction:column;overflow:hidden">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #e2e8f0">
       <span id="doc-preview-nome" style="font-size:13px;font-weight:600;color:#1e293b"></span>
-      <button onclick="chiudiPreview()" style="border:none;background:none;font-size:20px;cursor:pointer;color:#64748b;line-height:1">&#10005;</button>
+      <button onclick="chiudiPreview()" style="border:none;background:none;font-size:20px;cursor:pointer;color:#64748b">&#10005;</button>
     </div>
     <iframe id="doc-preview-frame" src="" style="flex:1;border:none;width:100%"></iframe>
   </div>
 </div>
 
+<!-- BASKET: firmati dal cliente in arrivo -->
 {% if docs_firmati %}
-<div style="background:#f0fdf4;border:2px solid #86efac;border-radius:8px;padding:14px;margin-bottom:16px">
+<div style="background:#f0fdf4;border:2px solid #86efac;border-radius:10px;padding:14px 16px;margin-bottom:20px">
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
-    <span style="font-size:14px;font-weight:700;color:#166534">&#9989; Basket firmati ({{ docs_firmati|length }}) — ricevuti dal cliente</span>
-    <a href="/crm/pratiche/{{ p.id }}/documenti/firmati-zip"
-       style="font-size:12px;padding:4px 10px;background:#dcfce7;border:1px solid #86efac;border-radius:5px;color:#166534;text-decoration:none">&#8659; Scarica tutti ZIP</a>
+    <span style="font-size:14px;font-weight:600;color:#166534">&#128229; Basket: {{ docs_firmati|length }} firmato/i ricevuti dal cliente</span>
+    <a href="/crm/pratiche/{{ p.id }}/documenti/firmati-zip" style="font-size:12px;padding:4px 10px;background:#dcfce7;border:1px solid #86efac;border-radius:5px;color:#166534;text-decoration:none">&#8659; Scarica tutti ZIP</a>
   </div>
-  <div class="tabella scorri"><table>
-  <thead><tr><th>File firmato</th><th>Ricevuto</th><th style="min-width:220px">&#8594; Assegna a riga col&#9313;</th></tr></thead><tbody>
-  {% for doc in docs_firmati %}<tr style="background:#f0fdf4">
-    <td>
-      {% if doc.google_file_id %}
-        <button type="button" onclick="apriPreview('{{ doc.google_file_id }}','{{ doc.nome_file }}')"
-          style="background:none;border:none;color:#15803d;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;text-align:left">{{ doc.nome_file }}</button>
-      {% else %}
-        <span style="font-size:13px;color:#166534">{{ doc.nome_file }}</span>
-      {% endif %}
-    </td>
-    <td style="font-size:12px;color:#64748b;white-space:nowrap">{{ data_it(doc.creato_il.date()) }}</td>
-    <td>
-      {% if p.righe_doc %}
-      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/0/firmato"
-            style="display:inline-flex;gap:4px;align-items:center">
-        <select style="font-size:11px"
-          onchange="this.form.action='/crm/pratiche/{{ p.id }}/righe/'+this.value+'/firmato'">
-          <option value="0">— scegli riga —</option>
-          {% for r in p.righe_doc|sort(attribute='ordine') %}
-          <option value="{{ r.id }}">{{ r.etichetta or 'Riga ' ~ loop.index }}</option>
-          {% endfor %}
-        </select>
-        <input type="hidden" name="doc_id" value="{{ doc.id }}">
-        <button type="submit" style="font-size:11px;padding:3px 9px;background:#16a34a;border:none;border-radius:4px;color:#fff;cursor:pointer">&#10003; Assegna</button>
-      </form>
-      {% else %}<span style="font-size:11px;color:#aaa">nessuna riga</span>{% endif %}
-    </td>
-  </tr>{% endfor %}</tbody></table></div>
+  {% for doc in docs_firmati %}
+  <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:#fff;border:0.5px solid #86efac;border-radius:6px;margin-bottom:6px;flex-wrap:wrap">
+    {% if doc.google_file_id %}
+    <button type="button" onclick="apriPreview('{{ doc.google_file_id }}','{{ doc.nome_file }}')" style="background:none;border:none;color:#15803d;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;flex:1;min-width:120px;text-align:left">{{ doc.nome_file }}</button>
+    {% else %}
+    <span style="flex:1;font-size:13px;color:#166534;min-width:120px">{{ doc.nome_file }}</span>
+    {% endif %}
+    <span style="font-size:11px;color:#64748b;white-space:nowrap">{{ data_it(doc.creato_il.date()) }}</span>
+    <form method="post" action="/crm/pratiche/{{ p.id }}/righe/0/firmato" style="display:inline-flex;gap:4px;align-items:center">
+      <select style="font-size:11px;padding:2px 4px" onchange="this.form.action='/crm/pratiche/{{ p.id }}/righe/'+this.value+'/firmato'">
+        <option value="0">&#8594; Assegna a riga...</option>
+        {% for r in p.righe_doc|sort(attribute='ordine') %}
+        <option value="{{ r.id }}">{{ r.etichetta or 'Riga ' ~ loop.index }}</option>
+        {% endfor %}
+      </select>
+      <input type="hidden" name="doc_id" value="{{ doc.id }}">
+      <button type="submit" style="padding:3px 8px;background:#16a34a;border:none;border-radius:4px;color:#fff;cursor:pointer;font-size:11px">&#10003;</button>
+    </form>
+  </div>
+  {% endfor %}
 </div>
 {% endif %}
 
+<!-- DA COMPLETARE -->
+{% if righe_todo %}
+<div style="margin-bottom:20px">
+  <div style="font-size:11px;font-weight:600;color:#92400e;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">&#9654; Da completare ({{ righe_todo|length }})</div>
+  {% for r in righe_todo %}
+  <div style="border:0.5px solid #e2e8f0;border-left:3px solid #f59e0b;border-radius:8px;margin-bottom:8px;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;background:#fff" onclick="toggleCard({{ r.id }})">
+      <input type="checkbox" class="chk-mod" value="{{ r.id }}" {% if not r.mod_google_id %}style="visibility:hidden"{% endif %} onclick="event.stopPropagation()">
+      <span style="flex:1;font-size:14px;font-weight:500;outline:none;border-bottom:1px dashed #e2e8f0;padding:1px 2px" id="et-{{ r.id }}"
+        contenteditable="true" onclick="event.stopPropagation()"
+        onblur="salvaEtichettaRiga({{ r.id }}, this.innerText.trim())"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">{{ r.etichetta or 'Documento' }}</span>
+      {% if not r.mod_google_id %}
+      <span style="font-size:11px;padding:2px 8px;background:#fef3c7;color:#92400e;border-radius:20px;white-space:nowrap">step ①</span>
+      {% else %}
+      <span style="font-size:11px;padding:2px 8px;background:#fef3c7;color:#92400e;border-radius:20px;white-space:nowrap">step ②</span>
+      {% endif %}
+      <span id="caret-{{ r.id }}" style="font-size:12px;color:#94a3b8">&#9660;</span>
+    </div>
+    <div id="detail-{{ r.id }}" style="padding:10px 14px 12px;background:#fafafa;border-top:0.5px solid #f1f5f9">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <div style="padding:10px;background:#fff;border-radius:6px;border:0.5px solid {% if r.mod_google_id %}#86efac{% else %}#fde68a{% endif %}">
+          <div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:6px;letter-spacing:.4px">① Modulo vuoto</div>
+          {% if r.mod_google_id %}
+          <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
+            <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:11px;color:#15803d">&#128196; {{ r.mod_nome }}</a>
+            <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/elimina" style="display:inline">
+              <button class="btn chiaro" type="submit" style="font-size:10px;padding:1px 5px;color:#dc2626">&#128465;</button>
+            </form>
+          </div>
+          {% elif p.bando and p.bando.allegati %}
+          <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/assegna-da-bando">
+            <select name="allegato_id" style="font-size:11px;width:100%;margin-bottom:5px">
+              <option value="">— scegli dal bando —</option>
+              {% for a in p.bando.allegati %}<option value="{{ a.id }}">{{ a.etichetta or a.nome_file }}</option>{% endfor %}
+            </select>
+            <button class="btn chiaro" type="submit" style="font-size:11px;width:100%">&#8595; Importa</button>
+          </form>
+          {% else %}
+          <span style="font-size:11px;color:#94a3b8">Nessun bando collegato</span>
+          {% endif %}
+        </div>
+        <div style="padding:10px;background:#fff;border-radius:6px;border:0.5px solid {% if r.comp_google_id %}#86efac{% elif r.mod_google_id %}#fde68a{% else %}#e2e8f0{% endif %}">
+          <div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:6px;letter-spacing:.4px">② Compilato</div>
+          {% if r.comp_google_id %}
+          <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
+            <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/scarica" style="font-size:11px;color:#15803d">&#128196; {{ r.comp_nome }}</a>
+            <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/elimina" style="display:inline">
+              <button class="btn chiaro" type="submit" style="font-size:10px;padding:1px 5px;color:#dc2626">&#128465;</button>
+            </form>
+          </div>
+          {% else %}
+          <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato" enctype="multipart/form-data">
+            <input type="file" name="file" style="font-size:11px;width:100%;margin-bottom:5px">
+            <button class="btn chiaro" type="submit" style="font-size:11px;width:100%">&#8593; Carica compilato</button>
+          </form>
+          {% endif %}
+        </div>
+        <div style="padding:10px;background:#f8fafc;border-radius:6px;border:0.5px solid #e2e8f0;opacity:.45">
+          <div style="font-size:10px;text-transform:uppercase;color:#94a3b8;margin-bottom:6px;letter-spacing:.4px">③ Firmato</div>
+          <span style="font-size:11px;color:#94a3b8">In attesa compilato</span>
+        </div>
+      </div>
+      <div style="margin-top:8px;text-align:right">
+        <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/elimina-riga" onsubmit="return confirm('Eliminare tutta la riga?')" style="display:inline">
+          <button class="btn chiaro" type="submit" style="font-size:11px;color:#dc2626">&#128465; Elimina riga</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- IN ATTESA FIRMA -->
+{% if righe_attesa %}
+<div style="margin-bottom:20px">
+  <div style="font-size:11px;font-weight:600;color:#1e40af;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px">&#8987; In attesa firma ({{ righe_attesa|length }})</div>
+  {% for r in righe_attesa %}
+  <div style="border:0.5px solid #e2e8f0;border-left:3px solid #3b82f6;border-radius:8px;margin-bottom:8px;overflow:hidden">
+    <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;background:#fff" onclick="toggleCard({{ r.id }})">
+      <input type="checkbox" class="chk-mod" value="{{ r.id }}" {% if not r.mod_google_id %}style="visibility:hidden"{% endif %} onclick="event.stopPropagation()">
+      <span style="flex:1;font-size:14px;font-weight:500;outline:none;border-bottom:1px dashed #e2e8f0;padding:1px 2px" id="et-{{ r.id }}"
+        contenteditable="true" onclick="event.stopPropagation()"
+        onblur="salvaEtichettaRiga({{ r.id }}, this.innerText.trim())"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">{{ r.etichetta or 'Documento' }}</span>
+      <span style="font-size:11px;padding:2px 8px;background:#dbeafe;color:#1e40af;border-radius:20px;white-space:nowrap">step ③</span>
+      {% if docs_firmati %}<span style="font-size:11px;color:#16a34a;font-weight:500;white-space:nowrap">{{ docs_firmati|length }} in basket</span>{% endif %}
+      <span id="caret-{{ r.id }}" style="font-size:12px;color:#94a3b8">&#9660;</span>
+    </div>
+    <div id="detail-{{ r.id }}" style="display:none;padding:10px 14px 12px;background:#f8fbff;border-top:0.5px solid #e2e8f0">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+        <div style="padding:10px;background:#f0fdf4;border-radius:6px;border:0.5px solid #86efac;opacity:.7">
+          <div style="font-size:10px;text-transform:uppercase;color:#16a34a;margin-bottom:4px;letter-spacing:.4px">① Modulo &#10003;</div>
+          {% if r.mod_nome %}<a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:11px;color:#15803d">{{ r.mod_nome }}</a>{% else %}<span style="font-size:11px;color:#94a3b8">—</span>{% endif %}
+        </div>
+        <div style="padding:10px;background:#f0fdf4;border-radius:6px;border:0.5px solid #86efac;opacity:.7">
+          <div style="font-size:10px;text-transform:uppercase;color:#16a34a;margin-bottom:4px;letter-spacing:.4px">② Compilato &#10003;</div>
+          <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/scarica" style="font-size:11px;color:#15803d">{{ r.comp_nome }}</a>
+        </div>
+        <div style="padding:10px;background:#eff6ff;border-radius:6px;border:0.5px solid #93c5fd">
+          <div style="font-size:10px;text-transform:uppercase;color:#1e40af;margin-bottom:6px;letter-spacing:.4px">③ Firmato — da ricevere</div>
+          {% if docs_firmati %}
+          <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato" style="margin-bottom:6px">
+            <select name="doc_id" style="font-size:11px;width:100%;margin-bottom:4px">
+              <option value="">&#8592; dal basket...</option>
+              {% for d in docs_firmati %}<option value="{{ d.id }}">{{ d.nome_file }}</option>{% endfor %}
+            </select>
+            <button type="submit" style="font-size:11px;width:100%;padding:4px;background:#3b82f6;border:none;border-radius:4px;color:#fff;cursor:pointer">&#10003; Assegna dal basket</button>
+          </form>
+          {% endif %}
+          <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato-upload" enctype="multipart/form-data">
+            <input type="file" name="file" style="font-size:10px;width:100%;margin-bottom:4px">
+            <button class="btn chiaro" type="submit" style="font-size:11px;width:100%">&#8593; Carica diretto</button>
+          </form>
+        </div>
+      </div>
+      <div style="margin-top:8px;text-align:right">
+        <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/elimina-riga" onsubmit="return confirm('Eliminare tutta la riga?')" style="display:inline">
+          <button class="btn chiaro" type="submit" style="font-size:11px;color:#dc2626">&#128465; Elimina riga</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- COMPLETATI -->
+{% if righe_ok %}
+<details style="margin-bottom:20px">
+<summary style="cursor:pointer;font-size:11px;font-weight:600;color:#166534;text-transform:uppercase;letter-spacing:.6px;padding:4px 0">&#10003; Completati ({{ righe_ok|length }})</summary>
+<div style="margin-top:8px">
+{% for r in righe_ok %}
+<div style="background:#f0fdf4;border:0.5px solid #86efac;border-radius:8px;margin-bottom:6px;padding:10px 14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+  <span style="font-size:13px;font-weight:500;flex:1">{{ r.etichetta or 'Documento' }}</span>
+  {% if r.firmato_doc %}
+  <a href="/crm/documenti/{{ r.firmato_doc_id }}/scarica" style="font-size:12px;color:#166534">&#9989; {{ r.firmato_doc.nome_file }}</a>
+  {% endif %}
+  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato/rimuovi" style="display:inline">
+    <button class="btn chiaro" type="submit" style="font-size:10px;padding:1px 5px;color:#dc2626" title="Rimuovi firmato">&#128465;</button>
+  </form>
+  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/elimina-riga" onsubmit="return confirm('Eliminare la riga?')" style="display:inline">
+    <button class="btn chiaro" type="submit" style="font-size:10px;padding:1px 5px;color:#dc2626" title="Elimina riga">&#128466;</button>
+  </form>
+</div>
+{% endfor %}
+</div>
+</details>
+{% endif %}
+
+<!-- DOC RICEVUTI (non ancora assegnati) -->
 {% if docs_pratica %}
-<details style="margin-bottom:20px" open>
-<summary style="cursor:pointer;color:#6b7b8c;font-size:13px">&#128229; {{ docs_pratica|length }} doc ricevuti — clicca per anteprima, assegna alla riga se necessario</summary>
+<details style="margin-bottom:16px">
+<summary style="cursor:pointer;font-size:12px;color:#64748b;padding:4px 0">&#128229; Doc ricevuti non assegnati ({{ docs_pratica|length }})</summary>
 <div class="tabella scorri" style="margin-top:8px"><table>
-<thead><tr><th>File</th><th>Caricato</th><th style="min-width:220px">Assegna a col&#9313; di riga</th></tr></thead><tbody>
+<thead><tr><th>File</th><th>Caricato</th><th style="min-width:200px">Assegna a riga ③</th></tr></thead><tbody>
 {% for doc in docs_pratica %}<tr>
   <td>
     {% if doc.google_file_id %}
-      <button type="button" onclick="apriPreview('{{ doc.google_file_id }}','{{ doc.nome_file }}')"
-        style="background:none;border:none;color:#2563eb;text-decoration:underline;cursor:pointer;font-size:14px;padding:0;text-align:left">{{ doc.nome_file }}</button>
+      <button type="button" onclick="apriPreview('{{ doc.google_file_id }}','{{ doc.nome_file }}')" style="background:none;border:none;color:#2563eb;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;text-align:left">{{ doc.nome_file }}</button>
     {% else %}
       <span style="font-size:13px">{{ doc.nome_file }}</span>
     {% endif %}
   </td>
   <td style="font-size:12px;color:#64748b;white-space:nowrap">{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
   <td>
-    {% if p.righe_doc %}
-    <form method="post" action="/crm/pratiche/{{ p.id }}/righe/0/firmato"
-          style="display:inline-flex;gap:4px;align-items:center">
-      <select style="font-size:11px"
-        onchange="this.form.action='/crm/pratiche/{{ p.id }}/righe/'+this.value+'/firmato'">
+    <form method="post" action="/crm/pratiche/{{ p.id }}/righe/0/firmato" style="display:inline-flex;gap:4px;align-items:center">
+      <select style="font-size:11px" onchange="this.form.action='/crm/pratiche/{{ p.id }}/righe/'+this.value+'/firmato'">
         <option value="0">Scegli riga…</option>
-        {% for r in p.righe_doc|sort(attribute='ordine') %}
-        <option value="{{ r.id }}">{{ r.etichetta or 'Riga ' ~ loop.index }}</option>
-        {% endfor %}
+        {% for r in p.righe_doc|sort(attribute='ordine') %}<option value="{{ r.id }}">{{ r.etichetta or 'Riga ' ~ loop.index }}</option>{% endfor %}
       </select>
       <input type="hidden" name="doc_id" value="{{ doc.id }}">
-      <button class="btn chiaro" type="submit" style="font-size:11px" title="Assegna come Firmato">&#10003; col&#9313;</button>
+      <button class="btn chiaro" type="submit" style="font-size:11px">&#10003;</button>
     </form>
-    {% else %}<span style="font-size:11px;color:#aaa">nessuna riga</span>{% endif %}
   </td>
 </tr>{% endfor %}</tbody></table></div>
 </details>
+{% endif %}
+
+<!-- AZIONI IN FONDO -->
+<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 0;border-top:0.5px solid #e2e8f0;margin-bottom:16px">
+  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/aggiungi">
+    <button class="btn chiaro" type="submit">+ Aggiungi riga</button>
+  </form>
+  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, false)">&#8659; Moduli vuoti ZIP</button>
+  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, true)">&#8659; Selezionati ZIP</button>
+  {% if p.bando and p.bando.allegati %}
+  <form method="post" action="/crm/pratiche/{{ p.id }}/righe/importa-bando" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+    <select name="allegato_ids" multiple size="{{ [p.bando.allegati|length, 4]|min }}" style="font-size:11px;min-width:200px;border:1px solid #cbd5e1;border-radius:6px;padding:4px">
+      {% for a in p.bando.allegati %}<option value="{{ a.id }}">{{ a.etichetta or a.nome_file }}</option>{% endfor %}
+    </select>
+    <button class="btn chiaro" type="submit" style="align-self:flex-end">&#8659; Da bando</button>
+  </form>
+  {% endif %}
+</div>
+{% if p.righe_doc %}
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+  <input readonly value="{{ request.url_root.rstrip('/') }}/crm/pratica-download/{{ token_download }}" style="font-size:12px;width:320px" id="link-dl">
+  <button type="button" class="btn chiaro" style="font-size:12px" onclick="navigator.clipboard.writeText(document.getElementById('link-dl').value);this.textContent='Copiato!';setTimeout(()=>this.textContent='Link firma cliente',1500)">Link firma cliente</button>
+  <a href="/crm/pratiche/{{ p.id }}/genera-brief" class="btn ambra" style="font-size:12px" target="_blank" rel="noopener">&#128203; Genera brief Cowork</a>
+</div>
 {% endif %}
 
 <script>
@@ -2056,6 +2087,14 @@ function salvaEtichettaRiga(id, testo) {
     method: 'POST', headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({etichetta: testo})
   }).catch(e => console.error('Errore etichetta riga', e));
+}
+function toggleCard(id) {
+  var d = document.getElementById('detail-' + id);
+  var c = document.getElementById('caret-' + id);
+  if (!d) return;
+  var hidden = d.style.display === 'none';
+  d.style.display = hidden ? 'block' : 'none';
+  if (c) c.textContent = hidden ? '▲' : '▼';
 }
 </script>
 
@@ -3424,9 +3463,15 @@ def scheda_pratica(pid):
     docs_firmati = [d for d in docs_liberi if d.caricato_da == "cliente_firma"]
     # Doc ricevuti generici (tutto il resto)
     docs_pratica = [d for d in docs_liberi if d.caricato_da != "cliente_firma"]
+    # Righe categorizzate per stato (per la nuova UX)
+    righe_sorted = sorted(p.righe_doc, key=lambda r: r.ordine)
+    righe_todo = [r for r in righe_sorted if not r.comp_google_id]
+    righe_attesa = [r for r in righe_sorted if r.comp_google_id and not r.firmato_doc_id]
+    righe_ok = [r for r in righe_sorted if r.firmato_doc_id]
     return rendi("pratica", titolo=p.nome_bando, pagina="pratiche", p=p,
                  docs_pratica=docs_pratica, docs_liberi=docs_liberi,
                  docs_firmati=docs_firmati,
+                 righe_todo=righe_todo, righe_attesa=righe_attesa, righe_ok=righe_ok,
                  token_download=_token_download_pratica(pid))
 
 
