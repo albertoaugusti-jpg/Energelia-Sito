@@ -3628,7 +3628,7 @@ def genera_brief_cowork(pid):
         righe.append("Sede: " + ", ".join(indirizzo_parts))
     righe.append("PEC: " + (c.pec or ""))
     righe.append("Email: " + (c.email or ""))
-    righe.append("Telefono: " + (c.telefono or c.cellulare or ""))
+    righe.append("Telefono: " + (c.telefono or ""))
     righe.append("Legale rappresentante: " + (c.referente or "") + (" — " + c.ruolo_referente if c.ruolo_referente else ""))
     righe.append("")
 
