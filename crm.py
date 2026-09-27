@@ -1837,15 +1837,21 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   </td>
   <td style="text-align:center">
     {% if r.firmato_doc %}
-      <a href="/crm/documenti/{{ r.firmato_doc_id }}/scarica" style="font-size:12px">✅ {{ r.firmato_doc.nome_file }}</a>
+      <a href="/crm/documenti/{{ r.firmato_doc_id }}/scarica" style="font-size:12px">&#9989; {{ r.firmato_doc.nome_file }}</a>
     {% else %}
-      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato" style="display:inline-flex;gap:4px;align-items:center">
+      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato-upload" enctype="multipart/form-data" style="display:inline-flex;gap:4px;align-items:center">
+        <input type="file" name="file" style="font-size:11px;max-width:130px">
+        <button class="btn chiaro" type="submit" style="font-size:11px">&#8593;</button>
+      </form>
+      {% if docs_liberi %}
+      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato" style="display:inline-flex;gap:4px;align-items:center;margin-top:4px">
         <select name="doc_id" style="font-size:11px">
-          <option value="">— da assegnare —</option>
+          <option value="">o assegna esistente</option>
           {% for d in docs_liberi %}<option value="{{ d.id }}">{{ d.nome_file }}</option>{% endfor %}
         </select>
-        <button class="btn chiaro" type="submit" style="font-size:11px">✓</button>
+        <button class="btn chiaro" type="submit" style="font-size:11px">&#10003;</button>
       </form>
+      {% endif %}
     {% endif %}
   </td>
 </tr>
@@ -3309,6 +3315,36 @@ def assegna_firmato_riga(pid, rid):
         SessionLocale.commit()
         avvisa("Documento firmato assegnato.")
     return redirect(f"/crm/pratiche/{pid}")
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/firmato-upload")
+def carica_firmato_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    f = request.files.get("file")
+    if not r or not f or not f.filename:
+        return redirect("/crm/pratiche/" + str(pid))
+    p = SessionLocale.get(Pratica, pid)
+    if not p:
+        abort(404)
+    try:
+        ris = _drive_carica_file(GOOGLE_CARTELLA_MADRE, f.filename, f.read(), f.mimetype)
+        doc = Documento(
+            cliente_id=p.cliente_id,
+            pratica_id=pid,
+            nome_file=f.filename,
+            google_file_id=ris.get("id"),
+            link_drive=ris.get("webViewLink"),
+            caricato_da="staff",
+            stato="assegnato",
+        )
+        SessionLocale.add(doc)
+        SessionLocale.flush()
+        r.firmato_doc_id = doc.id
+        SessionLocale.commit()
+        avvisa("Documento firmato caricato.")
+    except Exception as ex:
+        avvisa("Errore caricamento firmato: " + str(ex), "errore")
+    return redirect("/crm/pratiche/" + str(pid))
 
 
 @crm.get("/pratica-download/<token>")
