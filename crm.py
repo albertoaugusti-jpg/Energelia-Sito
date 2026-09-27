@@ -2041,7 +2041,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   <form method="post" action="/crm/pratiche/{{ p.id }}/righe/aggiungi">
     <button class="btn chiaro" type="submit">+ Aggiungi riga</button>
   </form>
-  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, false)">&#8659; Scarica template</button>
+  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, false)">&#8659; Moduli da compilare</button>
   <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, true)">&#8659; Scarica selezionati</button>
   {% if p.bando and p.bando.allegati %}
   <form method="post" action="/crm/pratiche/{{ p.id }}/righe/importa-bando" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
