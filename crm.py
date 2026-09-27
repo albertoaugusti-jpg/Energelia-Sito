@@ -1815,12 +1815,9 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   </td>
   <td style="text-align:center">
     {% if r.mod_google_id %}
-      <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:12px">📄 {{ r.mod_nome }}</a>
+      <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:12px">&#128196; {{ r.mod_nome }}</a>
     {% else %}
-      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo" enctype="multipart/form-data" style="display:inline-flex;gap:4px;align-items:center">
-        <input type="file" name="file" style="font-size:11px;max-width:130px">
-        <button class="btn chiaro" type="submit" style="font-size:11px">↑</button>
-      </form>
+      <span style="font-size:11px;color:#94a3b8">— importa dal bando —</span>
     {% endif %}
   </td>
   <td style="text-align:center">
@@ -1875,6 +1872,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
       this.textContent='Copiato!';setTimeout(()=>this.textContent='Link download compilati',1500)
     ">Link download compilati</button>
     <a href="/crm/pratiche/{{ p.id }}/genera-brief" class="btn ambra" style="font-size:12px" download>&#128203; Genera brief Cowork</a>
+    <span style="font-size:11px;color:#64748b">Il link mostra solo i file caricati in colonna &#9313;</span>
   </div>
   {% endif %}
 </div>
