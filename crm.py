@@ -3775,40 +3775,99 @@ def scarica_moduli_zip(pid):
 
 @crm.get("/pratica-download/<token>")
 def pagina_download_compilati(token):
-    """Pagina pubblica: il cliente scarica i moduli compilati da firmare."""
+    """Pagina pubblica: il cliente scarica i moduli compilati e ricarica i firmati."""
     pratiche = SessionLocale.query(Pratica).all()
     p = next((pr for pr in pratiche if _token_download_pratica(pr.id) == token), None)
     if not p:
         abort(404)
+    caricato = request.args.get("caricato")
     righe_con_compilato = [r for r in sorted(p.righe_doc, key=lambda x: x.ordine) if r.comp_google_id]
-    # Costruisco le righe HTML senza nested f-string (Python 3.11 non le supporta)
     righe_html = ""
     for r in righe_con_compilato:
         label = r.etichetta or r.comp_nome or "Documento"
         nome = r.comp_nome or "file"
-        url = "/crm/pratiche/" + str(p.id) + "/righe/" + str(r.id) + "/compilato/scarica"
+        url_scarica = "/crm/pratiche/" + str(p.id) + "/righe/" + str(r.id) + "/compilato/scarica"
+        url_upload = "/crm/pratica-firma/" + token + "/righe/" + str(r.id) + "/carica-firmato"
+        gia_firmato = ""
+        if r.firmato_doc_id:
+            gia_firmato = '<p style="color:#16a34a;font-size:13px;margin:8px 0 0">&#10003; Firmato ricevuto — puoi caricare una versione aggiornata se necessario.</p>'
         righe_html += (
-            '<div class="riga"><strong>' + label + "</strong><br>"
-            + '<a class="btn" href="' + url + '">Scarica ' + nome + "</a></div>"
+            '<div class="riga">'
+            '<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">'
+            '<strong style="font-size:16px">' + label + '</strong>'
+            '<a class="btn-scarica" href="' + url_scarica + '" target="_blank">&#8659; Scarica</a>'
+            '</div>'
+            + gia_firmato +
+            '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #e2e8f0">'
+            '<p style="font-size:13px;color:#5a6b7c;margin:0 0 8px">Dopo aver firmato, carica qui il documento firmato:</p>'
+            '<form method="post" action="' + url_upload + '" enctype="multipart/form-data" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'
+            '<input type="file" name="file" accept=".pdf,.docx,.doc,.p7m" required style="font-size:13px;max-width:280px">'
+            '<button type="submit" class="btn-invia">&#8679; Invia firmato</button>'
+            '</form>'
+            '</div>'
+            '</div>'
         )
     if not righe_html:
-        righe_html = "<p>Nessun documento disponibile al momento.</p>"
+        righe_html = "<p>Nessun documento disponibile al momento. Riprova tra poco.</p>"
+    banner = ""
+    if caricato:
+        banner = '<div style="background:#dcfce7;border:1px solid #86efac;border-radius:8px;padding:14px 18px;margin-bottom:20px;color:#166534;font-size:14px">&#10003; Documento ricevuto correttamente. Grazie!</div>'
     nome_bando = p.nome_bando or ""
+    cliente_nome = (p.cliente.ragione_sociale if p.cliente else "") or ""
     html = (
         "<!doctype html><html lang='it'><head><meta charset='utf-8'>"
         "<meta name='viewport' content='width=device-width,initial-scale=1'>"
-        "<title>Documenti da firmare - " + nome_bando + "</title>"
-        "<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 20px;color:#1a2e42}"
-        "h1{font-size:22px}p{color:#5a6b7c}"
-        "a.btn{display:inline-block;background:#1f4e78;color:#fff;padding:8px 18px;border-radius:6px;text-decoration:none;font-size:14px;margin-top:6px}"
-        ".riga{border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-bottom:12px}</style>"
+        "<title>Firma documenti - " + nome_bando + "</title>"
+        "<style>"
+        "body{font-family:system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 20px;color:#1a2e42;font-size:15px}"
+        "h1{font-size:22px;margin-bottom:4px}h2{font-size:14px;font-weight:normal;color:#64748b;margin-bottom:24px}"
+        ".riga{border:1px solid #e2e8f0;border-radius:10px;padding:18px;margin-bottom:16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.06)}"
+        ".btn-scarica{display:inline-block;background:#1f4e78;color:#fff;padding:7px 16px;border-radius:6px;text-decoration:none;font-size:13px;white-space:nowrap}"
+        ".btn-invia{background:#d97706;color:#fff;border:none;padding:7px 16px;border-radius:6px;font-size:13px;cursor:pointer;white-space:nowrap}"
+        ".btn-invia:hover{background:#b45309}"
+        "</style>"
         "</head><body>"
         "<h1>" + nome_bando + "</h1>"
-        "<p>Scarica i documenti, firmali e rispediscili come indicato.</p>"
+        "<h2>" + cliente_nome + "</h2>"
+        + banner
+        + "<p style='color:#5a6b7c;margin-bottom:20px'>Scarica ogni documento, firmalo e ricaricalo usando il pulsante arancione. Puoi farlo in pi&ugrave; volte.</p>"
         + righe_html
         + "</body></html>"
     )
     return Response(html, mimetype="text/html")
+
+
+@crm.post("/pratica-firma/<token>/righe/<int:rid>/carica-firmato")
+def cliente_carica_firmato(token, rid):
+    """Rotta pubblica: il cliente carica il documento firmato direttamente nella riga."""
+    pratiche = SessionLocale.query(Pratica).all()
+    p = next((pr for pr in pratiche if _token_download_pratica(pr.id) == token), None)
+    if not p:
+        abort(404)
+    r = SessionLocale.get(RigaDocPratica, rid)
+    if not r or r.pratica_id != p.id:
+        abort(404)
+    f = request.files.get("file")
+    if not f or not f.filename:
+        return redirect("/crm/pratica-download/" + token)
+    try:
+        ris = _drive_carica_file(GOOGLE_CARTELLA_MADRE, f.filename, f.read(), f.mimetype)
+        doc = Documento(
+            cliente_id=p.cliente_id,
+            pratica_id=p.id,
+            nome_file=f.filename,
+            google_file_id=ris.get("id"),
+            link_drive=ris.get("webViewLink"),
+            caricato_da="cliente",
+            stato="assegnato",
+        )
+        SessionLocale.add(doc)
+        SessionLocale.flush()
+        r.firmato_doc_id = doc.id
+        SessionLocale.commit()
+    except Exception as ex:
+        print("[crm] cliente-carica-firmato err: " + str(ex))
+    return redirect("/crm/pratica-download/" + token + "?caricato=1")
 
 
 @crm.post("/pratiche/<int:pid>/invia-link")
