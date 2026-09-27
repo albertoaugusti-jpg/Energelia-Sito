@@ -1869,16 +1869,21 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
         onblur="salvaEtichettaRiga({{ r.id }}, this.innerText.trim())"
         onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">{{ r.etichetta or 'Documento' }}</span>
       {% if not r.mod_google_id %}
-      <span style="font-size:11px;padding:2px 8px;background:#fef3c7;color:#92400e;border-radius:20px;white-space:nowrap">step ①</span>
+      <span style="font-size:11px;padding:2px 10px;background:#f59e0b;color:#fff;border-radius:20px;white-space:nowrap;font-weight:700">A</span>
       {% else %}
-      <span style="font-size:11px;padding:2px 8px;background:#fef3c7;color:#92400e;border-radius:20px;white-space:nowrap">step ②</span>
+      <span style="font-size:11px;padding:2px 10px;background:#3b82f6;color:#fff;border-radius:20px;white-space:nowrap;font-weight:700">B</span>
       {% endif %}
       <span id="caret-{{ r.id }}" style="font-size:12px;color:#94a3b8">&#9660;</span>
     </div>
     <div id="detail-{{ r.id }}" style="padding:10px 14px 12px;background:#fafafa;border-top:0.5px solid #f1f5f9">
+      <div style="display:flex;gap:4px;margin-bottom:8px;font-size:10px;font-weight:700">
+        <div style="flex:1;text-align:center;padding:4px 2px;background:#fef3c7;border-radius:4px;color:#78350f">A &mdash; Importa modulo</div>
+        <div style="flex:1;text-align:center;padding:4px 2px;background:#dbeafe;border-radius:4px;color:#1e3a8a">B &mdash; Compila e carica</div>
+        <div style="flex:1;text-align:center;padding:4px 2px;background:#f1f5f9;border-radius:4px;color:#94a3b8">C &mdash; Cliente firma</div>
+      </div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
         <div style="padding:10px;background:#fff;border-radius:6px;border:0.5px solid {% if r.mod_google_id %}#86efac{% else %}#fde68a{% endif %}">
-          <div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:6px;letter-spacing:.4px">① Modulo vuoto</div>
+          <div style="font-size:11px;font-weight:700;color:#92400e;margin-bottom:4px">A &mdash; <span style="font-weight:400;text-transform:uppercase;font-size:10px;color:#64748b;letter-spacing:.4px">Modulo vuoto</span></div>
           {% if r.mod_google_id %}
           <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
             <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:11px;color:#15803d">&#128196; {{ r.mod_nome }}</a>
@@ -1899,7 +1904,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
           {% endif %}
         </div>
         <div style="padding:10px;background:#fff;border-radius:6px;border:0.5px solid {% if r.comp_google_id %}#86efac{% elif r.mod_google_id %}#fde68a{% else %}#e2e8f0{% endif %}">
-          <div style="font-size:10px;text-transform:uppercase;color:#64748b;margin-bottom:6px;letter-spacing:.4px">② Compilato</div>
+          <div style="font-size:11px;font-weight:700;color:#1e40af;margin-bottom:4px">B &mdash; <span style="font-weight:400;text-transform:uppercase;font-size:10px;color:#64748b;letter-spacing:.4px">Compilato</span></div>
           {% if r.comp_google_id %}
           <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center">
             <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/scarica" style="font-size:11px;color:#15803d">&#128196; {{ r.comp_nome }}</a>
@@ -1915,7 +1920,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
           {% endif %}
         </div>
         <div style="padding:10px;background:#f8fafc;border-radius:6px;border:0.5px solid #e2e8f0;opacity:.45">
-          <div style="font-size:10px;text-transform:uppercase;color:#94a3b8;margin-bottom:6px;letter-spacing:.4px">③ Firmato</div>
+          <div style="font-size:11px;font-weight:700;color:#64748b;margin-bottom:4px">C &mdash; <span style="font-weight:400;text-transform:uppercase;font-size:10px;color:#94a3b8;letter-spacing:.4px">Firmato</span></div>
           <span style="font-size:11px;color:#94a3b8">In attesa compilato</span>
         </div>
       </div>
@@ -1942,22 +1947,27 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
         contenteditable="true" onclick="event.stopPropagation()"
         onblur="salvaEtichettaRiga({{ r.id }}, this.innerText.trim())"
         onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">{{ r.etichetta or 'Documento' }}</span>
-      <span style="font-size:11px;padding:2px 8px;background:#dbeafe;color:#1e40af;border-radius:20px;white-space:nowrap">step ③</span>
+      <span style="font-size:11px;padding:2px 10px;background:#8b5cf6;color:#fff;border-radius:20px;white-space:nowrap;font-weight:700">C</span>
       {% if docs_firmati %}<span style="font-size:11px;color:#16a34a;font-weight:500;white-space:nowrap">{{ docs_firmati|length }} in basket</span>{% endif %}
       <span id="caret-{{ r.id }}" style="font-size:12px;color:#94a3b8">&#9660;</span>
     </div>
     <div id="detail-{{ r.id }}" style="display:none;padding:10px 14px 12px;background:#f8fbff;border-top:0.5px solid #e2e8f0">
+      <div style="display:flex;gap:4px;margin-bottom:8px;font-size:10px;font-weight:700">
+        <div style="flex:1;text-align:center;padding:4px 2px;background:#dcfce7;border-radius:4px;color:#166534">A &mdash; Modulo &#10003;</div>
+        <div style="flex:1;text-align:center;padding:4px 2px;background:#dcfce7;border-radius:4px;color:#166534">B &mdash; Compilato &#10003;</div>
+        <div style="flex:1;text-align:center;padding:4px 2px;background:#eff6ff;border-radius:4px;color:#1e40af">C &mdash; In attesa firma</div>
+      </div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
         <div style="padding:10px;background:#f0fdf4;border-radius:6px;border:0.5px solid #86efac;opacity:.7">
-          <div style="font-size:10px;text-transform:uppercase;color:#16a34a;margin-bottom:4px;letter-spacing:.4px">① Modulo &#10003;</div>
+          <div style="font-size:11px;font-weight:700;color:#166534;margin-bottom:4px">A &mdash; <span style="font-weight:400;text-transform:uppercase;font-size:10px;letter-spacing:.4px">Modulo &#10003;</span></div>
           {% if r.mod_nome %}<a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:11px;color:#15803d">{{ r.mod_nome }}</a>{% else %}<span style="font-size:11px;color:#94a3b8">—</span>{% endif %}
         </div>
         <div style="padding:10px;background:#f0fdf4;border-radius:6px;border:0.5px solid #86efac;opacity:.7">
-          <div style="font-size:10px;text-transform:uppercase;color:#16a34a;margin-bottom:4px;letter-spacing:.4px">② Compilato &#10003;</div>
+          <div style="font-size:11px;font-weight:700;color:#166534;margin-bottom:4px">B &mdash; <span style="font-weight:400;text-transform:uppercase;font-size:10px;letter-spacing:.4px">Compilato &#10003;</span></div>
           <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/scarica" style="font-size:11px;color:#15803d">{{ r.comp_nome }}</a>
         </div>
         <div style="padding:10px;background:#eff6ff;border-radius:6px;border:0.5px solid #93c5fd">
-          <div style="font-size:10px;text-transform:uppercase;color:#1e40af;margin-bottom:6px;letter-spacing:.4px">③ Firmato — da ricevere</div>
+          <div style="font-size:11px;font-weight:700;color:#1e40af;margin-bottom:6px">C &mdash; <span style="font-weight:400;text-transform:uppercase;font-size:10px;letter-spacing:.4px">Firmato &mdash; da ricevere</span></div>
           {% if docs_firmati %}
           <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato" style="margin-bottom:6px">
             <select name="doc_id" style="font-size:11px;width:100%;margin-bottom:4px">
@@ -2041,7 +2051,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   <form method="post" action="/crm/pratiche/{{ p.id }}/righe/aggiungi">
     <button class="btn chiaro" type="submit">+ Aggiungi riga</button>
   </form>
-  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, false)">&#8659; Moduli da compilare</button>
+  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, false)">&#8659; Scarica moduli vuoti (da compilare a cura responsabile pratica)</button>
   <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, true)">&#8659; Scarica selezionati</button>
   {% if p.bando and p.bando.allegati %}
   <form method="post" action="/crm/pratiche/{{ p.id }}/righe/importa-bando" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
@@ -2053,10 +2063,20 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   {% endif %}
 </div>
 {% if p.righe_doc %}
-<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:20px">
-  <input readonly value="{{ request.url_root.rstrip('/') }}/crm/pratica-download/{{ token_download }}" style="font-size:12px;width:320px" id="link-dl">
-  <button type="button" class="btn chiaro" style="font-size:12px" onclick="navigator.clipboard.writeText(document.getElementById('link-dl').value);this.textContent='Copiato!';setTimeout(()=>this.textContent='Link firma cliente',1500)">Link firma cliente</button>
-  <a href="/crm/pratiche/{{ p.id }}/genera-brief" class="btn ambra" style="font-size:12px" target="_blank" rel="noopener">&#128203; Genera brief Cowork</a>
+<div style="display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;margin-bottom:20px;padding:12px 14px;background:#f8fafc;border-radius:8px;border:0.5px solid #e2e8f0">
+  <div>
+    <div style="font-size:11px;font-weight:700;color:#1e40af;margin-bottom:2px">Link firma cliente</div>
+    <div style="font-size:11px;color:#64748b;margin-bottom:8px">Invia questo link al cliente: potr&agrave; scaricare i moduli compilati, firmarli e ricaricarli. Finiscono automaticamente nel basket da assegnare allo step C.</div>
+    <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+      <input readonly value="{{ request.url_root.rstrip('/') }}/crm/pratica-download/{{ token_download }}" style="font-size:12px;width:300px" id="link-dl">
+      <button type="button" class="btn chiaro" style="font-size:12px" onclick="navigator.clipboard.writeText(document.getElementById('link-dl').value);this.textContent='Copiato!';setTimeout(()=>this.textContent='Copia link',1500)">Copia link</button>
+    </div>
+  </div>
+  <div style="border-left:1px solid #e2e8f0;padding-left:14px">
+    <div style="font-size:11px;font-weight:700;color:#92400e;margin-bottom:2px">Brief Cowork (AI)</div>
+    <div style="font-size:11px;color:#64748b;margin-bottom:8px">Genera un file .txt con tutti i dati della pratica, bando e link ai moduli. Usalo come contesto per l&rsquo;AI quando compili i moduli.</div>
+    <a href="/crm/pratiche/{{ p.id }}/genera-brief" class="btn ambra" style="font-size:12px" target="_blank" rel="noopener">&#128203; Genera brief</a>
+  </div>
 </div>
 {% endif %}
 
@@ -3843,8 +3863,8 @@ def scarica_moduli_zip(pid):
             if ids_set and r.id not in ids_set:
                 continue
             try:
-                contenuto = _drive_scarica_file(r.mod_google_id)
-                nome = r.mod_nome or ("modulo_" + str(r.id) + ".pdf")
+                contenuto, _mime, _nome_drive = _drive_scarica_file(r.mod_google_id)
+                nome = r.mod_nome or _nome_drive or ("modulo_" + str(r.id) + ".pdf")
                 z.writestr(nome, contenuto)
                 aggiunti += 1
             except Exception as ex:
@@ -3877,8 +3897,8 @@ def scarica_firmati_zip(pid):
             if not doc.google_file_id:
                 continue
             try:
-                contenuto = _drive_scarica_file(doc.google_file_id)
-                nome = doc.nome_file or ("firmato_" + str(doc.id) + ".pdf")
+                contenuto, _mime, _nome_drive = _drive_scarica_file(doc.google_file_id)
+                nome = doc.nome_file or _nome_drive or ("firmato_" + str(doc.id) + ".pdf")
                 z.writestr(nome, contenuto)
                 aggiunti += 1
             except Exception as ex:
