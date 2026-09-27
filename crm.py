@@ -3631,7 +3631,7 @@ def assegna_modulo_da_bando(pid, rid):
     if not aid_s or not aid_s.isdigit():
         avvisa("Seleziona un allegato dal bando.", "ko")
         return redirect("/crm/pratiche/" + str(pid))
-    allegato = SessionLocale.get(AllegatoBando, int(aid_s))
+    allegato = SessionLocale.get(BandoAllegato, int(aid_s))
     if not allegato or allegato.bando_id != p.bando_id:
         avvisa("Allegato non trovato.", "ko")
         return redirect("/crm/pratiche/" + str(pid))
