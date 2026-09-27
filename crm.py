@@ -1955,6 +1955,45 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   </div>
 </div>
 
+{% if docs_firmati %}
+<div style="background:#f0fdf4;border:2px solid #86efac;border-radius:8px;padding:14px;margin-bottom:16px">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+    <span style="font-size:14px;font-weight:700;color:#166534">&#9989; Basket firmati ({{ docs_firmati|length }}) — ricevuti dal cliente</span>
+    <a href="/crm/pratiche/{{ p.id }}/documenti/firmati-zip"
+       style="font-size:12px;padding:4px 10px;background:#dcfce7;border:1px solid #86efac;border-radius:5px;color:#166534;text-decoration:none">&#8659; Scarica tutti ZIP</a>
+  </div>
+  <div class="tabella scorri"><table>
+  <thead><tr><th>File firmato</th><th>Ricevuto</th><th style="min-width:220px">&#8594; Assegna a riga col&#9313;</th></tr></thead><tbody>
+  {% for doc in docs_firmati %}<tr style="background:#f0fdf4">
+    <td>
+      {% if doc.google_file_id %}
+        <button type="button" onclick="apriPreview('{{ doc.google_file_id }}','{{ doc.nome_file }}')"
+          style="background:none;border:none;color:#15803d;text-decoration:underline;cursor:pointer;font-size:13px;padding:0;text-align:left">{{ doc.nome_file }}</button>
+      {% else %}
+        <span style="font-size:13px;color:#166534">{{ doc.nome_file }}</span>
+      {% endif %}
+    </td>
+    <td style="font-size:12px;color:#64748b;white-space:nowrap">{{ data_it(doc.creato_il.date()) }}</td>
+    <td>
+      {% if p.righe_doc %}
+      <form method="post" action="/crm/pratiche/{{ p.id }}/righe/0/firmato"
+            style="display:inline-flex;gap:4px;align-items:center">
+        <select style="font-size:11px"
+          onchange="this.form.action='/crm/pratiche/{{ p.id }}/righe/'+this.value+'/firmato'">
+          <option value="0">— scegli riga —</option>
+          {% for r in p.righe_doc|sort(attribute='ordine') %}
+          <option value="{{ r.id }}">{{ r.etichetta or 'Riga ' ~ loop.index }}</option>
+          {% endfor %}
+        </select>
+        <input type="hidden" name="doc_id" value="{{ doc.id }}">
+        <button type="submit" style="font-size:11px;padding:3px 9px;background:#16a34a;border:none;border-radius:4px;color:#fff;cursor:pointer">&#10003; Assegna</button>
+      </form>
+      {% else %}<span style="font-size:11px;color:#aaa">nessuna riga</span>{% endif %}
+    </td>
+  </tr>{% endfor %}</tbody></table></div>
+</div>
+{% endif %}
+
 {% if docs_pratica %}
 <details style="margin-bottom:20px" open>
 <summary style="cursor:pointer;color:#6b7b8c;font-size:13px">&#128229; {{ docs_pratica|length }} doc ricevuti — clicca per anteprima, assegna alla riga se necessario</summary>
@@ -3381,9 +3420,13 @@ def scheda_pratica(pid):
     # Doc già usati in col 3 di qualche riga
     usati_ids = {r.firmato_doc_id for r in p.righe_doc if r.firmato_doc_id}
     docs_liberi = [d for d in tutti_docs if d.id not in usati_ids]
-    docs_pratica = [d for d in tutti_docs if d.id not in usati_ids]
+    # Basket: doc firmati ricevuti dal cliente (non ancora assegnati a col3)
+    docs_firmati = [d for d in docs_liberi if d.caricato_da == "cliente"]
+    # Doc ricevuti generici (staff o senza origine cliente)
+    docs_pratica = [d for d in docs_liberi if d.caricato_da != "cliente"]
     return rendi("pratica", titolo=p.nome_bando, pagina="pratiche", p=p,
                  docs_pratica=docs_pratica, docs_liberi=docs_liberi,
+                 docs_firmati=docs_firmati,
                  token_download=_token_download_pratica(pid))
 
 
@@ -3766,6 +3809,40 @@ def scarica_moduli_zip(pid):
         return redirect("/crm/pratiche/" + str(pid))
     buf.seek(0)
     nome_zip = "moduli_" + (p.codice or str(pid)) + ".zip"
+    resp = Response(buf.read(), status=200)
+    resp.headers["Content-Disposition"] = 'attachment; filename="' + nome_zip + '"'
+    resp.headers["Content-Type"] = "application/zip"
+    resp.headers["Cache-Control"] = "no-cache"
+    return resp
+
+
+@crm.get("/pratiche/<int:pid>/documenti/firmati-zip")
+def scarica_firmati_zip(pid):
+    import io, zipfile as zf
+    p = SessionLocale.get(Pratica, pid)
+    if not p:
+        abort(404)
+    tutti_docs = SessionLocale.query(Documento).filter_by(pratica_id=pid).order_by(Documento.creato_il.desc()).all()
+    usati_ids = {r.firmato_doc_id for r in p.righe_doc if r.firmato_doc_id}
+    docs_firmati = [d for d in tutti_docs if d.id not in usati_ids and d.caricato_da == "cliente"]
+    buf = io.BytesIO()
+    aggiunti = 0
+    with zf.ZipFile(buf, "w", zf.ZIP_DEFLATED) as z:
+        for doc in docs_firmati:
+            if not doc.google_file_id:
+                continue
+            try:
+                contenuto = _drive_scarica_file(doc.google_file_id)
+                nome = doc.nome_file or ("firmato_" + str(doc.id) + ".pdf")
+                z.writestr(nome, contenuto)
+                aggiunti += 1
+            except Exception as ex:
+                print("[crm] scarica-firmati-zip err: " + str(ex))
+    if not aggiunti:
+        avvisa("Nessun documento firmato disponibile nel basket.", "ko")
+        return redirect("/crm/pratiche/" + str(pid))
+    buf.seek(0)
+    nome_zip = "firmati_" + (p.codice or str(pid)) + ".zip"
     resp = Response(buf.read(), status=200)
     resp.headers["Content-Disposition"] = 'attachment; filename="' + nome_zip + '"'
     resp.headers["Content-Type"] = "application/zip"
