@@ -1816,6 +1816,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 <h2>Documenti della pratica</h2>
 <div class="tabella scorri" style="margin-bottom:8px"><table>
 <thead><tr>
+  <th style="width:20px"><input type="checkbox" id="chk-all" title="Seleziona tutti" onclick="document.querySelectorAll('.chk-mod').forEach(c=>c.checked=this.checked)"></th>
   <th style="width:24px"></th>
   <th>Documento</th>
   <th style="text-align:center">① Modulo vuoto</th>
@@ -1825,6 +1826,9 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 </tr></thead><tbody>
 {% for r in p.righe_doc|sort(attribute='ordine') %}
 <tr>
+  <td style="text-align:center">
+    {% if r.mod_google_id %}<input type="checkbox" class="chk-mod" value="{{ r.id }}">{% endif %}
+  </td>
   <td style="font-size:11px;color:#aaa">{{ loop.index }}</td>
   <td>
     <span id="et-{{ r.id }}" contenteditable="true"
@@ -1907,6 +1911,10 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   <form method="post" action="/crm/pratiche/{{ p.id }}/righe/aggiungi">
     <button class="btn chiaro" type="submit">+ Aggiungi riga</button>
   </form>
+  <button type="button" class="btn chiaro" style="font-size:12px"
+    onclick="scaricaModuli({{ p.id }}, false)">&#8659; Scarica tutti i moduli vuoti</button>
+  <button type="button" class="btn chiaro" style="font-size:12px"
+    onclick="scaricaModuli({{ p.id }}, true)">&#8659; Scarica selezionati</button>
   {% if p.bando and p.bando.allegati %}
   <form method="post" action="/crm/pratiche/{{ p.id }}/righe/importa-bando" style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap">
     <div>
@@ -1992,6 +2000,16 @@ function apriPreview(gid, nome) {
 function chiudiPreview() {
   document.getElementById('doc-preview-overlay').style.display = 'none';
   document.getElementById('doc-preview-frame').src = '';
+}
+function scaricaModuli(pid, soloSelezionati) {
+  var ids = [];
+  if (soloSelezionati) {
+    document.querySelectorAll('.chk-mod:checked').forEach(function(c){ ids.push(c.value); });
+    if (!ids.length) { alert('Seleziona almeno un modulo con la casella.'); return; }
+  }
+  var url = '/crm/pratiche/' + pid + '/righe/scarica-moduli-zip';
+  if (ids.length) url += '?ids=' + ids.join(',');
+  window.location.href = url;
 }
 function salvaEtichettaRiga(id, testo) {
   if (!testo) return;
@@ -3712,6 +3730,45 @@ def genera_brief_cowork(pid):
     resp = Response(testo.encode("utf-8"), status=200)
     resp.headers["Content-Disposition"] = 'attachment; filename="' + nome_file + '"'
     resp.headers["Content-Type"] = "text/plain; charset=utf-8"
+    resp.headers["Cache-Control"] = "no-cache"
+    return resp
+
+
+@crm.get("/pratiche/<int:pid>/righe/scarica-moduli-zip")
+def scarica_moduli_zip(pid):
+    import io, zipfile as zf
+    p = SessionLocale.get(Pratica, pid)
+    if not p:
+        abort(404)
+    ids_param = request.args.get("ids", "")
+    if ids_param:
+        ids_set = set(int(x) for x in ids_param.split(",") if x.strip().isdigit())
+    else:
+        ids_set = None
+    righe = sorted(p.righe_doc, key=lambda r: r.ordine)
+    buf = io.BytesIO()
+    aggiunti = 0
+    with zf.ZipFile(buf, "w", zf.ZIP_DEFLATED) as z:
+        for r in righe:
+            if not r.mod_google_id:
+                continue
+            if ids_set and r.id not in ids_set:
+                continue
+            try:
+                contenuto = _drive_scarica_file(r.mod_google_id)
+                nome = r.mod_nome or ("modulo_" + str(r.id) + ".pdf")
+                z.writestr(nome, contenuto)
+                aggiunti += 1
+            except Exception as ex:
+                print("[crm] scarica-moduli-zip err: " + str(ex))
+    if not aggiunti:
+        avvisa("Nessun modulo disponibile da scaricare.", "ko")
+        return redirect("/crm/pratiche/" + str(pid))
+    buf.seek(0)
+    nome_zip = "moduli_" + (p.codice or str(pid)) + ".zip"
+    resp = Response(buf.read(), status=200)
+    resp.headers["Content-Disposition"] = 'attachment; filename="' + nome_zip + '"'
+    resp.headers["Content-Type"] = "application/zip"
     resp.headers["Cache-Control"] = "no-cache"
     return resp
 
