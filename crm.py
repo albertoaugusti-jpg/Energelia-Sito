@@ -1815,24 +1815,39 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   </td>
   <td style="text-align:center">
     {% if r.mod_google_id %}
-      <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:12px">&#128196; {{ r.mod_nome }}</a>
+      <div style="display:inline-flex;gap:4px;align-items:center">
+        <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/scarica" style="font-size:12px">&#128196; {{ r.mod_nome }}</a>
+        <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/modulo/elimina" style="display:inline">
+          <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 6px;color:#dc2626" title="Rimuovi modulo">&#128465;</button>
+        </form>
+      </div>
     {% else %}
       <span style="font-size:11px;color:#94a3b8">— importa dal bando —</span>
     {% endif %}
   </td>
   <td style="text-align:center">
     {% if r.comp_google_id %}
-      <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/scarica" style="font-size:12px">📄 {{ r.comp_nome }}</a>
+      <div style="display:inline-flex;gap:4px;align-items:center">
+        <a href="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/scarica" style="font-size:12px">&#128196; {{ r.comp_nome }}</a>
+        <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato/elimina" style="display:inline">
+          <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 6px;color:#dc2626" title="Rimuovi compilato">&#128465;</button>
+        </form>
+      </div>
     {% else %}
       <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/compilato" enctype="multipart/form-data" style="display:inline-flex;gap:4px;align-items:center">
         <input type="file" name="file" style="font-size:11px;max-width:130px">
-        <button class="btn chiaro" type="submit" style="font-size:11px">↑</button>
+        <button class="btn chiaro" type="submit" style="font-size:11px">&#8593;</button>
       </form>
     {% endif %}
   </td>
   <td style="text-align:center">
     {% if r.firmato_doc %}
-      <a href="/crm/documenti/{{ r.firmato_doc_id }}/scarica" style="font-size:12px">&#9989; {{ r.firmato_doc.nome_file }}</a>
+      <div style="display:inline-flex;gap:4px;align-items:center">
+        <a href="/crm/documenti/{{ r.firmato_doc_id }}/scarica" style="font-size:12px">&#9989; {{ r.firmato_doc.nome_file }}</a>
+        <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato/rimuovi" style="display:inline">
+          <button class="btn chiaro" type="submit" style="font-size:11px;padding:2px 6px;color:#dc2626" title="Rimuovi firmato">&#128465;</button>
+        </form>
+      </div>
     {% else %}
       <form method="post" action="/crm/pratiche/{{ p.id }}/righe/{{ r.id }}/firmato-upload" enctype="multipart/form-data" style="display:inline-flex;gap:4px;align-items:center">
         <input type="file" name="file" style="font-size:11px;max-width:130px">
@@ -3404,6 +3419,38 @@ def carica_firmato_riga(pid, rid):
         avvisa("Documento firmato caricato.")
     except Exception as ex:
         avvisa("Errore caricamento firmato: " + str(ex), "errore")
+    return redirect("/crm/pratiche/" + str(pid))
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/modulo/elimina")
+def elimina_modulo_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    if r:
+        r.mod_nome = None
+        r.mod_google_id = None
+        SessionLocale.commit()
+        avvisa("Modulo rimosso.")
+    return redirect("/crm/pratiche/" + str(pid))
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/compilato/elimina")
+def elimina_compilato_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    if r:
+        r.comp_nome = None
+        r.comp_google_id = None
+        SessionLocale.commit()
+        avvisa("Compilato rimosso.")
+    return redirect("/crm/pratiche/" + str(pid))
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/firmato/rimuovi")
+def rimuovi_firmato_riga(pid, rid):
+    r = SessionLocale.get(RigaDocPratica, rid)
+    if r:
+        r.firmato_doc_id = None
+        SessionLocale.commit()
+        avvisa("Firmato rimosso dalla riga.")
     return redirect("/crm/pratiche/" + str(pid))
 
 
