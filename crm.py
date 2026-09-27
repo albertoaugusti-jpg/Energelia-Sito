@@ -2041,14 +2041,14 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   <form method="post" action="/crm/pratiche/{{ p.id }}/righe/aggiungi">
     <button class="btn chiaro" type="submit">+ Aggiungi riga</button>
   </form>
-  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, false)">&#8659; Moduli vuoti ZIP</button>
-  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, true)">&#8659; Selezionati ZIP</button>
+  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, false)">&#8659; Scarica template</button>
+  <button type="button" class="btn chiaro" style="font-size:12px" onclick="scaricaModuli({{ p.id }}, true)">&#8659; Scarica selezionati</button>
   {% if p.bando and p.bando.allegati %}
   <form method="post" action="/crm/pratiche/{{ p.id }}/righe/importa-bando" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
     <select name="allegato_ids" multiple size="{{ [p.bando.allegati|length, 4]|min }}" style="font-size:11px;min-width:200px;border:1px solid #cbd5e1;border-radius:6px;padding:4px">
       {% for a in p.bando.allegati %}<option value="{{ a.id }}">{{ a.etichetta or a.nome_file }}</option>{% endfor %}
     </select>
-    <button class="btn chiaro" type="submit" style="align-self:flex-end">&#8659; Da bando</button>
+    <button class="btn chiaro" type="submit" style="align-self:flex-end">&#8657; Importa dal bando</button>
   </form>
   {% endif %}
 </div>
