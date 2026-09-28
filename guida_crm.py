@@ -1,5 +1,4 @@
-prova
-riga2"""
+"""
 guida_crm.py - Testi della guida laterale del CRM Energelia.
 
 Una voce per ogni pagina (la chiave e' il nome del modello in crm.py).
