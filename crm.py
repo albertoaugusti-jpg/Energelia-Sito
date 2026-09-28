@@ -51,6 +51,8 @@ import pdfplumber
 import pypdf
 from openpyxl.styles import Font, PatternFill, Alignment
 
+from guida_crm import GUIDA
+
 # --------------------------------------------------------------------------
 # CONFIGURAZIONE
 # --------------------------------------------------------------------------
@@ -1130,6 +1132,25 @@ legend{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--
 .diario .capo{display:flex;gap:10px;align-items:center;font-size:11px;color:var(--tenue);margin-bottom:5px;flex-wrap:wrap}
 .diario .tipo{font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.05em}
 @media(prefers-reduced-motion:no-preference){.kpi,.riquadro{transition:box-shadow .15s}}
+
+/* Guida laterale: sempre disponibile, si apre e si chiude dalla linguetta */
+#guida{position:fixed;top:0;right:0;width:310px;height:100vh;background:#fff;border-left:1px solid var(--bordo);
+  box-shadow:-4px 0 14px rgba(0,0,0,.06);overflow-y:auto;z-index:50;transform:translateX(100%);
+  transition:transform .2s;padding:18px 18px 40px;font-size:13px;line-height:1.5}
+body.guida-aperta #guida{transform:none}
+@media(min-width:1200px){body.guida-aperta main,body.guida-aperta header{margin-right:310px}}
+#guida-tab{position:fixed;top:120px;right:0;z-index:51;background:var(--ambra);color:#fff;border:0;
+  border-radius:6px 0 0 6px;padding:10px 7px;cursor:pointer;font-weight:700;font-size:12px;
+  writing-mode:vertical-rl;letter-spacing:.08em}
+body.guida-aperta #guida-tab{right:310px}
+#guida h3{font-size:15px;margin:0 0 4px;color:var(--navy)}
+#guida .serve{color:var(--tenue);margin:0 0 14px}
+#guida h4{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--tenue);margin:16px 0 6px}
+#guida ol{padding-left:20px;margin:0} #guida ol li{margin-bottom:6px}
+#guida dl{margin:0} #guida dt{font-weight:700;color:var(--testo)} #guida dd{margin:0 0 8px;color:#4a5a6a}
+#guida .consiglio{background:#fdf3e3;border:1px solid #f2ddb9;border-radius:6px;padding:9px 11px;margin-top:16px;color:#6b4513}
+#guida .chiudi{float:right;background:none;border:0;font-size:18px;cursor:pointer;color:var(--tenue)}
+@media print{ #guida,#guida-tab{display:none} }
 </style></head><body>
 {% if utente %}
 <header>
@@ -1152,8 +1173,30 @@ legend{font-size:10px;letter-spacing:.10em;text-transform:uppercase;color:var(--
 {% for tipo, testo in messaggi %}<div class="avviso {{ tipo }}">{{ testo }}</div>{% endfor %}
 {% block contenuto %}{% endblock %}
 </main>
+{% if utente and guida %}
+<button id="guida-tab" type="button" onclick="guidaApriChiudi()" title="Apri o chiudi la guida">? GUIDA</button>
+<aside id="guida" aria-label="Guida alla pagina">
+  <button class="chiudi" type="button" onclick="guidaApriChiudi()" title="Chiudi">&#10005;</button>
+  <h3>{{ guida.titolo }}</h3>
+  <p class="serve">{{ guida.serve }}</p>
+  <h4>Cosa fai qui</h4>
+  <ol>{% for passo in guida.passi %}<li>{{ passo }}</li>{% endfor %}</ol>
+  {% if guida.legenda %}<h4>Legenda</h4>
+  <dl>{% for voce, spiega in guida.legenda %}<dt>{{ voce }}</dt><dd>{{ spiega }}</dd>{% endfor %}</dl>{% endif %}
+  {% if guida.consiglio %}<div class="consiglio">&#128161; {{ guida.consiglio }}</div>{% endif %}
+</aside>
+{% endif %}
 <script>
 function mostraPw(id){var c=document.getElementById(id);c.type=(c.type==='password')?'text':'password';}
+function guidaApriChiudi(){
+  var aperta=document.body.classList.toggle('guida-aperta');
+  try{localStorage.setItem('crm_guida',aperta?'1':'0');}catch(e){}
+}
+(function(){
+  if(!document.getElementById('guida'))return;
+  var pref=null; try{pref=localStorage.getItem('crm_guida');}catch(e){}
+  if(pref==='1'||(pref===null&&window.innerWidth>=1200))document.body.classList.add('guida-aperta');
+})();
 </script>
 </body></html>"""
 
@@ -2022,7 +2065,7 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
 <details style="margin-bottom:16px">
 <summary style="cursor:pointer;font-size:12px;color:#64748b;padding:4px 0">&#128229; Doc ricevuti non assegnati ({{ docs_pratica|length }})</summary>
 <div class="tabella scorri" style="margin-top:8px"><table>
-<thead><tr><th>File</th><th>Caricato</th><th style="min-width:200px">Assegna a riga ③</th></tr></thead><tbody>
+<thead><tr><th>File</th><th>Caricato</th><th style="min-width:200px">Metti in colonna A della riga…</th></tr></thead><tbody>
 {% for doc in docs_pratica %}<tr>
   <td>
     {% if doc.google_file_id %}
@@ -2033,8 +2076,8 @@ T_PRATICA = """{% extends "base" %}{% block contenuto %}
   </td>
   <td style="font-size:12px;color:#64748b;white-space:nowrap">{{ data_it(doc.creato_il.date()) }} · {{ doc.caricato_da }}</td>
   <td>
-    <form method="post" action="/crm/pratiche/{{ p.id }}/righe/0/firmato" style="display:inline-flex;gap:4px;align-items:center">
-      <select style="font-size:11px" onchange="this.form.action='/crm/pratiche/{{ p.id }}/righe/'+this.value+'/firmato'">
+    <form method="post" action="/crm/pratiche/{{ p.id }}/righe/0/modulo-da-doc" style="display:inline-flex;gap:4px;align-items:center">
+      <select style="font-size:11px" onchange="this.form.action='/crm/pratiche/{{ p.id }}/righe/'+this.value+'/modulo-da-doc'">
         <option value="0">Scegli riga…</option>
         {% for r in p.righe_doc|sort(attribute='ordine') %}<option value="{{ r.id }}">{{ r.etichetta or 'Riga ' ~ loop.index }}</option>{% endfor %}
       </select>
@@ -2861,6 +2904,7 @@ def rendi(nome, **ctx):
     ctx["messaggi"] = session.pop("crm_messaggi", [])
     ctx["oggi_iso"] = dt.date.today().isoformat()
     ctx["request"] = request
+    ctx["guida"] = GUIDA.get(nome)
     return env.get_template(nome).render(**ctx)
 
 
@@ -3491,7 +3535,10 @@ def scheda_pratica(pid):
     tutti_docs = SessionLocale.query(Documento).filter_by(pratica_id=pid).order_by(Documento.creato_il.desc()).all()
     # Doc già usati in col 3 di qualche riga
     usati_ids = {r.firmato_doc_id for r in p.righe_doc if r.firmato_doc_id}
-    docs_liberi = [d for d in tutti_docs if d.id not in usati_ids]
+    # Doc gia' messi in colonna A o B di qualche riga (stesso file su Drive)
+    usati_drive = {g for r in p.righe_doc for g in (r.mod_google_id, r.comp_google_id) if g}
+    docs_liberi = [d for d in tutti_docs if d.id not in usati_ids
+                   and not (d.google_file_id and d.google_file_id in usati_drive)]
     # Basket: doc firmati ricevuti via link di firma (non ancora assegnati a col3)
     docs_firmati = [d for d in docs_liberi if d.caricato_da == "cliente_firma"]
     # Doc ricevuti generici (tutto il resto)
@@ -3618,6 +3665,23 @@ def assegna_firmato_riga(pid, rid):
         r.firmato_doc_id = int(doc_id)
         SessionLocale.commit()
         avvisa("Documento firmato assegnato.")
+    return redirect(f"/crm/pratiche/{pid}")
+
+
+@crm.post("/pratiche/<int:pid>/righe/<int:rid>/modulo-da-doc")
+def assegna_modulo_da_doc(pid, rid):
+    """Doc ricevuto (non assegnato) -> colonna A della riga scelta."""
+    r = SessionLocale.get(RigaDocPratica, rid)
+    doc_id = request.form.get("doc_id")
+    doc = SessionLocale.get(Documento, int(doc_id)) if doc_id else None
+    if not r or r.pratica_id != pid or not doc:
+        avvisa("Scegli prima la riga dal menu, poi premi la spunta.", "errore")
+        return redirect(f"/crm/pratiche/{pid}")
+    r.mod_nome = doc.nome_file
+    r.mod_google_id = doc.google_file_id
+    doc.stato = "assegnato"
+    SessionLocale.commit()
+    avvisa(f"{doc.nome_file} messo nella colonna A di \"{r.etichetta or 'Documento'}\".")
     return redirect(f"/crm/pratiche/{pid}")
 
 
