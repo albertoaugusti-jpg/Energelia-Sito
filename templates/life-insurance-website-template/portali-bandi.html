@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'wait_for_update': 500
+  });
+  try {
+    if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'analytics_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted'
+      });
+    }
+  } catch(e) {}
+</script>
+
+<!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-67D2BL58Y9');
+    </script>
+
+    <meta charset="utf-8">
+    <title>Portali ufficiali dei bandi: Invitalia, SIMEST e Regioni | Energelia</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="Tutti i portali ufficiali dei bandi e della finanza agevolata: Incentivi.gov.it, Invitalia, SIMEST e i portali di Lombardia, Liguria, Friuli-Venezia Giulia, Toscana, Piemonte, Veneto, Emilia-Romagna, Trentino e Valle d'Aosta.">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
+    <!-- Icon Fonts -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/animate/animate.min.css') }}"/>
+
+    <!-- Bootstrap + Template -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <style>
+        .portali-hero {
+            background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
+            color: #fff;
+            padding: 5rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .portali-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg,
+                hsl(145, 45%, 35%) 0%, hsl(145, 45%, 35%) 33.33%,
+                #f5f5f0 33.33%, #f5f5f0 66.66%,
+                hsl(0, 70%, 45%) 66.66%, hsl(0, 70%, 45%) 100%);
+        }
+        .portali-hero h1 {
+            font-family: 'Source Serif 4', serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            margin-bottom: 1rem;
+        }
+        .portali-hero .lead {
+            font-size: 1.15rem;
+            opacity: 0.92;
+            max-width: 760px;
+        }
+        .portali-hero .badge-top {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #f4d03f;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+
+        .disclaimer-bar {
+            background: #fff8e1;
+            border-bottom: 1px solid #f0e2a8;
+            color: #6b5a1a;
+            font-size: 0.88rem;
+            padding: 0.7rem 0;
+            text-align: center;
+        }
+
+        .sezione { padding: 3.5rem 0; }
+        .sezione.grigia { background: #f5f7fa; }
+        .sezione h2 {
+            font-family: 'Source Serif 4', serif;
+            color: #0a1530;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .sezione .subtitle {
+            text-align: center;
+            color: #5a6577;
+            margin-bottom: 2.25rem;
+            font-size: 1.05rem;
+        }
+
+        /* Schede portali */
+        .portale-card {
+            background: #fff;
+            border: 1px solid #e5e8ee;
+            border-radius: 14px;
+            padding: 1.4rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            scroll-margin-top: 110px;
+        }
+        .portale-card:hover,
+        .portale-card:target {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 42px rgba(10, 21, 48, 0.12);
+            border-color: #d4af37;
+        }
+        .portale-card:target { box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.45), 0 18px 42px rgba(10, 21, 48, 0.12); }
+        .portale-card .top {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            margin-bottom: 0.9rem;
+        }
+        .logo-slot {
+            width: 88px;
+            height: 56px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: #f5f7fa;
+            border: 1px solid #e5e8ee;
+            overflow: hidden;
+        }
+        .logo-slot > * { grid-area: 1 / 1; }
+        .logo-slot img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            background: #fff;
+            padding: 4px;
+            width: 100%;
+            height: 100%;
+        }
+        .logo-slot .fallback { color: #1a5276; font-size: 1.4rem; }
+        .portale-card .ente {
+            font-size: 0.74rem;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            color: #b8860b;
+            font-weight: 700;
+            margin: 0;
+        }
+        .portale-card h5 {
+            color: #0a1530;
+            font-weight: 700;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        .portale-card p {
+            color: #5a6577;
+            font-size: 0.93rem;
+            line-height: 1.6;
+            margin: 0 0 1rem;
+            flex: 1;
+        }
+        .btn-portale {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.6rem 1.1rem;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #1a5276, #0a1530);
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .btn-portale:hover {
+            color: #0a1530;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            transform: translateY(-2px);
+        }
+        .portale-card.nazionale { border-top: 4px solid #1a5276; }
+
+        /* Mappa schematica a tessere */
+        .mappa-wrap { max-width: 640px; margin: 0 auto 1rem; }
+        .mappa-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+        .tessera {
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #1a5276, #0a1530);
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.2;
+            padding: 4px;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 14px rgba(10, 21, 48, 0.18);
+        }
+        .tessera i { color: #f4d03f; font-size: 1.1rem; margin-bottom: 4px; }
+        .tessera:hover {
+            transform: translateY(-4px) scale(1.03);
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #0a1530;
+            box-shadow: 0 14px 26px rgba(212, 175, 55, 0.4);
+        }
+        .tessera:hover i { color: #0a1530; }
+        .tessera.vuota { visibility: hidden; }
+        .mappa-nota {
+            text-align: center;
+            color: #7a8597;
+            font-size: 0.82rem;
+            margin-bottom: 0;
+        }
+        @media (max-width: 480px) {
+            .tessera { font-size: 0.62rem; border-radius: 8px; }
+            .tessera i { font-size: 0.9rem; }
+            .mappa-grid { gap: 5px; }
+        }
+
+        .cta-banner {
+            background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
+            color: #fff;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        .cta-banner h3 {
+            font-family: 'Source Serif 4', serif;
+            margin-bottom: 0.75rem;
+        }
+        .cta-banner .btn-cta {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            color: #0a1530;
+            font-weight: 700;
+            padding: 0.85rem 2rem;
+            border-radius: 30px;
+            border: none;
+            font-size: 1.05rem;
+            margin-top: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .cta-banner .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(212, 175, 55, 0.4);
+            color: #0a1530;
+        }
+    </style>
+    <!-- Favicon Energelia -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    {% include 'life-insurance-website-template/partials/navbar.html' %}
+
+    <!-- Hero -->
+    <section class="portali-hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <span class="badge-top"><i class="fas fa-landmark me-2"></i>Fonti ufficiali</span>
+                    <h1>I portali ufficiali dei bandi e della finanza agevolata</h1>
+                    <p class="lead">
+                        Un elenco ragionato dei siti dove vengono pubblicati i bandi nazionali e regionali, con il link diretto alla pagina dei bandi di ogni ente. Se non sai da dove partire, scrivici: ti diciamo noi quali sono adatti alla tua azienda.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="disclaimer-bar">
+        <div class="container">
+            <i class="fas fa-info-circle me-1"></i>
+            Link a portali ufficiali di enti terzi. Energelia non è affiliata a questi enti; i marchi appartengono ai rispettivi titolari.
+        </div>
+    </div>
+
+    <!-- Portali nazionali -->
+    <section class="sezione">
+        <div class="container">
+            <h2>Portali nazionali</h2>
+            <p class="subtitle">Per incentivi, finanziamenti e internazionalizzazione a livello nazionale</p>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card nazionale" id="incentivi-gov">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/incentivi-gov.png') }}" alt="Logo Incentivi.gov.it" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">MIMIT</p><h5>Incentivi.gov.it</h5></div>
+                        </div>
+                        <p>Il catalogo ufficiale di tutti gli incentivi pubblici, nazionali e regionali, con ricerca per tipo di impresa, settore e scadenza.</p>
+                        <a class="btn-portale" href="https://www.incentivi.gov.it/it/catalogo" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card nazionale" id="invitalia">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/invitalia.png') }}" alt="Logo Invitalia" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Agenzia nazionale</p><h5>Invitalia</h5></div>
+                        </div>
+                        <p>Incentivi e strumenti per nuove imprese, start-up, imprese femminili e giovanili, Mezzogiorno e grandi investimenti.</p>
+                        <a class="btn-portale" href="https://www.invitalia.it/incentivi-e-strumenti" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card nazionale" id="simest">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/simest.png') }}" alt="Logo SIMEST" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Gruppo CDP</p><h5>SIMEST</h5></div>
+                        </div>
+                        <p>Finanziamenti agevolati e contributi a fondo perduto per internazionalizzazione, fiere, transizione digitale ed ecologica.</p>
+                        <a class="btn-portale" href="https://www.simest.it/per-le-imprese/finanziamenti-agevolati" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mappa -->
+    <section class="sezione grigia">
+        <div class="container">
+            <h2>Scegli la tua Regione</h2>
+            <p class="subtitle">Tocca una tessera per andare al portale dei bandi della Regione</p>
+            <div class="mappa-wrap">
+                <div class="mappa-grid">
+                    <a class="tessera" href="#valle-d-aosta"><i class="fas fa-mountain"></i>Valle d'Aosta</a>
+                    <a class="tessera" href="#lombardia"><i class="fas fa-industry"></i>Lombardia</a>
+                    <a class="tessera" href="#trentino"><i class="fas fa-tree"></i>Trentino</a>
+                    <a class="tessera" href="#veneto"><i class="fas fa-water"></i>Veneto</a>
+                    <a class="tessera" href="#friuli-venezia-giulia"><i class="fas fa-anchor"></i>Friuli-V. Giulia</a>
+
+                    <a class="tessera" href="#piemonte"><i class="fas fa-cog"></i>Piemonte</a>
+                    <span class="tessera vuota"></span>
+                    <a class="tessera" href="#emilia-romagna"><i class="fas fa-tractor"></i>Emilia-Romagna</a>
+                    <span class="tessera vuota"></span>
+                    <span class="tessera vuota"></span>
+
+                    <a class="tessera" href="#liguria"><i class="fas fa-ship"></i>Liguria</a>
+                    <span class="tessera vuota"></span>
+                    <a class="tessera" href="#toscana"><i class="fas fa-leaf"></i>Toscana</a>
+                    <span class="tessera vuota"></span>
+                    <span class="tessera vuota"></span>
+                </div>
+            </div>
+            <p class="mappa-nota">Mappa schematica, non in scala.</p>
+        </div>
+    </section>
+
+    <!-- Portali regionali -->
+    <section class="sezione">
+        <div class="container">
+            <h2>Portali regionali</h2>
+            <p class="subtitle">Le pagine dove ogni Regione pubblica i propri bandi per le imprese</p>
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card" id="lombardia">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/lombardia.png') }}" alt="Logo Regione Lombardia" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Regione Lombardia</p><h5>Bandi e Servizi</h5></div>
+                        </div>
+                        <p>Il portale unico dei bandi regionali, nazionali ed europei in Lombardia. Accesso con SPID, CNS o CIE.</p>
+                        <a class="btn-portale" href="https://www.bandi.regione.lombardia.it" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card" id="liguria">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/liguria.png') }}" alt="Logo Regione Liguria" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Regione Liguria</p><h5>Filse - Bandi</h5></div>
+                        </div>
+                        <p>Filse gestisce per la Regione Liguria i bandi per imprese e start-up, con domande presentate online.</p>
+                        <a class="btn-portale" href="https://www.filse.it/bandi" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card" id="friuli-venezia-giulia">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/fvg.png') }}" alt="Logo Regione Friuli Venezia Giulia" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Regione Friuli-Venezia Giulia</p><h5>Imprese e incentivi</h5></div>
+                        </div>
+                        <p>Incentivi per industria, artigianato, turismo, commercio e cooperative, con il catalogo Rilancimpresa FVG.</p>
+                        <a class="btn-portale" href="https://www.regione.fvg.it/rafvg/cms/RAFVG/economia-imprese/" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card" id="toscana">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/toscana.png') }}" alt="Logo Sviluppo Toscana" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Regione Toscana</p><h5>Sviluppo Toscana</h5></div>
+                        </div>
+                        <p>Bandi e finanziamenti della Regione Toscana, con filtri per destinatario, tema, stato e fase.</p>
+                        <a class="btn-portale" href="https://www.sviluppo.toscana.it/bandi/" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card" id="piemonte">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/piemonte.png') }}" alt="Logo Finpiemonte" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Regione Piemonte</p><h5>Finpiemonte</h5></div>
+                        </div>
+                        <p>Finpiemonte gestisce i bandi e i finanziamenti agevolati della Regione Piemonte per le imprese.</p>
+                        <a class="btn-portale" href="https://www.finpiemonte.it/bandi" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card" id="veneto">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/veneto.png') }}" alt="Logo Regione Veneto" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Regione Veneto</p><h5>Sviluppo economico</h5></div>
+                        </div>
+                        <p>Fondi regionali per innovazione, energia, competitività, start-up e filiere, con il bollettino dei bandi aperti.</p>
+                        <a class="btn-portale" href="https://www.regione.veneto.it/web/sviluppo-economico/bandi" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card" id="emilia-romagna">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/emilia-romagna.png') }}" alt="Logo Regione Emilia-Romagna" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Regione Emilia-Romagna</p><h5>Imprese</h5></div>
+                        </div>
+                        <p>Il portale Imprese della Regione, con l'elenco di tutti i bandi e le opportunità di finanziamento.</p>
+                        <a class="btn-portale" href="https://imprese.regione.emilia-romagna.it/leggi-atti-bandi/tutti-i-bandi/tutti-i-finanziamenti" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card" id="trentino">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/trentino.png') }}" alt="Logo Trentino Sviluppo" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Provincia autonoma di Trento</p><h5>Trentino Sviluppo</h5></div>
+                        </div>
+                        <p>I bandi in corso per imprese e start-up in Trentino, gestiti da Trentino Sviluppo per la Provincia.</p>
+                        <a class="btn-portale" href="https://www.trentinosviluppo.it/it/bandi-e-appalti/bandi-attivi" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="portale-card" id="valle-d-aosta">
+                        <div class="top">
+                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/valle-d-aosta.png') }}" alt="Logo Finaosta" loading="lazy" onerror="this.remove()"></div>
+                            <div><p class="ente">Regione Valle d'Aosta</p><h5>Finaosta</h5></div>
+                        </div>
+                        <p>Finaosta gestisce finanziamenti e agevolazioni per le imprese valdostane.</p>
+                        <a class="btn-portale" href="https://www.finaosta.com/it/" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+        <div class="container">
+            <h3>Non sai quale bando fa per la tua azienda?</h3>
+            <p class="mb-0" style="opacity: 0.85;">Te lo cerchiamo noi: consulenza gratuita, senza impegno.</p>
+            <a href="tel:+390107776530" class="btn-cta">
+                <i class="fas fa-phone-alt me-2"></i>Chiamaci al 010 7776530
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'life-insurance-website-template/partials/footer.html' %}
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='lib/wow/wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>
