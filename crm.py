@@ -227,10 +227,10 @@ class Pratica(Base):
     cliente_id = Column(Integer, ForeignKey("crm_clienti.id"), nullable=False)
     bando_id = Column(Integer, ForeignKey("crm_bandi.id"))   # da quale bando del repository nasce, se c'è
     nome_bando = Column(String(255), nullable=False)
-    ente = Column(String(160))
-    tipologia = Column(String(60))
+    ente = Column(Text)
+    tipologia = Column(Text)
     perc_contributo = Column(Numeric(6, 2))          # in punti percentuali: 75.00
-    importo_max = Column(String(120))                # testo libero: "30k linea A / 40k linea B"
+    importo_max = Column(Text)
     data_apertura = Column(Date)
     data_scadenza = Column(Date)
     fase = Column(String(60), default="Analisi fattibilità")
