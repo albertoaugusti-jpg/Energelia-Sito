@@ -215,52 +215,6 @@
         }
         .portale-card.nazionale { border-top: 4px solid #1a5276; }
 
-        /* Mappa schematica a tessere */
-        .mappa-wrap { max-width: 640px; margin: 0 auto 1rem; }
-        .mappa-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-        }
-        .tessera {
-            aspect-ratio: 1 / 1;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #1a5276, #0a1530);
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 0.78rem;
-            font-weight: 600;
-            line-height: 1.2;
-            padding: 4px;
-            transition: all 0.25s ease;
-            box-shadow: 0 6px 14px rgba(10, 21, 48, 0.18);
-        }
-        .tessera i { color: #f4d03f; font-size: 1.1rem; margin-bottom: 4px; }
-        .tessera:hover {
-            transform: translateY(-4px) scale(1.03);
-            background: linear-gradient(135deg, #d4af37, #f4d03f);
-            color: #0a1530;
-            box-shadow: 0 14px 26px rgba(212, 175, 55, 0.4);
-        }
-        .tessera:hover i { color: #0a1530; }
-        .tessera.vuota { visibility: hidden; }
-        .mappa-nota {
-            text-align: center;
-            color: #7a8597;
-            font-size: 0.82rem;
-            margin-bottom: 0;
-        }
-        @media (max-width: 480px) {
-            .tessera { font-size: 0.62rem; border-radius: 8px; }
-            .tessera i { font-size: 0.9rem; }
-            .mappa-grid { gap: 5px; }
-        }
-
         .cta-banner {
             background: linear-gradient(135deg, #0a1530 0%, #1a5276 100%);
             color: #fff;
@@ -366,143 +320,12 @@
         </div>
     </section>
 
-    <!-- Mappa -->
+    <!-- Portali regionali -->
     <section class="sezione grigia">
         <div class="container">
             <h2>Scegli la tua Regione</h2>
-            <p class="subtitle">Tocca una tessera per andare al portale dei bandi della Regione</p>
-            <div class="mappa-wrap">
-                <div class="mappa-grid">
-                    <a class="tessera" href="#valle-d-aosta"><i class="fas fa-mountain"></i>Valle d'Aosta</a>
-                    <a class="tessera" href="#lombardia"><i class="fas fa-industry"></i>Lombardia</a>
-                    <a class="tessera" href="#trentino"><i class="fas fa-tree"></i>Trentino</a>
-                    <a class="tessera" href="#veneto"><i class="fas fa-water"></i>Veneto</a>
-                    <a class="tessera" href="#friuli-venezia-giulia"><i class="fas fa-anchor"></i>Friuli-V. Giulia</a>
-
-                    <a class="tessera" href="#piemonte"><i class="fas fa-cog"></i>Piemonte</a>
-                    <span class="tessera vuota"></span>
-                    <a class="tessera" href="#emilia-romagna"><i class="fas fa-tractor"></i>Emilia-Romagna</a>
-                    <span class="tessera vuota"></span>
-                    <span class="tessera vuota"></span>
-
-                    <a class="tessera" href="#liguria"><i class="fas fa-ship"></i>Liguria</a>
-                    <span class="tessera vuota"></span>
-                    <a class="tessera" href="#toscana"><i class="fas fa-leaf"></i>Toscana</a>
-                    <span class="tessera vuota"></span>
-                    <span class="tessera vuota"></span>
-                </div>
-            </div>
-            <p class="mappa-nota">Mappa schematica, non in scala.</p>
-        </div>
-    </section>
-
-    <!-- Portali regionali -->
-    <section class="sezione">
-        <div class="container">
-            <h2>Portali regionali</h2>
-            <p class="subtitle">Le pagine dove ogni Regione pubblica i propri bandi per le imprese</p>
-            <div class="row g-4">
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="portale-card" id="lombardia">
-                        <div class="top">
-                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/lombardia.png') }}" alt="Logo Regione Lombardia" loading="lazy" onerror="this.remove()"></div>
-                            <div><p class="ente">Regione Lombardia</p><h5>Bandi e Servizi</h5></div>
-                        </div>
-                        <p>Il portale unico dei bandi regionali, nazionali ed europei in Lombardia. Accesso con SPID, CNS o CIE.</p>
-                        <a class="btn-portale" href="https://www.bandi.regione.lombardia.it" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="portale-card" id="liguria">
-                        <div class="top">
-                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/liguria.png') }}" alt="Logo Regione Liguria" loading="lazy" onerror="this.remove()"></div>
-                            <div><p class="ente">Regione Liguria</p><h5>Filse - Bandi</h5></div>
-                        </div>
-                        <p>Filse gestisce per la Regione Liguria i bandi per imprese e start-up, con domande presentate online.</p>
-                        <a class="btn-portale" href="https://www.filse.it/bandi" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="portale-card" id="friuli-venezia-giulia">
-                        <div class="top">
-                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/fvg.png') }}" alt="Logo Regione Friuli Venezia Giulia" loading="lazy" onerror="this.remove()"></div>
-                            <div><p class="ente">Regione Friuli-Venezia Giulia</p><h5>Imprese e incentivi</h5></div>
-                        </div>
-                        <p>Incentivi per industria, artigianato, turismo, commercio e cooperative, con il catalogo Rilancimpresa FVG.</p>
-                        <a class="btn-portale" href="https://www.regione.fvg.it/rafvg/cms/RAFVG/economia-imprese/" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="portale-card" id="toscana">
-                        <div class="top">
-                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/toscana.png') }}" alt="Logo Sviluppo Toscana" loading="lazy" onerror="this.remove()"></div>
-                            <div><p class="ente">Regione Toscana</p><h5>Sviluppo Toscana</h5></div>
-                        </div>
-                        <p>Bandi e finanziamenti della Regione Toscana, con filtri per destinatario, tema, stato e fase.</p>
-                        <a class="btn-portale" href="https://www.sviluppo.toscana.it/bandi/" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="portale-card" id="piemonte">
-                        <div class="top">
-                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/piemonte.png') }}" alt="Logo Finpiemonte" loading="lazy" onerror="this.remove()"></div>
-                            <div><p class="ente">Regione Piemonte</p><h5>Finpiemonte</h5></div>
-                        </div>
-                        <p>Finpiemonte gestisce i bandi e i finanziamenti agevolati della Regione Piemonte per le imprese.</p>
-                        <a class="btn-portale" href="https://www.finpiemonte.it/bandi" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="portale-card" id="veneto">
-                        <div class="top">
-                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/veneto.png') }}" alt="Logo Regione Veneto" loading="lazy" onerror="this.remove()"></div>
-                            <div><p class="ente">Regione Veneto</p><h5>Sviluppo economico</h5></div>
-                        </div>
-                        <p>Fondi regionali per innovazione, energia, competitività, start-up e filiere, con il bollettino dei bandi aperti.</p>
-                        <a class="btn-portale" href="https://www.regione.veneto.it/web/sviluppo-economico/bandi" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="portale-card" id="emilia-romagna">
-                        <div class="top">
-                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/emilia-romagna.png') }}" alt="Logo Regione Emilia-Romagna" loading="lazy" onerror="this.remove()"></div>
-                            <div><p class="ente">Regione Emilia-Romagna</p><h5>Imprese</h5></div>
-                        </div>
-                        <p>Il portale Imprese della Regione, con l'elenco di tutti i bandi e le opportunità di finanziamento.</p>
-                        <a class="btn-portale" href="https://imprese.regione.emilia-romagna.it/leggi-atti-bandi/tutti-i-bandi/tutti-i-finanziamenti" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="portale-card" id="trentino">
-                        <div class="top">
-                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/trentino.png') }}" alt="Logo Trentino Sviluppo" loading="lazy" onerror="this.remove()"></div>
-                            <div><p class="ente">Provincia autonoma di Trento</p><h5>Trentino Sviluppo</h5></div>
-                        </div>
-                        <p>I bandi in corso per imprese e start-up in Trentino, gestiti da Trentino Sviluppo per la Provincia.</p>
-                        <a class="btn-portale" href="https://www.trentinosviluppo.it/it/bandi-e-appalti/bandi-attivi" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="portale-card" id="valle-d-aosta">
-                        <div class="top">
-                            <div class="logo-slot"><span class="fallback"><i class="fas fa-landmark"></i></span><img src="{{ url_for('static', filename='img/portali/valle-d-aosta.png') }}" alt="Logo Finaosta" loading="lazy" onerror="this.remove()"></div>
-                            <div><p class="ente">Regione Valle d'Aosta</p><h5>Finaosta</h5></div>
-                        </div>
-                        <p>Finaosta gestisce finanziamenti e agevolazioni per le imprese valdostane.</p>
-                        <a class="btn-portale" href="https://www.finaosta.com/it/" target="_blank" rel="noopener">Vai ai bandi <i class="fas fa-external-link-alt"></i></a>
-                    </div>
-                </div>
-
-            </div>
+            <p class="subtitle">Tocca una card per andare alla pagina ufficiale dei bandi della Regione</p>
+            {% include 'life-insurance-website-template/partials/portali-regioni.html' %}
         </div>
     </section>
 
