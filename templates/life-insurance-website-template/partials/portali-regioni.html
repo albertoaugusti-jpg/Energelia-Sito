@@ -1,0 +1,80 @@
+<!-- Griglia card Regioni: portali ufficiali dei bandi (usata in /portali-bandi e in homepage) -->
+<style>
+  .regioni-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    max-width: 1020px;
+    margin: 0 auto;
+  }
+  .regione-link {
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color: #0a1530;
+    scroll-margin-top: 110px;
+  }
+  .regione-link img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 22px;
+    box-shadow: 0 10px 26px rgba(10, 21, 48, 0.22);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .regione-link:hover img {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(212, 175, 55, 0.38);
+  }
+  .regione-link .didascalia {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #5a6577;
+  }
+  .regione-link:hover .didascalia { color: #b8860b; }
+  @media (max-width: 767px) {
+    .regioni-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .regione-link .didascalia { font-size: 0.78rem; }
+  }
+</style>
+
+<div class="regioni-grid">
+  <a class="regione-link" id="lombardia" href="https://www.bandi.regione.lombardia.it" target="_blank" rel="noopener" aria-label="Bandi Regione Lombardia">
+    <img src="{{ url_for('static', filename='img/regione-lombardia.webp') }}" alt="Bandi Regione Lombardia" loading="lazy" width="640" height="640">
+    <span class="didascalia">Bandi e Servizi</span>
+  </a>
+  <a class="regione-link" id="liguria" href="https://www.filse.it/bandi" target="_blank" rel="noopener" aria-label="Bandi Regione Liguria">
+    <img src="{{ url_for('static', filename='img/regione-liguria.webp') }}" alt="Bandi Regione Liguria" loading="lazy" width="640" height="640">
+    <span class="didascalia">Filse</span>
+  </a>
+  <a class="regione-link" id="friuli-venezia-giulia" href="https://www.regione.fvg.it/rafvg/cms/RAFVG/economia-imprese/" target="_blank" rel="noopener" aria-label="Bandi Regione Friuli-Venezia Giulia">
+    <img src="{{ url_for('static', filename='img/regione-friuli-venezia-giulia.webp') }}" alt="Bandi Regione Friuli-Venezia Giulia" loading="lazy" width="640" height="640">
+    <span class="didascalia">Imprese e incentivi</span>
+  </a>
+  <a class="regione-link" id="toscana" href="https://www.sviluppo.toscana.it/bandi/" target="_blank" rel="noopener" aria-label="Bandi Regione Toscana">
+    <img src="{{ url_for('static', filename='img/regione-toscana.webp') }}" alt="Bandi Regione Toscana" loading="lazy" width="640" height="640">
+    <span class="didascalia">Sviluppo Toscana</span>
+  </a>
+  <a class="regione-link" id="piemonte" href="https://www.finpiemonte.it/bandi" target="_blank" rel="noopener" aria-label="Bandi Regione Piemonte">
+    <img src="{{ url_for('static', filename='img/regione-piemonte.webp') }}" alt="Bandi Regione Piemonte" loading="lazy" width="640" height="640">
+    <span class="didascalia">Finpiemonte</span>
+  </a>
+  <a class="regione-link" id="veneto" href="https://www.regione.veneto.it/web/sviluppo-economico/bandi" target="_blank" rel="noopener" aria-label="Bandi Regione Veneto">
+    <img src="{{ url_for('static', filename='img/regione-veneto.webp') }}" alt="Bandi Regione Veneto" loading="lazy" width="640" height="640">
+    <span class="didascalia">Sviluppo economico</span>
+  </a>
+  <a class="regione-link" id="emilia-romagna" href="https://imprese.regione.emilia-romagna.it/leggi-atti-bandi/tutti-i-bandi/tutti-i-finanziamenti" target="_blank" rel="noopener" aria-label="Bandi Regione Emilia-Romagna">
+    <img src="{{ url_for('static', filename='img/regione-emilia-romagna.webp') }}" alt="Bandi Regione Emilia-Romagna" loading="lazy" width="640" height="640">
+    <span class="didascalia">Portale Imprese</span>
+  </a>
+  <a class="regione-link" id="trentino" href="https://www.trentinosviluppo.it/it/bandi-e-appalti/bandi-attivi" target="_blank" rel="noopener" aria-label="Bandi Trentino">
+    <img src="{{ url_for('static', filename='img/regione-trentino.webp') }}" alt="Bandi Trentino" loading="lazy" width="640" height="640">
+    <span class="didascalia">Trentino Sviluppo</span>
+  </a>
+  <a class="regione-link" id="valle-d-aosta" href="https://www.finaosta.com/it/" target="_blank" rel="noopener" aria-label="Bandi Regione Valle d'Aosta">
+    <img src="{{ url_for('static', filename='img/regione-valle-d-aosta.webp') }}" alt="Bandi Regione Valle d'Aosta" loading="lazy" width="640" height="640">
+    <span class="didascalia">Finaosta</span>
+  </a>
+</div>
