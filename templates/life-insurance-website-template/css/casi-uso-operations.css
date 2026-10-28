@@ -1,0 +1,243 @@
+/* Energelia showroom / cases 04, 05, 06. Scoped, no changes to demos 01–03. */
+.uc-page .uc-process{color:#142f43}
+.uc-page .uc-process-context{display:flex;align-items:center;gap:9px;padding:8px 7px 15px;color:#c5e2f0;font:600 11px/1.3 var(--uc-sans);letter-spacing:.08em}
+.uc-page .uc-process-context-dot{width:8px;height:8px;flex:none;border-radius:50%;background:#ee4c6c;box-shadow:0 0 12px #eb537b70}
+.uc-page .uc-process-context-note{margin-left:auto;letter-spacing:0;font-weight:400;color:#a0c2d4;font-size:11px;text-align:right}
+.uc-page .uc-process .uc-demo-panel{border-color:#82a9c0;background:#edf4f8}
+.uc-page .uc-process .uc-panel-header{min-height:57px}
+.uc-page .uc-process .uc-panel-header .uc-panel-online{white-space:normal}
+.uc-page .uc-process-body{padding:19px;display:flex;flex-direction:column;gap:15px;min-width:0}
+.uc-page .uc-process-intro{padding:4px 0 11px;border-bottom:1px solid #d3e1e9}
+.uc-page .uc-process-overline,.uc-page .uc-process-topline>span{color:#52758c;font:700 10px/1.4 var(--uc-sans);letter-spacing:.09em}
+.uc-page .uc-process-intro h2{font:400 31px/1.05 var(--uc-serif);letter-spacing:-.055em;margin:8px 0 8px;color:#112c40}
+.uc-page .uc-process-intro p{margin:0;font-size:12px;line-height:1.6;color:#5d7b8c}
+.uc-page .uc-process-body label{display:flex;flex-direction:column;gap:7px;min-width:0;font-weight:600;font-size:12px;line-height:1.3;color:#35586d}
+.uc-page .uc-process-body :is(input,textarea,select){display:block;width:100%;max-width:100%;min-width:0;min-height:46px;padding:11px 12px;border:1px solid #b9cfdd;border-radius:9px;background:#fff;color:#102a3d;font:400 14px/1.4 var(--uc-sans);outline:none;box-shadow:0 1px 3px #00172c07}
+.uc-page .uc-process-body textarea{resize:none;min-height:88px;max-height:88px;overflow-y:auto;overscroll-behavior:contain}
+.uc-page .uc-process-body :is(input,textarea,select):focus-visible{outline:2px solid #5ba8d9;outline-offset:1px;border-color:#6baccf}
+.uc-page .uc-process-body :is(input,textarea,select):disabled{background:#edf3f7;color:#597385;opacity:1}
+.uc-page .uc-process-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.uc-page .uc-process-helper{font-size:11px;color:#7791a0;margin:0}
+.uc-page .uc-process-primary{display:flex;align-items:center;justify-content:center;gap:10px;min-height:47px;width:100%;border:1px solid #0c3954;border-radius:9px;background:#0b304a;color:#fff;font:600 13px/1.35 var(--uc-sans);padding:12px 14px;box-shadow:0 9px 17px #07243a21;cursor:pointer;text-align:center;text-decoration:none}
+.uc-page .uc-process-primary:hover:not(:disabled){background:#114562}
+.uc-page .uc-process-primary:disabled{opacity:.42;cursor:not-allowed;box-shadow:none}
+.uc-page .uc-process-staff{background:linear-gradient(180deg,#eaf3f9,#eef5fa)}
+.uc-page .uc-process-topline{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid #cfdfeb;padding:2px 0 13px}
+.uc-page .uc-process-topline>strong{font:400 23px/1.1 var(--uc-serif);color:#12354e}
+.uc-page .uc-process-inbox-list{display:grid;gap:7px}
+.uc-page .uc-process-inbox-item{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid #d9e6ef;background:#fff;border-radius:9px;min-width:0}
+.uc-page .uc-process-inbox-item.is-new{border-color:#7caed3;background:#f9fdff;box-shadow:0 7px 19px #12334b12}
+.uc-page .uc-process-avatar{display:grid;place-items:center;width:32px;height:32px;flex:none;border-radius:50%;background:#dfedf6;color:#216083;font-size:10px;font-weight:700}
+.uc-page .uc-process-inbox-item>div{min-width:0;flex:1;display:grid;gap:3px}
+.uc-page .uc-process-inbox-item strong{font-size:12px;color:#173c54}
+.uc-page .uc-process-inbox-item small{font-size:10px;color:#657f92;overflow-wrap:anywhere}
+.uc-page .uc-process-tag{display:inline-flex;align-items:center;justify-content:center;padding:5px 7px;border-radius:100px;background:#e2f0f6;color:#28617b;font-size:10px;font-weight:600;white-space:nowrap}
+.uc-page .uc-process-tag.is-alert{background:#fff0e3;color:#91591e}
+.uc-page .uc-process-empty{display:grid;justify-items:center;text-align:center;gap:8px;padding:22px 14px;border:1px dashed #a2c2d2;border-radius:12px;background:#f8fbfd}
+.uc-page .uc-process-empty icon{display:grid;place-items:center;font-size:22px;width:45px;height:45px;border-radius:50%;background:#e6f2f9;color:#3980a6}
+.uc-page .uc-process-empty strong{font-size:13px;color:#173c53}
+.uc-page .uc-process-empty p{font-size:11px;line-height:1.55;color:#638094;margin:0;max-width:310px}
+.uc-page .uc-process-case{display:grid;gap:14px;min-width:0;border:1px solid #d0e2ec;border-radius:11px;background:#fff;padding:16px;box-shadow:0 10px 22px #143b5310}
+.uc-page .uc-process-case-head{display:flex;align-items:center;justify-content:space-between;gap:9px;padding-bottom:13px;border-bottom:1px solid #e4ecf2}
+.uc-page .uc-process-case-head>div{display:grid;gap:4px}
+.uc-page .uc-process-case-head small{font-size:9px;letter-spacing:.07em;color:#6f8998}
+.uc-page .uc-process-case-head strong{font-size:19px;color:#102f45}
+.uc-page .uc-process-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 8px;margin:0}
+.uc-page .uc-process-facts div{min-width:0}
+.uc-page .uc-process-facts dt{font-size:10px;color:#6b8696}
+.uc-page .uc-process-facts dd{font-size:12px;font-weight:600;color:#254b61;margin:3px 0 0;overflow-wrap:anywhere}
+.uc-page .uc-process-description{margin:0;font-size:12px;line-height:1.65;color:#496d80;border-left:3px solid #99c8e0;padding-left:10px;overflow-wrap:anywhere}
+.uc-page .uc-process-case [data-pc-inbox-assignment],.uc-page .uc-process-case [data-pc-inbox-assigned],.uc-page .uc-process-case [data-pc-quote-editor]{display:grid;gap:12px}
+.uc-page .uc-process-success-small{display:block;padding:12px;border:1px solid #bfe5d7;border-radius:8px;background:#eaf8f0;color:#206b4e;font-size:12px;line-height:1.5}
+.uc-page .uc-process-outcome{padding:18px 14px;border:1px solid #a6dec7;border-radius:12px;background:linear-gradient(145deg,#f0fbf4,#e2f5ee);display:grid;justify-items:start;gap:10px}
+.uc-page .uc-process-outcome-icon{display:grid;place-items:center;width:39px;height:39px;border-radius:50%;background:#197854;color:white;font-size:22px;font-weight:700}
+.uc-page .uc-process-outcome>strong{font-size:16px;color:#134935}
+.uc-page .uc-process-outcome>p{margin:0;color:#386754;font-size:12px;line-height:1.55}
+.uc-page .uc-process-outcome ol{margin:2px 0 0;padding-left:20px;color:#276b50;font-size:12px;line-height:1.9}
+.uc-page .uc-process-outcome>small{font-size:10px;color:#557869}
+.uc-page .uc-process-reset{min-height:46px;padding:11px 15px;border:1px solid #739ab0;background:#103249;color:#eaf6fc;border-radius:8px;font:600 12px/1.35 var(--uc-sans);white-space:nowrap;cursor:pointer}
+.uc-page .uc-process-reset:hover{background:#174662}
+.uc-page .uc-process .uc-demo-toolbar{align-items:center}
+.uc-page .uc-process .uc-demo-toolbar [role=status]{flex:1;max-width:none}
+/* Quote and downloadable A4 document confirmation */
+.uc-page .uc-process-file-label span{font-weight:400;font-size:10px;line-height:1.45;color:#748f9d}
+.uc-page .uc-process-file-preview{display:flex;align-items:center;gap:12px;font-size:10px;color:#496e83}
+.uc-page .uc-process-file-preview img{width:68px;height:52px;object-fit:cover;border-radius:6px;border:1px solid #cadeeb}
+.uc-page .uc-process-file-preview small{overflow-wrap:anywhere}
+.uc-page .uc-process-error{margin:0;color:#b51c44;font-size:12px;line-height:1.5}
+.uc-page .uc-process-subheading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:13px;font-weight:700;color:#1c465d}
+.uc-page .uc-process-subheading small{font-weight:400;color:#7993a1;font-size:10px;text-align:right}
+.uc-page .uc-process-total{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #dce8ee;padding-top:14px}
+.uc-page .uc-process-total>span{font-size:11px;color:#5a7b8e}
+.uc-page .uc-process-total small{display:block;font-size:10px;color:#8399a7}
+.uc-page .uc-process-total strong{font-size:22px;color:#133f58;font-variant-numeric:tabular-nums;white-space:nowrap}
+.uc-page .uc-process-paper{display:grid;gap:9px;border:1px solid #d1e2dc;background:#fff;border-radius:6px;padding:20px;width:100%;box-shadow:0 10px 25px #0a3f3020}
+.uc-page .uc-process-paper>strong{font:400 21px/1.1 var(--uc-serif);color:#143045}
+.uc-page .uc-process-paper>small{font-size:10px;color:#758d99;padding-bottom:9px;border-bottom:1px solid #e4ecee}
+.uc-page .uc-process-paper>span{font-size:12px;color:#375467}
+.uc-page .uc-process-paper>b{font-size:17px;color:#0b3e2e;text-align:right;border-top:1px solid #e4ecee;padding-top:11px}
+.uc-page .uc-process-download{background:#126748!important;border-color:#126748!important}
+.uc-page .uc-process-download:hover{background:#147d57!important}
+.uc-page .uc-process-secondary{display:flex;justify-content:center;align-items:center;width:100%;min-height:43px;border:1px solid #a5c8bb;border-radius:9px;background:transparent;color:#1d644f;font:600 12px/1.3 var(--uc-sans);cursor:pointer}
+.uc-page .uc-process-secondary:hover{background:#dbf2e8}
+/* Calendar: honest local availability and booked transitions */
+.uc-page .uc-process-days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.uc-page .uc-process-day{display:grid;place-items:center;gap:6px;min-width:0;min-height:70px;padding:11px 2px;background:#fff;border:1px solid #bfd4df;border-radius:10px;cursor:pointer;color:#294f65}
+.uc-page .uc-process-day small{font-size:10px;line-height:1.1;color:#708e9f}
+.uc-page .uc-process-day strong{font-size:20px;line-height:1.1}
+.uc-page .uc-process-day[aria-pressed="true"]{background:#0b304a;color:#fff;border-color:#0b304a;box-shadow:0 7px 13px #0c324b27}
+.uc-page .uc-process-day[aria-pressed="true"] small{color:#d1eafa}
+.uc-page .uc-process-times{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.uc-page .uc-process-time{min-height:46px;background:#fff;border:1px solid #bbd0dd;border-radius:9px;color:#224c66;font-size:13px;font-weight:600;cursor:pointer}
+.uc-page .uc-process-time[aria-pressed="true"]{background:#d9f1fd;border-color:#3589bd;color:#10436a}
+.uc-page .uc-process-time:disabled{background:#e8eef1;color:#9aaab5;cursor:not-allowed}
+.uc-page [data-pc-book-form]{display:grid;gap:13px}
+.uc-page .uc-process-review{display:grid;gap:6px;border:1px solid #97c4e2;border-radius:10px;background:#e7f3fc;padding:13px}
+.uc-page .uc-process-review small{font-size:9px;font-weight:700;color:#3d789d;letter-spacing:.07em}
+.uc-page .uc-process-review strong{font-size:13px;color:#163f5e}
+.uc-page .uc-process-review p{font-size:11px;line-height:1.5;color:#53768c;margin:0}
+.uc-page .uc-process-agenda-date{padding:10px 12px;border-radius:8px;background:#0b304a;color:#e9f4f9;font-weight:600;font-size:12px;text-transform:capitalize}
+.uc-page .uc-process-agenda{display:grid;gap:8px}
+.uc-page .uc-process-agenda-slot{display:grid;grid-template-columns:48px minmax(0,1fr) auto;align-items:center;gap:10px;border:1px solid #d3e4ed;background:white;border-radius:9px;padding:12px 10px}
+.uc-page .uc-process-agenda-slot>span:first-child{font-size:12px;font-weight:700;color:#225575;font-variant-numeric:tabular-nums}
+.uc-page .uc-process-agenda-slot>div{display:grid;gap:3px;min-width:0}
+.uc-page .uc-process-agenda-slot strong{font-size:11px;color:#345365;overflow-wrap:anywhere}
+.uc-page .uc-process-agenda-slot small{font-size:9px;color:#849aa8}
+.uc-page .uc-process-agenda-slot.is-ours{background:#ecfbf3;border-color:#93d0b6}
+.uc-page .uc-process-agenda-hint{padding-block:14px}
+@media(max-width:810px){
+  .uc-page .uc-process-switcher{margin:0 0 11px}
+  .uc-page .uc-process .uc-demo-panels{grid-template-columns:minmax(0,1fr)}
+  .uc-page .uc-process .uc-demo-panel[hidden]{display:none!important}
+  .uc-page .uc-process-body{padding:15px;gap:15px}
+  .uc-page .uc-process .uc-demo-toolbar{display:grid;grid-template-columns:1fr;gap:13px}
+  .uc-page .uc-process .uc-demo-toolbar [role=status]{grid-column:1;font-size:12px}
+  .uc-page .uc-process-reset{grid-column:1;width:100%;min-height:46px}
+  .uc-page .uc-process .uc-panel-header{flex-direction:row;align-items:center}
+  .uc-page .uc-process .uc-panel-header .uc-panel-online{font-size:10px}
+  .uc-page .uc-process-context-note{font-size:10px}
+}
+@media(max-width:420px){
+  .uc-page .uc-process-context{gap:7px;font-size:10px;padding-inline:4px}
+  .uc-page .uc-process-intro h2{font-size:28px}
+  .uc-page .uc-process-field-grid{grid-template-columns:1fr;gap:13px}
+  .uc-page .uc-process-body :is(input,textarea,select){font-size:16px}
+  .uc-page .uc-process-facts{gap:10px}
+  .uc-page .uc-process-case{padding:12px}
+  .uc-page .uc-process-inbox-item{gap:6px;padding:9px 7px}
+  .uc-page .uc-process-inbox-item .uc-process-tag{font-size:9px;padding:4px 6px}
+  .uc-page .uc-process-day{min-height:60px;padding:8px 1px}
+  .uc-page .uc-process-day strong{font-size:18px}
+  .uc-page .uc-process-agenda-slot{grid-template-columns:43px minmax(0,1fr) auto;gap:6px;padding:10px 7px}
+}
+@media(prefers-reduced-motion:reduce){.uc-page .uc-process *{scroll-behavior:auto;transition:none!important}}
+
+
+/* V15: approved case01 showroom applied to operational demos, with no changes to their logic. */
+.uc-standardized .uc-process-context{padding:6px 7px 13px;letter-spacing:.04em}
+.uc-standardized .uc-process-context-note{font-size:11px}
+.uc-standardized .uc-process .uc-editor-panel-header{min-height:78px}
+.uc-standardized .uc-process .uc-demo-panel{border-color:#a3c5da}
+.uc-standardized .uc-process-body{background:#f6fafd}
+.uc-standardized .uc-process-staff{background:#edf4f9}
+.uc-standardized .uc-process-body label{font-size:14px;line-height:1.45;color:#173b51}
+.uc-standardized .uc-process-body :is(input,textarea,select){font-size:16px;border:2px solid #8fb3c7}
+.uc-standardized .uc-process-primary{background:#de1640;border-color:#de1640;min-height:49px;font-size:14px;
+  box-shadow:0 9px 20px #d81d4533}
+.uc-standardized .uc-process-primary:hover:not(:disabled){background:#be1035}
+.uc-standardized .uc-process-primary:disabled{background:#93a4af;border-color:#93a4af;box-shadow:none;opacity:1;color:white}
+.uc-standardized .uc-process-reset{min-height:48px;border-color:#7e9bb0;background:#112f45;color:#f0f8fd;font-size:13px}
+.uc-standardized .uc-process-outcome{border:1px solid #a4d5bf;background:#edf8f1;box-shadow:none;padding:14px}
+.uc-standardized .uc-process .uc-demo-toolbar [data-pc-message]{position:absolute!important;clip:rect(0,0,0,0);
+  clip-path:inset(50%);width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;white-space:nowrap}
+.uc-standardized .uc-process-agenda-slot.is-ours{border:2px solid #5caf8b;background:#e7f8ee}
+@media(max-width:810px){
+  .uc-standardized .uc-process .uc-panel-header{display:grid;flex-direction:initial;align-items:center}
+  .uc-standardized .uc-process .uc-editor-panel-header{min-height:115px}
+  .uc-standardized .uc-process .uc-demo-toolbar{display:flex;justify-content:flex-end;flex-wrap:wrap}
+  .uc-standardized .uc-process-reset{width:100%;min-height:49px}
+  .uc-standardized .uc-process-intro p{font-size:13px}
+}
+
+
+/* Cases 07–08 */
+.uc-page .uc-order-products{display:grid;gap:10px}
+.uc-page .uc-order-product,.uc-page .uc-process-event-card,.uc-page .uc-process-event-summary,.uc-page .uc-process-attendee{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 13px;border:1px solid #d4e2ea;border-radius:11px;background:#fff;min-width:0}
+.uc-page .uc-order-product>div,.uc-page .uc-process-event-card>div,.uc-page .uc-process-attendee>div{display:grid;gap:4px;min-width:0;flex:1}
+.uc-page .uc-order-product strong,.uc-page .uc-process-event-card strong,.uc-page .uc-process-event-summary strong,.uc-page .uc-process-attendee strong{font-size:13px;color:#163a51}
+.uc-page .uc-order-product small,.uc-page .uc-process-event-card small,.uc-page .uc-process-event-summary small,.uc-page .uc-process-attendee small{font-size:10px;color:#6f8897}
+.uc-page .uc-order-product label{display:grid;gap:4px;min-width:88px;max-width:88px;font-size:10px}
+.uc-page .uc-order-product input[type="number"]{min-height:42px;padding:9px 10px;text-align:center;font-weight:700}
+.uc-page .uc-process-line-list{display:grid;gap:8px;list-style:none;padding:0;margin:0}
+.uc-page .uc-process-line-list li{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:9px;background:#f6fafc;border:1px solid #dae7ef}
+.uc-page .uc-process-line-list li strong{font-size:12px;color:#173d57}
+.uc-page .uc-process-line-list li span{font-size:11px;color:#547184;text-align:right}
+.uc-page .uc-process-actions{display:grid;gap:10px}
+.uc-page .uc-process-event-card{align-items:flex-start;background:linear-gradient(180deg,#fbfdff,#f4f8fb)}
+.uc-page .uc-process-event-card p{margin:0;font-size:11px;line-height:1.55;color:#597788}
+.uc-page .uc-process-event-summary{display:grid;justify-content:flex-start;background:#f8fbfd}
+.uc-page .uc-process-attendees{display:grid;gap:8px}
+.uc-page .uc-process-attendee.is-new{border-color:#7caed3;background:#f9fdff;box-shadow:0 7px 19px #12334b12}
+.uc-page .uc-process-attendee .uc-process-tag{flex:none}
+@media(max-width:420px){
+  .uc-page .uc-order-product,.uc-page .uc-process-event-card,.uc-page .uc-process-attendee{padding:10px}
+  .uc-page .uc-order-product{align-items:flex-end}
+  .uc-page .uc-order-product label{min-width:76px;max-width:76px}
+  .uc-page .uc-process-line-list li{grid-template-columns:1fr;display:grid}
+}
+
+
+/* v28 — Compact 05 / quote experience, no change to its business logic. */
+@media(max-width:810px){
+  .uc-standardized .uc-process[data-uc-process="quote"] .uc-editor-panel-header{min-height:76px;padding-block:12px}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-process-body{padding:13px 14px;gap:11px}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-process-intro{margin-bottom:0}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-process-intro h2{font-size:clamp(23px,6vw,29px);margin:5px 0 6px}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-process-intro p{font-size:12px;line-height:1.5}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-process-field-grid{gap:9px}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-process-file-label{margin-top:0}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-process-facts{gap:8px}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-process-case{padding:13px}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-process-outcome{padding:12px}
+}
+@media(max-width:420px){
+  .uc-page .uc-process[data-uc-process="quote"] .uc-quote-measures{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .uc-page .uc-process[data-uc-process="quote"] .uc-quote-measures input{min-width:0}
+}
+
+/* v29 — Case 04: preserve and expose optional technician note. */
+.uc-page .uc-process-internal-note{padding:12px 14px;border:1px solid #b8d4e2;border-left:3px solid #3c91ba;border-radius:9px;background:#f0f8fc;color:#24475a}
+.uc-page .uc-process-internal-note[hidden]{display:none!important}
+.uc-page .uc-process-internal-note strong{font-size:12px;font-weight:750}
+.uc-page .uc-process-internal-note p{margin:5px 0 0;font-size:12px;line-height:1.55;overflow-wrap:anywhere;white-space:pre-wrap}
+
+/* v30 | 07–08: harmonize application panels with the other process demos. */
+.uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px}
+.uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header > span:first-child{display:flex;align-items:center;min-width:0;flex:1;gap:12px}
+.uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header .uc-panel-mark{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:9px}
+.uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header b{font-size:16px;line-height:1.3}
+.uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header :is(.uc-panel-muted,.uc-panel-online){margin:0 0 0 50px!important;flex:0 0 auto;font-size:12px;max-width:calc(100% - 50px)}
+@media(max-width:810px){
+ .uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header{display:flex;flex-direction:column;align-items:stretch;justify-content:center;min-height:100px;padding:15px 16px}
+ .uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header > span:first-child{flex:0 1 auto;width:100%}
+ .uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header :is(.uc-panel-muted,.uc-panel-online){align-self:flex-start;margin-left:50px!important}
+}
+/* Attendee statuses are two different facts: enrolled or checked-in. */
+.uc-page .uc-process-attendee{align-items:center}
+.uc-page .uc-process-attendee .uc-process-tag.is-present{background:#e2f6ec;color:#1c704d}
+.uc-page .uc-process-attendee .uc-process-tag.is-enrolled{background:#e6f0f8;color:#27658c}
+.uc-page .uc-attendee-checkin{flex:none;min-height:39px;padding:8px 9px;border:1px solid #9bbfd3;border-radius:8px;background:#fff;color:#174c69;font:700 11px/1.25 var(--uc-sans);cursor:pointer}
+.uc-page .uc-attendee-checkin:hover{background:#e6f4fb}
+.uc-page .uc-attendee-checkin:disabled{opacity:1;background:#e8f7ef;color:#277550;border-color:#bedbcc;cursor:default}
+@media(max-width:420px){.uc-page .uc-process-attendee[data-pc-demo-person]{flex-wrap:wrap}.uc-page .uc-process-attendee[data-pc-demo-person] .uc-attendee-checkin{width:100%}}
+
+/* v30 final touch: heading and "Cliente"/"Pronto" stay on the same row when space permits. */
+@media(max-width:810px){
+ .uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header{flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:space-between;min-height:80px;gap:8px}
+ .uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header > span:first-child{flex:1 1 auto;min-width:0;width:auto}
+ .uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header :is(.uc-panel-muted,.uc-panel-online){margin:0!important;align-self:center;max-width:45%;flex:none}
+}
+@media(max-width:360px){
+ .uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header{flex-wrap:wrap;min-height:84px}
+ .uc-page.uc-standardized :is([data-uc-process="order"],[data-uc-process="enroll"]) .uc-panel-header :is(.uc-panel-muted,.uc-panel-online){margin-left:50px!important;max-width:calc(100% - 50px)}
+}

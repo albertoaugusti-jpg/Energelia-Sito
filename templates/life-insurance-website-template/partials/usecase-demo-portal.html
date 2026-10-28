@@ -1,0 +1,58 @@
+<div class="uc-demo uc-work ux-portal" data-uc-work="portal" data-ux-portal-tab="overview">
+  <header class="ux-app-bar">
+    <div class="ux-app-identity"><span class="ux-app-monogram ux-portal-brand">C</span><span><strong>CASAFORMA</strong><small>Spazio clienti · progetti su misura</small></span></div>
+    <span class="ux-app-mode"><span class="ux-live-dot"></span> ACCESSO DIMOSTRATIVO</span>
+  </header>
+  <div class="ux-portal-layout">
+    <nav class="ux-portal-nav" aria-label="Sezioni del portale">
+      <div class="ux-portal-welcome"><small>BUONGIORNO, MARTINA</small><strong>Il tuo spazio</strong><p>Tutti gli aggiornamenti del progetto, in un unico posto.</p></div>
+      <div class="ux-portal-nav-list">
+        <button type="button" data-ux-portal-link="overview" aria-pressed="true"><span aria-hidden="true">◫</span> Progetto</button>
+        <button type="button" data-ux-portal-link="documents" aria-pressed="false"><span aria-hidden="true">▤</span> Documenti <b>3</b></button>
+        <button type="button" data-ux-portal-link="messages" aria-pressed="false"><span aria-hidden="true">✉</span> Messaggi</button>
+      </div>
+      <div class="ux-portal-nav-bottom"><span class="ux-portal-spark" aria-hidden="true">✳</span> Un solo punto di riferimento per il cliente.</div>
+    </nav>
+    <div class="ux-portal-main">
+      <div class="ux-portal-main-top"><div><small>AREA RISERVATA · ESEMPIO</small><h2>Ristrutturazione appartamento</h2><p>Martina Serra · progetto di interni</p></div><span class="ux-portal-project-chip">Lavori in corso</span></div>
+      <div class="ux-portal-tabs" role="group" aria-label="Viste del portale">
+        <button type="button" data-ux-portal-tab-button="overview" aria-pressed="true">Progetto</button>
+        <button type="button" data-ux-portal-tab-button="documents" aria-pressed="false">Documenti</button>
+        <button type="button" data-ux-portal-tab-button="messages" aria-pressed="false">Messaggi</button>
+      </div>
+      <section class="ux-portal-pane" data-ux-portal-section="overview" aria-label="Panoramica progetto">
+        <div class="ux-portal-pane-heading"><div><small>PANORAMICA</small><h3>Il progetto, a colpo d’occhio.</h3></div><span class="ux-portal-status">In avanzamento</span></div>
+        <div class="ux-portal-progress-card"><div><span>Avanzamento complessivo</span><strong>65%</strong></div><div class="ux-portal-track"><span style="width:65%"></span></div><small>Prossimo passaggio: completamento impianti</small></div>
+        <div class="ux-portal-milestones">
+          <div><span class="ux-milestone-dot is-done">✓</span><span><strong>Sopralluogo</strong><small>Completato</small></span></div>
+          <div><span class="ux-milestone-dot is-done">✓</span><span><strong>Progetto approvato</strong><small>Completato</small></span></div>
+          <div><span class="ux-milestone-dot is-current">●</span><span><strong>Lavori in corso</strong><small>Fase attuale</small></span></div>
+          <div><span class="ux-milestone-dot">○</span><span><strong>Consegna finale</strong><small>Da programmare</small></span></div>
+        </div>
+        <button type="button" class="ux-portal-next" data-ux-portal-open-docs><span><strong>Vuoi vedere i documenti?</strong><small>Apri planimetria, programma lavori e riepilogo.</small></span><span aria-hidden="true">↗</span></button>
+      </section>
+      <section class="ux-portal-pane" data-ux-portal-section="documents" aria-label="Documenti di progetto" hidden>
+        <div class="ux-portal-pane-heading"><div><small>ARCHIVIO PROGETTO</small><h3>Documenti condivisi</h3></div><span class="ux-portal-status">3 documenti</span></div>
+        <div class="ux-portal-documents">
+          <button type="button" data-ux-portal-doc="plan"><span class="ux-portal-file-icon">▤</span><span><strong>Planimetria aggiornata</strong><small>Disposizione degli ambienti · anteprima</small></span><span aria-hidden="true">Apri ↗</span></button>
+          <button type="button" data-ux-portal-doc="works"><span class="ux-portal-file-icon">▤</span><span><strong>Programma dei lavori</strong><small>Fasi e attività previste · anteprima</small></span><span aria-hidden="true">Apri ↗</span></button>
+          <button type="button" data-ux-portal-doc="summary"><span class="ux-portal-file-icon">▤</span><span><strong>Riepilogo delle finiture</strong><small>Materiali e scelte confermate · anteprima</small></span><span aria-hidden="true">Apri ↗</span></button>
+        </div>
+
+      </section>
+      <section class="ux-portal-pane" data-ux-portal-section="messages" aria-label="Messaggi con il responsabile" hidden>
+        <div class="ux-portal-pane-heading"><div><small>COMUNICAZIONI</small><h3>Scrivi al responsabile</h3></div></div>
+        <div class="ux-portal-chat" data-ux-portal-thread aria-label="Conversazione dimostrativa">
+          <div class="ux-portal-chat-row is-staff"><strong>Responsabile CasaForma</strong><p>Buongiorno Martina, la nuova planimetria è disponibile nell’area documenti. I lavori procedono secondo il programma.</p><small>Ultimo aggiornamento</small></div>
+        </div>
+        <form class="ux-portal-message-form" data-ux-portal-form novalidate>
+          <label for="ux-portal-message">Il tuo messaggio</label>
+          <textarea id="ux-portal-message" rows="3" minlength="3" maxlength="220" data-ux-portal-input placeholder="Ad esempio: possiamo rivedere il colore delle pareti?"></textarea>
+          <div class="ux-portal-compose-foot"><span><span data-ux-portal-count>0</span> / 220</span><button type="submit" class="ux-action-primary">Aggiungi messaggio ↗</button></div>
+          <p class="ux-form-error" data-ux-portal-error hidden role="alert">Inserisci un messaggio di almeno 3 caratteri.</p>
+        </form>
+      </section>
+    </div>
+  </div>
+  <div class="ux-work-footer"><span class="ux-footer-status" data-ux-portal-status role="status" aria-live="polite">Consulta il progetto, poi apri un documento e prova a scrivere un messaggio.</span><button type="button" class="ux-footer-reset" data-ux-portal-reset>↻ Ricomincia demo</button></div>
+</div>

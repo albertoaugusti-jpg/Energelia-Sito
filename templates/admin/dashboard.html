@@ -244,6 +244,7 @@
             <a href="#" class="active" data-section="leads"><i class="fas fa-users"></i> Lead Report</a>
             <a href="#" data-section="consultations"><i class="fas fa-phone"></i> Consulenze</a>
             <a href="#" data-section="autosender"><i class="fab fa-whatsapp"></i> Auto Sender</a>
+            <a href="/crm/richieste-digitali"><i class="fas fa-laptop"></i> Richieste digitali</a>
             <a href="#" data-section="csvlist"><i class="fas fa-file-csv"></i> Lista CSV</a>
         </div>
         <button class="logout-btn" onclick="logout()">
@@ -568,11 +569,12 @@ Può chiamarci al 010 7776530 o rispondere a questo messaggio per una consulenza
         let selectedCsvPhones = new Set();
 
         function getToken() {
-            return localStorage.getItem('adminToken');
+            return sessionStorage.getItem('adminToken');
         }
 
-        function logout() {
-            localStorage.removeItem('adminToken');
+        async function logout() {
+            await fetch('/api/admin/logout', {method:'POST', headers:{'Authorization':'Bearer ' + (getToken() || '')}});
+            sessionStorage.removeItem('adminToken');
             window.location.href = '/forzasamp';
         }
 
@@ -616,6 +618,10 @@ Può chiamarci al 010 7776530 o rispondere a questo messaggio per una consulenza
             }
         }
 
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+        }
+
         function renderLeads() {
             const tbody = document.getElementById('leadsBody');
             const filtered = currentFilter === 'all' 
@@ -623,18 +629,18 @@ Può chiamarci al 010 7776530 o rispondere a questo messaggio per una consulenza
                 : allLeads.filter(l => l.bando === currentFilter);
 
             tbody.innerHTML = filtered.map(lead => `
-                <tr class="${lead.tag ? 'row-' + lead.tag : ''}">
+                <tr class="${lead.tag ? 'row-' + escapeHtml(lead.tag) : ''}">
                     <td class="checkbox-cell">
                         <input type="checkbox" 
                             data-id="${lead.id}" 
-                            data-phone="${lead.phone || ''}"
-                            data-bando="${lead.bando}"
+                            data-phone="${escapeHtml(lead.phone || '')}"
+                            data-bando="${escapeHtml(lead.bando)}"
                             ${selectedLeads.has(lead.id) ? 'checked' : ''}
                             onchange="toggleSelect(${lead.id}, this)">
                     </td>
-                    <td>${lead.email}</td>
-                    <td>${lead.phone || '-'}</td>
-                    <td><span class="badge-bando badge-${lead.bando}">${formatBando(lead.bando)}</span></td>
+                    <td>${escapeHtml(lead.email)}</td>
+                    <td>${escapeHtml(lead.phone || '-')}</td>
+                    <td><span class="badge-bando badge-${escapeHtml(lead.bando)}">${escapeHtml(formatBando(lead.bando))}</span></td>
                     <td>${formatDate(lead.created_at)}</td>
                     <td>
                         <select class="tag-select" onchange="updateTag(${lead.id}, this.value)">
@@ -697,8 +703,8 @@ Può chiamarci al 010 7776530 o rispondere a questo messaggio per una consulenza
             const tbody = document.getElementById('consultationsBody');
             tbody.innerHTML = allConsultations.map(c => `
                 <tr>
-                    <td>${c.email}</td>
-                    <td><a href="tel:${c.phone}">${c.phone}</a></td>
+                    <td>${escapeHtml(c.email)}</td>
+                    <td><a href="tel:${String(c.phone || '').replace(/[^+0-9]/g, '')}">${escapeHtml(c.phone)}</a></td>
                     <td>${formatDate(c.created_at)}</td>
                 </tr>
             `).join('');
@@ -814,7 +820,7 @@ Può chiamarci al 010 7776530 o rispondere a questo messaggio per una consulenza
             });
         });
 
-        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+        document.querySelectorAll('.sidebar-menu a[data-section]').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));

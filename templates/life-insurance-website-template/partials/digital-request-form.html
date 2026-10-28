@@ -1,0 +1,41 @@
+<div class="ed-contact-copy">
+  <span class="dr-eyebrow">IL TUO PROSSIMO PASSO</span>
+  <h2 id="ed-contact-title">Un’idea tua.<br><em>Una direzione, insieme.</em></h2>
+  <p class="ed-contact-lead">Partiamo da quello che vuoi migliorare.</p>
+  <p>Non serve un capitolato. Raccontaci la tua attività, un problema da risolvere o un progetto che hai in mente.</p>
+  <div class="dr-proposal"><span class="dr-proposal-mark" aria-hidden="true">↗</span><div><h3>Prima di decidere, puoi vederlo.</h3><p>Dopo un confronto preliminare, possiamo preparare una <strong>prima proposta visiva gratuita e senza impegno</strong>, per dare forma alla direzione del progetto.</p><small>La realizzazione e lo sviluppo saranno oggetto di una proposta dedicata.</small></div></div>
+  <a id="contatti-diretti" class="ed-phone" href="tel:+390107776530"><span>Preferisci parlarne a voce?</span><strong>010 777 65 30 <i aria-hidden="true">↗</i></strong></a>
+  <a class="dr-contact-email" href="mailto:info@energelia.it">info@energelia.it</a>
+</div>
+<div class="ed-form-wrap">
+  <div class="ed-form-topbar"><span>Energelia <b>/</b> Richieste digitali</span><span>Cominciamo da qui</span></div>
+  <div class="ed-form-body">
+    <div class="ed-form-intro"><span class="ed-form-kicker">IL PROGETTO PRENDE FORMA</span><h3>Che cosa vorresti ottenere?</h3><p>Scegli un’area e raccontacelo con parole tue. I campi con * sono obbligatori.</p></div>
+    <form class="nx-form" id="nx-project-form" action="/api/digital-project" method="post" data-nx-project-form>
+      <fieldset class="ed-service-picker" aria-describedby="service-error"><legend>Su cosa vuoi lavorare? <span>*</span></legend><div class="ed-service-choices">
+        <label class="ed-service-choice"><input type="radio" name="service" value="sito" required><span><b class="dr-choice-icon" aria-hidden="true">01</b><strong>Siti web</strong><small>Farti conoscere, generare contatti</small><i aria-hidden="true">✓</i></span></label>
+        <label class="ed-service-choice"><input type="radio" name="service" value="app-software"><span><b class="dr-choice-icon" aria-hidden="true">02</b><strong>App/software</strong><small>Nuovi strumenti e servizi digitali</small><i aria-hidden="true">✓</i></span></label>
+        <label class="ed-service-choice"><input type="radio" name="service" value="gestionale"><span><b class="dr-choice-icon" aria-hidden="true">03</b><strong>Gestionali</strong><small>Clienti, attività e dati, in ordine</small><i aria-hidden="true">✓</i></span></label>
+        <label class="ed-service-choice"><input type="radio" name="service" value="automazioni"><span><b class="dr-choice-icon" aria-hidden="true">04</b><strong>Automazioni / AI</strong><small>Meno passaggi manuali, più tempo</small><i aria-hidden="true">✓</i></span></label>
+        <label class="ed-service-choice"><input type="radio" name="service" value="da-definire"><span><b class="dr-choice-icon" aria-hidden="true">?</b><strong>Definiamolo insieme</strong><small>Un confronto per trovare la soluzione</small><i aria-hidden="true">✓</i></span></label>
+      </div><span class="dr-field-error" id="service-error" data-error="service"></span></fieldset>
+      <fieldset class="dr-goals" hidden><legend>C’è un obiettivo che ti somiglia? <small>Facoltativo</small></legend><p>Puoi sceglierne più di uno, oppure raccontarci un’esigenza diversa.</p><div data-digital-goals></div><span class="dr-field-error" id="goals-error" data-error="goals"></span></fieldset>
+      <label for="digital-message">Il risultato che hai in mente <span>*</span><textarea id="digital-message" name="message" minlength="12" maxlength="2500" required aria-describedby="message-hint message-error" placeholder="Per esempio: riceviamo richieste via email e WhatsApp. Vorremmo riunirle e seguire ogni cliente senza perdere passaggi."></textarea><small id="message-hint">Anche un problema concreto va benissimo. Da 12 a 2.500 caratteri.</small><span class="dr-field-error" id="message-error" data-error="message"></span></label>
+      <details class="dr-more"><summary>Aggiungi qualche dettaglio <span>Facoltativo</span></summary><div class="dr-more-fields">
+        <label for="digital-context">La tua attività e il contesto<textarea id="digital-context" name="project_context" rows="2" maxlength="1500" aria-describedby="project_context-error" placeholder="Di cosa ti occupi? Chi userà la soluzione?"></textarea><span class="dr-field-error" id="project_context-error" data-error="project_context"></span></label>
+        <label for="digital-existing">Usi già un sito o uno strumento?<textarea id="digital-existing" name="existing_solution" rows="2" maxlength="1000" aria-describedby="existing_solution-error" placeholder="Un sito, un software, dei fogli Excel… Cosa funziona e cosa cambieresti?"></textarea><span class="dr-field-error" id="existing_solution-error" data-error="existing_solution"></span></label>
+        <label for="digital-timeline">Quando vorresti partire?<select name="timeline" id="digital-timeline" aria-describedby="timeline-error"><option value="">Da valutare insieme</option><option value="presto">Appena possibile</option><option value="1-3-mesi">Entro 1–3 mesi</option><option value="3-6-mesi">Entro 3–6 mesi</option><option value="esplorativa">Sto esplorando le possibilità</option></select><span class="dr-field-error" id="timeline-error" data-error="timeline"></span></label>
+      </div></details>
+      <div class="dr-contact-heading"><h4>Come possiamo ricontattarti?</h4><p>Ti scriveremo per un primo confronto sul progetto.</p></div>
+      <div class="nx-form-row"><label for="digital-name">Nome e cognome <span>*</span><input id="digital-name" type="text" name="name" autocomplete="name" minlength="2" maxlength="100" required aria-describedby="name-error" placeholder="Il tuo nome"><span class="dr-field-error" id="name-error" data-error="name"></span></label><label for="digital-email">Email <span>*</span><input id="digital-email" type="email" name="email" autocomplete="email" maxlength="254" required aria-describedby="email-error" placeholder="nome@azienda.it"><span class="dr-field-error" id="email-error" data-error="email"></span></label></div>
+      <label for="digital-phone">Telefono <small>Facoltativo, se preferisci essere chiamato</small><input id="digital-phone" type="tel" name="phone" autocomplete="tel" maxlength="40" aria-describedby="phone-error" placeholder="Il tuo numero"><span class="dr-field-error" id="phone-error" data-error="phone"></span></label>
+      <div class="nx-honeypot" aria-hidden="true"><label>Lascia vuoto questo campo<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
+      <div class="dr-privacy">
+<label class="nx-consent"><input type="checkbox" name="contact_ack" required aria-describedby="contact_ack-error"><span>Ho letto la <a href="/privacy-policy#richieste">Privacy Policy</a> e chiedo di essere ricontattato per questa richiesta. <em>*</em></span></label><span class="dr-field-error" id="contact_ack-error" data-error="contact_ack"></span></div>
+      <button type="submit" class="nx-submit">Parliamo del tuo progetto <span aria-hidden="true">↗</span></button>
+      <p class="nx-form-status" role="status" aria-live="polite" tabindex="-1" data-nx-form-status></p><p class="nx-form-legal">Un primo confronto, senza impegno. Nessun budget da indicare.</p>
+      <noscript><p>Per inviare il modulo abilita JavaScript. Puoi anche <a href="tel:+390107776530">chiamarci</a> o <a href="mailto:info@energelia.it">scriverci via email</a>.</p></noscript>
+    </form>
+    <script type="application/json" id="digital-goals-data">{{ digital_goals|default({})|tojson }}</script>
+  </div>
+</div>

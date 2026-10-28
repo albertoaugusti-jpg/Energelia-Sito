@@ -1,0 +1,79 @@
+/* Scoped to the request section: immersive scenes and commercial sections are untouched. */
+.digital-services-page #contatto{padding-block:88px;scroll-margin-top:24px}
+.digital-services-page #contatto .ed-contact-grid{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:7%}
+#contatto .ed-contact-copy{padding-top:24px;min-width:0}#contatto .dr-eyebrow{font:700 10px/1.5 Inter,sans-serif;letter-spacing:.17em;color:#e3a3ad}
+.digital-services-page #contatto .ed-contact-copy h2{font:400 clamp(42px,4.3vw,62px)/1.08 'Source Serif 4',Georgia,serif;letter-spacing:-.045em;margin:25px 0}
+#contatto .ed-contact-copy h2 em{font-style:italic;color:#b7cedd}.digital-services-page #contatto .ed-contact-copy>p{max-width:38ch;line-height:1.7}
+#contatto .dr-proposal{display:flex;gap:16px;margin:38px 0 30px;padding-top:28px;border-top:1px solid #ffffff30;max-width:390px}
+#contatto .dr-proposal-mark{color:#ff9ba8;font:400 29px/1 Inter,sans-serif}#contatto .dr-proposal h3{font:400 24px/1.2 'Source Serif 4',Georgia,serif;color:#fff;letter-spacing:-.02em;margin:0 0 12px}
+#contatto .dr-proposal p{color:#b7cbd9;font:400 14px/1.75 Inter,sans-serif;margin:0 0 12px}#contatto .dr-proposal strong{color:#fff;font-weight:600}#contatto .dr-proposal small{display:block;color:#aec4d4;font:400 12px/1.6 Inter,sans-serif}
+#contatto .dr-contact-email{display:block;color:#d2e0e9;font-size:14px;margin-top:16px;text-underline-offset:5px}
+.digital-services-page #contatto .ed-form-wrap{border:1px solid #cbd9e1;border-radius:14px;background:#f8fafb;box-shadow:0 20px 60px #0002}
+#contatto .ed-form-topbar{padding:18px 28px}.digital-services-page #contatto .ed-form-body{padding:30px}.digital-services-page #contatto .ed-form-intro{margin-bottom:24px}
+.digital-services-page #contatto .ed-form-intro h3{font-size:34px}.digital-services-page #contatto .ed-form-intro p{font-size:13px;line-height:1.65}
+.digital-services-page #contatto .nx-form{gap:22px}.digital-services-page #contatto fieldset{min-width:0}.digital-services-page #contatto fieldset legend{font:650 13px/1.5 Inter,sans-serif;float:none;width:auto;margin:0 0 10px;color:#263d4b}
+.digital-services-page #contatto .ed-service-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.digital-services-page #contatto .ed-service-choice:last-child{grid-column:1/-1}
+.digital-services-page #contatto .ed-service-choice>span{grid-template-columns:24px minmax(0,1fr);gap:4px 10px;padding:14px 28px 14px 12px;min-height:82px;background:#fff;border-radius:8px}
+#contatto .dr-choice-icon{grid-row:span 2;font:500 12px/1 Inter,sans-serif;color:#7c91a1;align-self:start;margin-top:3px}
+.digital-services-page #contatto .ed-service-choice strong{font-size:13px}.digital-services-page #contatto .ed-service-choice small{font-size:11px;line-height:1.4}
+.digital-services-page #contatto .ed-service-choice i{right:8px;top:12px;width:16px;height:16px;border-radius:50%;font-size:10px}
+#contatto .dr-goals{border:0;border-top:1px solid #dce5eb;padding:18px 0 0;margin:0}#contatto .dr-goals[hidden]{display:none}
+#contatto .dr-goals legend small{display:inline-block;margin-left:6px;color:#526776;font-size:11px;font-weight:400}
+#contatto .dr-goals p{font:400 12px/1.5 Inter,sans-serif;color:#526776;margin:0 0 12px}
+#contatto [data-digital-goals]{display:flex;gap:8px;flex-wrap:wrap}#contatto [data-digital-goals] label{position:relative;cursor:pointer}
+#contatto [data-digital-goals] input{position:absolute;opacity:0;width:1px;height:1px;min-width:0;min-height:0}
+#contatto [data-digital-goals] span{display:block;border:1px solid #bdcdd7;border-radius:7px;padding:10px 12px;font:500 12px/1.5 Inter,sans-serif;background:#fff;color:#294355;min-height:42px}
+#contatto [data-digital-goals] input:checked+span{border-color:#c52c45;color:#a32236;background:#fff1f3}#contatto [data-digital-goals] input:checked+span:before{content:'✓ ';font-weight:700}
+#contatto [data-digital-goals] input:focus-visible+span{outline:3px solid #244e6c;outline-offset:2px}
+.digital-services-page #contatto .nx-form textarea{min-height:120px}.digital-services-page #contatto :is(input,select,textarea){border-radius:7px}
+#contatto label>small{display:block;color:#526776;font-weight:400;line-height:1.55;margin-top:5px}
+#contatto .dr-more{border-block:1px solid #dce5eb;padding-block:4px}#contatto .dr-more summary,#contatto .dr-privacy summary{cursor:pointer;color:#244b66;font:600 13px/1.5 Inter,sans-serif;padding:13px 0;min-height:44px}
+#contatto .dr-more summary>span{font-size:11px;font-weight:400;margin-left:8px;color:#526776}#contatto .dr-more-fields{display:grid;gap:18px;padding:10px 0 20px}.digital-services-page #contatto .dr-more-fields textarea{min-height:86px}
+#contatto .dr-contact-heading h4{font:650 14px/1.5 Inter,sans-serif;margin:0 0 3px;color:#18364b}#contatto .dr-contact-heading p{font-size:12px;color:#526776;margin:0}
+#contatto .dr-privacy details>div{font:400 12px/1.7 Inter,sans-serif;color:#415a6c;padding-bottom:10px}#contatto .dr-privacy details a{color:#234f71;text-decoration:underline}
+.digital-services-page #contatto .nx-consent{margin:6px 0 0;font:400 12px/1.7 Inter,sans-serif;color:#344d60}.digital-services-page #contatto .nx-submit{min-height:56px;border-radius:7px}
+#contatto .dr-field-error{display:block;color:#aa2339;font:500 12px/1.5 Inter,sans-serif;margin-top:6px}#contatto .dr-field-error:empty{display:none}
+#contatto [aria-invalid=true]:not([type=radio]):not([type=checkbox]){border-color:#b02238;box-shadow:0 0 0 1px #b02238}
+#contatto :is(input,select,textarea,summary,a,button):focus-visible{outline:3px solid #3e7a9c;outline-offset:3px}
+#contatto .nx-form-status{margin:0;overflow-wrap:anywhere}#contatto .nx-form-status:focus{outline:2px solid currentColor;outline-offset:4px}.digital-services-page #contatto .nx-form-legal{margin:0;font-size:11px;text-align:center}
+@media(max-width:1100px){.digital-services-page #contatto .ed-contact-grid{gap:4%;grid-template-columns:minmax(0,.75fr) minmax(0,1.25fr)}.digital-services-page #contatto .ed-form-body{padding:24px}}
+@media(max-width:991px){.digital-services-page #contatto .ed-contact-grid{grid-template-columns:minmax(0,1fr);gap:28px}.digital-services-page #contatto{padding-block:48px}.digital-services-page #contatto .ed-contact-copy{padding:0}.digital-services-page #contatto .ed-contact-copy h2{font-size:48px;max-width:580px;margin:18px 0}.digital-services-page #contatto .ed-contact-copy>p{max-width:52ch}.digital-services-page #contatto .dr-proposal{margin:24px 0;max-width:580px}.digital-services-page #contatto .ed-phone{margin-top:24px}}
+@media(max-width:600px){.digital-services-page #contatto .ed-form-body{padding:22px 18px}.digital-services-page #contatto .ed-form-topbar{padding:15px 18px;font-size:10px}.digital-services-page #contatto .ed-form-topbar>span:last-child{display:none}.digital-services-page #contatto .ed-contact-copy h2{font-size:42px}.digital-services-page #contatto .ed-form-intro h3{font-size:29px}.digital-services-page #contatto .ed-service-choices{grid-template-columns:minmax(0,1fr);gap:7px}.digital-services-page #contatto .ed-service-choice>span{min-height:65px;padding:10px 30px 10px 12px}.digital-services-page #contatto .ed-service-choice strong{font-size:13px}.digital-services-page #contatto .ed-service-choice small{font-size:11px}.digital-services-page #contatto .nx-form-row{grid-template-columns:minmax(0,1fr);gap:18px}.digital-services-page #contatto .nx-form{gap:20px}#contatto .dr-more summary>span{display:block;margin-left:16px}.digital-services-page #contatto .dr-proposal h3{font-size:23px}}
+@media(prefers-reduced-motion:reduce){#contatto *,#contatto *:before{transition:none!important;scroll-behavior:auto!important}}
+/* Override the old !important single-column card layout only inside this form. */
+.digital-services-page #contatto .ed-service-choice>span{grid-template-columns:24px minmax(0,1fr)!important;padding:13px 31px 13px 12px!important;min-height:76px!important}
+.digital-services-page #contatto .ed-service-choice>span :is(strong,small){grid-column:2}
+.digital-services-page #contatto .ed-service-choice input:checked+span i{background:#c52c45;box-shadow:none;border:0;color:#fff}
+@media(max-width:600px){.digital-services-page #contatto .ed-service-choice>span{padding:10px 30px 10px 12px!important;min-height:65px!important}.digital-services-page #contatto .dr-choice-icon{margin-top:4px}.digital-services-page #contatto .dr-proposal{padding-top:20px}.digital-services-page #contatto .ed-contact-copy h2{font-size:clamp(36px,10vw,42px)}}
+
+/* Navigation from use-case "Contatti": target the phone's top divider, not the start of the whole section. */
+.digital-services-page #contatto #contatti-diretti{scroll-margin-top:12px}
+@media(min-width:992px){
+  /* The phone is beside the form on desktop: preserve the form's heading in view. */
+  .digital-services-page #contatto #contatti-diretti{scroll-margin-top:240px}
+}
+
+/* Compact choices keep the native radios, labels and submitted values intact. */
+.digital-services-page #contatto .nx-form{gap:16px}
+.digital-services-page #contatto .ed-form-intro{margin-bottom:18px}
+.digital-services-page #contatto .ed-service-choice>span{min-height:68px!important;padding-block:10px!important}
+.digital-services-page #contatto .ed-service-choice:last-child>span{min-height:60px!important}
+.digital-services-page #contatto .nx-form textarea{min-height:108px}
+@media(min-width:350px) and (max-width:600px){
+  .digital-services-page #contatto .ed-service-choices{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .digital-services-page #contatto .ed-service-choice>span{height:100%;grid-template-columns:minmax(0,1fr)!important;gap:5px;padding:12px 10px!important;align-content:start}
+  .digital-services-page #contatto .ed-service-choice>span :is(strong,small){grid-column:1}
+  .digital-services-page #contatto .dr-choice-icon{display:none}
+  .digital-services-page #contatto .ed-service-choice strong{padding-right:17px;line-height:1.35}
+  .digital-services-page #contatto .ed-service-choice small{line-height:1.45}
+  .digital-services-page #contatto .ed-service-choice i{top:12px}
+}
+@media(max-width:600px){
+  .digital-services-page #contatto .ed-form-body{padding:20px 16px}
+  .digital-services-page #contatto .nx-form-row{gap:14px}
+  #contatto .dr-more summary>span{display:inline;margin-left:8px}
+}
+@media(max-width:349px){
+  .digital-services-page #contatto .ed-service-choice>span{min-height:58px!important;padding-block:8px!important}
+}

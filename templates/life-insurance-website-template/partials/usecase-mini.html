@@ -1,0 +1,24 @@
+<div class="uc-mini uc-mini-{{ kind }}" aria-hidden="true">
+<div class="uc-mini-top"><span class="uc-mini-dots">● ● ●</span><span class="uc-mini-heading">{% if kind=='editor' %}IL TUO SITO{% elif kind=='products' %}CATALOGO{% elif kind=='reviews' %}TESTIMONIANZE{% elif kind=='inbox' %}RICHIESTE{% elif kind=='quote' %}PREVENTIVO{% elif kind=='calendar' %}AGENDA{% elif kind=='orders' %}ORDINI{% elif kind=='enroll' %}ISCRITTI{% elif kind=='customer' %}CLIENTE{% elif kind=='tasks' %}INTERVENTI{% elif kind=='portal' %}AREA CLIENTI{% elif kind=='stock' %}MAGAZZINO{% elif kind=='job' %}COMMESSE{% elif kind=='reminder' %}ABBONAMENTI{% else %}RAPPORTO{% endif %}</span></div>
+{% if kind=='editor' %}
+<div class="uc-mini-editor"><aside><b>Pagine</b><span>Homepage</span><span>Immagini</span><span>Progetti</span></aside><div class="uc-mini-photo"><span>Spazi che fanno<br>stare bene.</span><small>Hero · sito aggiornabile</small></div></div>
+<div class="uc-mini-caption"><i></i><span>Titoli, testo e copertina aggiornabili</span></div>
+{% elif kind=='products' %}
+<div class="uc-mini-products-hero"><b>Finestra scorrevole 240</b><span>€ 480</span><small>Disponibile</small></div>
+<div class="uc-mini-table"><span>Porta-finestra Slim <i>€ 690</i></span><span>Vetrata panoramica <i>Su richiesta</i></span><span>Oscurante minimale <i class="uc-mini-success">Online</i></span></div>
+{% elif kind=='reviews' %}
+<div class="uc-mini-reviews-highlight"><div>★★★★★ <span>Lucia R.</span></div><p>"Precisi e molto ordinati."</p></div>
+<div class="uc-mini-reviews"><div>★★★★★<span>Marco F.</span></div><div>★★★★★<span>Anna B.</span></div></div>
+{% elif kind=='inbox' %}<div class="uc-mini-inbox"><div><i>LC</i><span>Lucia Conti<small>Richiesta informazioni</small></span><b>Nuova</b></div><div><i>MR</i><span>Marco Rossi<small>Preventivo</small></span><b>Da seguire</b></div><div><i>FG</i><span>Francesca Galli<small>Appuntamento</small></span><b>Nuova</b></div></div>
+{% elif kind=='quote' %}<div class="uc-mini-quote"><b>Preventivo PR-1042</b><span>Cliente: Laura Conti</span><span>Servizio: Infissi su misura</span><span>Allegati: 3 fotografie</span><strong>Genera PDF ↗</strong></div>
+{% elif kind=='calendar' %}<div class="uc-mini-calendar"><div>LUN</div><div>MAR</div><div>MER</div><div>GIO</div><div>VEN</div>{% for cell in range(15) %}<span class="{% if cell in [2,6,12] %}is-booked{% endif %}">{% if cell==2 %}09:30{% elif cell==6 %}11:00{% elif cell==12 %}15:00{% endif %}</span>{% endfor %}</div>
+{% elif kind=='orders' %}<div class="uc-mini-orders"><span><b>#1024</b> 2 prodotti <i>Nuovo</i></span><span><b>#1023</b> 4 prodotti <i>Preparo</i></span><span><b>#1022</b> 1 prodotto <i>Pronto ✓</i></span></div>
+{% elif kind=='enroll' %}<div class="uc-mini-enroll"><b>Workshop ceramica</b><div class="uc-mini-progress"><i></i></div><small>9 / 12 posti occupati</small><span>Giulia R. <i>Iscritta</i></span><span>Andrea S. <i>Iscritto</i></span></div>
+{% elif kind=='customer' %}<div class="uc-mini-customer"><b><i>MR</i> Marco Rossi</b><div><span>4<small>Interventi</small></span><span>2<small>Preventivi</small></span><span>3<small>Documenti</small></span></div><small>Ultimo intervento: 12 ottobre</small></div>
+{% elif kind=='tasks' %}<div class="uc-mini-tasks"><span><b>✓</b> Sopralluogo <i>Completato</i></span><span><b>○</b> Installazione <i>Marco R.</i></span><span><b>○</b> Collaudo <i>Domani</i></span></div>
+{% elif kind=='portal' %}<div class="uc-mini-portal"><div class="uc-mini-photo"></div><b>Progetto Villa Rossi</b><span>Avanzamento <i>70%</i></span><div class="uc-mini-progress"><i></i></div><small>Documenti · Messaggi · Foto</small></div>
+{% elif kind=='stock' %}<div class="uc-mini-stock"><b>Materiale <i>Disponibilità</i></b><span>Profili 30mm <i>24</i></span><span>Guarnizioni <i>5 · Scorta bassa</i></span><span>Viti inox <i>132</i></span></div>
+{% elif kind=='job' %}<div class="uc-mini-flow"><div><small>PREV-1042</small><b>Accettato ✓</b></div><span>→</span><div><small>COM-1042</small><b>Commessa creata</b></div></div>
+{% elif kind=='reminder' %}<div class="uc-mini-reminder"><b>Abbonamento Giulia</b><span>Scade tra 7 giorni</span><div>✉ Promemoria inviato <b>✓</b></div></div>
+{% else %}<div class="uc-mini-report"><div><b>Intervento completato</b><span>3 fotografie · Note</span></div><span>→</span><div><b>Rapporto PDF</b><span>Generato e archiviato</span></div></div>{% endif %}
+</div>

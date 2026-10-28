@@ -1,0 +1,20 @@
+{% set case = {
+'number':'10',
+'category':'ORGANIZZARE IL LAVORO',
+'title':'Assegnare interventi al team.',
+'description':'Scegli un intervento dalla bacheca, indica tecnico e priorità, quindi assegnalo e avvialo. Segui il lavoro fino al completamento.',
+'benefits': [
+  'Meno incarichi lasciati senza responsabile.',
+  'Priorità più chiare per tutto il team.',
+  'Meno tempo speso a chiedere a che punto sono i lavori.',
+],
+'group_anchor':'gruppo-lavoro',
+'demo_type':'dispatch',
+'demo':'life-insurance-website-template/partials/usecase-demo-dispatch.html',
+'steps':[('01','Scegli l’intervento'),('02','Assegna e avvia'),('03','Completa il lavoro')],
+'short_steps':['Intervento','Incarico','Completato'],
+'related':[
+ {'href':'/caso-storico-cliente','kind':'customer','title':'Consultare lo storico di un cliente','text':'Interventi e documenti in una scheda cliente.'},
+ {'href':'/caso-magazzino-scorte','kind':'stock','title':'Controllare materiali e scorte','text':'Consumi, rifornimenti e disponibilità.'}]
+} %}
+{% include 'life-insurance-website-template/partials/usecase-detail-shell.html' %}

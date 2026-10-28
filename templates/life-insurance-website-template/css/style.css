@@ -1,4 +1,5 @@
-/*** ENERGELIA - Stile Istituzionale Governativo ***/
+
+/*** ENERGELIA - Stile Istituzionale Governativo ***/
 
 /* Animazione pulse per icona telefono */
 @keyframes pulse {
@@ -91,45 +92,8 @@ h4, h5, h6 {
 }
 
 /* Barra */
-.barra-tricolore {
-    height: 3px;
-    background: #0e3f7e;
-}
 
 /* Pre-Header Istituzionale */
-.pre-header-istituzionale {
-    background: var(--navy-dark);
-    padding: 0.5rem 0;
-    font-size: 0.8rem;
-}
-
-.pre-header-istituzionale .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.pre-header-istituzionale .portale-label {
-    color: rgba(255,255,255,0.85);
-    font-weight: 400;
-}
-
-.pre-header-istituzionale .badge-verificato {
-    background: rgba(255,255,255,0.1);
-    color: var(--oro-chiaro);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
-.pre-header-istituzionale .badge-verificato i {
-    color: var(--oro-sigillo);
-}
 
 /* Card Premium Istituzionale */
 .card-premium {
@@ -343,146 +307,13 @@ h4, h5, h6 {
 /*** Topbar End ***/
 
 
-/*** Navbar Start - Stile Istituzionale ***/
-.nav-bar {
-    background: var(--card-bg) !important;
-    transition: 0.2s ease-out;
-    position: relative;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-}
-
-.navbar-light .navbar-brand img {
-    max-height: 60px;
-    transition: .3s;
-}
-
-.nav-bar .navbar-light .navbar-brand img {
-    max-height: 50px;
-}
-
-.navbar .navbar-nav .nav-item .nav-link {
-    padding: 0;
-    font-family: var(--font-corpo);
-    font-weight: 500;
-    color: var(--navy-primary) !important;
-    font-size: 0.95rem;
-    letter-spacing: 0.01em;
-    transition: color 0.15s ease-out;
-}
-
-.navbar .navbar-nav .nav-item {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-}
-
-.navbar-light .navbar-nav .nav-item:hover,
-.navbar-light .navbar-nav .nav-item.active,
-.navbar-light .navbar-nav .nav-item:hover .nav-link,
-.navbar-light .navbar-nav .nav-item.active .nav-link {
-    color: var(--navy-light) !important;
-}
-
-@media (max-width: 991px) {
-    .navbar {
-        padding: 20px 0;
-    }
-
-    .navbar .navbar-nav .nav-link {
-        padding: 0;
-    }
-
-    .navbar .navbar-nav .nav-item {
-        display: flex;
-        padding: 20px;
-        flex-direction: column;
-        justify-content: start;
-        align-items: start;
-    }
-
-    .navbar .navbar-nav .nav-btn {
-        display: flex;
-        justify-content: start;
-    }
-
-    .navbar .navbar-nav {
-        width: 100%;
-        display: flex;
-        margin-top: 20px;
-        padding-bottom: 20px;
-        background: var(--bs-light);
-        border-radius: 10px;
-    }
-
-    .navbar.navbar-expand-lg .navbar-toggler {
-        padding: 8px 15px;
-        border: 1px solid var(--bs-primary);
-        color: var(--bs-primary);
-    }
-}
-
-.navbar .dropdown-toggle::after {
-    border: none;
-    content: "\f107";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 600;
-    vertical-align: middle;
-    margin-left: 8px;
-}
+/* Shared navigation lives in navigation.css. */
 
 .dropdown .dropdown-menu .dropdown-item:hover {
     background: var(--bs-primary);
     color: var(--bs-white);
 }
 
-@media (min-width: 992px) {
-    .navbar {
-        padding: 20px 0;
-    }
-
-    .navbar .nav-btn {
-        display: flex;
-        align-items: center;
-        justify-content: end;
-    }
-
-    .navbar .navbar-nav {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #F7F7F7;
-        border-radius: 10px;
-    }
-
-    .navbar .navbar-nav .nav-btn {
-        width: 100%;
-        display: flex;
-        margin-left: auto;
-    }
-
-    .navbar .nav-item .dropdown-menu {
-        display: block;
-        visibility: hidden;
-        top: 100%;
-        transform: rotateX(-75deg);
-        transform-origin: 0% 0%;
-        border: 0;
-        border-radius: 10px;
-        transition: .5s;
-        opacity: 0;
-    }
-
-    .navbar .nav-item:hover .dropdown-menu {
-        transform: rotateX(0deg);
-        visibility: visible;
-        margin-top: 20px;
-        background: var(--bs-light);
-        transition: .5s;
-        opacity: 1;
-    }
-}
-/*** Navbar End ***/
 
 
 /*** Carousel Hero Header Start - Stile Istituzionale ***/
@@ -1678,3 +1509,54 @@ h4, h5, h6 {
 }
 
 
+
+
+/* Contrasto titoli su fondi scuri — 23/10/2026.
+   La regola tipografica generale h1/h2/h3 usa --navy-primary;
+   questi contesti hanno invece un fondo scuro e richiedono bianco.
+   Non toccare i titoli su fondi chiari o la sezione Servizi digitali. */
+.chi-siamo-hero h1,
+.cta-banner h3,
+.fv-cta h3,
+.axpo-hero h1,
+.axpo-form-section h2,
+.finanza-agevolata-hero h2,
+.cta-section .cta-right h2,
+.call-modal-header h2,
+.rete-contatto h2,
+.ai-page .hero-title,
+.ai-page .section-header h2,
+.ai-page .use-cases-section h2,
+.ai-page .waitlist-section h2,
+.italbandi-page .newspaper-headline h3,
+.bg-gradient-to-r.from-red-500.to-blue-500 h3 {
+    color: #ffffff;
+}
+/* ENERGELIA_BACK_TO_TOP_SCROLL_V1 */
+/* Nessun flash iniziale: la freccia compare solo dopo lo scroll. */
+.btn.back-to-top {
+    width: 48px;
+    height: 48px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s;
+}
+.btn.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+@media (max-width: 767px) {
+    .btn.back-to-top {
+        width: 44px;
+        height: 44px;
+        right: 16px;
+        bottom: 16px;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .btn.back-to-top { transition: none; }
+}

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <!-- Cookie Consent Default (GDPR) - prima di Google Analytics -->
+  
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servizi digitali per imprese | Energelia</title>
+  <meta name="description" content="Siti web, app e software, gestionali, automazioni e AI su misura per le imprese. Scopri i servizi Energelia e prova 15 casi d’uso interattivi.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/servizi-digitali.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/servizi-digitali-automazioni.css') }}" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/servizi-digitali-editorial.css') }}">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/servizi-digitali-mobile.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/servizi-digitali-story.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/servizi-digitali-casi-v33.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/servizi-digitali-rifiniture-v34.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/servizi-digitali-richiesta-v35.css') }}">
+
+  <link href="{{ url_for('static', filename='css/energelia-digital-v1.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/energelia-digital-refinements-v1-1.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/energelia-preview-v13.css') }}">
+  <link href="{{ url_for('static', filename='css/energelia-automazioni-optical-v1-2.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/servizi-digitali-mobile-motion.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/favicon.svg') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/apple-touch-icon.png') }}">
+  <noscript><style>
+    body.digital-services-page .ds-immersive{height:auto}
+    body.digital-services-page .ds-imm-sticky{position:relative;height:auto;min-height:0;padding:70px 0 0}
+    body.digital-services-page .ds-imm-intro{position:relative;inset:auto;opacity:1;transform:none}
+    body.digital-services-page .ds-imm-seed,body.digital-services-page .ds-imm-scene,body.digital-services-page .ds-imm-copy,body.digital-services-page .ds-imm-progress,body.digital-services-page .ds-imm-scroll{display:none}
+    body.digital-services-page .ds-imm-stage{position:relative;inset:auto;padding:0;margin-top:50px}
+    body.digital-services-page .ds-imm-final{position:relative;inset:auto;width:100%;margin:0;padding:0;opacity:1;visibility:visible;transform:none}
+    .ed-image-hint{display:none}
+  </style></noscript>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/digital-request.css') }}">
+</head>
+<body class="digital-services-page">
+
+  {% with digital_services_cookie=true %}
+  {% include 'life-insurance-website-template/partials/navbar.html' %}
+  {% endwith %}
+
+  <main>
+    <!-- HERO / IMMERSIVE PRODUCT STORY -->
+    <section class="ds-immersive" id="top" data-ds-immersive>
+      <div class="ds-imm-sticky">
+        <div class="ds-imm-atmosphere" aria-hidden="true"></div>
+        <div class="ds-imm-grid" aria-hidden="true"></div>
+
+        <div class="ds-imm-intro" data-ds-intro>
+          <div class="container">
+            <div class="ds-imm-intro-copy">
+              <div class="ds-kicker"><span></span> Servizi digitali per imprese</div>
+              <h1><span class="ds-title-main">Siti web e software</span><em>su misura.</em></h1>
+              <p class="ds-hero-lead">Progettiamo siti web, applicazioni, gestionali e automazioni per presentare la tua attività, offrire nuovi servizi e organizzare meglio il lavoro.</p>
+              <div class="ds-hero-actions">
+                <a href="/casi-uso" class="ds-btn ds-btn-primary">Esplora i casi d’uso <i class="fas fa-arrow-right"></i></a>
+                <a href="#soluzione-sito" class="ds-btn ds-btn-ghost">Esplora i servizi</a>
+              </div>
+              <ul class="ds-hero-points" aria-label="Valori del servizio">
+                <li>
+                  <span class="ds-point-icon"><i class="fas fa-sliders-h" aria-hidden="true"></i></span>
+                  <div>
+                    <strong>Su misura</strong>
+                    <span>Soluzioni costruite sui tuoi processi</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="ds-point-icon"><i class="fas fa-bolt" aria-hidden="true"></i></span>
+                  <div>
+                    <strong>Operativo</strong>
+                    <span>Strumenti pronti a produrre valore</span>
+                  </div>
+                </li>
+                <li>
+                  <span class="ds-point-icon"><i class="fas fa-link" aria-hidden="true"></i></span>
+                  <div>
+                    <strong>Integrato</strong>
+                    <span>Siti, gestionali e automazioni connessi</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-imm-seed" data-ds-seed aria-hidden="true">
+          <div class="ds-seed-backdrop"></div>
+          <div class="ds-seed-glow ds-seed-glow-a"></div>
+          <div class="ds-seed-glow ds-seed-glow-b"></div>
+          <div class="ds-seed-lines">
+            <span class="seed-line seed-line-a"></span>
+            <span class="seed-line seed-line-b"></span>
+            <span class="seed-line seed-line-c"></span>
+            <span class="seed-line seed-line-d"></span>
+            <span class="seed-node seed-node-a"></span>
+            <span class="seed-node seed-node-b"></span>
+            <span class="seed-node seed-node-c"></span>
+            <span class="seed-node seed-node-d"></span>
+            <span class="seed-node seed-node-e"></span>
+          </div>
+          <figure class="ds-seed-panel ds-seed-panel-site">
+            <img src="{{ url_for('static', filename='img/servizi-digitali/hero-site-premium.png') }}" alt="Anteprima di un sito web premium per un'impresa">
+          </figure>
+          <figure class="ds-seed-panel ds-seed-panel-management">
+            <img src="{{ url_for('static', filename='img/servizi-digitali/hero-management-premium.png') }}" alt="Anteprima di un gestionale operativo integrato">
+          </figure>
+          <ul class="ds-seed-card-stack">
+            <li class="ds-seed-card">
+              <i class="fas fa-globe"></i>
+              <div><strong>Sito web</strong><span>Più visibilità, più opportunità</span></div>
+            </li>
+            <li class="ds-seed-card">
+              <i class="fas fa-clipboard-list"></i>
+              <div><strong>Gestionale</strong><span>Processi più semplici, più efficienza</span></div>
+            </li>
+            <li class="ds-seed-card">
+              <i class="fas fa-cog"></i>
+              <div><strong>Automazioni</strong><span>Sistemi connessi, meno lavoro manuale</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="ds-imm-stage" aria-label="Siti web, app, gestionali e automazioni che prendono forma durante lo scorrimento">
+          <!-- 01 · WEBSITE -->
+          <article class="ds-imm-scene ds-imm-site" data-ds-scene="site" aria-label="Esempio illustrativo di sito web">
+            <figure class="ds-scene-frame ds-chapter-frame ds-chapter-site-frame">
+              <span class="ds-chapter-aura" aria-hidden="true"></span>
+              <div class="ds-chapter-pieces ds-chapter-pieces-site" aria-hidden="true">
+                <img class="ds-chapter-piece piece-a" src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-b" src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-c" src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-d" src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-e" src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-f" src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-g" src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+              </div>
+              <img class="ds-chapter-image ds-chapter-image-site"
+                   src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}"
+                   alt="Esempio illustrativo di un sito web completo per un'impresa di impianti e servizi"
+                   draggable="false" decoding="async">
+            </figure>
+            <div class="ds-scene-label"><span>01</span><i></i><b>Siti web &amp; piattaforme · Esempio illustrativo</b></div>
+          </article>
+
+          <!-- 02 · MANAGEMENT -->
+
+          <article class="ds-imm-scene ds-imm-app" data-ds-scene="app" aria-label="App di prenotazione: scelta di giorno e orario, conferma e appuntamento nell'agenda">
+            <div aria-label="Animazione illustrativa: un cliente seleziona la data e l’orario di una consulenza, conferma e vede il nuovo appuntamento nell’agenda" class="ds-app-stage" data-ds-app-art=""><div aria-hidden="true" class="v4-grid"></div><div aria-hidden="true" class="v4-orbit-inner"></div><div aria-hidden="true" class="v4-orbit"></div><div class="app-glass-sheet sheet-one"></div><div class="app-glass-sheet sheet-two"></div><div class="app-device"><div class="device-notch"></div><div class="device-status"><span>9:41</span><span>●●●</span></div><div class="device-brand">STUDIO ARCO <span>↗</span></div><div class="device-divider"></div><span class="device-eyebrow">PRENOTAZIONE ONLINE</span><h3>Scegli il momento<br/>giusto per te.</h3><p>Una consulenza, nell'orario che preferisci.</p><div class="device-month">NOVEMBRE 2026<b>‹   ›</b></div><div class="device-days"><span>MAR<b>10</b></span><span class="chosen">MER<b>11</b></span><span>GIO<b>12</b></span><span>VEN<b>13</b></span></div><div class="device-times"><span class="is-busy" aria-disabled="true">09:30</span><span class="chosen">10:30</span><span>11:30</span></div><div class="device-button" data-device-button="">Conferma appuntamento <span>↗</span></div><div class="device-confirm" data-device-confirm="">✓ Prenotazione confermata</div><div class="v4-booking-progress"><span>01 · DATA</span><i></i><span>02 · ORARIO</span><i></i><span>03 · CONFERMA</span></div></div><div aria-hidden="true" class="app-data-trail"><i></i><i></i><i></i><i></i></div><div class="app-dashboard"><div class="dashboard-mini-top"><span class="dash-mini-icon">S</span><div><b>STUDIO ARCO</b><small>Agenda appuntamenti</small></div><span class="dash-mini-status">● AGENDA ATTIVA</span></div><div class="dash-mini-content"><small>MERCOLEDÌ · 11 NOVEMBRE</small><h3>Agenda del giorno</h3><div class="dash-mini-schedule"><div><span>09:30</span><b>Consulenza progetto</b></div><div class="dash-new" data-dash-new=""><span>10:30</span><b>Elena Conti · Consulenza</b><i>NUOVA</i></div><div><span>11:30</span><b>Disponibile</b></div></div><div class="dash-bottom-summary"><span data-dash-message="">Disponibilità in attesa</span><b>↗</b></div></div></div></div>
+          </article>
+          <article class="ds-imm-scene ds-imm-management" data-ds-scene="management" aria-label="Esempio illustrativo di gestionale">
+            <figure class="ds-scene-frame ds-chapter-frame ds-chapter-management-frame">
+              <span class="ds-chapter-aura" aria-hidden="true"></span>
+              <div class="ds-chapter-pieces ds-chapter-pieces-management" aria-hidden="true">
+                <img class="ds-chapter-piece piece-a" src="{{ url_for('static', filename='img/servizi-digitali/chapter-management-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-b" src="{{ url_for('static', filename='img/servizi-digitali/chapter-management-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-c" src="{{ url_for('static', filename='img/servizi-digitali/chapter-management-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-d" src="{{ url_for('static', filename='img/servizi-digitali/chapter-management-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-e" src="{{ url_for('static', filename='img/servizi-digitali/chapter-management-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-f" src="{{ url_for('static', filename='img/servizi-digitali/chapter-management-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+                <img class="ds-chapter-piece piece-g" src="{{ url_for('static', filename='img/servizi-digitali/chapter-management-fullscreen.webp') }}" alt="" draggable="false" decoding="async">
+              </div>
+              <img class="ds-chapter-image ds-chapter-image-management"
+                   src="{{ url_for('static', filename='img/servizi-digitali/chapter-management-fullscreen.webp') }}"
+                   alt="Esempio illustrativo di un gestionale operativo per interventi, clienti e documenti"
+                   draggable="false" decoding="async">
+            </figure>
+            
+          </article>
+
+          <!-- 03 · AUTOMATION. One trigger, one orchestrator, three outcomes.
+               The scene is semantic and fully legible without the scroll effect. -->
+          <article class="ds-imm-scene ds-imm-automation" data-ds-scene="automation" aria-label="Una richiesta cliente attiva le regole del sistema, che assegna l'attività, aggiorna il gestionale e avvisa il team">
+            <div class="ds-orch" data-ds-orch>
+              <div class="ds-orch-atmosphere" aria-hidden="true"></div>
+              <header class="ds-orch-heading" data-orch-part="heading">
+                <span class="ds-orch-kicker">AUTOMAZIONI E AI</span>
+                <h3>Una richiesta.<br><em>Il lavoro si muove.</em></h3>
+              </header>
+
+              <svg class="ds-orch-wires" viewBox="0 0 1400 720" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="orchWire" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#4f92c6"/><stop offset=".60" stop-color="#8bd8ff"/><stop offset="1" stop-color="#65b7e8"/>
+                  </linearGradient>
+                  <linearGradient id="orchWireStart" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#ea5860"/><stop offset="1" stop-color="#86cfff"/>
+                  </linearGradient>
+                </defs>
+                <path class="ds-orch-wire-rail" d="M416 379 C472 379 515 375 552 375"/>
+                <path class="ds-orch-wire-rail" d="M829 356 C917 356 945 256 1025 256"/>
+                <path class="ds-orch-wire-rail" d="M829 381 C938 381 958 416 1040 416"/>
+                <path class="ds-orch-wire-rail" d="M829 406 C918 406 936 576 1017 576"/>
+                <path class="ds-orch-wire ds-orch-wire-in" data-orch-wire="input" d="M416 379 C472 379 515 375 552 375"/>
+                <path class="ds-orch-wire ds-orch-wire-one" data-orch-wire="task" d="M829 356 C917 356 945 256 1025 256"/>
+                <path class="ds-orch-wire ds-orch-wire-two" data-orch-wire="data" d="M829 381 C938 381 958 416 1040 416"/>
+                <path class="ds-orch-wire ds-orch-wire-three" data-orch-wire="team" d="M829 406 C918 406 936 576 1017 576"/>
+                <circle class="ds-orch-packet" data-orch-packet="input" r="5"/>
+                <circle class="ds-orch-packet" data-orch-packet="task" r="5"/>
+                <circle class="ds-orch-packet" data-orch-packet="data" r="5"/>
+                <circle class="ds-orch-packet" data-orch-packet="team" r="5"/>
+              </svg>
+
+              <div class="ds-orch-request" data-orch-part="request">
+                <div class="ds-orch-request-icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" fill="none"><rect x="5" y="8" width="22" height="16" rx="3"/><path d="m6.5 10 9.5 8 9.5-8"/></svg>
+                </div>
+                <span class="ds-orch-request-type">In ingresso</span>
+                <h4>Nuova richiesta<br>dal cliente</h4>
+                <p>Dal sito, da un modulo o via email.</p>
+                <div class="ds-orch-request-foot"><span></span>Un solo inserimento</div>
+              </div>
+
+              <div class="ds-orch-engine" data-orch-part="engine">
+                <div class="ds-orch-engine-halo" aria-hidden="true"></div>
+                <div class="ds-orch-engine-orbit" aria-hidden="true"></div>
+                <div class="ds-orch-engine-disc">
+                  <svg class="ds-orch-engine-mark" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+                    <path d="M60 25v18M60 77v18M25 60h18M77 60h18"/>
+                    <path d="M60 43 77 60 60 77 43 60Z"/>
+                    <circle cx="60" cy="60" r="5"/><circle cx="60" cy="25" r="5"/><circle cx="95" cy="60" r="5"/><circle cx="60" cy="95" r="5"/><circle cx="25" cy="60" r="5"/>
+                  </svg>
+                </div>
+                <div class="ds-orch-engine-caption"><strong>Regole &amp;<br> supporto AI</strong><span>Ogni funzione interviene quando serve.</span></div>
+              </div>
+
+              <div class="ds-orch-result ds-orch-result-main" data-orch-part="task">
+                <div class="ds-orch-result-symbol" aria-hidden="true">
+                  <svg viewBox="0 0 32 32" fill="none"><rect x="6" y="5" width="20" height="22" rx="4"/><path d="M12 12h8M12 18h5m2.5 0 2 2 3-4"/></svg>
+                </div>
+                <div class="ds-orch-result-copy"><h4>Attività assegnata</h4><p>Responsabile e scadenza definiti dal processo.</p></div>
+                <span class="ds-orch-result-check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m4 10 4 4 8-8"/></svg></span>
+              </div>
+              <div class="ds-orch-result ds-orch-result-data" data-orch-part="data">
+                <div class="ds-orch-result-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="8" rx="10" ry="4"/><path d="M6 8v16c0 2.2 4.5 4 10 4s10-1.8 10-4V8M6 16c0 2.2 4.5 4 10 4s10-1.8 10-4"/></svg></div>
+                <div class="ds-orch-result-copy"><h4>Dati aggiornati</h4><p>Gestionale allineato.</p></div>
+                <span class="ds-orch-result-check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m4 10 4 4 8-8"/></svg></span>
+              </div>
+              <div class="ds-orch-result ds-orch-result-team" data-orch-part="team">
+                <div class="ds-orch-result-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 5a8 8 0 0 0-8 8v6l-3 4h22l-3-4v-6a8 8 0 0 0-8-8ZM13 27h6"/></svg></div>
+                <div class="ds-orch-result-copy"><h4>Team avvisato</h4><p>Chi deve agire lo sa.</p></div>
+                <span class="ds-orch-result-check" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="m4 10 4 4 8-8"/></svg></span>
+              </div>
+            </div>
+            <div class="ds-scene-label"><span>04</span><i></i><b>Automazioni e AI</b></div>
+          </article>
+
+        <div class="ds-imm-copy ds-imm-copy-site" data-ds-copy="site">
+          <div class="ds-copy-index"><b>01</b><span>SITI WEB</span></div>
+          <h2>Farti scegliere<br><em>prima del contatto.</em></h2>
+          <p>Identità, contenuti e percorso lavorano come un'unica esperienza: chi arriva capisce subito chi sei, cosa fai e come contattarti.</p>
+          
+        </div>
+
+        <div class="ds-imm-copy ds-imm-copy-app" data-ds-copy="app">
+          <div class="ds-copy-index"><b>02</b><span>APP E SOFTWARE</span></div><h2>Un appuntamento scelto.<br><em>Un'agenda aggiornata.</em></h2><p>Il cliente prenota online e l'appuntamento compare nell'agenda dello studio.</p>
+        </div>
+        <div class="ds-imm-copy ds-imm-copy-management" data-ds-copy="management">
+          <div class="ds-copy-index"><b>03</b><span>GESTIONALI</span></div>
+          <h2>Mettere il lavoro<br><em>nello stesso posto.</em></h2>
+          <p>Clienti, interventi, documenti e scadenze smettono di vivere separati e diventano un flusso operativo leggibile.</p>
+          
+        </div>
+        <div class="ds-imm-copy ds-imm-copy-automation" data-ds-copy="automation">
+          <div class="ds-copy-index"><b>04</b><span>AUTOMAZIONI E AI</span></div>
+          <h2>Far avanzare il lavoro,<br><em>senza rincorrere ogni passaggio.</em></h2>
+          <p>Una richiesta arriva. Il sistema crea l’attività, aggiorna le informazioni e avvisa le persone giuste, senza ripetere gli stessi passaggi a mano.</p>
+          
+        </div>
+
+        <div class="ds-imm-final" data-ds-final>
+          <div class="sd-finale-art" aria-hidden="true">
+            <svg viewBox="0 0 900 450" preserveAspectRatio="xMaxYMid slice" focusable="false">
+              <defs>
+                <linearGradient id="sdArtGlass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0d2e48" stop-opacity=".2"/><stop offset=".65" stop-color="#244c69" stop-opacity=".6"/><stop offset="1" stop-color="#061425"/></linearGradient>
+                <linearGradient id="sdArtSky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#478ebd" stop-opacity="0"/><stop offset=".65" stop-color="#9bdcff" stop-opacity=".95"/><stop offset="1" stop-color="#cfeaff" stop-opacity=".4"/></linearGradient>
+                <linearGradient id="sdArtRose" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#ff4769" stop-opacity="0"/><stop offset=".7" stop-color="#fe5366"/><stop offset="1" stop-color="#ff98a5"/></linearGradient>
+                <filter id="sdArtGlow"><feGaussianBlur stdDeviation="4"/></filter>
+              </defs>
+              <g opacity=".8">
+                <path d="M495 -40L900 -180V450L686 401Z" fill="url(#sdArtGlass)"/>
+                <path d="M580 -45L676 401M648 -63L736 419M718 -90L791 434M790 -116L851 450" stroke="#5f93b2" stroke-opacity=".27" stroke-width="2"/>
+                <path d="M496 80 900 -45M527 151 900 46M566 223 900 137M605 295 900 227M645 365 900 313" stroke="#8ebcdd" stroke-opacity=".16" stroke-width="2"/>
+              </g>
+              <path d="M240 -82C330 16 481 74 627 104S803 91 838 30" stroke="#64bce9" stroke-opacity=".32" stroke-width="9" fill="none" filter="url(#sdArtGlow)"/>
+              <path d="M240 -82C330 16 481 74 627 104S803 91 838 30" stroke="url(#sdArtSky)" stroke-width="1.7" fill="none"/>
+              <path d="M818 10C798 80 753 148 693 200S558 281 448 298" stroke="#eb5471" stroke-opacity=".42" stroke-width="7" fill="none" filter="url(#sdArtGlow)"/>
+              <path d="M818 10C798 80 753 148 693 200S558 281 448 298" stroke="url(#sdArtRose)" stroke-width="1.9" fill="none"/>
+              <path d="M700 190 896 131M711 204 900 157" stroke="#b5d3e6" stroke-opacity=".17" fill="none"/>
+            </svg>
+          </div>
+          <div class="ds-finale-title" aria-hidden="true"><span>DAL PROGETTO ALL'OPERATIVITÀ</span><strong>Il digitale prende forma.<br><em>Guarda cosa puoi farci.</em></strong><i>↓</i></div>
+        </div>
+        <div class="ds-imm-progress" aria-hidden="true">
+          <span data-ds-progress-index>00</span><b>/04</b><i><em data-ds-progress-bar></em></i>
+        </div>
+        <div class="ds-imm-scroll" data-ds-scroll-cue aria-hidden="true"><span>Scorri per esplorare</span><i></i></div>
+      </div>
+    </section>
+
+
+    <!-- Mobile-only shared stage. A sibling of the desktop hero so its sticky
+         viewport is not trapped by the desktop scene's overflow container. -->
+    <section class="ds-mobile-film" data-mobile-film aria-labelledby="mf-title">
+      <h2 id="mf-title" class="mf-accessible">Dal sito al lavoro, tutto connesso.</h2>
+      <p class="mf-accessible">Esempio illustrativo: il sito diventa un’app di prenotazione. La scelta delle 10:30 viene confermata e trasferita nell’agenda. Il gestionale assegna l’attività, aggiorna il sistema e avvisa il team.</p>
+      <div class="mf-fallback">
+        <div class="mf-static-products">
+          <img src="{{ url_for('static', filename='img/servizi-digitali/hero-site-premium.png') }}" width="1448" height="1086" alt="Anteprima di un sito web aziendale" decoding="async">
+          <img src="{{ url_for('static', filename='img/servizi-digitali/hero-management-premium.png') }}" width="1448" height="1086" alt="Anteprima del gestionale collegato" decoding="async">
+        </div>
+        <p>Sito <span>→</span> Prenotazione <span>→</span> Agenda <span>→</span> Automazioni</p>
+      </div>
+      <div class="mf-pin">
+        <div class="mf-heading" aria-hidden="true">
+          <span class="mf-eyebrow">UN SOLO ECOSISTEMA</span>
+          <div class="mf-captions">
+            <p data-mf-caption>La tua attività.<br><em>Prende forma.</em></p>
+            <p data-mf-caption>Un orario scelto.<br><em>Una conferma.</em></p>
+            <p data-mf-caption>La prenotazione<br><em>diventa lavoro.</em></p>
+            <p data-mf-caption>Un gesto.<br><em>Tutto si collega.</em></p>
+          </div>
+        </div>
+        <div class="mf-art-space" aria-hidden="true">
+          <div class="mf-canvas" data-mf-canvas>
+            <div class="mf-floor" data-mf-floor></div>
+            <div class="mf-device" data-mf-device>
+              <div class="mf-shell" data-mf-shell></div>
+              <div class="mf-app" data-mf-app>
+                <div class="mf-phone-top"><i></i><span>9:41</span></div>
+                <div class="mf-brand">STUDIO ARCO <span>↗</span></div>
+                <span class="mf-app-eyebrow">PRENOTAZIONE ONLINE</span>
+                <h3>Scegli il momento<br><em>giusto per te.</em></h3>
+                <div class="mf-month">NOVEMBRE 2026 <span>‹ &nbsp; ›</span></div>
+                <div class="mf-days"><span>MAR<b>10</b></span><span class="mf-day"><i data-mf-day></i><span>MER<b>11</b></span></span><span>GIO<b>12</b></span><span>VEN<b>13</b></span></div>
+                <div class="mf-times"><span>09:30</span><span class="mf-time"><i data-mf-time></i><b>10:30</b></span><span>11:30</span></div>
+                <div class="mf-confirm-button" data-mf-button><span>Conferma appuntamento</span><b>↗</b></div>
+              </div>
+            </div>
+            <div class="mf-website" data-mf-website>
+              <img data-mf-piece src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" width="1619" height="971" alt="" decoding="async" draggable="false">
+              <img data-mf-piece src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" width="1619" height="971" alt="" decoding="async" draggable="false">
+              <img data-mf-piece src="{{ url_for('static', filename='img/servizi-digitali/chapter-site-fullscreen.webp') }}" width="1619" height="971" alt="" decoding="async" draggable="false">
+            </div>
+            <div class="mf-agenda" data-mf-agenda>
+              <div class="mf-agenda-bar"><span class="mf-agenda-mark">S</span><div>STUDIO ARCO<small>Il tuo spazio di lavoro</small></div><b>↗</b></div>
+              <div class="mf-agenda-content"><span>MERCOLEDÌ · 11 NOVEMBRE</span><h3>Agenda del giorno</h3>
+                <div class="mf-agenda-old"><b>09:30</b><span>Consulenza progetto</span><i>✓</i></div>
+                <div class="mf-agenda-slot"><span>Nuova prenotazione</span></div>
+                <div class="mf-agenda-old"><b>11:30</b><span>Disponibile</span><i>＋</i></div>
+              </div>
+            </div>
+            <svg class="mf-transfer-path" viewBox="0 0 360 440" data-mf-transfer aria-hidden="true"><path d="M180 324 Q335 165 180 238" fill="none" stroke="#80b6cc" stroke-width="1" stroke-dasharray="3 5"/></svg>
+            <!-- This single ticket physically travels from the phone into the agenda. -->
+            <div class="mf-ticket" data-mf-ticket><b>10:30</b><div><strong>Consulenza</strong><span>Prenotazione confermata</span></div><i>✓</i></div>
+            <svg class="mf-wires" viewBox="0 0 360 440" aria-hidden="true">
+              <g fill="none" stroke="#598ca7" stroke-width="1.5">
+                <path data-mf-wire pathLength="1" d="M180 248V282"/>
+                <path data-mf-wire pathLength="1" d="M180 302C180 329 62 312 62 350"/>
+                <path data-mf-wire pathLength="1" d="M180 302V365"/>
+                <path data-mf-wire pathLength="1" d="M180 302C180 329 298 312 298 350"/>
+              </g>
+              <circle data-mf-packet r="3" fill="#cceaf3"/><circle data-mf-packet r="3" fill="#cceaf3"/><circle data-mf-packet r="3" fill="#cceaf3"/>
+            </svg>
+            <div class="mf-core" data-mf-core><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 5v7m0 8v7M5 16h7m8 0h7"/><rect x="12" y="12" width="8" height="8" rx="2"/><circle cx="16" cy="4" r="2"/><circle cx="4" cy="16" r="2"/><circle cx="28" cy="16" r="2"/><circle cx="16" cy="28" r="2"/></svg></div>
+            <div class="mf-output mf-output-task" data-mf-output><span>01 <i>✓</i></span><strong>Attività<br>assegnata</strong></div>
+            <div class="mf-output mf-output-system" data-mf-output><span>02 <i>✓</i></span><strong>Sistema<br>aggiornato</strong></div>
+            <div class="mf-output mf-output-team" data-mf-output><span>03 <i>✓</i></span><strong>Team<br>avvisato</strong></div>
+          </div>
+        </div>
+        <div class="mf-footer">
+          <div class="mf-progress" aria-hidden="true"><div><i data-mf-progress></i></div><span data-mf-step>Sito</span><span data-mf-step>App</span><span data-mf-step>Agenda</span><span data-mf-step>Flusso</span></div>
+          <a href="#soluzione-sito">Vai ai servizi <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="el-orient" id="utilita" aria-labelledby="el-orient-title">
+      <div class="el-orient-wrap">
+        <div class="el-orient-intro">
+          <span class="el-eyebrow"><i></i> 01 / DAL PROGETTO ALL'UTILITÀ</span>
+          <h2 id="el-orient-title">Il digitale ha valore quando <em>semplifica il lavoro.</em></h2>
+          <p>Sviluppiamo soluzioni che aiutano la tua attività a farsi conoscere, offrire servizi ai clienti e organizzare le operazioni quotidiane. Partiamo dalle esigenze concrete, non da un prodotto predefinito.</p>
+          <a class="el-orient-link" href="/casi-uso"><span>Vuoi vedere cosa fanno, nella pratica?</span><strong>Esplora i laboratori interattivi <b>↗</b></strong></a>
+        </div>
+        <nav class="el-orient-nav" aria-label="Esplora i quattro servizi digitali">
+          <a href="#soluzione-sito"><span>01</span><div><strong>Siti web</strong><small>Presentare la tua attività e generare contatti</small></div><b>↗</b></a>
+          <a href="#soluzione-app"><span>02</span><div><strong>App e software</strong><small>Offrire strumenti e servizi online</small></div><b>↗</b></a>
+          <a href="#soluzione-gestionale"><span>03</span><div><strong>Gestionali</strong><small>Organizzare clienti, attività e dati</small></div><b>↗</b></a>
+          <a href="#soluzione-automazioni"><span>04</span><div><strong>Automazioni e AI</strong><small>Collegare processi e ridurre le attività manuali</small></div><b>↗</b></a>
+        </nav>
+      </div>
+    </section>
+    {% include 'life-insurance-website-template/partials/digital-solutions.html' %}
+    {% include 'life-insurance-website-template/partials/digital-continuation.html' %}
+    <div class="ed-continuation">
+      <div class="ed-contact-surface">
+      <section class="ed-contact ed-wrap" id="contatto" aria-labelledby="ed-contact-title">
+        <div class="ed-contact-grid">
+          {% include 'life-insurance-website-template/partials/digital-request-form.html' %}
+        </div>
+      </section>
+      </div>
+    </div>
+
+  </main>
+
+  {% include 'life-insurance-website-template/partials/footer.html' %}
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/servizi-digitali.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/servizi-digitali-sezioni.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/servizi-digitali-mobile-motion.js') }}" defer></script>
+</body>
+</html>

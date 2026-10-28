@@ -1,0 +1,37 @@
+/* V1.1 preview refinements: only identified problem areas. */
+/* Header mobile: remove doubled service mini-card navigation. The editorial service navigator remains in section 01. */
+.digital-services-page .ds-mobile-shortcuts{display:none!important}
+/* Section 02/02: always show the complete approved desktop+phone graphic; never crop it. */
+.digital-services-page .el-service-app .el-app-visual{overflow:visible!important}
+.digital-services-page .el-service-app .el-app-visual picture{display:block;width:100%}
+.digital-services-page .el-service-app .el-app-visual img{object-fit:contain!important;object-position:center center!important;overflow:visible!important;max-height:none!important}
+@media(max-width:650px){
+  .digital-services-page .el-service-app .sd-service-inner{gap:15px!important}
+  .digital-services-page .el-service-app .el-app-visual{width:calc(100% + 24px)!important;margin-left:-12px!important;margin-right:-12px!important}
+  .digital-services-page .el-service-app .el-app-visual img{width:100%;height:auto!important;max-width:100%;}
+  .digital-services-page .el-service-app .el-app-visual figcaption{margin:2px 13px 0;text-align:right}
+}
+/* Scena 01: remove low presentation caption, preserving meaningful accessible descriptions. */
+.digital-services-page .ds-imm-site .ds-scene-label{display:none!important}
+/* Scene 02: use entire immersive canvas AFTER narrative has faded. */
+@media(min-width:992px){
+ .digital-services-page .ds-imm-app{left:50%!important;width:min(1260px,96vw)!important;height:min(77vh,695px)!important;max-width:none!important;max-height:none!important;}
+ .digital-services-page .ds-imm-app .ds-app-stage{width:100%!important;height:100%!important;background:radial-gradient(ellipse 61% 57% at 51% 54%,rgba(37,118,157,.20),transparent 88%)}
+ .digital-services-page .ds-imm-app .app-device{left:15%!important;right:auto!important;top:3%!important;width:270px!important;min-width:0!important;max-width:none!important;height:94%!important;max-height:615px!important;padding:20px 18px 15px!important;transform:none;border-width:7px;overflow:visible!important}
+ .digital-services-page .ds-imm-app .app-dashboard{left:auto!important;right:13%!important;top:25%!important;width:430px!important;min-width:0!important;max-width:43%!important;z-index:4!important;}
+ .digital-services-page .ds-imm-app .app-data-trail{left:39%!important;top:49%!important;width:17%!important;z-index:2!important}
+ .digital-services-page .ds-imm-app .v4-booking-label{top:0;right:6%;}
+ .digital-services-page .ds-imm-copy-app{max-width:min(740px,90vw)!important;z-index:12!important;}
+ .digital-services-page .ds-imm-copy-app h2{font-size:clamp(42px,5vw,66px)!important;line-height:1.08;}
+ .digital-services-page .ds-imm-app .device-days span{padding:7px 1px!important}
+ .digital-services-page .ds-imm-app .device-days b{font-size:14px;margin-top:3px}
+ .digital-services-page .ds-imm-app .device-times{margin-top:11px}
+ .digital-services-page .ds-imm-app .device-times span{padding:10px 0}
+ .digital-services-page .ds-imm-app .device-button{margin-top:14px;padding:10px}
+ .digital-services-page .ds-imm-app .device-confirm{margin-top:8px;padding:8px}
+ .digital-services-page .ds-imm-app .v4-booking-progress{margin-top:8px}
+}
+@media(min-width:992px) and (max-width:1199px){
+ .digital-services-page .ds-imm-app .app-device{left:10%!important;width:245px!important}
+ .digital-services-page .ds-imm-app .app-dashboard{right:7%!important;width:380px!important;max-width:45%!important}
+}

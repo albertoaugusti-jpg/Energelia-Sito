@@ -1,0 +1,27 @@
+<div class="uc-demo uc-work ux-dispatch" data-uc-work="dispatch">
+  <div class="ux-app-bar"><div class="ux-app-identity"><span class="ux-app-monogram ux-app-monogram-dispatch">R</span><span><strong>RETE TECNICA</strong><small>Centro operativo interventi</small></span></div><span class="ux-app-mode"><span class="ux-live-dot"></span> GESTIONE TEAM</span></div>
+  <div class="ux-dispatch-overview"><div><small>GESTIONE INTERVENTI</small><h2>Tutto il lavoro, sotto controllo.</h2><p>Seleziona un intervento per assegnarlo al tecnico giusto.</p></div><div class="ux-overview-stats"><span><strong data-ux-count-unassigned>3</strong><small>Da assegnare</small></span><span><strong data-ux-count-active>0</strong><small>In corso</small></span><span><strong data-ux-count-done>0</strong><small>Completati</small></span></div></div>
+  <div class="ux-dispatch-content">
+    <section class="ux-dispatch-board" aria-label="Bacheca degli interventi">
+      <div class="ux-board-heading"><div><small>BACHECA OPERATIVA</small><h3>Interventi</h3></div><span>Seleziona una scheda →</span></div>
+      <div class="ux-board-filter" role="group" aria-label="Filtra gli interventi su mobile"><button type="button" data-ux-board-tab="unassigned" aria-pressed="true">Da assegnare <span data-ux-tab-unassigned>3</span></button><button type="button" data-ux-board-tab="active" aria-pressed="false">In corso <span data-ux-tab-active>0</span></button><button type="button" data-ux-board-tab="done" aria-pressed="false">Completati <span data-ux-tab-done>0</span></button></div>
+      <div class="ux-kanban">
+        <section class="ux-kanban-column" data-ux-board-col="unassigned"><header><span class="ux-col-dot ux-col-unassigned"></span><strong>Da assegnare</strong><span data-ux-column-unassigned>3</span></header><div class="ux-kanban-stack" data-ux-cards="unassigned"></div></section>
+        <section class="ux-kanban-column" data-ux-board-col="active"><header><span class="ux-col-dot ux-col-active"></span><strong>In corso</strong><span data-ux-column-active>0</span></header><div class="ux-kanban-stack" data-ux-cards="active"></div></section>
+        <section class="ux-kanban-column" data-ux-board-col="done"><header><span class="ux-col-dot ux-col-done"></span><strong>Completati</strong><span data-ux-column-done>0</span></header><div class="ux-kanban-stack" data-ux-cards="done"></div></section>
+      </div>
+    </section>
+    <aside class="ux-dispatch-inspector" aria-labelledby="ux-inspector-title"><button type="button" class="ux-mobile-back" data-ux-dispatch-back>← Torna agli interventi</button><div class="ux-inspector-header"><span><small>DETTAGLIO OPERATIVO</small><h3 id="ux-inspector-title">Scheda intervento</h3></span><span class="ux-inspector-glyph" aria-hidden="true">↗</span></div>
+      <div class="ux-inspector-empty" data-ux-inspector-empty><span class="ux-empty-icon">▤</span><strong>Seleziona un intervento</strong><p>Scegli una scheda nella bacheca per vedere i dettagli e assegnarla.</p></div>
+      <div data-ux-inspector-active hidden>
+        <div class="ux-inspector-ticket"><small>DETTAGLIO INTERVENTO</small><span class="ux-priority" data-ux-detail-priority>P. MEDIA</span><h4 data-ux-detail-title></h4><p data-ux-detail-address></p><span class="ux-inspector-date" data-ux-detail-time></span></div>
+        <div class="ux-dispatch-form" data-ux-assign-form><label for="ux-assign-technician">Tecnico responsabile<select id="ux-assign-technician" data-ux-assign-technician><option value="">Scegli un tecnico</option><option value="Luca Ferri">Luca Ferri</option><option value="Sara Riva">Sara Riva</option><option value="Davide Costa">Davide Costa</option></select></label><fieldset class="ux-priority-picker"><legend>Priorità dell’intervento</legend><div><button type="button" data-ux-priority="Bassa" aria-pressed="false">Bassa</button><button type="button" data-ux-priority="Media" aria-pressed="true">Media</button><button type="button" data-ux-priority="Alta" aria-pressed="false">Alta</button></div></fieldset><button type="button" class="ux-action-primary" data-ux-action-assign disabled>Assegna e avvia →</button></div>
+        
+        <div class="ux-dispatch-next" data-ux-next-finish hidden><span class="ux-inline-success">● Lavorazione in corso</span><p data-ux-work-owner></p><button type="button" class="ux-action-primary" data-ux-action-finish>Segna come completato →</button></div>
+        <div class="ux-dispatch-done" data-ux-next-done hidden><strong>✓ Intervento completato</strong><p data-ux-done-summary></p></div>
+
+      </div>
+    </aside>
+  </div>
+  <div class="ux-work-footer"><span class="ux-footer-status" data-ux-dispatch-message role="status" aria-live="polite">Scegli uno degli interventi in attesa.</span><button type="button" class="ux-footer-reset" data-ux-dispatch-reset>↻ Ricomincia demo</button></div>
+</div>

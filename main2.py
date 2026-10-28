@@ -3,13 +3,16 @@ import re
 import html
 import smtplib
 import threading
+import hmac
+import secrets
 import psycopg2
 import feedparser
+import requests
 from datetime import datetime, timedelta
 from urllib.parse import urlparse, parse_qs, unquote
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from flask import Flask, render_template, abort, request, redirect, send_from_directory,jsonify
+from flask import Flask, render_template, abort, request, redirect, send_from_directory, jsonify, session
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__,
@@ -22,30 +25,11 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Genera URL con https:// invece di http:// nei template
 app.config['PREFERRED_URL_SCHEME'] = 'https'
+app.config.update(SESSION_COOKIE_HTTPONLY=True, SESSION_COOKIE_SAMESITE='Lax',
+                  SESSION_COOKIE_SECURE=os.environ.get('SESSION_COOKIE_SECURE', '1') != '0')
 
-# ==================== GOOGLE ANALYTICS ====================
-GA_SNIPPET = """<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PNQNJG5LLV"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-PNQNJG5LLV');
-      </script>
-      """
-
-
-@app.after_request
-def inject_google_analytics(response):
-    if response.content_type and response.content_type.startswith('text/html'):
-        try:
-            body = response.get_data(as_text=True)
-            if '</head>' in body:
-                response.set_data(body.replace('</head>', GA_SNIPPET + '</head>', 1))
-        except Exception as e:
-            print(f"[analytics] errore iniezione GA: {e}")
-    return response
+from privacy import register_privacy
+register_privacy(app)
 
 from crm import init_crm
 init_crm(app)
@@ -78,6 +62,8 @@ def render_page(page):
     Cerca un file <page>.html (case-insensitive) in
     templates/life-insurance-website-template e lo serve.
     """
+    if page.lower() in ('privacy-policy.html', 'cookie-policy.html'):
+        return redirect('/' + page[:-5], code=308)
     tpl_dir = os.path.join(app.template_folder,
                            'life-insurance-website-template')
     target = None
@@ -135,14 +121,15 @@ LEAD_NOTIFY_TO = os.environ.get('LEAD_NOTIFY_TO', 'a.castagnaro@energelia.it')
 LEAD_NOTIFY_FROM_NAME = os.environ.get('LEAD_NOTIFY_FROM_NAME', 'Sito Energelia')
 
 
-def _send_lead_email(subject, body):
+def _send_lead_email(subject, body, recipient=None):
     """Invio reale SMTP (chiamato dentro un thread)."""
-    if not (SMTP_USER and SMTP_PASS and LEAD_NOTIFY_TO):
+    actual_to = recipient or LEAD_NOTIFY_TO
+    if not (SMTP_USER and SMTP_PASS and actual_to):
         return
     try:
         msg = MIMEMultipart()
         msg['From'] = f"{LEAD_NOTIFY_FROM_NAME} <{SMTP_USER}>"
-        msg['To'] = LEAD_NOTIFY_TO
+        msg['To'] = actual_to
         msg['Subject'] = subject
         msg.attach(MIMEText(body, 'plain', 'utf-8'))
 
@@ -188,6 +175,10 @@ def get_db_connection():
     return psycopg2.connect(os.environ.get('DATABASE_URL'))
 
 
+from retention import register_retention, record_new_contact
+register_retention(app, lambda: get_db_connection())
+
+
 def init_db():
     """Crea le tabelle se non esistono"""
     try:
@@ -209,10 +200,18 @@ def init_db():
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        cur.execute('ALTER TABLE leads ADD COLUMN IF NOT EXISTS phone VARCHAR(50), ADD COLUMN IF NOT EXISTS tag VARCHAR(50)')
+        from digital_requests import migrate
+        migrate(cur)
+        from retention import migrate_retention
+        migrate_retention(cur)
         conn.commit()
         cur.close()
         conn.close()
     except Exception as e:
+        if 'conn' in locals():
+            conn.rollback()
+            conn.close()
         print(f"Errore init_db: {e}")
 
 
@@ -220,7 +219,7 @@ init_db()
 init_simulatore_db()
 
 
-VALID_BANDI = {'isi_inail', 'parco_agrisolare', 'botteghe_entroterra'}
+VALID_BANDI = {'isi_inail', 'parco_agrisolare', 'botteghe_entroterra', 'resto_sud'}
 
 
 @app.route('/api/lead', methods=['POST'])
@@ -249,9 +248,10 @@ def save_lead():
             )
         """)
         cur.execute(
-            "INSERT INTO leads (email, phone, bando) VALUES (%s, %s, %s)",
+            "INSERT INTO leads (email, phone, bando) VALUES (%s, %s, %s) RETURNING id",
             (email, phone, bando)
         )
+        record_new_contact(cur, 'leads', cur.fetchone()[0])
         conn.commit()
         cur.close()
         conn.close()
@@ -259,8 +259,73 @@ def save_lead():
         notify_new_lead('Lead — download report', email=email, phone=phone, bando=bando)
         return jsonify({'success': True})
     except Exception as e:
-        print(f"Errore save_lead: {e}")
-        return jsonify({'success': False, 'error': f'Errore: {str(e)}'}), 500
+        app.logger.error("Errore save_lead: %s", type(e).__name__)
+        return jsonify({'success': False, 'error': 'Servizio temporaneamente non disponibile. Riprova più tardi.'}), 500
+
+
+# Servizi digitali: percorso di contatto indipendente dai lead sui bandi.
+# Configurare DIGITAL_NOTIFY_TO prima della pubblicazione del nuovo modulo.
+DIGITAL_NOTIFY_TO = os.environ.get('DIGITAL_NOTIFY_TO', '').strip()
+DIGITAL_NOTIFY_FROM = os.environ.get('DIGITAL_NOTIFY_FROM', '').strip()
+DIGITAL_RESEND_API_KEY = (os.environ.get('DIGITAL_RESEND_API_KEY', '').strip()
+                          or os.environ.get('RESEND_API_KEY', '').strip())
+DIGITAL_PROJECT_FORM_ENABLED = os.environ.get('DIGITAL_PROJECT_FORM_ENABLED', '').strip() == '1'
+# Digital requests reuse the site's PostgreSQL and the existing CRM identity.
+from digital_requests import register_digital_requests, DigitalNotificationError, SERVICES as DIGITAL_SERVICES, TIMELINES as DIGITAL_TIMELINES
+from crm import utente_corrente, BASE as CRM_BASE
+
+
+def _digital_notification_ready():
+    return bool(DIGITAL_RESEND_API_KEY and DIGITAL_NOTIFY_FROM and DIGITAL_NOTIFY_TO)
+
+
+def _digital_notification_payload(row):
+    # No customer contacts, project free text or internal notes leave the CRM.
+    body = (f"Nuova richiesta digitale #{row['id']} registrata.\n"
+            f"Servizio: {DIGITAL_SERVICES.get(row['category'], row['category'])}\n"
+            f"Tempistica: {DIGITAL_TIMELINES.get(row['timeline'], 'Da valutare insieme')}\n"
+            f"Dettaglio nell'area riservata: https://energelia.it/crm/richieste-digitali/{row['id']}\n")
+    return {'from': DIGITAL_NOTIFY_FROM,
+            'to': [address.strip() for address in DIGITAL_NOTIFY_TO.split(',') if address.strip()],
+            'subject': f"Nuova richiesta digitale #{row['id']} — Energelia", 'text': body}
+
+
+def _send_digital_notification(row):
+    try:
+        response = requests.post('https://api.resend.com/emails',
+            headers={'Authorization': f'Bearer {DIGITAL_RESEND_API_KEY}',
+                     'Idempotency-Key': row['notification_key']},
+            json=row['notification_payload'], timeout=(3.05, 10), allow_redirects=False)
+    except requests.RequestException:
+        raise DigitalNotificationError('provider_connection_error') from None
+    if response.status_code != 200:
+        try:
+            error_name = response.json().get('name')
+        except (ValueError, AttributeError):
+            error_name = None
+        if response.status_code == 409 and error_name == 'invalid_idempotent_request':
+            raise DigitalNotificationError('idempotency_conflict', retryable=False)
+        try:
+            retry_after = min(86400, max(0, int(response.headers.get('Retry-After', '0'))))
+        except (ValueError, TypeError):
+            retry_after = 0
+        raise DigitalNotificationError(f'provider_http_{response.status_code}',
+            retryable=response.status_code in (408, 429) or response.status_code >= 500 or
+                      (response.status_code == 409 and error_name == 'concurrent_idempotent_requests'),
+            retry_after=retry_after)
+    try:
+        provider_id = response.json()['id']
+    except (ValueError, TypeError, KeyError):
+        raise DigitalNotificationError('invalid_provider_response') from None
+    return provider_id
+
+
+register_digital_requests(
+    app, lambda: get_db_connection(), lambda: DIGITAL_PROJECT_FORM_ENABLED,
+    _send_digital_notification, lambda: _digital_notification_ready(), utente_corrente, CRM_BASE,
+    notification_payload=_digital_notification_payload)
+
+
 
 
 @app.route('/api/consultation', methods=['POST'])
@@ -287,9 +352,10 @@ def save_consultation():
             )
         """)
         cur.execute(
-            "INSERT INTO consultations (email, phone) VALUES (%s, %s)",
+            "INSERT INTO consultations (email, phone) VALUES (%s, %s) RETURNING id",
             (email, phone)
         )
+        record_new_contact(cur, 'consultations', cur.fetchone()[0])
         conn.commit()
         cur.close()
         conn.close()
@@ -297,8 +363,8 @@ def save_consultation():
         notify_new_lead('Richiesta consulenza / Ricerca Bandi', email=email, phone=phone)
         return jsonify({'success': True})
     except Exception as e:
-        print(f"Errore save_consultation: {e}")
-        return jsonify({'success': False, 'error': f'Errore: {str(e)}'}), 500
+        app.logger.error("Errore save_consultation: %s", type(e).__name__)
+        return jsonify({'success': False, 'error': 'Servizio temporaneamente non disponibile. Riprova più tardi.'}), 500
 
 
 @app.route('/scarica-sito')
@@ -327,7 +393,7 @@ def download_report(bando):
 
 # ==================== ADMIN PANEL ====================
 
-ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'energelia2026')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', '')
 
 @app.route('/forzasamp')
 def admin_login_page():
@@ -335,21 +401,38 @@ def admin_login_page():
 
 @app.route('/forzasamp/dashboard')
 def admin_dashboard():
+    if not session.get('web_admin'):
+        return redirect('/forzasamp')
     return render_template('admin/dashboard.html')
 
 @app.route('/api/admin/login', methods=['POST'])
 def admin_login():
+    if request.headers.get('Origin', request.host_url.rstrip('/')) != request.host_url.rstrip('/') or request.headers.get('Sec-Fetch-Site') == 'cross-site':
+        abort(403)
     data = request.get_json(silent=True) or {}
     password = data.get('password', '')
 
-    if password == ADMIN_PASSWORD:
-        return jsonify({'success': True, 'token': 'admin_authenticated'})
+    if isinstance(password, str) and ADMIN_PASSWORD and hmac.compare_digest(password.encode(), ADMIN_PASSWORD.encode()):
+        session.clear()
+        session.permanent = True
+        session['web_admin'] = True
+        session['web_admin_token'] = secrets.token_urlsafe(32)
+        return jsonify({'success': True, 'token': session['web_admin_token']})
     return jsonify({'success': False, 'error': 'Password errata'}), 401
+
+@app.post('/api/admin/logout')
+def admin_logout():
+    if request.headers.get('Sec-Fetch-Site') == 'cross-site':
+        abort(403)
+    session.pop('web_admin', None)
+    session.pop('web_admin_token', None)
+    return jsonify(success=True)
+
 
 @app.route('/api/admin/leads', methods=['GET'])
 def get_all_leads():
     auth = request.headers.get('Authorization', '')
-    if auth != 'Bearer admin_authenticated':
+    if not session.get('web_admin') or not hmac.compare_digest(auth, 'Bearer ' + session.get('web_admin_token', '')):
         return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
 
     try:
@@ -377,12 +460,12 @@ def get_all_leads():
 
         return jsonify({'success': True, 'leads': leads})
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        return jsonify({'success': False, 'error': 'Servizio temporaneamente non disponibile.'}), 500
 
 @app.route('/api/admin/consultations', methods=['GET'])
 def get_all_consultations():
     auth = request.headers.get('Authorization', '')
-    if auth != 'Bearer admin_authenticated':
+    if not session.get('web_admin') or not hmac.compare_digest(auth, 'Bearer ' + session.get('web_admin_token', '')):
         return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
 
     try:
@@ -408,12 +491,14 @@ def get_all_consultations():
 
         return jsonify({'success': True, 'consultations': consultations})
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        return jsonify({'success': False, 'error': 'Servizio temporaneamente non disponibile.'}), 500
 
 @app.route('/api/admin/lead/<int:lead_id>/tag', methods=['PUT'])
 def update_lead_tag(lead_id):
+    if request.headers.get('Origin', request.host_url.rstrip('/')) != request.host_url.rstrip('/') or request.headers.get('Sec-Fetch-Site') == 'cross-site':
+        abort(403)
     auth = request.headers.get('Authorization', '')
-    if auth != 'Bearer admin_authenticated':
+    if not session.get('web_admin') or not hmac.compare_digest(auth, 'Bearer ' + session.get('web_admin_token', '')):
         return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
 
     data = request.get_json(silent=True) or {}
@@ -432,12 +517,12 @@ def update_lead_tag(lead_id):
         conn.close()
         return jsonify({'success': True})
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        return jsonify({'success': False, 'error': 'Servizio temporaneamente non disponibile.'}), 500
 
 @app.route('/api/admin/stats', methods=['GET'])
 def get_admin_stats():
     auth = request.headers.get('Authorization', '')
-    if auth != 'Bearer admin_authenticated':
+    if not session.get('web_admin') or not hmac.compare_digest(auth, 'Bearer ' + session.get('web_admin_token', '')):
         return jsonify({'success': False, 'error': 'Non autorizzato'}), 401
 
     try:
@@ -469,7 +554,7 @@ def get_admin_stats():
             }
         })
     except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
+        return jsonify({'success': False, 'error': 'Servizio temporaneamente non disponibile.'}), 500
 
 
 # ==================== NEWS TICKER (Google Alerts RSS) ====================

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Casi d'uso concreti | Energelia</title>
+<meta name="description" content="Prova 15 casi d’uso interattivi di siti web, app, gestionali e automazioni. Filtra per servizio o esigenza e scopri le possibilità di un progetto su misura.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/casi-uso.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/energelia-catalog-v1.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/energelia-catalog-refinements-v1-1.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/energelia-preview-catalog-v13.css') }}">
+<script defer src="{{ url_for('static', filename='js/casi-uso.js') }}"></script>
+<script defer src="{{ url_for('static', filename='js/energelia-catalog-v1.js') }}"></script>
+</head>
+<body class="uc-page uc-catalog">
+{% include 'life-insurance-website-template/partials/usecase-header.html' %}
+{% set groups = [
+ {'key':'sito','number':'01','kicker':'SITI E CONTENUTI','title':'Gestisci il sito in autonomia.','desc':'Aggiorna testi, fotografie e informazioni senza dover intervenire sul codice.','items':[
+  {'id':'01','slug':'caso-modificare-sito','title':'Modificare il sito senza toccare codice','desc':'Testi, foto e pagine aggiornabili da un pannello.','kind':'editor','ready':true},
+  {'id':'02','slug':'caso-catalogo-online','title':'Aggiornare un menù o catalogo online','desc':'Prodotti, prezzi e disponibilità sempre aggiornati.','kind':'products','ready':true},
+  {'id':'03','slug':'caso-recensioni-testimonianze','title':'Gestire recensioni e testimonianze','desc':'Scegli quali testimonianze pubblicare sul sito.','kind':'reviews','ready':true}
+ ]},
+ {'key':'richieste','number':'02','kicker':'RICHIESTE E APPUNTAMENTI','title':'Dalle richieste dei clienti al lavoro.','desc':'Raccogli contatti, prenotazioni, preventivi e ordini in un unico percorso ordinato.','items':[
+  {'id':'04','slug':'caso-gestire-richieste','title':'Ricevere e gestire le richieste','desc':'Dalla richiesta del cliente alla pratica da seguire.','kind':'inbox','ready':true},
+  {'id':'05','slug':'caso-preparare-preventivo','title':'Richiedere e preparare un preventivo','desc':'Modulo guidato, dati raccolti e preventivo in PDF.','kind':'quote','ready':true},
+  {'id':'06','slug':'caso-prenotare-appuntamento','title':'Prenotare un appuntamento online','desc':'Disponibilità visibili e agenda aggiornata.','kind':'calendar','ready':true},
+  {'id':'07','slug':'caso-ordinare-ritiro','title':'Ordinare online per il ritiro','desc':'Ordine ricevuto, preparato e pronto per il ritiro.','kind':'orders','ready':true},
+  {'id':'08','slug':'caso-iscriversi-evento','title':'Iscriversi a un corso o evento','desc':'Posti disponibili, iscritti e check-in.','kind':'enroll','ready':true}
+ ]},
+ {'key':'lavoro','number':'03','kicker':'ORGANIZZARE IL LAVORO','title':'Organizza il lavoro di ogni giorno.','desc':'Segui clienti, interventi, attività e materiali con strumenti semplici e chiari. Tutto ciò di cui hai bisogno in un unico ambiente.','items':[
+  {'id':'09','slug':'caso-storico-cliente','title':'Consultare lo storico di un cliente','desc':'Scegli un cliente, esplora gli interventi e aggiungi una nota.','kind':'customer','ready':true},
+  {'id':'10','slug':'caso-assegnare-interventi','title':'Assegnare interventi al team','desc':'Organizza gli incarichi e segui gli stati fino al completamento.','kind':'tasks','ready':true},
+  {'id':'11','slug':'caso-area-clienti','title':'Offrire un’area clienti riservata','desc':'Progetti, stati, documenti e comunicazioni.','kind':'portal','ready':true},
+  {'id':'12','slug':'caso-magazzino-scorte','title':'Controllare materiali e scorte','desc':'Movimenti e disponibilità sempre sotto controllo.','kind':'stock','ready':true}
+ ]},
+ {'key':'automazioni','number':'04','kicker':'AUTOMAZIONI PRATICHE','title':'Eventi chiari, risultati automatici.','desc':'Ogni automazione racconta un passaggio concreto: succede qualcosa, parte un’azione, si ottiene un risultato utile.','items':[
+  {'id':'13','slug':'caso-preventivo-commessa','title':'Estrarre dati da un documento','desc':'Dal testo ai campi del gestionale, con verifica prima dell’importazione.','kind':'job','ready':true},
+  {'id':'14','slug':'caso-promemoria-scadenza','title':'Preparare e inviare promemoria','desc':'Regola, messaggi personalizzati e invio simulato.','kind':'reminder','ready':true},
+  {'id':'15','slug':'caso-rapporto-intervento','title':'Dal lavoro concluso al rapporto PDF','desc':'Note e fotografie diventano un report archiviato.','kind':'report','ready':true}
+ ]}
+] %}
+<main id="contenuto">
+<section class="uc-hero el-cat-hero" aria-labelledby="uc-title"><div class="uc-shell el-cat-layout">
+  <div class="uc-hero-copy el-cat-copy"><p class="uc-kicker uc-kicker-light"><span></span> SERVIZI DIGITALI / LABORATORI</p>
+    <h1 id="uc-title">Non solo idee.<br><em>Prova come funzionano.</em></h1>
+    <p>15 casi d’uso interattivi per scoprire come possono funzionare siti web, applicazioni, gestionali e automazioni. Scegli una funzione, prova i passaggi e valuta se può essere utile alla tua attività.</p>
+    <span class="uc-illustrative">Dimostrazioni con dati inventati · Nessun servizio reale viene attivato</span>
+  </div>
+  <div class="el-cat-steps" aria-label="Come funzionano le dimostrazioni"><span class="el-cat-steps-label">DAL BISOGNO AL RISULTATO</span>
+    <div><b>01</b><span><strong>Scegli un esempio</strong><small>Trova la funzione che ti interessa</small></span><i>↗</i></div>
+    <div><b>02</b><span><strong>Prova i passaggi</strong><small>Interagisci con una demo guidata</small></span><i>↗</i></div>
+    <div><b>03</b><span><strong>Guarda il risultato</strong><small>Verifica cosa accade nella pratica</small></span><i>✓</i></div>
+  </div>
+</div></section>
+<section class="el-cat-filter-shell" id="catalogo-filtri" aria-label="Filtri dei casi d'uso"><div class="uc-shell">
+  <div class="el-filter-top"><div><span class="el-filter-eyebrow">ESPLORA I LABORATORI</span><h2>Trova la funzione giusta.</h2></div><div class="v11-filter-tools"><span class="el-filter-count" role="status" aria-live="polite" data-el-count>15 casi disponibili</span><button type="button" data-el-reset>Reimposta filtri ↺</button></div></div>
+  <div class="el-filter-select-grid" role="group" aria-label="Filtra i laboratori">
+    <div class="el-filter-select-field">
+      <label for="el-select-service">Quale servizio ti interessa?</label>
+      <div class="el-filter-select-wrap"><select id="el-select-service" data-el-service>
+        <option value="all">Tutti i servizi</option>
+        <option value="sito">Siti web</option>
+        <option value="app">App e software</option>
+        <option value="gestionale">Gestionali</option>
+        <option value="automazioni">Automazioni e AI</option>
+      </select></div>
+    </div>
+    <div class="el-filter-select-field">
+      <label for="el-select-goal">Cosa vuoi ottenere?</label>
+      <div class="el-filter-select-wrap"><select id="el-select-goal" data-el-goal>
+        <option value="all">Tutti gli obiettivi</option>
+        <option value="contenuti">Contenuti online</option>
+        <option value="clienti">Servizi per clienti</option>
+        <option value="lavoro">Organizzare il lavoro</option>
+        <option value="documenti">Documenti e attività ripetitive</option>
+      </select></div>
+    </div>
+  </div>
+  
+</div></section>
+{% set el_service_tags = {
+'editor':'sito','products':'sito','reviews':'sito',
+'inbox':'app gestionale automazioni','quote':'app gestionale','calendar':'sito app',
+'orders':'sito app','enroll':'app','customer':'gestionale','tasks':'gestionale',
+'portal':'app gestionale','stock':'gestionale','job':'automazioni gestionale',
+'reminder':'automazioni','report':'automazioni gestionale'} %}
+{% set el_goal_tags = {
+'editor':'contenuti','products':'contenuti clienti','reviews':'contenuti',
+'inbox':'clienti lavoro','quote':'clienti documenti','calendar':'clienti',
+'orders':'clienti','enroll':'clienti','customer':'lavoro',
+ 'tasks':'lavoro','portal':'clienti lavoro','stock':'lavoro',
+'job':'documenti lavoro','reminder':'documenti lavoro','report':'documenti lavoro'} %}
+<div class="el-cat-no-results" data-el-empty hidden>Non ci sono casi d’uso con questa combinazione. Prova a selezionare un altro obiettivo oppure mostra tutti i servizi.</div>
+<div class="uc-catalog-sections">
+{% for group in groups %}
+<section class="uc-group" id="gruppo-{{ group.key }}" data-uc-group="{{ group.key }}" data-el-section aria-labelledby="group-title-{{ group.key }}"><div class="uc-shell uc-group-layout">
+<div class="uc-group-copy"><p class="uc-kicker"><span>{{ group.number }}</span> {{ group.kicker }}</p><h2 id="group-title-{{ group.key }}">{{ group.title }}</h2><p>{{ group.desc }}</p></div>
+<div class="uc-card-grid">
+{% for case in group['items'] %}
+{% if case.ready|default(false) %}<a class="uc-card uc-card-live" data-el-services="{{ el_service_tags[case.kind] }}" data-el-goals="{{ el_goal_tags[case.kind] }}" href="/{{ case.slug }}" aria-label="Esplora il caso {{ case.id }}: {{ case.title }}">
+{% else %}<article class="uc-card uc-card-soon" data-el-services="{{ el_service_tags[case.kind] }}" data-el-goals="{{ el_goal_tags[case.kind] }}" aria-label="Caso {{ case.id }}: {{ case.title }}. Approfondimento in preparazione">
+{% endif %}
+<div class="uc-card-image"><img class="uc-case-cover" src="{{ url_for('static', filename='img/casi-uso/covers/' ~ case.kind ~ '.webp') }}" alt="" loading="lazy" decoding="async" width="960" height="500"></div>
+<div class="uc-card-body"><span class="uc-card-id">{{ case.id }} / 15</span><h3>{{ case.title }}</h3><p>{{ case.desc }}</p><span class="uc-card-action">{% if case.ready|default(false) %}Esplora la demo <i aria-hidden="true">↗</i>{% else %}Approfondimento in preparazione{% endif %}</span></div>
+{% if case.ready|default(false) %}</a>{% else %}</article>{% endif %}
+{% endfor %}
+</div></div></section>
+{% endfor %}
+</div>
+<section class="uc-footer-cta uc-footer-catalog" aria-labelledby="uc-footer-title"><div class="uc-shell uc-footer-inner"><div class="uc-footer-copy"><p class="uc-kicker uc-kicker-light">IL PROSSIMO PASSO</p><h2 id="uc-footer-title">Hai un’idea in mente?</h2><p>Raccontaci le tue esigenze. Possiamo prepararti una prima proposta visiva, gratuitamente e senza impegno.</p></div><a class="uc-button uc-button-red" href="/servizi-digitali#contatto">Richiedi una proposta <span aria-hidden="true">↗</span></a></div></section>
+</main>
+{% include 'life-insurance-website-template/partials/usecase-footer.html' %}
+</body></html>

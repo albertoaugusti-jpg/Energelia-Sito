@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} | Energelia</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/privacy.css') }}">
+</head>
+<body>
+{% include 'life-insurance-website-template/partials/navbar.html' %}
+<main class="legal-main"><div class="legal-layout">
+  <a href="/">Energelia / Informazioni legali</a>
+  <h1>{{ self.title() }}</h1>
+  <p class="legal-meta">Versione {{ privacy_version|default('2026-10-27-v2') }} · Ultimo aggiornamento: 27 ottobre 2026</p>
+
+  {% block legal_content %}{% endblock %}
+</div></main>
+{% include 'life-insurance-website-template/partials/footer.html' %}
+</body>
+</html>

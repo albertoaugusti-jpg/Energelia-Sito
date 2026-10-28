@@ -3,44 +3,14 @@
 
     <head>
         <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('consent', 'default', {
-            'ad_storage': 'denied',
-            'analytics_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
-            'wait_for_update': 500
-          });
-          try {
-            if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
-              gtag('consent', 'update', {
-                'ad_storage': 'granted',
-                'analytics_storage': 'granted',
-                'ad_user_data': 'granted',
-                'ad_personalization': 'granted'
-              });
-            }
-          } catch(e) {}
-        </script>
+        
 
         <!-- Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-VL6MKDTQXH"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-VL6MKDTQXH');
-        </script>
+        
+        
         <!-- Google Ads -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17893109593"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-17893109593');
-        </script>
+        
+        
 
         <meta charset="utf-8">
         <title>Simulatore Fotovoltaico | Energelia</title>
@@ -369,7 +339,7 @@
           <p class="sfv-file-name sfv-hidden" id="sfv-file-name"></p>
           <input type="file" id="sfv-file-input" accept="application/pdf" class="sfv-hidden">
         </div>
-        <p class="sfv-privacy-note">Il file viene usato solo per estrarre i dati di consumo necessari alla simulazione.</p>
+        <p class="sfv-privacy-note">Il testo estratto dal PDF (fino a 12.000 caratteri, anche con dati identificativi presenti nella bolletta) è inviato al servizio AI Anthropic per ricavare i dati energetici. Puoi usare l’inserimento manuale senza inviare la bolletta al servizio AI. Il PDF originale non viene salvato dall’applicazione. <a href="/privacy-policy#simulatore">Leggi finalità, destinatari e conservazione</a>.</p>
       </div>
 
       <!-- Tab manuale -->
@@ -435,6 +405,7 @@
           <span><span class="dot" style="background:#1a5276"></span>Energia immessa in rete</span>
         </div>
       </div>
+      <p class="form-privacy-note">I recapiti e i dati estratti della simulazione vengono salvati solo quando invii la richiesta di contatto. Nessuna newsletter. <a href="/privacy-policy#simulatore">Informativa privacy del simulatore</a>.</p>
       <p class="sfv-privacy-note">*Scenario senza batteria di accumulo. Stima grossolana, non sostituisce un sopralluogo.</p>
 
       <div class="sfv-spiegazione">
@@ -476,6 +447,7 @@
         <label for="l-phone">Telefono (facoltativo)</label>
         <input type="tel" id="l-phone">
       </div>
+<p class="form-privacy-note">Invieremo e salveremo email, eventuale telefono e dati della simulazione per gestire la tua richiesta. Nessuna newsletter. Per i contatti non acquisiti è previsto un termine di 24 mesi dall’ultima interazione significativa. <a href="/privacy-policy#simulatore">Informativa completa</a>.</p>
       <button class="sfv-btn" id="sfv-invia-lead-btn"><i class="fas fa-paper-plane me-2"></i>Ricevi la valutazione completa</button>
 
       <div id="sfv-lead-ok" class="sfv-hidden" style="margin-top:14px; color:#1e7e3a; font-weight:700;">

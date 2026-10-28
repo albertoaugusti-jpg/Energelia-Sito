@@ -1,0 +1,34 @@
+<div class="uc-demo uc-work ux-history" data-uc-work="history">
+  <div class="ux-app-bar"><div class="ux-app-identity"><span class="ux-app-monogram">N</span><span><strong>NOVA ASSISTENZA</strong><small>Gestionale clienti</small></span></div><span class="ux-app-mode"><span class="ux-live-dot"></span> ARCHIVIO CLIENTI</span></div>
+  <div class="ux-history-layout">
+    <aside class="ux-customer-rail" aria-labelledby="ux-history-customer-heading">
+      <div class="ux-rail-heading"><div><small>RUBRICA CLIENTI</small><h2 id="ux-history-customer-heading">I tuoi clienti</h2></div><span class="ux-counter">03</span></div>
+      <p class="ux-rail-help">Scegli una scheda per consultare lo storico.</p>
+      <div class="ux-customer-list" role="group" aria-label="Scegli un cliente">
+        <button type="button" class="ux-customer-option" data-ux-customer="anna" aria-pressed="false"><span class="ux-avatar">AV</span><span><strong>Anna Verdi</strong><small>2 interventi in archivio</small></span><span class="ux-chevron" aria-hidden="true">›</span></button>
+        <button type="button" class="ux-customer-option" data-ux-customer="marco" aria-pressed="false"><span class="ux-avatar ux-avatar-b">ML</span><span><strong>Marco Lodi</strong><small>2 interventi in archivio</small></span><span class="ux-chevron" aria-hidden="true">›</span></button>
+        <button type="button" class="ux-customer-option" data-ux-customer="giulia" aria-pressed="false"><span class="ux-avatar ux-avatar-c">GC</span><span><strong>Giulia Costa</strong><small>2 interventi in archivio</small></span><span class="ux-chevron" aria-hidden="true">›</span></button>
+      </div>
+      <div class="ux-rail-foot"><span class="ux-rail-foot-symbol">◎</span><span>Una sola scheda per tutte le attività.</span></div>
+    </aside>
+    <section class="ux-history-main" aria-label="Storico del cliente selezionato">
+      <div class="ux-empty-welcome" data-ux-history-empty>
+        <span class="ux-empty-icon">▤</span><small>SCHEDE CLIENTI</small><h2>La storia di ogni intervento,<br>sempre a portata di mano.</h2><p>Seleziona un cliente dalla rubrica per aprire attività, documenti e note.</p>
+        <div class="ux-empty-preview"><span>Richiesta ricevuta</span><i></i><span>Intervento concluso</span><i></i><span>Documento archiviato</span></div>
+      </div>
+      <div data-ux-history-active hidden>
+        <button type="button" class="ux-mobile-back" data-ux-history-back>← Cambia cliente</button>
+        <div class="ux-history-profile"><div class="ux-profile-identity"><span class="ux-profile-avatar" data-ux-history-avatar>AV</span><div><small>ANAGRAFICA CLIENTE</small><h2 data-ux-history-name>Anna Verdi</h2><span data-ux-history-contact>anna@example.com · Genova</span></div></div><span class="ux-profile-pill">Scheda attiva</span></div>
+        <div class="ux-history-metrics"><div><small>INTERVENTI</small><strong data-ux-history-count>2</strong></div><div><small>DOCUMENTI</small><strong data-ux-history-doc-count>2</strong></div><div><small>ULTIMO AGGIORNAMENTO</small><strong data-ux-history-last>Oggi</strong></div></div>
+        <div class="ux-history-tabs" role="tablist" aria-label="Sezioni scheda cliente"><button type="button" role="tab" data-ux-history-tab="history" aria-selected="true">Storico</button><button type="button" role="tab" data-ux-history-tab="documents" aria-selected="false">Documenti</button><button type="button" role="tab" data-ux-history-tab="notes" aria-selected="false">Note</button></div>
+        <div class="ux-history-content-grid">
+          <section class="ux-history-timeline-section" data-ux-history-section="history" aria-labelledby="ux-history-events-title"><div class="ux-section-title"><span><small>ATTIVITÀ CLIENTE</small><h3 id="ux-history-events-title">Cronologia interventi</h3></span><span class="ux-section-meta">Più recenti in alto</span></div><div class="ux-timeline" data-ux-history-events></div></section>
+          <section class="ux-history-docs" data-ux-history-section="documents" aria-labelledby="ux-history-docs-title"><div class="ux-section-title"><span><small>ARCHIVIO DIGITALE</small><h3 id="ux-history-docs-title">Documenti</h3></span></div><div class="ux-doc-list" data-ux-history-docs></div></section>
+        </div>
+        <form class="ux-note-form" data-ux-history-section="notes" data-ux-history-note-form><div class="ux-section-title"><span><small>APPUNTI INTERNI</small><h3>Nuova nota nella scheda</h3></span></div><label for="ux-history-note-input">Scrivi una nota utile per il prossimo intervento</label><textarea id="ux-history-note-input" data-ux-history-note-input maxlength="180" rows="3" placeholder="Es. Verificare la guarnizione al prossimo controllo." required></textarea><div class="ux-note-actions"><small><span data-ux-history-note-count>0</span> / 180 caratteri</small><button type="submit" class="ux-action-primary">Aggiungi nota <span aria-hidden="true">↗</span></button></div><p class="ux-form-error" data-ux-history-note-error hidden role="alert">Scrivi almeno 3 caratteri per aggiungere la nota.</p></form>
+
+      </div>
+    </section>
+  </div>
+  <div class="ux-work-footer"><span class="ux-footer-status" data-ux-history-message role="status" aria-live="polite">Seleziona un cliente per iniziare.</span><button type="button" class="ux-footer-reset" data-ux-history-reset>↻ Ricomincia demo</button></div>
+</div>

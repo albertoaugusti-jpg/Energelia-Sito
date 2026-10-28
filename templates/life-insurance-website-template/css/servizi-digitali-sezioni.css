@@ -1,0 +1,392 @@
+/* ENERGELIA / SERVIZI DIGITALI — P025 POST-IMMERSIVE EDITORIAL SYSTEM
+   Intentionally isolated from approved hero and three chapter journey. */
+.digital-services-page .nx-bridge,
+.digital-services-page .nx-offer,
+.digital-services-page .nx-lab,
+.digital-services-page .nx-method,
+.digital-services-page .nx-questions,
+.digital-services-page .nx-contact {font-family:'Inter',sans-serif;position:relative;isolation:isolate;box-sizing:border-box;}
+.digital-services-page .nx-bridge *, .digital-services-page .nx-offer *, .digital-services-page .nx-lab *, .digital-services-page .nx-method *, .digital-services-page .nx-questions *, .digital-services-page .nx-contact *{box-sizing:border-box}
+.digital-services-page .nx-shell{width:min(100% - 104px,1320px);margin:0 auto}
+.digital-services-page .nx-index{display:inline-block;font-size:11px;letter-spacing:.16em;font-weight:750;line-height:1.5;color:#7691a9}
+.digital-services-page .nx-index-red{color:#d52833}
+.digital-services-page .nx-bridge h2,.digital-services-page .nx-offer h2,.digital-services-page .nx-lab h2,.digital-services-page .nx-method h2,.digital-services-page .nx-questions h2,.digital-services-page .nx-contact h2{margin:0;letter-spacing:-.065em;font-weight:750;line-height:1.075}
+.digital-services-page .nx-bridge em,.digital-services-page .nx-offer em,.digital-services-page .nx-lab em,.digital-services-page .nx-method em,.digital-services-page .nx-questions em,.digital-services-page .nx-contact em{font-family:'Source Serif 4',Georgia,serif;font-weight:450;letter-spacing:-.043em;font-style:italic}
+.digital-services-page .nx-text-link,.digital-services-page .nx-inline-link{color:#c52a34;font-size:13px;letter-spacing:-.015em;font-weight:700;text-decoration:none;display:inline-flex;gap:24px;align-items:center;transition:gap .18s ease,color .18s ease}
+.digital-services-page .nx-text-link:hover,.digital-services-page .nx-inline-link:hover{gap:31px;color:#9c1b28;text-decoration:none}
+.digital-services-page .nx-text-link:focus-visible,.digital-services-page .nx-inline-link:focus-visible,.digital-services-page .nx-lab-tabs button:focus-visible,.digital-services-page .nx-submit:focus-visible,.digital-services-page .nx-contact a:focus-visible,.digital-services-page .nx-faq summary:focus-visible{outline:3px solid #e33339;outline-offset:4px}
+
+/* Return to the ordinary world after the immersive payoff: ample air, stronger typography. */
+.digital-services-page .nx-bridge{background:#f5f6f7;color:#10263e;padding:153px 0 152px;overflow:hidden}
+.digital-services-page .nx-bridge::before{content:'';position:absolute;width:1px;top:0;bottom:0;left:max(52px,calc((100vw - 1320px)/2));background:#dfe4e8;opacity:.8}
+.digital-services-page .nx-bridge-grid{display:grid;grid-template-columns:148px minmax(0,1.7fr) minmax(260px,.75fr);gap:45px;align-items:start}
+.digital-services-page .nx-bridge-ledger{display:flex;flex-direction:column;gap:25px;padding-top:17px}
+.digital-services-page .nx-ledger-line{display:block;height:1px;width:72px;background:#d42b35}
+.digital-services-page .nx-bridge h2{font-size:clamp(46px,5.0vw,81px);max-width:830px}
+.digital-services-page .nx-bridge h2 em{display:inline;color:#b32936}
+.digital-services-page .nx-bridge-aside{padding:130px 0 0 14px}
+.digital-services-page .nx-bridge-mark{display:flex;color:#c72734;width:47px;height:47px;margin-bottom:12px}
+.digital-services-page .nx-bridge-mark svg{width:100%;height:100%}
+.digital-services-page .nx-bridge-aside p{margin:0 0 24px;font-size:16px;line-height:1.8;letter-spacing:-.013em;color:#42536a;max-width:330px}
+
+/* Services: editorial ledger, no boxed carousel or mini dashboards. */
+.digital-services-page .nx-offer{background:#ffffff;color:#0d2139;padding:142px 0 136px}
+.digital-services-page .nx-offer-head{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(260px,.75fr);gap:50px;align-items:end;margin-bottom:82px}
+.digital-services-page .nx-offer h2{font-size:clamp(46px,5.1vw,77px);margin-top:28px}
+.digital-services-page .nx-offer h2 em{color:#697d90}
+.digital-services-page .nx-offer-head>p{color:#4d6077;font-size:17px;line-height:1.75;letter-spacing:-.018em;margin:0 0 7px;max-width:340px}
+.digital-services-page .nx-offer-list{border-top:1px solid #d8dfe6}
+.digital-services-page .nx-offer-item{display:grid;grid-template-columns:134px minmax(0,1.32fr) minmax(0,.8fr);gap:35px;border-bottom:1px solid #d8dfe6;padding:51px 0 58px;align-items:start;transition:background-color .22s ease}
+.digital-services-page .nx-offer-index{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:52px;min-height:165px}
+.digital-services-page .nx-offer-index>span{font-size:15px;font-weight:700;color:#aaafbc}
+.digital-services-page .nx-offer-index svg{color:#c7d1db;width:57px;height:57px;transition:color .3s ease,transform .3s ease}
+.digital-services-page .nx-offer-item:hover .nx-offer-index svg{color:#c92834;transform:translateY(-5px)}
+.digital-services-page .nx-overline{font-size:10px;color:#c32936;font-weight:750;letter-spacing:.19em;margin:0 0 18px!important}
+.digital-services-page .nx-offer-main h3{margin:0 0 22px;font-size:clamp(30px,3.2vw,48px);letter-spacing:-.055em;line-height:1.1;font-weight:760;color:#132941}
+.digital-services-page .nx-offer-main h3 span{display:block;color:#788c9f;font-family:'Source Serif 4',Georgia,serif;font-weight:450;font-style:italic;letter-spacing:-.042em}
+.digital-services-page .nx-offer-question{font-size:18px;line-height:1.55;letter-spacing:-.022em;color:#334961;max-width:440px;margin:0!important;font-weight:500}
+.digital-services-page .nx-offer-detail{padding-top:36px}
+.digital-services-page .nx-offer-detail>p{font-size:15px;line-height:1.78;color:#55677a;margin:0 0 24px}
+.digital-services-page .nx-offer-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:23px}
+.digital-services-page .nx-offer-tags span{font-size:11px;line-height:1.1;padding:8px 10px;border:1px solid #dfe5e9;border-radius:4px;color:#647487;font-weight:600;white-space:nowrap}
+.digital-services-page .nx-offer-outro{display:flex;align-items:center;gap:22px;border-bottom:1px solid #e0e4e8;padding:34px 0 0}
+.digital-services-page .nx-outro-star{font-size:31px;line-height:1;color:#d22e36;flex-shrink:0}
+.digital-services-page .nx-offer-outro p{font-size:14px;color:#546377;margin:0;line-height:1.65;flex:1}
+.digital-services-page .nx-offer-outro p strong{color:#17283e}
+.digital-services-page .nx-offer-outro a{flex-shrink:0}
+
+/* Concrete examples: a single authored dark workbench with three user-selectable cases. */
+.digital-services-page .nx-lab{padding:119px 0 142px;background:#f1f4f6;color:#0a213c}
+.digital-services-page .nx-lab-heading{margin-bottom:49px}
+.digital-services-page .nx-lab-heading-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(260px,.7fr);gap:65px;align-items:end;margin-top:25px}
+.digital-services-page .nx-lab h2{font-size:clamp(48px,5.1vw,79px)}
+.digital-services-page .nx-lab h2 em{color:#b72d3a}
+.digital-services-page .nx-lab-heading-grid>p{font-size:16px;line-height:1.73;letter-spacing:-.014em;color:#506178;margin:0 0 6px;max-width:350px}
+.digital-services-page .nx-lab-heading-grid>p strong{color:#182d44;font-weight:700}
+.digital-services-page .nx-lab-stage{background:radial-gradient(ellipse at 78% 42%,rgba(46,97,142,.42),transparent 54%),linear-gradient(145deg,#05182c,#0c2a47 68%,#07182b);border:1px solid #1d415e;box-shadow:0 36px 72px rgba(15,46,75,.11);border-radius:18px;overflow:hidden;color:white;position:relative}
+.digital-services-page .nx-lab-stage::before{content:'';pointer-events:none;position:absolute;inset:0;background-image:linear-gradient(rgba(138,198,239,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(138,198,239,.035) 1px,transparent 1px);background-size:64px 64px;opacity:.45}
+.digital-services-page .nx-lab-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));position:relative;z-index:2;border-bottom:1px solid rgba(168,211,245,.18)}
+.digital-services-page .nx-lab-tabs button{border:0;border-right:1px solid rgba(168,211,245,.13);background:rgba(8,28,47,.14);color:#8faac0;padding:27px 25px 25px;text-align:left;display:flex;align-items:center;gap:15px;cursor:pointer;font-size:14px;font-weight:650;line-height:1.5;letter-spacing:-.018em;transition:background .18s,color .18s;position:relative}
+.digital-services-page .nx-lab-tabs button:last-child{border-right:0}
+.digital-services-page .nx-lab-tabs button span{font-size:11px;font-weight:700;color:#69859d;letter-spacing:.05em}
+.digital-services-page .nx-lab-tabs button[aria-selected="true"]{color:#fff;background:rgba(43,101,142,.22)}
+.digital-services-page .nx-lab-tabs button[aria-selected="true"]:after{content:'';position:absolute;left:24px;right:24px;bottom:0;height:3px;background:#e23a46}
+.digital-services-page .nx-lab-tabs button:hover{color:#f0f8ff}
+.digital-services-page .nx-lab-panel{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);min-height:560px;align-items:stretch}
+.digital-services-page .nx-lab-panel[hidden]{display:none!important}
+.digital-services-page .nx-lab-story{padding:71px 47px 69px 62px;display:flex;flex-direction:column;align-items:flex-start;position:relative;z-index:1}
+.digital-services-page .nx-lab-kind{font-size:10px;letter-spacing:.13em;color:#9dbed6;font-weight:700;margin-bottom:27px}
+.digital-services-page .nx-lab-story h3{font-weight:750;font-size:clamp(40px,4.0vw,57px);letter-spacing:-.055em;line-height:1.08;color:#fff;margin:0 0 36px}
+.digital-services-page .nx-lab-story h3 em{color:#8fc2e0;font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:400;letter-spacing:-.044em}
+.digital-services-page .nx-lab-sequence{display:grid;grid-template-columns:1fr;gap:22px;margin-bottom:32px;width:100%}
+.digital-services-page .nx-lab-sequence>div{border-top:1px solid rgba(151,197,228,.24);padding-top:13px}
+.digital-services-page .nx-lab-sequence b{font-size:12px;color:#e7f3fc;display:block;margin-bottom:7px;font-weight:700}
+.digital-services-page .nx-lab-sequence p{font-size:13px;color:#a5b9ca;line-height:1.74;max-width:355px;margin:0}
+.digital-services-page .nx-lab-takeaway{margin:auto 0 0!important;font-size:13px;line-height:1.65;color:#e1eef7;display:flex;align-items:start;gap:12px;font-weight:600}
+.digital-services-page .nx-lab-takeaway>span{font-size:21px;color:#f15e66;line-height:1;flex:0 0 auto}
+.digital-services-page .nx-lab-art{position:relative;min-width:0;display:flex;align-items:center;justify-content:center;padding:62px 49px 67px 20px;isolation:isolate}
+.digital-services-page .nx-lab-art::before{content:'';position:absolute;inset:65px 30px 80px 1px;border-radius:50%;filter:blur(40px);background:radial-gradient(circle,rgba(98,159,218,.27),transparent 72%);z-index:-1}
+.digital-services-page .nx-demo-window,.digital-services-page .nx-demo-workspace,.digital-services-page .nx-demo-flow{width:100%;max-width:640px;box-shadow:0 26px 57px rgba(0,8,24,.3)}
+.digital-services-page .nx-demo-window{background:#fff;border-radius:12px;overflow:hidden;transform:rotate(-2.2deg) translateY(-5px)}
+.digital-services-page .nx-demo-browser{height:41px;background:#f1f4f6;display:flex;align-items:center;gap:6px;padding:0 15px;border-bottom:1px solid #e2e9ed}
+.digital-services-page .nx-demo-browser i{display:block;width:7px;height:7px;border-radius:50%;background:#b4c2cb}
+.digital-services-page .nx-demo-browser i:first-child{background:#d14c58}
+.digital-services-page .nx-demo-browser span{margin-left:auto;font-size:8px;color:#8a99a7;font-weight:800;letter-spacing:.12em}
+.digital-services-page .nx-demo-website{padding:23px 28px 24px;color:#0b2e47}
+.digital-services-page .nx-demo-website header{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #e4edf2;padding-bottom:18px;font-size:9px;color:#607184}
+.digital-services-page .nx-demo-website header b{letter-spacing:.17em;font-size:12px;color:#102d47}
+.digital-services-page .nx-demo-web-hero{display:flex;justify-content:space-between;gap:14px;padding:28px 0 34px}
+.digital-services-page .nx-demo-web-hero>div:first-child{flex:1;min-width:0}
+.digital-services-page .nx-demo-small{display:block;font-size:8px;font-weight:750;color:#c33842;letter-spacing:.14em;margin-bottom:14px}
+.digital-services-page .nx-demo-web-hero strong{display:block;font-size:clamp(17px,2.0vw,28px);line-height:1.19;letter-spacing:-.052em;font-weight:800}
+.digital-services-page .nx-demo-web-hero p{font-size:10px;color:#64798b;margin:10px 0 16px}
+.digital-services-page .nx-demo-fake-btn{background:#c72e39;color:white;display:inline-flex;gap:16px;padding:10px 12px;border-radius:3px;font-size:9px;font-weight:700}
+.digital-services-page .nx-demo-web-shape{width:37%;background:linear-gradient(145deg,#153e61,#0a2039);border-radius:4px;position:relative;overflow:hidden;min-height:185px;display:flex;align-items:end;justify-content:center;gap:6px;padding:17px}
+.digital-services-page .nx-demo-web-shape:before{content:'';width:145px;height:145px;border:1px solid rgba(255,255,255,.16);border-radius:50%;position:absolute;top:-40px;right:-55px}
+.digital-services-page .nx-demo-web-shape i{display:block;height:39%;flex:1;background:#6f98ad;border-radius:2px 2px 0 0;opacity:.8}
+.digital-services-page .nx-demo-web-shape i:nth-child(2){height:65%;background:#bad4e1}
+.digital-services-page .nx-demo-web-shape i:nth-child(3){height:49%;background:#438198}
+.digital-services-page .nx-demo-web-bottom{display:flex;justify-content:space-between;border-top:1px solid #e4edf2;padding-top:15px;gap:4px}
+.digital-services-page .nx-demo-web-bottom span{font-size:9px;color:#607589;white-space:nowrap}
+.digital-services-page .nx-demo-float{position:absolute;bottom:62px;right:31px;display:flex;align-items:center;gap:13px;background:#edf8f9;border:1px solid #d3e7e9;padding:16px 18px;border-radius:8px;color:#164456;box-shadow:0 13px 36px rgba(0,6,20,.2);z-index:2;transform:rotate(3deg)}
+.digital-services-page .nx-demo-float-check{display:grid;place-items:center;background:#1e9c8a;color:white;border-radius:50%;width:27px;height:27px;font-size:15px;font-weight:700}
+.digital-services-page .nx-demo-float strong{display:block;font-size:11px;line-height:1.35}
+.digital-services-page .nx-demo-float small{display:block;font-size:10px;color:#557785;line-height:1.5}
+.digital-services-page .nx-demo-workspace{display:flex;background:#f3f6fa;border-radius:10px;overflow:hidden;min-height:310px;transform:rotate(1.8deg)}
+.digital-services-page .nx-demo-w-sidebar{background:#112a47;width:55px;flex:0 0 55px;display:flex;flex-direction:column;align-items:center;gap:18px;padding:21px 0}
+.digital-services-page .nx-demo-w-mark{width:24px;height:24px;border-radius:6px;background:#fff;color:#12324d;display:grid;place-items:center;font-size:12px;font-weight:800}
+.digital-services-page .nx-demo-w-sidebar span{height:8px;width:23px;background:#45607c;border-radius:5px}
+.digital-services-page .nx-demo-w-sidebar span:first-of-type{background:#d63845}
+.digital-services-page .nx-demo-w-content{flex:1;min-width:0;padding:24px 20px}
+.digital-services-page .nx-demo-w-top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #dce3ed;padding-bottom:18px}
+.digital-services-page .nx-demo-w-top small{font-size:8px;letter-spacing:.1em;color:#7e93a5;display:block;margin-bottom:7px;font-weight:700}
+.digital-services-page .nx-demo-w-top strong{font-size:18px;color:#16314e;display:block;font-weight:750;letter-spacing:-.04em}
+.digital-services-page .nx-demo-w-top>span{font-size:21px;color:#c72e39}
+.digital-services-page .nx-demo-columns{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:10px;padding-top:20px}
+.digital-services-page .nx-demo-col label{display:flex;justify-content:space-between;gap:2px;font-size:8px;font-weight:750;color:#6b8196;letter-spacing:.02em;margin-bottom:12px}
+.digital-services-page .nx-demo-col label b{color:#90a2b0;font-weight:750}
+.digital-services-page .nx-demo-task{background:white;border:1px solid #e3e9f0;border-radius:5px;min-height:80px;padding:12px 8px 9px;margin-bottom:8px;color:#263e53;box-shadow:0 4px 10px rgba(30,60,85,.035)}
+.digital-services-page .nx-demo-task>i{display:block;width:15px;height:3px;background:#db3d46;margin-bottom:11px;border-radius:3px}
+.digital-services-page .nx-demo-task strong{display:block;font-size:10px;line-height:1.4;margin-bottom:7px}
+.digital-services-page .nx-demo-task small{font-size:8px;color:#91a0ae;display:block;line-height:1.45}
+.digital-services-page .nx-demo-task-mute>i{background:#9caabc}
+.digital-services-page .nx-demo-done>i{background:#d9eee8;color:#229c82;width:17px;height:17px;border-radius:50%;font-style:normal;display:grid;place-items:center;font-size:10px;margin-bottom:8px}
+.digital-services-page .nx-demo-flow{max-width:510px;border:1px solid rgba(147,206,237,.23);background:linear-gradient(145deg,#123a58,#0b2944);border-radius:13px;padding:30px 36px;transform:rotate(-1.4deg)}
+.digital-services-page .nx-demo-flow-top{text-align:center;padding-bottom:23px;border-bottom:1px solid rgba(154,209,232,.2)}
+.digital-services-page .nx-demo-flow-top span{font-size:8px;color:#82b1cf;letter-spacing:.15em;display:block;margin-bottom:9px;font-weight:700}
+.digital-services-page .nx-demo-flow-top strong{font-size:17px;color:#e7f6fd;font-weight:700;letter-spacing:-.03em}
+.digital-services-page .nx-demo-flow-input{display:flex;align-items:center;gap:13px;background:rgba(128,190,230,.13);border:1px solid rgba(158,213,241,.33);border-radius:7px;padding:13px 18px;margin:19px auto 0;max-width:295px}
+.digital-services-page .nx-demo-flow-icon{height:34px;width:34px;display:grid;place-items:center;border-radius:8px;background:#2f6792;color:#c6f0ff;font-size:22px;flex-shrink:0}
+.digital-services-page .nx-demo-flow-input>div{flex:1}
+.digital-services-page .nx-demo-flow-input strong,.digital-services-page .nx-demo-flow-results strong{font-size:11px;line-height:1.3;color:#eaf7ff;display:block}
+.digital-services-page .nx-demo-flow-input small{display:block;font-size:9px;color:#95b8d2;margin-top:4px}
+.digital-services-page .nx-demo-flow-led{width:7px;height:7px;background:#5fceab;border-radius:50%;box-shadow:0 0 0 4px rgba(95,206,171,.15)}
+.digital-services-page .nx-demo-flow-spine{height:53px;width:100%;display:flex;align-items:center;justify-content:center;gap:22px;position:relative}
+.digital-services-page .nx-demo-flow-spine:before{content:'';height:43px;width:1px;position:absolute;top:0;left:50%;background:linear-gradient(#81b6dc,rgba(129,182,220,.5))}
+.digital-services-page .nx-demo-flow-spine:after{content:'';height:1px;width:65%;bottom:10px;position:absolute;background:#689dc3}
+.digital-services-page .nx-demo-flow-spine i{height:6px;width:6px;border-radius:50%;background:#85c9ea;position:absolute;bottom:7px;z-index:1}
+.digital-services-page .nx-demo-flow-spine i:nth-child(1){left:17%}.digital-services-page .nx-demo-flow-spine i:nth-child(2){left:49.5%}.digital-services-page .nx-demo-flow-spine i:nth-child(3){left:81.5%}
+.digital-services-page .nx-demo-flow-results{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:10px}
+.digital-services-page .nx-demo-flow-results>div{display:flex;align-items:center;flex-direction:column;justify-content:center;gap:12px;border:1px solid rgba(135,186,221,.32);border-radius:6px;background:rgba(160,203,228,.07);padding:17px 6px;text-align:center;min-height:86px}
+.digital-services-page .nx-demo-check{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:rgba(63,187,153,.17);color:#75dab5;font-size:13px;font-weight:800}
+.digital-services-page .nx-demo-flow-results strong{font-size:10px}
+.digital-services-page .nx-lab-stage-foot{position:relative;z-index:2;border-top:1px solid rgba(154,207,241,.15);min-height:76px;display:flex;gap:22px;align-items:center;justify-content:space-between;padding:0 33px 0 62px}
+.digital-services-page .nx-lab-stage-foot>span{font-size:9px;letter-spacing:.095em;font-weight:750;color:#7f9db5;display:flex;align-items:center;gap:8px}
+.digital-services-page .nx-foot-dot{background:#ca4248;width:5px;height:5px;border-radius:50%}
+.digital-services-page .nx-lab-stage-foot a{font-weight:700;font-size:12px;color:#eaf7ff;text-decoration:none;display:flex;align-items:center;gap:18px;transition:gap .18s}
+.digital-services-page .nx-lab-stage-foot a:hover{gap:24px}
+
+/* Delivery method: process clarity replaces visual techno-jargon. */
+.digital-services-page .nx-method{background:#fff;padding:151px 0 145px;color:#13263b}
+.digital-services-page .nx-method-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:11%;align-items:start}
+.digital-services-page .nx-method-head{position:sticky;top:55px}
+.digital-services-page .nx-method h2{font-size:clamp(46px,4.4vw,67px);margin:30px 0 25px}
+.digital-services-page .nx-method h2 em{color:#a72f3c}
+.digital-services-page .nx-method-head p{font-size:16px;line-height:1.8;color:#607083;max-width:410px;margin:0}
+.digital-services-page .nx-method-steps{border-top:1px solid #d5dee6}
+.digital-services-page .nx-method-steps article{display:grid;grid-template-columns:72px 1fr;gap:22px;padding:37px 0 38px;border-bottom:1px solid #d5dee6}
+.digital-services-page .nx-method-steps article>span{font-size:15px;font-weight:700;color:#c02a35;letter-spacing:.05em;padding-top:5px}
+.digital-services-page .nx-method-steps h3{font-size:23px;line-height:1.25;color:#152c44;font-weight:730;letter-spacing:-.035em;margin:0 0 12px}
+.digital-services-page .nx-method-steps p{font-size:14px;line-height:1.73;color:#5c6f81;max-width:460px;margin:0}
+
+/* FAQ: unobtrusive decision support. */
+.digital-services-page .nx-questions{background:#eff2f4;padding:126px 0 133px;color:#112a42}
+.digital-services-page .nx-questions-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:12%}
+.digital-services-page .nx-questions h2{font-size:clamp(48px,4.5vw,70px);margin:24px 0 24px}
+.digital-services-page .nx-questions h2 em{color:#b43140}
+.digital-services-page .nx-questions-grid>div:first-child>p{font-size:15px;color:#617386;line-height:1.8;max-width:300px}
+.digital-services-page .nx-faq{border-top:1px solid #cad3dd}
+.digital-services-page .nx-faq details{border-bottom:1px solid #cad3dd;}
+.digital-services-page .nx-faq summary{font-size:17px;font-weight:680;letter-spacing:-.02em;padding:25px 40px 25px 0;list-style:none;cursor:pointer;color:#203b54;position:relative;line-height:1.4}
+.digital-services-page .nx-faq summary::-webkit-details-marker{display:none}
+.digital-services-page .nx-faq summary span{position:absolute;right:0;top:21px;font-size:24px;line-height:1;font-weight:350;transition:transform .2s ease;color:#bd303d}
+.digital-services-page .nx-faq details[open] summary span{transform:rotate(45deg)}
+.digital-services-page .nx-faq details p{font-size:14px;line-height:1.76;max-width:570px;color:#5e7183;margin:0 35px 25px 0}
+
+/* Conversion: the content journey ends in a genuinely dedicated project brief. */
+.digital-services-page .nx-contact{background:#071e35;color:#fff;padding:145px 0 152px;overflow:hidden}
+.digital-services-page .nx-contact:before{content:'';position:absolute;width:600px;height:600px;border:1px solid rgba(117,173,205,.13);border-radius:50%;left:-370px;bottom:-370px;box-shadow:0 0 0 120px rgba(117,173,205,.02);pointer-events:none}
+.digital-services-page .nx-contact-grid{display:grid;grid-template-columns:minmax(0,.89fr) minmax(0,1.11fr);gap:11%;align-items:start}
+.digital-services-page .nx-contact-copy{padding:26px 0}
+.digital-services-page .nx-contact-copy .nx-index{color:#8aa8c3}
+.digital-services-page .nx-contact h2{font-size:clamp(64px,6.2vw,96px);margin:33px 0 31px;color:#fff}
+.digital-services-page .nx-contact h2 em{color:#97cce7}
+.digital-services-page .nx-contact-copy>p{font-size:17px;line-height:1.79;color:#adbdcb;max-width:425px;margin:0 0 67px}
+.digital-services-page .nx-contact-note{border-top:1px solid rgba(156,201,231,.2);padding:30px 0;display:flex;gap:20px;align-items:flex-start;max-width:415px}
+.digital-services-page .nx-contact-note-icon{font-size:23px;color:#f1747b;line-height:1}
+.digital-services-page .nx-contact-note strong{font-size:14px;display:block;font-weight:700;margin-bottom:6px}
+.digital-services-page .nx-contact-note span:last-child{font-size:13px;color:#9fb4c7;line-height:1.55;display:block}
+.digital-services-page .nx-contact-call{display:block;border-top:1px solid rgba(156,201,231,.2);padding:27px 0 0;max-width:415px;text-decoration:none!important}
+.digital-services-page .nx-contact-call>span{font-size:12px;color:#89a6be;display:block;margin-bottom:8px}
+.digital-services-page .nx-contact-call strong{font-size:23px;letter-spacing:-.03em;color:white;font-weight:700;display:flex;gap:19px;align-items:center}
+.digital-services-page .nx-contact-call strong span{font-size:17px;color:#e44c55}
+.digital-services-page .nx-contact-form-wrap{background:#f7f8fa;color:#172d43;border-radius:12px;padding:44px 48px 44px;box-shadow:0 24px 55px rgba(0,3,15,.13)}
+.digital-services-page .nx-form-heading{display:flex;flex-direction:column;gap:9px;border-bottom:1px solid #d9e1e7;padding-bottom:25px;margin-bottom:27px}
+.digital-services-page .nx-form-heading strong{font-size:25px;letter-spacing:-.048em;font-weight:760;line-height:1.15}
+.digital-services-page .nx-form-heading span{color:#6c7c8e;font-size:13px;line-height:1.55}
+.digital-services-page .nx-form{display:flex;flex-direction:column;gap:17px}
+.digital-services-page .nx-form-row{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+.digital-services-page .nx-form label{font-size:12px;font-weight:680;color:#324d65;display:block;margin:0}
+.digital-services-page .nx-form label>span{color:#c6313b}
+.digital-services-page .nx-form label small{font-size:11px;color:#8291a0;display:inline;font-weight:450}
+.digital-services-page .nx-form input:not([type=checkbox]),.digital-services-page .nx-form select,.digital-services-page .nx-form textarea{width:100%;border:1px solid #d3dde5;background:#fff;border-radius:5px;color:#193148;padding:14px 13px;margin-top:9px;font-size:13px;font-weight:500;font-family:'Inter',sans-serif;transition:border-color .15s ease,box-shadow .15s ease;outline:0;min-height:48px}
+.digital-services-page .nx-form input:focus-visible,.digital-services-page .nx-form textarea:focus-visible,.digital-services-page .nx-form select:focus-visible{border-color:#266a97;box-shadow:0 0 0 3px rgba(38,106,151,.13)}
+.digital-services-page .nx-form input::placeholder,.digital-services-page .nx-form textarea::placeholder{color:#9caab5;font-weight:420}
+.digital-services-page .nx-form textarea{min-height:127px;resize:vertical;line-height:1.6}
+.digital-services-page .nx-form .nx-consent{display:flex;flex-direction:row;gap:12px;align-items:flex-start;margin:3px 0 0;color:#607386;font-size:11px;line-height:1.6;font-weight:450}
+.digital-services-page .nx-consent input{margin:2px 0 0;width:16px;height:16px;flex:0 0 16px;accent-color:#c3303b;cursor:pointer}
+.digital-services-page .nx-consent span{color:#64778a!important}
+.digital-services-page .nx-consent em{color:#c3303b;font-style:normal}
+.digital-services-page .nx-submit{background:#cf303b;color:#fff;border:1px solid #cf303b;display:flex;justify-content:space-between;align-items:center;gap:16px;border-radius:5px;width:100%;padding:16px 17px 16px 21px;font-size:14px;font-weight:730;cursor:pointer;min-height:56px;transition:background .17s,transform .17s,border-color .17s}
+.digital-services-page .nx-submit:hover{background:#ad2530;border-color:#ad2530;transform:translateY(-1px)}
+.digital-services-page .nx-submit:disabled{cursor:wait;opacity:.7;transform:none}
+.digital-services-page .nx-submit span{font-size:20px;font-weight:450}
+.digital-services-page .nx-form-legal{font-size:10px;color:#8291a2;text-align:center;margin:0;line-height:1.6}
+.digital-services-page .nx-form-status{font-size:12px;line-height:1.6;margin:0;display:none}
+.digital-services-page .nx-form-status.is-visible{display:block}
+.digital-services-page .nx-form-status.is-success{color:#147956}
+.digital-services-page .nx-form-status.is-error{color:#b22433}
+.digital-services-page .nx-honeypot{position:absolute;left:-99999px;opacity:0;pointer-events:none}
+
+@media(max-width:1199.98px){
+  .digital-services-page .nx-shell{width:min(100% - 70px,1320px)}
+  .digital-services-page .nx-bridge{padding:118px 0}
+  .digital-services-page .nx-bridge-grid{grid-template-columns:90px 1fr;gap:23px}
+  .digital-services-page .nx-bridge-aside{grid-column:2;padding:0;max-width:600px}
+  .digital-services-page .nx-bridge-aside p{max-width:580px}
+  .digital-services-page .nx-bridge-mark{display:none}
+  .digital-services-page .nx-offer-item{grid-template-columns:72px minmax(0,1.1fr) minmax(0,1fr);gap:24px}
+  .digital-services-page .nx-offer-index svg{width:49px;height:49px}
+  .digital-services-page .nx-lab-story{padding:54px 30px 50px 40px}
+  .digital-services-page .nx-lab-art{padding:50px 38px 65px 8px}
+  .digital-services-page .nx-method-grid{gap:8%}
+  .digital-services-page .nx-contact-grid{gap:6%}
+  .digital-services-page .nx-contact-form-wrap{padding:35px}
+}
+@media(max-width:991.98px){
+  .digital-services-page .nx-bridge-grid{grid-template-columns:1fr;gap:22px}
+  .digital-services-page .nx-bridge-ledger{padding:0;flex-direction:row;align-items:center;gap:14px}
+  .digital-services-page .nx-bridge-aside{grid-column:auto;margin-top:8px}
+  .digital-services-page .nx-bridge::before{display:none}
+  .digital-services-page .nx-offer-head,.digital-services-page .nx-lab-heading-grid{grid-template-columns:1fr;gap:23px;margin-bottom:44px}
+  .digital-services-page .nx-offer-head>p,.digital-services-page .nx-lab-heading-grid>p{max-width:620px}
+  .digital-services-page .nx-offer-item{grid-template-columns:65px minmax(0,1fr) ;gap:15px}
+  .digital-services-page .nx-offer-detail{grid-column:2;padding-top:0}
+  .digital-services-page .nx-offer-index{min-height:0;gap:18px}
+  .digital-services-page .nx-lab-panel{grid-template-columns:1fr;min-height:0}
+  .digital-services-page .nx-lab-story{padding:52px 47px 17px}
+  .digital-services-page .nx-lab-story h3{margin-bottom:26px}
+  .digital-services-page .nx-lab-sequence{grid-template-columns:1fr 1fr;gap:23px}
+  .digital-services-page .nx-lab-art{padding:30px 54px 85px;min-height:405px}
+  .digital-services-page .nx-demo-window,.digital-services-page .nx-demo-workspace{max-width:540px}
+  .digital-services-page .nx-demo-flow{max-width:480px}
+  .digital-services-page .nx-lab-stage-foot{padding:20px 40px}
+  .digital-services-page .nx-method-grid,.digital-services-page .nx-questions-grid{grid-template-columns:1fr;gap:52px}
+  .digital-services-page .nx-method-head{position:static}
+  .digital-services-page .nx-method-steps{max-width:710px}
+  .digital-services-page .nx-contact-grid{grid-template-columns:1fr;gap:52px}
+  .digital-services-page .nx-contact-copy{padding:0}
+  .digital-services-page .nx-contact-copy>p{margin-bottom:38px}
+  .digital-services-page .nx-contact-note,.digital-services-page .nx-contact-call{max-width:none}
+  .digital-services-page .nx-contact-form-wrap{max-width:780px}
+}
+@media(max-width:650px){
+  .digital-services-page .nx-shell{width:calc(100% - 40px)}
+  .digital-services-page .nx-index{font-size:9px;letter-spacing:.14em}
+  .digital-services-page .nx-bridge{padding:93px 0 101px}
+  .digital-services-page .nx-bridge-grid{gap:26px}
+  .digital-services-page .nx-bridge h2{font-size:clamp(40px,10vw,55px);line-height:1.13}
+  .digital-services-page .nx-bridge h2 br{display:none}
+  .digital-services-page .nx-bridge-aside p{font-size:15px;line-height:1.75}
+  .digital-services-page .nx-offer{padding:91px 0 96px}
+  .digital-services-page .nx-offer-head{gap:20px;margin-bottom:38px}
+  .digital-services-page .nx-offer h2{font-size:clamp(40px,10.4vw,55px);line-height:1.13;margin-top:17px}
+  .digital-services-page .nx-offer h2 br{display:none}
+  .digital-services-page .nx-offer-head>p{font-size:15px;line-height:1.7}
+  .digital-services-page .nx-offer-item{grid-template-columns:1fr;gap:0;padding:34px 0 39px}
+  .digital-services-page .nx-offer-index{flex-direction:row;align-items:center;margin-bottom:20px;gap:10px}
+  .digital-services-page .nx-offer-index svg{width:34px;height:34px}
+  .digital-services-page .nx-offer-main h3{font-size:37px;margin-bottom:17px}
+  .digital-services-page .nx-overline{font-size:9px;margin-bottom:11px!important}
+  .digital-services-page .nx-offer-question{font-size:16px;margin-bottom:18px!important}
+  .digital-services-page .nx-offer-detail{grid-column:auto}
+  .digital-services-page .nx-offer-detail>p{font-size:14px;line-height:1.74;margin-bottom:17px}
+  .digital-services-page .nx-offer-tags{margin-bottom:17px}
+  .digital-services-page .nx-offer-outro{align-items:flex-start;flex-wrap:wrap;gap:12px 14px;padding-top:23px}
+  .digital-services-page .nx-offer-outro p{flex:1 1 calc(100% - 55px);font-size:13px}
+  .digital-services-page .nx-offer-outro a{margin:2px 0 0 41px}
+  .digital-services-page .nx-lab{padding:90px 0 97px}
+  .digital-services-page .nx-lab-heading{margin-bottom:31px}
+  .digital-services-page .nx-lab-heading-grid{margin-top:19px;gap:21px}
+  .digital-services-page .nx-lab h2{font-size:clamp(41px,10vw,55px)}
+  .digital-services-page .nx-lab h2 br{display:none}
+  .digital-services-page .nx-lab-heading-grid>p{font-size:14px;line-height:1.7}
+  .digital-services-page .nx-lab-stage{border-radius:11px}
+  .digital-services-page .nx-lab-tabs button{padding:17px 8px 15px;min-width:0;gap:6px;display:flex;flex-direction:column;align-items:flex-start;font-size:10px;line-height:1.45}
+  .digital-services-page .nx-lab-tabs button span{font-size:9px}
+  .digital-services-page .nx-lab-tabs button[aria-selected="true"]:after{left:8px;right:8px;height:2px}
+  .digital-services-page .nx-lab-story{padding:35px 23px 0}
+  .digital-services-page .nx-lab-kind{font-size:9px;line-height:1.5;margin-bottom:15px}
+  .digital-services-page .nx-lab-story h3{font-size:42px;margin:0 0 26px}
+  .digital-services-page .nx-lab-sequence{grid-template-columns:1fr;gap:18px;margin-bottom:20px}
+  .digital-services-page .nx-lab-sequence p{max-width:none;font-size:12px;line-height:1.7}
+  .digital-services-page .nx-lab-takeaway{font-size:12px;line-height:1.6}
+  .digital-services-page .nx-lab-art{padding:35px 20px 73px;min-height:310px}
+  .digital-services-page .nx-demo-window{transform:rotate(-1.2deg)}
+  .digital-services-page .nx-demo-browser{height:29px;padding:0 10px}
+  .digital-services-page .nx-demo-browser span{font-size:6px}
+  .digital-services-page .nx-demo-website{padding:14px}
+  .digital-services-page .nx-demo-website header{font-size:7px;padding-bottom:12px}
+  .digital-services-page .nx-demo-website header b{font-size:10px}
+  .digital-services-page .nx-demo-web-hero{padding:15px 0 19px}
+  .digital-services-page .nx-demo-small{font-size:6px;margin-bottom:8px}
+  .digital-services-page .nx-demo-web-hero strong{font-size:16px}
+  .digital-services-page .nx-demo-web-hero p{font-size:8px;line-height:1.5}
+  .digital-services-page .nx-demo-fake-btn{padding:8px;font-size:7px;gap:5px}
+  .digital-services-page .nx-demo-web-shape{min-height:130px;padding:9px;gap:4px}
+  .digital-services-page .nx-demo-web-bottom span{font-size:6.5px}
+  .digital-services-page .nx-demo-float{bottom:39px;right:6px;padding:10px 11px;gap:8px}
+  .digital-services-page .nx-demo-float-check{width:22px;height:22px;font-size:11px}
+  .digital-services-page .nx-demo-float strong{font-size:9px}
+  .digital-services-page .nx-demo-float small{font-size:8px}
+  .digital-services-page .nx-demo-workspace{min-height:0}
+  .digital-services-page .nx-demo-w-sidebar{width:31px;flex-basis:31px;padding:11px 0;gap:13px}
+  .digital-services-page .nx-demo-w-mark{width:18px;height:18px;font-size:10px}
+  .digital-services-page .nx-demo-w-sidebar span{width:15px;height:5px}
+  .digital-services-page .nx-demo-w-content{padding:14px 9px}
+  .digital-services-page .nx-demo-w-top small{font-size:6px}
+  .digital-services-page .nx-demo-w-top strong{font-size:13px}
+  .digital-services-page .nx-demo-columns{gap:4px;padding-top:12px}
+  .digital-services-page .nx-demo-col label{font-size:6px}
+  .digital-services-page .nx-demo-task{padding:7px 5px;min-height:70px}
+  .digital-services-page .nx-demo-task strong{font-size:8px}
+  .digital-services-page .nx-demo-task small{font-size:6px}
+  .digital-services-page .nx-demo-flow{padding:19px 14px}
+  .digital-services-page .nx-demo-flow-top strong{font-size:13px}
+  .digital-services-page .nx-demo-flow-results{gap:4px}
+  .digital-services-page .nx-demo-flow-results strong{font-size:7px;line-height:1.4}
+  .digital-services-page .nx-demo-flow-results>div{min-height:74px;padding:10px 3px}
+  .digital-services-page .nx-demo-flow-input{padding:9px;gap:8px}
+  .digital-services-page .nx-demo-flow-input strong{font-size:9px}
+  .digital-services-page .nx-demo-flow-icon{width:27px;height:27px}
+  .digital-services-page .nx-lab-stage-foot{padding:19px 23px;flex-wrap:wrap;gap:13px}
+  .digital-services-page .nx-lab-stage-foot>span{font-size:8px}
+  .digital-services-page .nx-lab-stage-foot a{font-size:11px}
+  .digital-services-page .nx-method{padding:97px 0 102px}
+  .digital-services-page .nx-method-grid{gap:42px}
+  .digital-services-page .nx-method h2{font-size:clamp(43px,10vw,55px);margin:21px 0 18px}
+  .digital-services-page .nx-method h2 br{display:none}
+  .digital-services-page .nx-method-head p{font-size:14px;line-height:1.7}
+  .digital-services-page .nx-method-steps article{grid-template-columns:43px 1fr;gap:17px;padding:24px 0}
+  .digital-services-page .nx-method-steps h3{font-size:19px}
+  .digital-services-page .nx-method-steps p{font-size:13px}
+  .digital-services-page .nx-questions{padding:93px 0 102px}
+  .digital-services-page .nx-questions-grid{gap:40px}
+  .digital-services-page .nx-questions h2{font-size:52px;margin:19px 0 19px}
+  .digital-services-page .nx-questions-grid>div:first-child>p{font-size:14px}
+  .digital-services-page .nx-faq summary{font-size:15px;padding:19px 31px 19px 0}
+  .digital-services-page .nx-faq summary span{top:17px}
+  .digital-services-page .nx-faq details p{font-size:13px}
+  .digital-services-page .nx-contact{padding:100px 0 106px}
+  .digital-services-page .nx-contact-grid{gap:37px}
+  .digital-services-page .nx-contact h2{font-size:clamp(62px,15vw,77px);margin:24px 0}
+  .digital-services-page .nx-contact-copy>p{font-size:15px;margin-bottom:33px}
+  .digital-services-page .nx-contact-note{padding:22px 0}
+  .digital-services-page .nx-contact-call{padding:22px 0 0}
+  .digital-services-page .nx-contact-form-wrap{padding:29px 20px;border-radius:10px}
+  .digital-services-page .nx-form-heading strong{font-size:22px}
+  .digital-services-page .nx-form-row{grid-template-columns:1fr;gap:17px}
+  .digital-services-page .nx-form input:not([type=checkbox]),.digital-services-page .nx-form select,.digital-services-page .nx-form textarea{font-size:14px}
+}
+@media(max-width:365px){
+  .digital-services-page .nx-shell{width:calc(100% - 32px)}
+  .digital-services-page .nx-lab-story{padding-left:18px;padding-right:18px}
+  .digital-services-page .nx-lab-story h3{font-size:37px}
+  .digital-services-page .nx-demo-web-shape{min-height:125px}
+  .digital-services-page .nx-demo-web-hero strong{font-size:14px}
+  .digital-services-page .nx-lab-art{padding-left:14px;padding-right:14px}
+  .digital-services-page .nx-demo-flow{padding:15px 9px}
+}
+@media(prefers-reduced-motion:reduce){
+  .digital-services-page .nx-offer-index svg,.digital-services-page .nx-text-link,.digital-services-page .nx-inline-link,.digital-services-page .nx-lab-tabs button,.digital-services-page .nx-submit,.digital-services-page .nx-lab-stage-foot a,.digital-services-page .nx-faq summary span{transition:none!important}
+}

@@ -3,36 +3,11 @@
 
 <head>
     <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'analytics_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'wait_for_update': 500
-      });
-      try {
-        if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
-          gtag('consent', 'update', {
-            'ad_storage': 'granted',
-            'analytics_storage': 'granted',
-            'ad_user_data': 'granted',
-            'ad_personalization': 'granted'
-          });
-        }
-      } catch(e) {}
-    </script>
+    
 
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-67D2BL58Y9');
-    </script>
+    
+    
 
     <meta charset="utf-8">
     <title>Fotovoltaico chiavi in mano | Energelia Energy Solutions</title>
@@ -149,6 +124,20 @@
         .axpo-cta { padding: 64px 0; text-align: center; }
         .axpo-cta h3 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
         .axpo-cta p { color: #666; margin-bottom: 32px; }
+        /* Allinea le due CTA della hero solo quando la griglia diventa mobile. */
+        @media (max-width: 768px) {
+            .axpo-hero-actions { display: flex; flex-direction: column; align-items: stretch; gap: 12px; max-width: 380px; }
+            .axpo-hero-actions > a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 54px;
+                padding: 12px 16px;
+                margin-left: 0;
+                box-sizing: border-box;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 
@@ -166,8 +155,10 @@
                     <p class="lead">
                         Energelia e AXPO uniscono le competenze per aiutare le imprese italiane a finanziare impianti fotovoltaici e interventi di efficienza energetica. Individuiamo i bandi più vantaggiosi e gestiamo la pratica dall&apos;inizio alla fine.
                     </p>
-                    <a href="#contatto" class="axpo-btn-primary"><i class="fas fa-phone-alt me-2"></i>Richiedi consulenza gratuita</a>
-                    <a href="#incentivi" class="axpo-btn-outline">Vedi i bandi attivi</a>
+                    <div class="axpo-hero-actions">
+                        <a href="#contatto" class="axpo-btn-primary"><i class="fas fa-phone-alt me-2"></i>Richiedi consulenza gratuita</a>
+                        <a href="#incentivi" class="axpo-btn-outline">Vedi i bandi attivi</a>
+                    </div>
                 </div>
                 <div class="axpo-hero-logo-wrap">
                     <div class="axpo-hero-logo-box">
@@ -293,27 +284,19 @@
             <p class="subtitle">Uno dei nostri consulenti ti ricontatta entro 48 ore per valutare insieme il tuo progetto</p>
             <div class="axpo-form">
                 <div class="mb-3">
-                    <label class="form-label">Nome e Cognome *</label>
-                    <input type="text" class="form-control" id="axpoNome" placeholder="Mario Rossi" required>
-                </div>
-                <div class="mb-3">
                     <label class="form-label">Email aziendale *</label>
                     <input type="email" class="form-control" id="axpoEmail" placeholder="mario@azienda.it" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Telefono</label>
-                    <input type="tel" class="form-control" id="axpoTel" placeholder="+39 010 000 0000">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Descrivi brevemente il tuo progetto</label>
-                    <textarea class="form-control" id="axpoMsg" rows="3" placeholder="Es. installazione fotovoltaico su capannone industriale, 150 kWp..."></textarea>
+                    <label class="form-label" for="axpoTel">Telefono *</label>
+                    <input type="tel" class="form-control" id="axpoTel" required placeholder="+39 010 000 0000">
                 </div>
                 <button type="button" class="axpo-btn-primary w-100" onclick="inviaAxpoForm()" id="axpoSubmit">
                     <i class="fas fa-paper-plane me-2"></i>Invia richiesta
                 </button>
                 <div class="axpo-form-msg" id="axpoMsg2"></div>
-                <p style="margin-top:20px; font-size:.8rem; color:rgba(255,255,255,.4); text-align:center;">
-                    I tuoi dati non vengono condivisi con terzi. Vedi la <a href="/privacy-policy" style="color:rgba(255,255,255,.5);">Privacy Policy</a>.
+                <p class="form-privacy-note" style="margin-top:20px; color:#d9e4ef;">
+                    Energelia usa email e telefono per gestire la consulenza, senza condivisione commerciale con partner. Per i contatti non acquisiti è previsto un termine di 24 mesi dall’ultima interazione significativa. Vedi la <a href="/privacy-policy" style="color:#f3d78b; text-decoration:underline;">Privacy Policy</a>.
                 </p>
             </div>
         </div>
@@ -343,19 +326,17 @@
 
     <script>
     function inviaAxpoForm() {
-        var nome = document.getElementById('axpoNome').value.trim();
         var email = document.getElementById('axpoEmail').value.trim();
         var tel = document.getElementById('axpoTel').value.trim();
-        var msg = document.getElementById('axpoMsg').value.trim();
         var msgDiv = document.getElementById('axpoMsg2');
         var btn = document.getElementById('axpoSubmit');
-        if (!nome || !email) { msgDiv.className='axpo-form-msg error'; msgDiv.style.display='block'; msgDiv.textContent='Compila nome ed email.'; return; }
+        if (!email || !tel || tel.length < 6) { msgDiv.className='axpo-form-msg error'; msgDiv.style.display='block'; msgDiv.textContent='Compila email e telefono.'; return; }
         btn.disabled = true; btn.textContent = 'Invio in corso...';
         fetch('/api/consultation', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({name: nome, email: email, phone: tel, message: 'AXPO Partnership: ' + msg, source: 'axpo-page'})
-        }).then(r => r.json()).then(d => {
+            body: JSON.stringify({email: email, phone: tel})
+        }).then(async r => { const d = await r.json(); if (!r.ok || !d.success) throw new Error('not_saved'); return d; }).then(d => {
             msgDiv.className='axpo-form-msg success'; msgDiv.style.display='block';
             msgDiv.textContent = 'Richiesta inviata! Ti ricontattiamo entro 48 ore.';
             btn.textContent = 'Inviato ✓';

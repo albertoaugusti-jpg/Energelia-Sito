@@ -1,0 +1,151 @@
+/* ENERGELIA / P027 — sections 01–02, standalone art direction.
+   All rules are scoped to ev-* so existing immersive and P026 content are untouched. */
+.digital-services-page .ev-bridge,.digital-services-page .ev-solutions{font-family:'Inter',sans-serif;box-sizing:border-box;position:relative;isolation:isolate}
+.digital-services-page .ev-bridge *,.digital-services-page .ev-solutions *{box-sizing:border-box}
+.digital-services-page .ev-bridge{background:#f8f7f5;color:#0b2640;overflow:hidden;padding:123px 0 80px}
+.digital-services-page .ev-bridge:before{content:"";position:absolute;left:0;right:0;top:0;height:225px;background:linear-gradient(180deg,#0a2946 0%,#426780 24%,#e5e8eb 60%,rgba(248,247,245,0) 100%);opacity:.85;pointer-events:none}
+.digital-services-page .ev-bridge-atmosphere{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.digital-services-page .ev-bridge-atmosphere:before{content:"";position:absolute;right:-7%;top:30px;width:min(78vw,1100px);height:800px;border:1px solid rgba(255,255,255,.72);border-radius:50%;transform:rotate(25deg);opacity:.9}
+.digital-services-page .ev-bridge-atmosphere i{display:block;position:absolute;width:1100px;height:700px;border:1px solid rgba(213,85,99,.16);border-radius:50%;right:-17%;top:125px;transform:rotate(24deg)}
+.digital-services-page .ev-bridge-atmosphere i:nth-child(2){width:800px;height:600px;right:-13%;top:185px;border-color:rgba(255,255,255,.6)}
+.digital-services-page .ev-bridge-atmosphere b{position:absolute;width:11px;height:11px;background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.23),0 0 25px rgba(214,56,71,.65);border-radius:50%;right:14%;top:185px}
+.digital-services-page .ev-bridge-inner{position:relative;z-index:1}
+.digital-services-page .ev-section-label{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.15em;font-weight:780;color:#27435b;line-height:1.45}
+.digital-services-page .ev-section-label>span{color:#d13a49}
+.digital-services-page .ev-section-label>i{display:block;width:24px;height:1px;background:rgba(22,51,74,.5)}
+.digital-services-page .ev-bridge .ev-section-label{margin-bottom:43px}
+.digital-services-page .ev-bridge-lead{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(275px,.65fr);align-items:end;gap:8%;}
+.digital-services-page .ev-bridge h2{font-family:'Source Serif 4',Georgia,serif;font-size:clamp(49px,5.55vw,83px);font-weight:500;line-height:1.055;letter-spacing:-.053em;margin:0;max-width:930px;color:#08253e;text-wrap:balance}
+.digital-services-page .ev-bridge h2 em{font-weight:400;color:#526b80;letter-spacing:-.052em;font-style:italic}
+.digital-services-page .ev-dot{color:#e14453;font-style:normal}
+.digital-services-page .ev-bridge-aside{max-width:370px;padding-bottom:15px}
+.digital-services-page .ev-bridge-aside p{font-size:15px;line-height:1.78;color:#617588;margin:0 0 28px;letter-spacing:-.012em}
+.digital-services-page .ev-link{display:inline-flex;align-items:center;gap:20px;color:#173550!important;text-decoration:none!important;border-bottom:1px solid #d8b2b6;padding-bottom:10px;font-weight:760;font-size:12px;letter-spacing:.065em;text-transform:uppercase;transition:gap .22s ease,border-color .22s ease}
+.digital-services-page .ev-link svg{width:22px;height:22px;stroke:#d74654;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.digital-services-page .ev-link:hover{gap:27px;border-color:#d74654}
+.digital-services-page .ev-link:focus-visible,.digital-services-page .ev-showcase-link:focus-visible{outline:3px solid #c23b4a;outline-offset:5px}
+.digital-services-page .ev-benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:91px;border-top:1px solid rgba(33,67,93,.17);padding-top:34px}
+.digital-services-page .ev-benefit{display:grid;grid-template-columns:62px 1fr;gap:18px;padding:5px 27px 6px 0;min-width:0}
+.digital-services-page .ev-benefit+.ev-benefit{border-left:1px solid rgba(24,56,82,.13);padding-left:35px}
+.digital-services-page .ev-benefit-icon{width:57px;height:57px;display:grid;place-items:center;border:1px solid rgba(198,73,88,.16);background:rgba(242,232,230,.48);border-radius:50%;color:#113451}
+.digital-services-page .ev-benefit-icon svg{width:26px;height:26px;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
+.digital-services-page .ev-benefit h3{font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:550;letter-spacing:-.032em;line-height:1.15;color:#0f2c46;margin:0 0 11px}
+.digital-services-page .ev-benefit h3 span{display:block}
+.digital-services-page .ev-benefit p{font-size:12px;color:#7a8c9d;line-height:1.63;margin:0;max-width:270px}
+/* SOLUTIONS, a gallery of one authored scene per offering, not dashboard cards */
+.digital-services-page .ev-solutions{background:#f7f6f4;color:#0e2942;padding:112px 0 0;overflow:hidden}
+.digital-services-page .ev-solutions .ev-section-label{margin-bottom:26px}
+.digital-services-page .ev-solutions-header{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(230px,.52fr);gap:9%;align-items:end;padding-bottom:67px}
+.digital-services-page .ev-solutions h2{font-family:'Source Serif 4',Georgia,serif;font-weight:550;letter-spacing:-.052em;font-size:clamp(49px,5.35vw,78px);line-height:1.06;color:#09253e;margin:0;text-wrap:balance}
+.digital-services-page .ev-solutions h2 em{font-weight:400;font-style:italic;color:#5b7185}
+.digital-services-page .ev-solutions-header p{font-size:16px;line-height:1.8;color:#687d8d;max-width:345px;margin:0 0 5px}
+.digital-services-page .ev-showcases{border-top:1px solid #e2e5e5}
+.digital-services-page .ev-showcase{position:relative;overflow:hidden;min-height:530px;border-bottom:1px solid rgba(41,70,89,.11);}
+.digital-services-page .ev-showcase-site{background:#eae5de}
+.digital-services-page .ev-showcase-management{background:#e7e9e7}
+.digital-services-page .ev-showcase-automation{background:#eae8e7}
+.digital-services-page .ev-showcase-inner{min-height:530px;display:grid;grid-template-columns:42% 58%;align-items:stretch;position:relative}
+.digital-services-page .ev-showcase-management .ev-showcase-inner{grid-template-columns:59% 41%}
+.digital-services-page .ev-showcase-copy{grid-column:1;grid-row:1;position:relative;z-index:3;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:58px 9% 58px 2px}
+.digital-services-page .ev-showcase-management .ev-showcase-copy{grid-column:2;grid-row:1;padding:55px 0 55px 16%}
+.digital-services-page .ev-showcase-index{display:flex;align-items:center;gap:14px;font-size:10px;font-weight:760;letter-spacing:.11em;text-transform:uppercase;color:#758496;margin-bottom:27px}
+.digital-services-page .ev-showcase-index>b{color:#d13d49}
+.digital-services-page .ev-showcase-index i{width:28px;height:1px;background:#bdc0c2}
+.digital-services-page .ev-showcase h3{font-family:'Source Serif 4',Georgia,serif;font-weight:500;font-size:clamp(44px,4.05vw,64px);line-height:1.06;letter-spacing:-.052em;margin:0 0 23px;color:#0a2942;max-width:480px}
+.digital-services-page .ev-showcase h3 em{font-weight:400;font-style:italic;color:#607a8e;display:block}
+.digital-services-page .ev-showcase-copy>p{font-size:15px;line-height:1.76;letter-spacing:-.014em;color:#536679;max-width:400px;margin:0 0 23px}
+.digital-services-page .ev-showcase-copy ul{margin:0 0 30px;padding:0;list-style:none;display:grid;gap:8px}
+.digital-services-page .ev-showcase-copy li{display:flex;gap:11px;align-items:baseline;font-size:12px;font-weight:570;color:#405971;line-height:1.4}
+.digital-services-page .ev-showcase-copy li:before{content:'✓';font-size:13px;color:#b93244;flex-shrink:0}
+.digital-services-page .ev-showcase-link{display:inline-flex;align-items:center;gap:17px;text-decoration:none!important;color:#b42d3a!important;border-bottom:1px solid rgba(164,52,66,.3);padding-bottom:8px;font-size:12px;font-weight:760;transition:gap .2s ease,border-color .2s ease}
+.digital-services-page .ev-showcase-link span{font-size:20px;font-weight:450;line-height:.9}
+.digital-services-page .ev-showcase-link:hover{gap:23px;border-color:#b42d3a}
+.digital-services-page .ev-showcase-visual{grid-column:2;grid-row:1;position:relative;min-width:0;margin:0;overflow:hidden;align-self:stretch;display:block;isolation:isolate}
+.digital-services-page .ev-showcase-management .ev-showcase-visual{grid-column:1;grid-row:1}
+.digital-services-page .ev-showcase-visual picture,.digital-services-page .ev-showcase-visual img{display:block;width:100%;height:100%;}
+.digital-services-page .ev-showcase-visual img{object-fit:cover;object-position:center center;filter:saturate(.94);transition:transform .75s cubic-bezier(.16,.7,.2,1)}
+.digital-services-page .ev-showcase:hover .ev-showcase-visual img{transform:scale(1.025)}
+.digital-services-page .ev-showcase-visual:after{content:"";pointer-events:none;position:absolute;inset:0;background:linear-gradient(90deg,rgba(234,229,222,.75),transparent 13%)}
+.digital-services-page .ev-showcase-management .ev-showcase-visual:after{background:linear-gradient(270deg,rgba(231,233,231,.4),transparent 17%)}
+.digital-services-page .ev-showcase-automation .ev-showcase-visual:after{background:linear-gradient(90deg,rgba(234,232,231,.55),transparent 12%)}
+.digital-services-page .ev-showcase-visual figcaption{position:absolute;right:17px;bottom:16px;background:rgba(249,249,249,.93);border:1px solid rgba(255,255,255,.58);backdrop-filter:blur(8px);padding:8px 11px;color:#4e667b;font-size:9px;letter-spacing:.045em;line-height:1.3;border-radius:3px;z-index:2}
+.digital-services-page .ev-solutions-foot{display:flex;align-items:center;justify-content:space-between;gap:22px;padding-top:34px;padding-bottom:46px}
+.digital-services-page .ev-solutions-foot p{margin:0;font-size:14px;line-height:1.6;color:#6b7b88}
+.digital-services-page .ev-solutions-foot strong{color:#203d54;font-weight:700}
+@media(max-width:1199.98px){
+ .digital-services-page .ev-bridge{padding-top:105px}
+ .digital-services-page .ev-bridge-lead{grid-template-columns:1.5fr .7fr;gap:5%}
+ .digital-services-page .ev-bridge h2{font-size:clamp(47px,5.55vw,68px)}
+ .digital-services-page .ev-benefit{grid-template-columns:46px 1fr;gap:10px;padding-right:14px}
+ .digital-services-page .ev-benefit+.ev-benefit{padding-left:16px}
+ .digital-services-page .ev-benefit-icon{width:44px;height:44px}
+ .digital-services-page .ev-benefit h3{font-size:21px}
+ .digital-services-page .ev-showcase-inner,.digital-services-page .ev-showcase-management .ev-showcase-inner{min-height:465px}
+ .digital-services-page .ev-showcase{min-height:465px}
+ .digital-services-page .ev-showcase-copy{padding-right:18px}
+ .digital-services-page .ev-showcase h3{font-size:clamp(38px,4.3vw,54px)}
+}
+@media(max-width:991.98px){
+ .digital-services-page .ev-bridge-lead{grid-template-columns:1fr;gap:20px}
+ .digital-services-page .ev-bridge-aside{max-width:600px;padding:0}
+ .digital-services-page .ev-bridge h2{font-size:clamp(48px,7.1vw,70px)}
+ .digital-services-page .ev-benefits{margin-top:57px}
+ .digital-services-page .ev-benefit{display:block}
+ .digital-services-page .ev-benefit-icon{margin-bottom:13px}
+ .digital-services-page .ev-benefit h3{font-size:19px}
+ .digital-services-page .ev-solutions-header{grid-template-columns:1fr;gap:18px}
+ .digital-services-page .ev-solutions-header p{max-width:650px}
+ .digital-services-page .ev-showcase-inner{grid-template-columns:44% 56%}
+ .digital-services-page .ev-showcase-management .ev-showcase-inner{grid-template-columns:54% 46%}
+ .digital-services-page .ev-showcase-copy>p{font-size:14px}
+ .digital-services-page .ev-showcase h3{font-size:clamp(35px,4.6vw,49px)}
+}
+@media(max-width:700px){
+ .digital-services-page .ev-bridge{padding:91px 0 55px;background:#faf8f6}
+ .digital-services-page .ev-bridge:before{height:180px}
+ .digital-services-page .ev-bridge-atmosphere:before{width:680px;height:620px;top:0;right:-110%;opacity:.6}
+ .digital-services-page .ev-bridge-atmosphere i{width:590px;height:450px;top:135px;right:-115%;opacity:.5}
+ .digital-services-page .ev-bridge-atmosphere i:nth-child(2){display:none}
+ .digital-services-page .ev-bridge-atmosphere b{right:17%;top:117px;width:8px;height:8px}
+ .digital-services-page .ev-section-label{font-size:10px;letter-spacing:.12em;gap:9px}
+ .digital-services-page .ev-bridge .ev-section-label{margin-bottom:29px}
+ .digital-services-page .ev-bridge h2{font-size:clamp(39px,10.1vw,57px);line-height:1.055;letter-spacing:-.06em}
+ .digital-services-page .ev-bridge h2 br{display:none}
+ .digital-services-page .ev-bridge-aside{margin-top:8px}
+ .digital-services-page .ev-bridge-aside p{font-size:14px;line-height:1.72;margin-bottom:18px}
+ .digital-services-page .ev-link{font-size:11px}
+ .digital-services-page .ev-benefits{grid-template-columns:1fr;margin-top:39px;padding-top:8px}
+ .digital-services-page .ev-benefit,.digital-services-page .ev-benefit+.ev-benefit{display:grid;grid-template-columns:52px 1fr;gap:12px;border-left:0;border-bottom:1px solid rgba(25,58,82,.13);padding:18px 0}
+ .digital-services-page .ev-benefit:last-child{border:0;padding-bottom:0}
+ .digital-services-page .ev-benefit-icon{margin:0;width:44px;height:44px}
+ .digital-services-page .ev-benefit-icon svg{width:23px;height:23px}
+ .digital-services-page .ev-benefit h3{font-size:22px;margin-bottom:6px}
+ .digital-services-page .ev-benefit h3 span{display:inline}
+ .digital-services-page .ev-benefit p{font-size:12px}
+ .digital-services-page .ev-solutions{padding-top:80px}
+ .digital-services-page .ev-solutions h2{font-size:clamp(43px,11vw,61px)}
+ .digital-services-page .ev-solutions-header{padding-bottom:42px}
+ .digital-services-page .ev-solutions-header p{font-size:14px;line-height:1.72}
+ .digital-services-page .ev-showcase{min-height:0}
+ .digital-services-page .ev-showcase .ev-showcase-inner,.digital-services-page .ev-showcase-management .ev-showcase-inner{display:flex;flex-direction:column;min-height:0;width:100%;}
+ .digital-services-page .ev-showcase .ev-showcase-copy,.digital-services-page .ev-showcase-management .ev-showcase-copy{order:0;display:flex;padding:42px 0 22px;width:100%;}
+ .digital-services-page .ev-showcase-index{margin-bottom:15px}
+ .digital-services-page .ev-showcase h3{font-size:clamp(40px,10.6vw,58px);margin-bottom:12px}
+ .digital-services-page .ev-showcase-copy>p{font-size:14px;line-height:1.72;margin-bottom:16px}
+ .digital-services-page .ev-showcase-copy ul{gap:5px;margin:0 0 19px}
+ .digital-services-page .ev-showcase-copy li{font-size:12px}
+ .digital-services-page .ev-showcase .ev-showcase-visual{order:1;display:block;width:calc(100% + 40px);margin-left:-20px;margin-right:-20px;aspect-ratio:1.08;max-height:420px}
+ .digital-services-page .ev-showcase-visual img{object-position:center center}
+ .digital-services-page .ev-showcase-visual:after,.digital-services-page .ev-showcase-management .ev-showcase-visual:after,.digital-services-page .ev-showcase-automation .ev-showcase-visual:after{display:none}
+ .digital-services-page .ev-showcase-visual figcaption{right:13px;bottom:12px;font-size:8px}
+ .digital-services-page .ev-solutions-foot{padding-top:27px;padding-bottom:36px;display:block}
+ .digital-services-page .ev-solutions-foot p{font-size:12px;margin-bottom:14px}
+}
+@media(max-width:365px){
+ .digital-services-page .ev-bridge h2{font-size:37px}
+ .digital-services-page .ev-solutions h2{font-size:39px}
+ .digital-services-page .ev-showcase h3{font-size:39px}
+ .digital-services-page .ev-benefit h3{font-size:20px}
+ .digital-services-page .ev-showcase .ev-showcase-visual{width:calc(100% + 32px);margin-left:-16px;margin-right:-16px}
+}
+@media(prefers-reduced-motion:reduce){.digital-services-page .ev-link,.digital-services-page .ev-showcase-link,.digital-services-page .ev-showcase-visual img{transition:none!important}}

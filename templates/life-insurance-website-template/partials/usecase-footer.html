@@ -1,0 +1,26 @@
+<style>
+  .uc-site-footer .uc-shell.uc-footer-layout { gap: 20px 30px; padding-block: 18px; flex-wrap: wrap; }
+  .uc-site-footer .uc-shell > .uc-footer-identity { display: block; flex: 1 1 245px; line-height: 1.65; }
+  .uc-site-footer .uc-footer-identity address { font-style: normal; margin-top: 4px; }
+  .uc-site-footer .uc-footer-links { display: flex; flex: 2 1 480px; justify-content: flex-end; flex-wrap: wrap; gap: 10px 18px; }
+  @media (max-width: 570px) {
+    .uc-site-footer .uc-shell > .uc-footer-identity { flex: 0 1 auto; }
+    .uc-site-footer .uc-footer-links { flex: 0 1 auto; justify-content: flex-start; }
+  }
+</style>
+<footer class="uc-site-footer">
+  <div class="uc-shell uc-footer-layout">
+    <div class="uc-footer-identity">
+      <span>© Energelia · Servizi digitali</span>
+      <address>Via Gabriele D'Annunzio 2, int. 26C, Genova (sede operativa)</address>
+    </div>
+    <nav class="uc-footer-links" aria-label="Servizi digitali">
+      <a href="/servizi-digitali">Servizi digitali</a>
+      <a href="/casi-uso">Esplora i casi d'uso ↗</a>
+      <a href="/servizi-digitali#contatti-diretti">Contatti</a>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/cookie-policy">Cookie Policy</a>
+      {% if privacy_analytics_enabled|default(false) %}<button type="button" class="privacy-footer-action" data-cookie-preferences>Preferenze cookie</button>{% endif %}
+    </nav>
+  </div>
+</footer>

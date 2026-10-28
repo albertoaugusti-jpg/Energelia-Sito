@@ -1,0 +1,21 @@
+{% set case = {
+'number':'01',
+'category':'SITI E CONTENUTI',
+'title':'Modificare il sito senza toccare codice.',
+'description':'Modifica testi e fotografie del sito di Bianchi Serramenti. Controlla l’anteprima e pubblica il risultato.',
+'benefits': [
+  'Meno dipendenza da un tecnico per le piccole modifiche.',
+  'Tempi più rapidi per aggiornare offerte e novità.',
+  'Un sito che resta attuale senza complicazioni.',
+],
+'group_anchor':'gruppo-sito',
+'demo_type':'editor',
+'demo':'life-insurance-website-template/partials/usecase-demo-editor.html',
+'steps':[('01','Modifica il contenuto'),('02','Guarda l’anteprima'),('03','Pubblica le modifiche')],
+'short_steps':['Modifica','Anteprima','Pubblica'],
+'related':[
+  {'href':'/caso-catalogo-online','kind':'products','title':'Aggiornare un menù o catalogo online','text':'Gestisci prodotti, prezzi e disponibilità.'},
+  {'href':'/caso-recensioni-testimonianze','kind':'reviews','title':'Gestire recensioni e testimonianze','text':'Scegli quali recensioni mostrare sul sito.'}
+ ]
+} %}
+{% include 'life-insurance-website-template/partials/usecase-detail-shell.html' %}

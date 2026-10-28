@@ -1,0 +1,264 @@
+/* Energelia / Servizi Digitali — P026. Art-directed refinement of the commercial continuation.
+   This file never targets .ds-immersive nor the approved scroll chapters. */
+.digital-services-page .nx-bridge,.digital-services-page .nx-offer,.digital-services-page .nx-lab,.digital-services-page .nx-method,.digital-services-page .nx-questions,.digital-services-page .nx-contact{--nx-ink:#0b2742;--nx-red:#bf2938;--nx-blue:#9dc8df;}
+/* The first quiet transition: editorial rather than another hero. */
+.digital-services-page .nx-bridge{background:linear-gradient(175deg,#e9f0f4 0%,#fff 22%,#fff 100%)}
+.digital-services-page .nx-bridge-title h2{max-width:1100px;text-wrap:balance}
+.digital-services-page .nx-bridge-aside{position:relative}
+.digital-services-page .nx-bridge-aside:after{content:"";display:block;width:60px;height:2px;background:#bc2d3c;margin-top:38px}
+.digital-services-page .nx-text-link:focus-visible,.digital-services-page .nx-inline-link:focus-visible{outline:3px solid #ab3744;outline-offset:5px}
+/* Service rows gain their own digital character rather than competing with the demos. */
+.digital-services-page .nx-offer{background:#fff}
+.digital-services-page .nx-offer-item{position:relative;transition:background-color .2s ease}
+.digital-services-page .nx-offer-item:hover{background:#f7fafc}
+.digital-services-page .nx-offer-index svg{box-sizing:content-box;width:63px;height:63px;padding:12px;background:#edf3f7;border:1px solid #dce8ef;border-radius:16px;color:#234964;transition:transform .24s cubic-bezier(.2,.8,.2,1),border-color .24s,background-color .24s}
+.digital-services-page .nx-offer-item:nth-child(2) .nx-offer-index svg{background:#eef1f7}
+.digital-services-page .nx-offer-item:nth-child(3) .nx-offer-index svg{background:#ecf4f5}
+.digital-services-page .nx-offer-item:hover .nx-offer-index svg{transform:translateY(-4px);border-color:#b7d1dc;background:#e7f0f4}
+.digital-services-page .nx-offer-detail .nx-offer-tags{gap:7px}
+.digital-services-page .nx-offer-tags span{border-radius:4px;background:#f3f6f8;border:1px solid #e5eaee}
+.digital-services-page .nx-offer-detail .nx-inline-link{padding:10px 0;border-bottom:1px solid #d9dfe5}
+.digital-services-page .nx-offer-outro{border-top:1px solid #d7e0e7}
+/* The demo-lab: product imagery reads like a designed artefact, not a diagram. */
+.digital-services-page .nx-lab{background:#f0f3f5}
+.digital-services-page .nx-lab-stage{box-shadow:0 32px 82px rgba(9,38,64,.12);border:1px solid rgba(23,68,103,.12);overflow:hidden}
+.digital-services-page .nx-lab-tabs button{transition:color .18s ease,background-color .18s ease;cursor:pointer}
+.digital-services-page .nx-lab-tabs button:hover{background:rgba(255,255,255,.055);color:#fff}
+.digital-services-page .nx-lab-tabs button:focus-visible{outline:2px solid #8dcde6;outline-offset:-4px}
+.digital-services-page .nx-lab-panel.is-active .nx-lab-story{animation:nx26-story .36s cubic-bezier(.16,.7,.25,1) both}
+.digital-services-page .nx-lab-panel.is-active .nx-lab-art>*{animation:nx26-art .52s cubic-bezier(.16,.7,.25,1) both;transform-origin:center}
+.digital-services-page .nx-lab-art{overflow:hidden}
+.digital-services-page .nx-demo-window{box-shadow:0 36px 60px rgba(0,8,25,.26);border:1px solid rgba(255,255,255,.6)}
+.digital-services-page .nx-demo-workspace{box-shadow:0 33px 65px rgba(0,8,25,.23);border:1px solid rgba(255,255,255,.35)}
+.digital-services-page .nx-demo-flow{box-shadow:0 32px 70px rgba(0,8,25,.26)}
+.digital-services-page .nx-demo-float{box-shadow:0 18px 48px rgba(0,9,25,.2)}
+@keyframes nx26-story{from{opacity:.2;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes nx26-art{from{opacity:.5;translate:0 15px}to{opacity:1;translate:0 0}}
+/* The method is a visually demonstrable series of deliverables, not a list of promises. */
+.digital-services-page .nx-method{background:radial-gradient(ellipse 65% 55% at 80% 43%,rgba(38,94,137,.21),transparent 76%),linear-gradient(135deg,#061b30 0%,#0a2944 100%);color:#f6f9fc;padding:140px 0 145px;overflow:hidden}
+.digital-services-page .nx-method:before{content:"";pointer-events:none;position:absolute;inset:0;background-image:linear-gradient(rgba(151,195,220,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(151,195,220,.022) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(90deg,transparent 25%,black 100%)}
+.digital-services-page .nx-method .nx-index{color:#a9bfd0}
+.digital-services-page .nx-method-intro{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(250px,.58fr);gap:9%;align-items:end;margin-bottom:68px;position:relative}
+.digital-services-page .nx-method h2{font-size:clamp(46px,5.2vw,82px);line-height:1.075;letter-spacing:-.062em;color:#fff;margin:26px 0 0;text-wrap:balance}
+.digital-services-page .nx-method h2 em{color:#a6d5ec}
+.digital-services-page .nx-method-intro>p{color:#b1c7d8;font-size:16px;line-height:1.78;max-width:380px;margin:0 0 5px}
+.digital-services-page .nx-process{display:grid;grid-template-columns:minmax(280px,.43fr) minmax(0,.57fr);border:1px solid rgba(141,190,218,.23);border-radius:19px;overflow:hidden;min-height:660px;background:rgba(3,18,32,.28);box-shadow:0 28px 90px rgba(0,7,18,.24)}
+.digital-services-page .nx-process-controls{padding:34px 23px 24px;background:rgba(4,21,37,.6);display:flex;flex-direction:column}
+.digital-services-page .nx-process-step{width:100%;appearance:none;border:1px solid transparent;background:transparent;color:#9db4c6;text-align:left;display:grid;grid-template-columns:33px 1fr 24px;gap:16px;align-items:center;padding:23px 16px;border-radius:9px;cursor:pointer;transition:background-color .22s,border-color .22s,color .22s;min-height:104px}
+.digital-services-page .nx-process-step+.nx-process-step{margin-top:8px}
+.digital-services-page .nx-process-step:hover{background:rgba(135,190,223,.07);color:#fff}
+.digital-services-page .nx-process-step.is-active{background:linear-gradient(115deg,rgba(96,163,204,.15),rgba(67,116,151,.06));border-color:rgba(134,191,225,.35);color:#fff}
+.digital-services-page .nx-process-step:focus-visible{outline:2px solid #9ed7ed;outline-offset:-3px}
+.digital-services-page .nx-process-n{font-size:12px;color:#d25b67;align-self:start;padding-top:5px;font-weight:780;font-variant-numeric:tabular-nums}
+.digital-services-page .nx-process-title{display:flex;flex-direction:column;gap:8px;min-width:0}
+.digital-services-page .nx-process-title strong{display:block;font-size:18px;line-height:1.23;letter-spacing:-.027em;font-weight:720}
+.digital-services-page .nx-process-title small{font-size:12px;line-height:1.45;color:#8ea9bd;font-weight:450}
+.digital-services-page .nx-process-step.is-active .nx-process-title small{color:#b5d2e3}
+.digital-services-page .nx-process-arrow{justify-self:end;font-size:20px;color:#a8d7eb;opacity:0;transform:translate(-5px,5px);transition:opacity .2s,transform .2s}
+.digital-services-page .nx-process-step.is-active .nx-process-arrow{opacity:1;transform:translate(0)}
+.digital-services-page .nx-process-bottom{font-size:11px;line-height:1.6;color:#7e9bb0;border-top:1px solid rgba(141,190,218,.15);margin-top:auto;padding:25px 15px 3px;display:flex;align-items:center;gap:11px}
+.digital-services-page .nx-process-status-dot{height:7px;width:7px;border-radius:50%;background:#67d5b0;box-shadow:0 0 0 4px rgba(103,213,176,.1);flex-shrink:0}
+.digital-services-page .nx-process-display{padding:26px 31px 27px;background:radial-gradient(circle at 65% 30%,rgba(94,153,184,.11),transparent 65%);min-width:0;display:flex;flex-direction:column}
+.digital-services-page .nx-process-display-head,.digital-services-page .nx-process-display-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;color:#8baec7;letter-spacing:.11em;font-size:10px;font-weight:700;line-height:1.5}
+.digital-services-page .nx-process-display-head{padding:0 4px 23px}
+.digital-services-page .nx-process-display-head span:last-child{font-variant-numeric:tabular-nums;color:#c6ddea}
+.digital-services-page .nx-process-artifacts{flex:1;display:flex;min-width:0}
+.digital-services-page .nx-process-panel{width:100%;display:flex;flex-direction:column;animation:nx26-processIn .35s cubic-bezier(.15,.7,.25,1) both;min-width:0}
+.digital-services-page .nx-process-panel[hidden]{display:none}
+.digital-services-page .nx-artifact-paper{background:#f6f8f9;border:1px solid #d5e2e9;border-radius:9px;box-shadow:0 24px 48px rgba(0,10,23,.18);padding:30px 31px 21px;color:#173651;flex:1;display:flex;flex-direction:column;min-height:480px;position:relative;overflow:hidden}
+.digital-services-page .nx-artifact-paper:after{content:"";width:130px;height:130px;border:1px solid #d9e5eb;position:absolute;right:-75px;top:-72px;border-radius:50%;pointer-events:none}
+.digital-services-page .nx-artifact-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.digital-services-page .nx-artifact-eyebrow,.digital-services-page .nx-artifact-mono,.digital-services-page .nx-artifact-label{font-size:9px;font-weight:760;letter-spacing:.11em;color:#718da1}
+.digital-services-page .nx-artifact-mono{color:#ae5160}
+.digital-services-page .nx-artifact-paper h3{font-size:clamp(26px,2.4vw,34px);letter-spacing:-.05em;line-height:1.12;margin:29px 0 27px;color:#0d2a43;font-weight:750}
+.digital-services-page .nx-artifact-paper h3 em{font-family:'Source Serif 4',Georgia,serif;font-weight:500;color:#b62f3d;letter-spacing:-.035em}
+.digital-services-page .nx-artifact-footer{margin-top:auto;border-top:1px solid #d5e0e6;padding-top:18px;color:#4d697e;font-size:11px;line-height:1.5;display:flex;gap:9px;align-items:center}
+.digital-services-page .nx-mini-check{display:grid;place-items:center;background:#dcece7;color:#277b67;height:20px;width:20px;border-radius:50%;font-weight:800;font-size:12px;flex-shrink:0}
+.digital-services-page .nx-discovery-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:26px}
+.digital-services-page .nx-artifact-label{display:block;margin-bottom:12px}
+.digital-services-page .nx-note{display:flex;align-items:center;gap:9px;font-size:10px;line-height:1.35;padding:11px 10px;margin-bottom:7px;border-radius:4px;min-height:42px}
+.digital-services-page .nx-note-muted{background:#e7edf1;color:#5e7689}
+.digital-services-page .nx-note-muted i{height:5px;width:5px;flex-shrink:0;border-radius:50%;background:#8aa2b4}
+.digital-services-page .nx-note-result{background:#deebf1;color:#21445d;font-weight:650;border-left:2px solid #7eaac1}
+.digital-services-page .nx-note-result span{color:#be3444;font-size:9px;font-weight:780}
+.digital-services-page .nx-wireframe{border:1px solid #abc2d1;border-radius:5px;background:#ecf3f7;overflow:hidden;max-width:475px;margin:0 10px 20px 0;box-shadow:9px 9px 0 rgba(145,179,199,.18)}
+.digital-services-page .nx-wire-header{border-bottom:1px solid #b9d0dc;display:flex;align-items:center;gap:5px;height:27px;padding:0 11px}
+.digital-services-page .nx-wire-header i{background:#b8cdd9;width:6px;height:6px;border-radius:50%}
+.digital-services-page .nx-wire-header span{font-size:7px;color:#7c9caf;margin-left:auto;letter-spacing:.11em}
+.digital-services-page .nx-wire-hero{padding:20px 19px;display:flex;gap:23px;min-height:143px}
+.digital-services-page .nx-wire-hero>div{flex:1;display:flex;flex-direction:column;gap:10px;padding-top:7px}
+.digital-services-page .nx-wire-hero span{height:10px;background:#87aabe;border-radius:2px;width:80%}
+.digital-services-page .nx-wire-hero span:nth-child(2){width:94%;height:7px;background:#bdd3de}
+.digital-services-page .nx-wire-hero span:nth-child(3){width:42%;height:24px;margin-top:8px;background:#c04450}
+.digital-services-page .nx-wire-hero>b{display:block;width:36%;background:repeating-linear-gradient(45deg,#cbdde6 0 4px,#b8d1de 4px 5px);border:1px solid #a5c5d4;border-radius:3px}
+.digital-services-page .nx-wire-blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 19px 20px}
+.digital-services-page .nx-wire-blocks i{height:42px;background:#cbdae3;border:1px solid #bed1db;border-radius:3px}
+.digital-services-page .nx-wire-footer{display:flex;justify-content:space-between;padding:14px 19px;border-top:1px solid #c8d9e3}
+.digital-services-page .nx-wire-footer i{height:7px;width:26%;background:#c1d6e0;border-radius:2px}
+.digital-services-page .nx-test-screen{border:1px solid #cfdae2;border-radius:6px;background:#fff;display:flex;min-height:210px;margin-bottom:27px;overflow:hidden;box-shadow:0 11px 22px rgba(15,51,76,.07)}
+.digital-services-page .nx-test-sidebar{width:44px;flex:0 0 44px;background:#153a58;display:flex;flex-direction:column;align-items:center;padding-top:16px;gap:19px}
+.digital-services-page .nx-test-sidebar b{display:grid;place-items:center;background:#e6f1f8;color:#153a58;border-radius:5px;font-size:12px;height:22px;width:22px}
+.digital-services-page .nx-test-sidebar i{height:5px;width:18px;border-radius:2px;background:#7a9aae}
+.digital-services-page .nx-test-content{padding:20px;min-width:0;flex:1}
+.digital-services-page .nx-test-title{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #e1e9ed;padding-bottom:14px;color:#14314c;font-weight:730;font-size:13px}
+.digital-services-page .nx-test-title small{font-size:8px;font-weight:800;letter-spacing:.09em;color:#b34954}
+.digital-services-page .nx-test-row{display:flex;gap:10px;align-items:center;border-bottom:1px solid #e9eef2;padding:14px 0;font-size:10px;color:#23435b}
+.digital-services-page .nx-test-row strong{font-size:11px;font-weight:650;flex:1}
+.digital-services-page .nx-test-row i{background:#e0f3e9;color:#37866b;font-style:normal;height:19px;width:19px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+.digital-services-page .nx-test-num{font-variant-numeric:tabular-nums;font-size:9px;color:#9aacbb}
+.digital-services-page .nx-delivery-card{background:white;border:1px solid #dae3e8;border-radius:8px;padding:22px 23px;margin-bottom:27px;box-shadow:0 15px 28px rgba(12,48,76,.08)}
+.digital-services-page .nx-delivery-head{display:flex;gap:12px;align-items:center;border-bottom:1px solid #e6ebef;padding-bottom:18px}
+.digital-services-page .nx-delivery-symbol{background:#143d5e;color:white;width:41px;height:41px;border-radius:8px;display:grid;place-items:center;font-size:23px}
+.digital-services-page .nx-delivery-head>div:nth-child(2){flex:1;min-width:0}
+.digital-services-page .nx-delivery-head>div:nth-child(2) span{font-size:8px;letter-spacing:.09em;color:#8797a6;display:block;margin-bottom:6px}
+.digital-services-page .nx-delivery-head strong{font-size:13px;color:#123249}
+.digital-services-page .nx-delivery-ready{border-radius:50px;background:#e1f1e9;color:#31816a;padding:7px 9px;font-size:9px;font-weight:800}
+.digital-services-page .nx-delivery-list{padding:15px 0 8px}
+.digital-services-page .nx-delivery-list>div{display:flex;gap:11px;padding:9px 0;color:#37546b;font-size:11px}
+.digital-services-page .nx-delivery-list span{color:#2f9372;font-weight:800}
+.digital-services-page .nx-delivery-tail{border-top:1px solid #e7edf0;font-size:10px;color:#788da0;padding-top:13px;line-height:1.5}
+.digital-services-page .nx-process-caption{font-size:12px;line-height:1.6;color:#9ab4c8;margin:17px 6px 0;max-width:550px}
+.digital-services-page .nx-process-display-foot{border-top:1px solid rgba(132,185,214,.16);margin-top:23px;padding:17px 5px 0;color:#8ea7bb;font-size:9px}
+.digital-services-page .nx-process-progress{display:flex;gap:6px}
+.digital-services-page .nx-process-progress i{width:18px;height:3px;border-radius:4px;background:#305674;transition:background-color .17s}
+.digital-services-page .nx-process-progress i.is-lit{background:#c74553}
+@keyframes nx26-processIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+/* The questions receive the same perceived priority as method and demo work. */
+.digital-services-page .nx-questions{background:#edf2f4;padding:130px 0 145px;color:#0c2c45}
+.digital-services-page .nx-questions-header{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.55fr);gap:9%;align-items:end;padding-bottom:64px}
+.digital-services-page .nx-questions h2{font-size:clamp(48px,5.5vw,84px);line-height:1.08;letter-spacing:-.062em;margin:24px 0 0;max-width:900px;text-wrap:balance}
+.digital-services-page .nx-questions h2 em{color:#b52c3c}
+.digital-services-page .nx-questions-side{max-width:340px;justify-self:end;display:flex;align-items:start;gap:19px;padding-bottom:4px}
+.digital-services-page .nx-questions-symbol{height:42px;width:42px;flex:0 0 42px;border:1px solid #b0c6d3;border-radius:50%;display:grid;place-items:center;font-size:23px;color:#b63042;font-family:'Source Serif 4',serif;font-style:italic}
+.digital-services-page .nx-questions-side p{color:#587083;font-size:14px;line-height:1.75;margin:0}
+.digital-services-page .nx-faq{border-top:1px solid #b7c8d3}
+.digital-services-page .nx-faq details{border-bottom:1px solid #b7c8d3;transition:background-color .2s}
+.digital-services-page .nx-faq details[open]{background:rgba(255,255,255,.56)}
+.digital-services-page .nx-faq summary{display:grid;grid-template-columns:76px minmax(0,1fr) 50px;gap:24px;align-items:center;min-height:107px;list-style:none;cursor:pointer;padding:21px 28px 21px 23px;color:#143249;position:relative;outline-offset:-3px}
+.digital-services-page .nx-faq summary::-webkit-details-marker{display:none}
+.digital-services-page .nx-faq summary:focus-visible{outline:2px solid #bf3442}
+.digital-services-page .nx-faq summary .nx-faq-number,.digital-services-page .nx-faq summary .nx-faq-question{position:static;right:auto;top:auto;transform:none;font-weight:inherit;line-height:inherit;color:inherit}
+.digital-services-page .nx-faq-number{font-variant-numeric:tabular-nums;color:#a83342;letter-spacing:.04em;font-size:12px;font-weight:750}
+.digital-services-page .nx-faq-question{font-size:clamp(19px,2.1vw,28px);line-height:1.25;font-weight:670;letter-spacing:-.04em;max-width:810px;color:#123149;transition:color .2s}
+.digital-services-page .nx-faq summary:hover .nx-faq-question{color:#ac2f3d}
+.digital-services-page .nx-faq details[open] summary .nx-faq-number,.digital-services-page .nx-faq details[open] summary .nx-faq-question{transform:none}
+.digital-services-page .nx-faq-icon{width:42px;height:42px;justify-self:end;border:1px solid #c6d4de;border-radius:50%;background:#f8fafb;position:relative;display:grid;place-items:center;transition:background-color .2s,transform .2s,border-color .2s}
+.digital-services-page .nx-faq details[open] summary .nx-faq-icon{transform:none}
+.digital-services-page .nx-faq-icon i{position:absolute;width:12px;height:1.5px;border-radius:2px;background:#bf3646;transition:transform .22s}
+.digital-services-page .nx-faq-icon i:nth-child(2){transform:rotate(90deg)}
+.digital-services-page .nx-faq details[open] .nx-faq-icon{background:#123c5b;border-color:#123c5b}
+.digital-services-page .nx-faq details[open] .nx-faq-icon i{background:#fff}
+.digital-services-page .nx-faq details[open] .nx-faq-icon i:nth-child(2){transform:rotate(0deg)}
+.digital-services-page .nx-faq-answer{padding:0 112px 33px 123px;animation:nx26-faqIn .2s ease-out both}
+.digital-services-page .nx-faq-answer p{font-size:16px;color:#506c80;line-height:1.78;max-width:680px;margin:0;padding-left:23px;border-left:2px solid #cf5b66}
+@keyframes nx26-faqIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.digital-services-page .nx-questions-outro{display:flex;align-items:center;justify-content:space-between;gap:28px;padding-top:37px}
+.digital-services-page .nx-questions-outro p{font-size:14px;color:#657e91;margin:0}
+.digital-services-page .nx-questions-outro a{font-size:14px;text-decoration:none;color:#b52c3c;font-weight:700;border-bottom:1px solid #cda7af;padding-bottom:8px;display:inline-flex;align-items:center;gap:20px}
+.digital-services-page .nx-questions-outro a:hover{gap:26px}
+.digital-services-page .nx-questions-outro a:focus-visible{outline:2px solid #b52c3c;outline-offset:4px}
+/* Contact: tactile polish and readable field affordances, no extra step. */
+.digital-services-page .nx-contact-form-wrap{border:1px solid rgba(255,255,255,.18);box-shadow:0 28px 78px rgba(0,9,25,.24)}
+.digital-services-page .nx-form input:not([type=checkbox]):hover,.digital-services-page .nx-form select:hover,.digital-services-page .nx-form textarea:hover{border-color:#a8bccb}
+.digital-services-page .nx-form input:not([type=checkbox]):focus-visible,.digital-services-page .nx-form select:focus-visible,.digital-services-page .nx-form textarea:focus-visible{border-color:#1c678f;box-shadow:0 0 0 3px rgba(33,114,158,.16)}
+.digital-services-page .nx-submit:focus-visible{outline:3px solid #99cfe8;outline-offset:4px}
+@media(max-width:1199.98px){
+.digital-services-page .nx-method-intro{gap:5%}
+.digital-services-page .nx-method h2{font-size:clamp(44px,5.3vw,70px)}
+.digital-services-page .nx-process{grid-template-columns:minmax(260px,.42fr) minmax(0,.58fr)}
+.digital-services-page .nx-process-controls{padding:22px 13px}
+.digital-services-page .nx-process-display{padding:23px 19px}
+.digital-services-page .nx-artifact-paper{padding:25px 22px 19px}
+.digital-services-page .nx-questions-header{gap:5%}
+}
+@media(max-width:991.98px){
+.digital-services-page .nx-method{padding:108px 0 112px}
+.digital-services-page .nx-method-intro{grid-template-columns:1fr;gap:22px;margin-bottom:42px}
+.digital-services-page .nx-method-intro>p{max-width:630px}
+.digital-services-page .nx-process{grid-template-columns:1fr;min-height:0}
+.digital-services-page .nx-process-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:14px;border-bottom:1px solid rgba(141,190,218,.2)}
+.digital-services-page .nx-process-step{display:flex;flex-direction:column;align-items:flex-start;min-height:100px;gap:10px;padding:13px 10px}
+.digital-services-page .nx-process-step+.nx-process-step{margin:0}
+.digital-services-page .nx-process-n{padding:0}
+.digital-services-page .nx-process-title strong{font-size:14px}
+.digital-services-page .nx-process-title small,.digital-services-page .nx-process-arrow,.digital-services-page .nx-process-bottom{display:none}
+.digital-services-page .nx-process-display{padding:24px 30px}
+.digital-services-page .nx-artifact-paper{min-height:445px}
+.digital-services-page .nx-questions-header{grid-template-columns:1fr;gap:30px;padding-bottom:40px}
+.digital-services-page .nx-questions-side{justify-self:start;max-width:600px}
+}
+@media(max-width:650px){
+.digital-services-page .nx-bridge-aside:after{margin-top:25px}
+.digital-services-page .nx-offer-index svg{width:41px;height:41px;padding:7px;border-radius:12px}
+.digital-services-page .nx-offer-item:hover{background:transparent}
+.digital-services-page .nx-lab-stage{box-shadow:0 17px 35px rgba(9,38,64,.10)}
+.digital-services-page .nx-lab-panel.is-active .nx-lab-art>*{animation-duration:.36s}
+.digital-services-page .nx-method{padding:94px 0 98px}
+.digital-services-page .nx-method h2{font-size:clamp(40px,10.2vw,56px);line-height:1.11}
+.digital-services-page .nx-method h2 br{display:none}
+.digital-services-page .nx-method-intro{margin-bottom:33px}
+.digital-services-page .nx-method-intro>p{font-size:14px;line-height:1.72}
+.digital-services-page .nx-process{border-radius:11px}
+.digital-services-page .nx-process-controls{gap:3px;padding:9px}
+.digital-services-page .nx-process-step{min-height:85px;padding:12px 6px;gap:8px;border-radius:6px}
+.digital-services-page .nx-process-n{font-size:10px}
+.digital-services-page .nx-process-title strong{font-size:11px;line-height:1.33;letter-spacing:-.025em}
+.digital-services-page .nx-process-display{padding:18px 12px 20px}
+.digital-services-page .nx-process-display-head{font-size:8px;padding:0 6px 14px;letter-spacing:.07em}
+.digital-services-page .nx-artifact-paper{padding:21px 17px 17px;min-height:425px}
+.digital-services-page .nx-artifact-paper h3{font-size:27px;margin:24px 0 24px}
+.digital-services-page .nx-discovery-columns{gap:8px}
+.digital-services-page .nx-artifact-label{font-size:8px;min-height:25px}
+.digital-services-page .nx-note{font-size:9px;padding:8px 6px;min-height:45px;gap:5px}
+.digital-services-page .nx-artifact-footer{font-size:10px}
+.digital-services-page .nx-process-display-foot{font-size:8px;letter-spacing:.05em;gap:8px}
+.digital-services-page .nx-process-progress i{width:9px}
+.digital-services-page .nx-test-content{padding:13px}
+.digital-services-page .nx-test-sidebar{width:31px;flex-basis:31px}
+.digital-services-page .nx-test-title{font-size:11px}
+.digital-services-page .nx-test-row{gap:6px}
+.digital-services-page .nx-test-row strong{font-size:9px}
+.digital-services-page .nx-delivery-card{padding:14px 12px}
+.digital-services-page .nx-delivery-head strong{font-size:11px}
+.digital-services-page .nx-delivery-ready{font-size:8px;padding:5px 7px}
+.digital-services-page .nx-process-caption{font-size:11px}
+.digital-services-page .nx-questions{padding:95px 0 100px}
+.digital-services-page .nx-questions h2{font-size:clamp(39px,10.5vw,56px);line-height:1.1}
+.digital-services-page .nx-questions h2 br{display:none}
+.digital-services-page .nx-questions-side{gap:15px}
+.digital-services-page .nx-questions-symbol{width:36px;height:36px;flex-basis:36px}
+.digital-services-page .nx-questions-side p{font-size:13px}
+.digital-services-page .nx-questions-header{padding-bottom:34px}
+.digital-services-page .nx-faq summary{grid-template-columns:27px minmax(0,1fr) 34px;gap:9px;min-height:92px;padding:17px 0}
+.digital-services-page .nx-faq-number{font-size:10px}
+.digital-services-page .nx-faq-question{font-size:19px;line-height:1.3}
+.digital-services-page .nx-faq-icon{width:32px;height:32px}
+.digital-services-page .nx-faq-answer{padding:0 23px 26px 36px}
+.digital-services-page .nx-faq-answer p{font-size:13px;line-height:1.76;padding-left:14px}
+.digital-services-page .nx-questions-outro{flex-direction:column;align-items:flex-start;gap:13px;padding-top:28px}
+.digital-services-page .nx-questions-outro a{font-size:13px}
+.digital-services-page .nx-contact-form-wrap{box-shadow:none}
+}
+@media(max-width:360px){
+.digital-services-page .nx-artifact-paper{padding:17px 11px;min-height:430px}
+.digital-services-page .nx-artifact-paper h3{font-size:25px}
+.digital-services-page .nx-note{font-size:8px}
+.digital-services-page .nx-process-title strong{font-size:10px}
+.digital-services-page .nx-faq-question{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){
+.digital-services-page .nx-lab-panel.is-active .nx-lab-story,.digital-services-page .nx-lab-panel.is-active .nx-lab-art>*,.digital-services-page .nx-process-panel,.digital-services-page .nx-faq-answer{animation:none!important}
+.digital-services-page .nx-offer-index svg,.digital-services-page .nx-process-step,.digital-services-page .nx-process-arrow,.digital-services-page .nx-faq-icon,.digital-services-page .nx-faq-icon i,.digital-services-page .nx-process-progress i{transition:none!important}
+}
+
+/* Anchor landings account for the fixed institutional header. */
+.digital-services-page #servizi,.digital-services-page #nx-esempi,.digital-services-page #approccio,.digital-services-page #contatto{scroll-margin-top:86px}
+@media(max-width:650px){.digital-services-page #servizi,.digital-services-page #nx-esempi,.digital-services-page #approccio,.digital-services-page #contatto{scroll-margin-top:110px}}
+/* Two readable rows beat four microscopic tabs on narrow phones. */
+@media(max-width:650px){
+.digital-services-page .nx-process-controls{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+.digital-services-page .nx-process-step{flex-direction:row;align-items:center;min-height:69px;padding:10px 9px;gap:10px}
+.digital-services-page .nx-process-title strong{font-size:12px;line-height:1.32}
+.digital-services-page .nx-process-n{flex:0 0 19px}
+}
+@media(max-width:360px){.digital-services-page .nx-process-title strong{font-size:11px}}

@@ -1,0 +1,138 @@
+/* ---- News Ticker (Google Alerts) ---- */
+.news-ticker {
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(90deg, #0a1530 0%, #1a5276 100%);
+  color: #fff;
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  font-size: 1.05rem;
+  overflow: hidden;
+  border-bottom: 2px solid #cc0000;
+  position: relative;
+  z-index: 1040;
+}
+.news-ticker-label {
+  flex: 0 0 auto;
+  background: #cc0000;
+  color: #fff;
+  padding: 9px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+}
+
+.news-ticker-wrap {
+  flex: 1 1 auto;
+  overflow: hidden;
+  position: relative;
+  padding: 9px 0;
+}
+.news-ticker-wrap::before,
+.news-ticker-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  z-index: 2;
+  pointer-events: none;
+}
+.news-ticker-wrap::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(10,21,48,1) 0%, rgba(10,21,48,0) 100%);
+}
+.news-ticker-wrap::after {
+  right: 0;
+  background: linear-gradient(90deg, rgba(26,82,118,0) 0%, rgba(26,82,118,1) 100%);
+}
+.news-ticker-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: nt-scroll 120s linear infinite;
+  will-change: transform;
+}
+.news-ticker:hover .news-ticker-track {
+  animation-play-state: paused;
+}
+@keyframes nt-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.news-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 28px;
+  position: relative;
+}
+.news-ticker-item + .news-ticker-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: #cc0000;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(204,0,0,0.6);
+}
+.news-ticker-item a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.news-ticker-item a:hover {
+  color: #ffd166;
+  text-decoration: underline;
+}
+.news-ticker-loading {
+  color: rgba(255,255,255,0.7);
+  font-style: italic;
+  padding: 0 20px;
+}
+.news-ticker-empty {
+  color: rgba(255,255,255,0.6);
+  padding: 0 20px;
+  font-style: italic;
+}
+@media (max-width: 575.98px) {
+  .news-ticker { font-size: 0.8rem; }
+  .news-ticker-label { padding: 6px 10px; font-size: 0.7rem; }
+  .news-ticker-label span { display: none; }
+  .news-ticker-item { padding: 0 18px; }
+}
+
+.news-ticker:focus-within .news-ticker-track{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce) {
+  /* No autoplay, but keep the news ticker at a single-row height. */
+  .news-ticker-wrap {
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  /* Gradients should not obscure text while scrolling manually. */
+  .news-ticker-wrap::before,
+  .news-ticker-wrap::after {
+    display: none;
+  }
+  .news-ticker-track {
+    animation: none;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    will-change: auto;
+  }
+  .news-ticker-item {
+    flex: 0 0 auto;
+    padding: 0 18px;
+  }
+}

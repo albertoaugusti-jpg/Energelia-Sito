@@ -3,44 +3,14 @@
 
     <head>  
         <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'wait_for_update': 500
-  });
-  try {
-    if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
-      gtag('consent', 'update', {
-        'ad_storage': 'granted',
-        'analytics_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted'
-      });
-    }
-  } catch(e) {}
-</script>
+
 
 <!-- Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-VL6MKDTQXH"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-VL6MKDTQXH');
-        </script>
+        
+        
         <!-- Google Ads -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17893109593"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'AW-17893109593');
-        </script>
+        
+        
       
         <meta charset="utf-8">
         <title> Energelia </title>
@@ -78,41 +48,6 @@
     </head>
 
 <style>
-  @media (max-width: 575.98px) {
-    .nav-bar {
-      padding-top: 0.25rem !important;
-      padding-bottom: 0.25rem !important;
-      padding-left: 0.5rem !important;
-      padding-right: 0.5rem !important;
-    }
-    .nav-bar .navbar-nav .nav-link {
-      padding: 0.25rem 0.5rem !important;
-      font-size: 0.9rem;
-    }
-    .nav-bar .navbar-brand .navbar-logo {
-      height: 50px !important;
-    }
-  }
-
- 
-
-  @media (max-width: 575.98px) {
-    .nav-bar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
-      z-index: 999;
-    }
-    .nav-bar.hidden {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    .nav-bar.visible {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
   @media (max-width: 767px) {
     .counters-grid {
       justify-content: center !important;  /* centra gli item invece di space-between */
@@ -123,52 +58,6 @@
       flex: 0 1 auto;                      /* dimensione automatica al contenuto */
       margin: 0;                            /* rimuove margini esterni */
     }
-  }
-
-  @media (max-width: 575.98px) {
-    /* 1) In cima: navbar statica e spinge il banner */
-    .nav-bar.at-top {
-      position: static !important;
-      background-color: rgba(255,255,255,0.85);
-    }
-    /* 2) Dopo scroll: fixed con hide/show */
-    .nav-bar:not(.at-top) {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 999;
-      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
-    }
-    .nav-bar.hidden { transform: translateY(-100%); opacity: 0; }
-    .nav-bar.visible { transform: translateY(0);    opacity: 1; }
-  }
-
-  @media (max-width: 575.98px) {
-    /* Niente transizioni quando sei in cima */
-    .nav-bar.at-top {
-      transition: none !important;
-    }
-  }
-
-
-  @media (max-width: 575.98px) {
-    /* In cima: navbar statica e senza transizioni */
-    .nav-bar.at-top {
-      position: static !important;
-      transition: none !important;
-    }
-
-    /* Oltre la soglia: fixed con le tue transizioni */
-    .nav-bar:not(.at-top) {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 999;
-      transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
-    }
-
-    .nav-bar.hidden { transform: translateY(-100%); opacity: 0; }
-    .nav-bar.visible { transform: translateY(0);    opacity: 1; }
   }
 
 
@@ -304,13 +193,13 @@
               <button type="submit" id="lead-submit-btn">
                 <i class="fas fa-download me-2"></i>Scarica Report
               </button>
-            </form>
-            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">I tuoi dati non verranno condivisi con terzi.</p>
+            <p class="form-privacy-note">Energelia S.r.l. usa i dati per gestire la richiesta e le attività precontrattuali richieste. I campi obbligatori servono per risponderti. Nessuna iscrizione a newsletter; per i contatti non acquisiti è previsto un termine di 24 mesi dall’ultima interazione significativa. <a href="/privacy-policy#richieste">Leggi l’informativa privacy completa</a>.</p></form>
+            <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">Usiamo i recapiti per gestire la richiesta, senza condivisione commerciale con partner.</p>
           </div>
 
           <div class="popup-success-wrap" id="lead-success" style="display:none;">
             <h2>Report in arrivo!</h2>
-            <p>Il download partirà automaticamente.<br>Controlla la tua email per altri aggiornamenti.</p>
+            <p>Il download partirà automaticamente.<br>Useremo i recapiti per gestire questa richiesta.</p>
             <button class="popup-close-success" onclick="closeLeadPopup()">Chiudi</button>
           </div>
         </div>
@@ -352,9 +241,9 @@
               <button type="submit" id="consultation-submit-btn" style="background: linear-gradient(135deg, #d4af37 0%, #b8960c 100%); color: #0a1530; font-weight: 600; padding: 14px 24px; border-radius: 8px; font-size: 1rem; width: 100%; border: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;">
                 <i class="fas fa-paper-plane me-2"></i>Richiedi Consulenza Gratuita
               </button>
-            </form>
+            <p class="form-privacy-note">Energelia S.r.l. usa i dati per gestire la richiesta e le attività precontrattuali richieste. I campi obbligatori servono per risponderti. Nessuna iscrizione a newsletter; per i contatti non acquisiti è previsto un termine di 24 mesi dall’ultima interazione significativa. <a href="/privacy-policy#richieste">Leggi l’informativa privacy completa</a>.</p></form>
             <p style="font-size: 0.75rem; color: #999; margin-top: 14px; text-align: center;">
-              <i class="fas fa-lock me-1"></i>I tuoi dati sono al sicuro. Non condividiamo nulla con terzi.
+              <i class="fas fa-lock me-1"></i>Recapiti usati per la richiesta, senza condivisione commerciale con partner.
             </p>
           </div>
 
@@ -379,102 +268,7 @@
 
       
 {% include 'life-insurance-website-template/partials/navbar.html' %}
-
-<!-- ====================  SHIELD LOGO (deborda navbar → CTA)  ==================== -->
-<style>
-  #shield-logo-wrap {
-    position: relative;
-    z-index: 1100;
-    height: 0;
-    overflow: visible;
-  }
-  #shield-logo-link {
-    position: absolute;
-    top: -70px;
-    left: 28px;
-    display: block;
-    z-index: 1100;
-    text-decoration: none;
-  }
-  #shield-logo-img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    background-color: #0c1e4a;
-    border-radius: 12px;
-    border: 4px solid #ffffff;
-    box-shadow:
-      0 0 0 6px rgba(255,255,255,0.16),
-      0 14px 40px rgba(0,0,0,0.65);
-    display: block;
-    position: relative;
-    z-index: 2;
-    transition: transform 0.3s ease;
-  }
-  /* Alone dorato pulsante dietro il logo */
-  #shield-logo-link::before {
-    content: '';
-    position: absolute;
-    inset: -16px;
-    border-radius: 22px;
-    background: radial-gradient(ellipse at center,
-      rgba(244, 208, 63, 0.55) 0%,
-      rgba(212, 175, 55, 0.25) 45%,
-      rgba(212, 175, 55, 0) 75%);
-    z-index: 1;
-    pointer-events: none;
-    animation: logo-glow-pulse 3.4s ease-in-out infinite;
-  }
-  @keyframes logo-glow-pulse {
-    0%, 100% { transform: scale(0.96); opacity: 0.55; }
-    50%      { transform: scale(1.06); opacity: 0.95; }
-  }
-  /* Shimmer obliquo che attraversa il logo */
-  #shield-logo-link::after {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    right: 4px;
-    bottom: 4px;
-    border-radius: 10px;
-    background: linear-gradient(115deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.28) 48%,
-      rgba(255, 255, 255, 0.42) 50%,
-      rgba(255, 255, 255, 0.28) 52%,
-      transparent 70%);
-    background-size: 250% 100%;
-    background-position: 200% 0;
-    z-index: 3;
-    pointer-events: none;
-    mix-blend-mode: screen;
-    animation: logo-shimmer 5.5s ease-in-out infinite;
-  }
-  @keyframes logo-shimmer {
-    0%, 85%, 100% { background-position: 200% 0; opacity: 0; }
-    90%           { opacity: 1; }
-    95%           { background-position: -50% 0; opacity: 1; }
-  }
-  #shield-logo-link:hover #shield-logo-img {
-    transform: scale(1.05);
-  }
-  @media (max-width: 575.98px) {
-    #shield-logo-link { top: -46px; left: 14px; }
-    #shield-logo-img  { width: 80px; height: 80px; border-radius: 10px; border-width: 3px; }
-    #shield-logo-link::before { inset: -10px; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    #shield-logo-link::before,
-    #shield-logo-link::after { animation: none; }
-  }
-</style>
-<div id="shield-logo-wrap">
-  <a id="shield-logo-link" href="/" aria-label="Energelia — Home">
-    <img id="shield-logo-img" src="img/logo-hq.png" alt="Logo Energelia">
-  </a>
-</div>
-<!-- ====================  FINE SHIELD LOGO  ==================== -->
+{% include 'life-insurance-website-template/partials/news-ticker.html' %}
 
 <!-- ====================  CTA RICERCA BANDI  ==================== -->
 <section class="cta-ricerca-bandi" aria-label="Ricerca bandi personalizzata">
@@ -520,7 +314,7 @@
           <div class="cta-form-error" id="ctaRicercaError" style="display:none;">
             <i class="fas fa-exclamation-triangle me-2"></i><span id="ctaRicercaErrorMsg">Si è verificato un errore. Riprova.</span>
           </div>
-        </form>
+        <p class="form-privacy-note">Energelia S.r.l. usa i dati per gestire la richiesta e le attività precontrattuali richieste. I campi obbligatori servono per risponderti. Nessuna iscrizione a newsletter; per i contatti non acquisiti è previsto un termine di 24 mesi dall’ultima interazione significativa. <a href="/privacy-policy#richieste">Leggi l’informativa privacy completa</a>.</p></form>
       </div>
     </div>
   </div>
@@ -751,109 +545,13 @@
 </script>
 <!-- ==================== FINE CTA RICERCA BANDI ==================== -->
 
-<style>
-  /* Logo ingrandito */
 
 
-  .nav-bar {
-    background-color: rgba(255,255,255,0.97) !important;
-    box-shadow: 0 4px 16px 0 rgba(34,97,170,0.06); /* effetto elegante, cambia pure il colore se vuoi */
-    transition: background-color 0.2s, box-shadow 0.2s;
-  }
 
-  
-  .navbar-logo {
-    height: 120px !important;
-    width: auto;
-  }
-
-  /* Area Clienti button */
-  .btn-area-clienti {
-    background-color: #0050b5;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 0.6rem 1.2rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
-    transition: background 0.3s, transform 0.3s;
-  }
-  .btn-area-clienti:hover {
-    background-color: #00397f;
-    transform: translateY(-2px);
-  }
-</style>
-
-
-<style>
-
-  
-  /* Area Clienti button */
-  .btn-area-clienti {
-    background-color: #0050b5;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 0.6rem 1.2rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
-    transition: background 0.3s, transform 0.3s;
-  }
-  .btn-area-clienti:hover {
-    background-color: #00397f;
-    transform: translateY(-2px);
-  }
-
-  /* Adjust spacing for call icon area */
-  .nav-bar .btn-light {
-    padding: 0.5rem;
-  }
-</style>
+        
 
 
         <style>
-  .navbar-logo {
-    height: 80px !important;
-    width: auto;
-  }
-</style>
-
-
-        <style>
-.navbar-nav .nav-link {
-  position: relative;
-  font-weight: 500;
-  color: #222 !important;
-  padding: 8px 10px;
-  transition: color 0.2s ease;
-}
-
-.navbar-nav .nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 4px;
-  width: 0%;
-  height: 2px;
-  background-color: #0050b5;
-  transition: width 0.3s ease;
-}
-
-.navbar-nav .nav-link:hover::after,
-.navbar-nav .nav-link.active::after {
-  width: 100%;
-}
-
-.navbar-nav .nav-link:hover {
-  color: #0050b5 !important;
-}
-
-.navbar {
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  font-size: 0.95rem;
-}
 
 .dropdown-menu {
   border: none;
@@ -871,10 +569,6 @@
 .dropdown-item:hover {
   background-color: #f0f6ff;
   color: #0050b5;
-}
-
-.nav-bar {
-  z-index: 999;
 }
 
 /* MOBILE RESPONSIVE - 576px e sotto */
@@ -957,9 +651,6 @@
             </div>
         </div>
         <!-- Modal Search End -->
-
-
-        <!-- Shield Logo: vuoto qui, viene reso subito dopo la navbar (vedi sopra) -->
 
         <!-- Carousel Start -->
 <div class="header-carousel owl-carousel"
@@ -3483,30 +3174,3 @@ function filterBandi() {
 
   
 </script>
-<script>
-  if (window.matchMedia("(max-width: 575.98px)").matches) {
-    const navbar = document.querySelector('.nav-bar');
-    let lastY = window.scrollY;
-
-    // Stato iniziale
-    if (lastY === 0) {
-      navbar.classList.add('at-top', 'visible');
-    } else {
-      navbar.classList.add('visible');
-    }
-
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-
-      if (y === 0) {
-        // In cima: navbar statica, SENZA visible/hidden per evitare transizioni
-        navbar.classList.add('at-top');
-        navbar.classList.remove('visible','hidden');
-      } else {
-        // dopo i primi scroll: fixed + hide/show come prima
-        navbar.classList.remove('at-top');
-        if (y > lastY + 5) {
-          navbar.classList.add('hidden');
-          navbar.classList.remove('visible');
-        } else if (y < lastY - 5) {
-          navbar.classList.add('

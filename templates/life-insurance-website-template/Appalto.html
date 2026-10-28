@@ -3,36 +3,11 @@
 
 <head>
 <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('consent', 'default', {
-'ad_storage': 'denied',
-'analytics_storage': 'denied',
-'ad_user_data': 'denied',
-'ad_personalization': 'denied',
-'wait_for_update': 500
-});
-try {
-if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
-gtag('consent', 'update', {
-'ad_storage': 'granted',
-'analytics_storage': 'granted',
-'ad_user_data': 'granted',
-'ad_personalization': 'granted'
-});
-}
-} catch(e) {}
-</script>
+
 
 <!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-67D2BL58Y9');
-</script>
+
+
 
 <meta charset="utf-8">
 <title>Gare d'appalto e contenzioso amministrativo | Energelia</title>
@@ -400,6 +375,19 @@ gtag('config', 'G-67D2BL58Y9');
   .referente-card { flex-direction: column; }
   .referente-photo { width: 100%; min-height: 280px; }
   .referente-info { padding: 32px 24px; }
+  /* Allinea le CTA senza alterare la versione desktop. */
+  .appalto-cta .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 320px;
+    min-height: 54px;
+    margin: 0 auto 12px !important;
+    padding: 14px 16px !important;
+  }
+  .appalto-cta .btn:last-of-type { margin-bottom: 0 !important; }
 }
 </style>
 

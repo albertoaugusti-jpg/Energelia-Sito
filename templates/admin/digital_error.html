@@ -1,0 +1,5 @@
+{% extends 'digital_admin_base.html' %}{% block contenuto %}
+{% include 'admin/digital_assets.html' %}
+<section class="dr-admin dr-panel"><h1>Richieste digitali temporaneamente non disponibili</h1><p role="alert">L’operazione non è stata confermata. Riprova tra poco.</p><a href="{{ url_for('digital_requests.listing') }}">Torna all’elenco</a>
+{% if unsaved %}<h2>Modifiche da conservare prima di riprovare</h2><p>Stato: {{ unsaved.status }} · Esito: {{ unsaved.outcome }}</p><textarea rows="10" readonly aria-label="Note non confermate">{{ unsaved.internal_notes }}</textarea>{% endif %}</section>
+{% endblock %}

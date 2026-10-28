@@ -1,0 +1,20 @@
+{% set case = {
+'number':'09',
+'category':'ORGANIZZARE IL LAVORO',
+'title':'Consultare lo storico di un cliente.',
+'description':'Un unico posto per vedere richieste, interventi, documenti e note. Seleziona un cliente, apri un lavoro svolto e prova ad aggiungere una nota alla sua scheda.',
+'benefits': [
+  'Meno tempo per recuperare informazioni.',
+  'Meno errori causati da informazioni dimenticate.',
+  'Continuità nel servizio anche cambiando operatore.',
+],
+'group_anchor':'gruppo-lavoro',
+'demo_type':'history',
+'demo':'life-insurance-website-template/partials/usecase-demo-history.html',
+'steps':[('01','Scegli il cliente'),('02','Consulta gli interventi'),('03','Aggiungi una nota')],
+'short_steps':['Cliente','Storico','Nota aggiunta'],
+'related':[
+ {'href':'/caso-assegnare-interventi','kind':'tasks','title':'Assegnare interventi al team','text':'Dalla richiesta al lavoro completato.'},
+ {'href':'/caso-area-clienti','kind':'portal','title':'Offrire un’area clienti riservata','text':'Progetti e documenti consultabili dal cliente.'}]
+} %}
+{% include 'life-insurance-website-template/partials/usecase-detail-shell.html' %}

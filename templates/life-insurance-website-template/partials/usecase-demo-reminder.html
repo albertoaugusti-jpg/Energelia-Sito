@@ -1,0 +1,24 @@
+<div class="uc-demo ua-app ua-reminder" data-uc-automation="reminder" data-ua-state="rule" data-ua-mobile-view="rule">
+  <header class="ua-appbar"><span class="ua-logo ua-logo-blue">M</span><div><strong>STUDIO MOVIMENTO</strong><small>Abbonamenti e promemoria</small></div><span class="ua-appbar-tag">Regole automatiche</span></header>
+  <nav class="ua-view-tabs ua-lab-mobile-tabs" role="group" aria-label="Fasi della dimostrazione"><button type="button" data-ua-reminder-view-button="rule" aria-controls="ua-reminder-rule" aria-pressed="true"><span>1</span> Regola</button><button type="button" data-ua-reminder-view-button="results" aria-controls="ua-reminder-results" aria-pressed="false" disabled><span>2</span> Messaggi</button></nav>
+  <div class="ua-reminder-stats"><div><small>SCADENZE NEI <span data-ua-reminder-count-days>7 GIORNI</span></small><strong data-ua-reminder-count-eligible>2</strong></div><div><small>MESSAGGI PRONTI</small><strong data-ua-reminder-count-prepared>0</strong></div><div><small>INVII SIMULATI</small><strong data-ua-reminder-count-sent>0</strong></div></div>
+  <div class="ua-reminder-layout">
+    <section id="ua-reminder-rule" class="ua-surface ua-rule-side" aria-label="Impostazioni della regola"><div class="ua-section-head"><div><small>PASSAGGIO 1 · REGOLA</small><h2>Quando avvisare?</h2></div><span class="ua-chip ua-chip-blue">Configurazione di prova</span></div>
+      <div class="ua-rule-visual"><span aria-hidden="true">◷</span><div><strong>Scadenza individuata → messaggio personalizzato</strong><p>Il sistema prepara le comunicazioni per i clienti nel periodo selezionato.</p></div></div>
+      <label for="ua-days">Preavviso prima della scadenza<select id="ua-days" data-ua-reminder-days><option value="3">3 giorni</option><option value="7" selected>7 giorni</option><option value="14">14 giorni</option></select></label>
+      <label for="ua-msg-template">Testo di partenza<textarea id="ua-msg-template" data-ua-reminder-text minlength="10" maxlength="200" rows="4">Ciao {nome}, il tuo abbonamento scade il {data}. Ti aspettiamo in studio per il rinnovo!</textarea></label>
+      <small class="ua-field-hint">{nome} e {data} verranno sostituiti per ogni cliente. Potrai vedere ogni messaggio prima dell'invio simulato.</small>
+      <p class="ua-error" data-ua-reminder-error role="alert" hidden>Inserisci almeno 10 caratteri di testo.</p>
+      <button type="button" class="ua-primary" data-ua-reminder-check>Prepara i messaggi <span aria-hidden="true">↗</span></button>
+    </section>
+    <section id="ua-reminder-results" class="ua-surface ua-reminder-results" aria-label="Messaggi pronti per l'invio simulato"><div class="ua-section-head"><div><small data-ua-reminder-stage-label>PASSAGGIO 2 · ANTEPRIMA</small><h2 data-ua-reminder-results-heading>Messaggi da inviare</h2></div><span class="ua-chip" data-ua-reminder-chip>Da preparare</span></div>
+      <div class="ua-reminder-empty" data-ua-reminder-empty><span aria-hidden="true">◎</span><p>Imposta il preavviso e premi «Prepara i messaggi»: qui vedrai i testi personalizzati e i destinatari.</p></div>
+      <div class="ua-reminder-ready" data-ua-reminder-ready hidden><div class="ua-sub-head"><h3 data-ua-reminder-list-heading>Destinatari individuati</h3><small data-ua-reminder-audience-count></small></div><div class="ua-reminder-list" data-ua-reminder-list></div>
+        <div class="ua-sub-head ua-reminder-preview-heading"><h3>Anteprima messaggi</h3><small>Verifica testi e destinatari</small></div><div class="ua-generated-messages" data-ua-reminder-generated role="region" tabindex="0" aria-label="Messaggi personalizzati, elenco scorrevole"></div>
+        <button type="button" class="ua-primary ua-reminder-send" data-ua-reminder-send>Simula invio <span aria-hidden="true">↗</span></button>
+        <div class="ua-confirm-inline" data-ua-reminder-sent hidden><span aria-hidden="true">✓</span><div><strong>Invio simulato completato</strong><p data-ua-reminder-summary></p></div></div>
+      </div>
+    </section>
+  </div>
+  <div class="ua-footer"><span data-ua-reminder-msg aria-live="polite">Imposta la regola, prepara i messaggi e simula l'invio.</span><button type="button" data-ua-reminder-reset>↻ Ricomincia demo</button></div>
+</div>

@@ -1,0 +1,257 @@
+/* Energelia P028 — authored second act. Scoped to post-immersive surfaces. */
+.digital-services-page .ev-bridge {background:#f7f6f3;padding:114px 0 64px;}
+.digital-services-page .ev-bridge::before {height:112px;opacity:1;background:linear-gradient(180deg,#081e35 0%,#23425c 16%,#8d9ba7 55%,#f7f6f3 100%);}
+.digital-services-page .ev-bridge-atmosphere {opacity:.42;}
+.digital-services-page .ev-bridge-atmosphere::before {border-color:rgba(115,145,169,.16);top:195px;}
+.digital-services-page .ev-bridge-atmosphere i {border-color:rgba(191,62,79,.1);top:305px;}
+.digital-services-page .ev-bridge-atmosphere i:nth-child(2){border-color:rgba(93,132,162,.13)}
+.digital-services-page .ev-bridge-atmosphere b{display:none}
+.digital-services-page .ev-bridge .ev-section-label{margin-bottom:31px}
+.digital-services-page .ev-bridge-lead{align-items:center;gap:7%}
+.digital-services-page .ev-bridge h2{font-size:clamp(49px,5.3vw,78px);max-width:860px;line-height:1.065}
+.digital-services-page .ev-bridge-aside{padding:24px 0 0;border-top:1px solid rgba(12,44,70,.18)}
+.digital-services-page .ev-bridge-aside p{font-size:15px;line-height:1.68;margin-bottom:24px}
+.digital-services-page .ev-benefits{margin-top:66px;padding-top:28px}
+.digital-services-page .ev-benefit{grid-template-columns:42px 1fr;gap:16px}
+.digital-services-page .ev-benefit+.ev-benefit{padding-left:28px}
+.digital-services-page .ev-benefit-icon{width:42px;height:42px;border-radius:50%;background:transparent;border-color:rgba(30,61,82,.2)}
+.digital-services-page .ev-benefit-icon svg{width:23px;height:23px}
+.digital-services-page .ev-benefit h3{font-size:23px;margin:0 0 7px}
+.digital-services-page .ev-benefit p{font-size:12px;max-width:310px}
+
+/* Services: one genuine full frame per offering. The media never gets cropped. */
+.digital-services-page .ev-solutions{background:#f7f6f3;padding:89px 0 0}
+.digital-services-page .ev-solutions-header{padding-bottom:57px;align-items:end}
+.digital-services-page .ev-solutions h2{font-size:clamp(48px,5.1vw,73px)}
+.digital-services-page .ev-showcases{border-top:1px solid rgba(28,55,72,.14)}
+.digital-services-page .ev-showcase{min-height:0;overflow:hidden}
+.digital-services-page .ev-showcase-site{background:#eae7e1}
+.digital-services-page .ev-showcase-management{background:#e7ecf1}
+.digital-services-page .ev-showcase-automation{background:#edf2f6}
+.digital-services-page .ev-showcase-inner,.digital-services-page .ev-showcase-management .ev-showcase-inner{min-height:590px;grid-template-columns:37% minmax(0,63%);gap:0;max-width:1440px}
+.digital-services-page .ev-showcase-management .ev-showcase-inner{grid-template-columns:minmax(0,63%) 37%}
+.digital-services-page .ev-showcase .ev-showcase-copy{padding:60px 11% 60px 1%;justify-content:center;max-width:510px}
+.digital-services-page .ev-showcase-management .ev-showcase-copy{grid-column:2;padding:60px 0 60px 12%;max-width:none}
+.digital-services-page .ev-showcase-index{margin-bottom:19px}
+.digital-services-page .ev-showcase h3{font-size:clamp(41px,3.8vw,58px);margin-bottom:18px;line-height:1.08}
+.digital-services-page .ev-showcase-copy>p{font-size:15px;line-height:1.7;margin-bottom:21px;max-width:370px}
+.digital-services-page .ev-showcase-copy ul{margin-bottom:24px;gap:8px}
+.digital-services-page .ev-showcase-copy li{font-size:12px}
+.digital-services-page .ev-showcase .ev-showcase-visual{grid-column:2;grid-row:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0;overflow:visible;align-self:center;margin:22px 0 28px;aspect-ratio:auto;max-height:none;padding:6px 0 24px 10px}
+.digital-services-page .ev-showcase-management .ev-showcase-visual{grid-column:1;padding:36px 25px 45px 0}
+.digital-services-page .ev-showcase-automation .ev-showcase-visual{padding:25px 0 35px 18px}
+.digital-services-page .ev-showcase-visual img{width:100%;height:auto;aspect-ratio:4 / 3;object-fit:contain;filter:none;display:block;border-radius:5px;transition:transform .45s cubic-bezier(.2,.75,.2,1);box-shadow:0 25px 65px -42px rgba(5,32,54,.35)}
+.digital-services-page .ev-showcase-site .ev-showcase-visual img{box-shadow:none;border-radius:0}
+.digital-services-page .ev-showcase-visual::after,.digital-services-page .ev-showcase-management .ev-showcase-visual::after,.digital-services-page .ev-showcase-automation .ev-showcase-visual::after{display:none}
+.digital-services-page .ev-showcase:hover .ev-showcase-visual img{transform:translateY(-5px)}
+.digital-services-page .ev-showcase-visual figcaption{position:static;margin:12px 0 0;align-self:flex-end;border:0;background:none;backdrop-filter:none;padding:0;font-size:10px;color:#6b8396;font-weight:550;letter-spacing:.02em}
+.digital-services-page .ev-solutions-foot{padding-top:28px;padding-bottom:30px}
+
+/* Problem-led laboratory: the only main selector after the immersive story. */
+.digital-services-page .p28-lab{background:#071b31;color:#eef5f9;position:relative;isolation:isolate;overflow:hidden;padding:108px 0 105px}
+.digital-services-page .p28-lab::before{content:'';position:absolute;pointer-events:none;inset:0 0 auto;height:610px;background:radial-gradient(ellipse at 75% 35%,rgba(32,78,117,.24),transparent 66%)}
+.digital-services-page .p28-lab .nx-shell{position:relative;z-index:1}
+.digital-services-page .p28-lab-intro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.55fr);gap:11%;align-items:end;margin-bottom:53px}
+.digital-services-page .p28-lab .nx-index{display:block;margin-bottom:24px;color:#de5965;font-weight:730;letter-spacing:.11em;font-size:11px}
+.digital-services-page .p28-lab h2{margin:0;font-family:'Source Serif 4',Georgia,serif;font-weight:500;font-size:clamp(47px,5.0vw,73px);line-height:1.07;letter-spacing:-.049em;color:#f3f7fa;text-wrap:balance}
+.digital-services-page .p28-lab h2 em{font-weight:400;color:#9ebed6;font-style:italic}
+.digital-services-page .p28-lab-intro>p{font-size:15px;line-height:1.8;color:#a7bacb;margin:0 0 8px;max-width:390px}
+.digital-services-page .p28-lab-stage{display:grid;grid-template-columns:minmax(275px,33%) minmax(0,1fr);border:1px solid rgba(164,195,216,.23);border-radius:16px;overflow:hidden;min-height:615px;background:#0e2b48;box-shadow:0 45px 95px -65px rgba(0,0,0,.65)}
+.digital-services-page .p28-choice{padding:34px 0 30px;background:linear-gradient(155deg,#113653,#081f38 85%);display:flex;flex-direction:column;min-width:0;border-right:1px solid rgba(164,195,216,.19)}
+.digital-services-page .p28-choice-intro{font-size:10px;letter-spacing:.105em;color:#80a8c1;font-weight:740;margin:0 30px 24px}
+.digital-services-page .p28-choice button{appearance:none;border:0;border-top:1px solid rgba(183,210,227,.14);background:transparent;text-align:left;color:#cfdeea;width:100%;padding:26px 29px 28px;display:grid;grid-template-columns:31px 1fr 19px;gap:11px;align-items:start;cursor:pointer;min-height:135px;transition:background .18s,color .18s;position:relative}
+.digital-services-page .p28-choice button:last-of-type{border-bottom:1px solid rgba(183,210,227,.14)}
+.digital-services-page .p28-choice button span{font-size:11px;color:#8eabc1;font-weight:750;padding-top:5px}
+.digital-services-page .p28-choice button strong{font-size:clamp(16px,1.6vw,21px);line-height:1.34;font-weight:620;letter-spacing:-.025em}
+.digital-services-page .p28-choice button i{font-style:normal;font-size:19px;color:#8eabc1}
+.digital-services-page .p28-choice button.is-selected{background:#1b405f;color:white}
+.digital-services-page .p28-choice button.is-selected:before{content:'';position:absolute;inset:0 auto 0 0;width:3px;background:#de5363}
+.digital-services-page .p28-choice button.is-selected i{color:#ec7480}
+.digital-services-page .p28-choice button:hover:not(.is-selected){background:rgba(160,196,223,.07)}
+.digital-services-page .p28-choice button:focus-visible{outline:3px solid #9cddff;outline-offset:-4px}
+.digital-services-page .p28-choice-foot{font-size:11px;color:#8eaabe;line-height:1.7;margin:auto 30px 0;padding-top:34px;display:flex;align-items:flex-start;gap:11px}
+.digital-services-page .p28-choice-dot{width:7px;height:7px;flex:0 0 7px;margin-top:6px;border-radius:50%;background:#45c79f}
+.digital-services-page .p28-scenes{min-width:0;background:#f1f5f6;color:#0c2841;position:relative}
+.digital-services-page .p28-scene{min-height:615px;display:flex;flex-direction:column;padding:37px 42px 30px}
+.digital-services-page .p28-scene[hidden]{display:none!important}
+.digital-services-page .p28-scene.is-visible{animation:p28-scene-in .28s ease-out both}
+@keyframes p28-scene-in{from{opacity:.65;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.digital-services-page .p28-scene-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;border-bottom:1px solid #d3dfe5;padding:0 0 17px;margin-bottom:27px}
+.digital-services-page .p28-scene-head span{font-size:10px;letter-spacing:.06em;color:#6b8191;font-weight:740}
+.digital-services-page .p28-scene-head strong{font-size:12px;color:#173e59;font-weight:620;text-align:right}
+.digital-services-page .p28-acquire-art,.digital-services-page .p28-team-art,.digital-services-page .p28-sync-art{flex:1;min-width:0}
+.digital-services-page .p28-acquire-art{position:relative;display:flex;flex-direction:column;justify-content:center;max-width:680px;width:100%;margin:0 auto}
+.digital-services-page .p28-acquire-main{background:#fff;border:1px solid #d6e0e6;box-shadow:0 25px 53px -38px rgba(20,66,94,.4);border-radius:12px;padding:25px 28px 17px}
+.digital-services-page .p28-paper-top{display:flex;align-items:center;gap:10px;font-size:9px;font-weight:760;letter-spacing:.08em;color:#50718a}
+.digital-services-page .p28-paper-top b{font-weight:580;margin-left:auto;color:#9eafbc;font-size:10px;letter-spacing:0}
+.digital-services-page .p28-signal{width:7px;height:7px;border-radius:50%;background:#2db28f;box-shadow:0 0 0 4px #e2f4ef}
+.digital-services-page .p28-acquire-main h3{font-family:'Source Serif 4',Georgia,serif;font-size:clamp(33px,3.15vw,49px);line-height:1.04;letter-spacing:-.04em;font-weight:500;color:#092a45;margin:23px 0 12px}
+.digital-services-page .p28-acquire-main>p{font-size:12px;color:#6b7e90;line-height:1.65;max-width:475px;margin:0 0 23px}
+.digital-services-page .p28-request-line{display:grid;grid-template-columns:94px 1fr;gap:12px;padding:11px 0;border-top:1px solid #e7edf0;font-size:12px}
+.digital-services-page .p28-request-line>span{color:#7d90a1}
+.digital-services-page .p28-request-line strong{color:#19364d;font-weight:620}
+.digital-services-page .p28-acquire-stamp{align-self:flex-end;transform:translate(15px,-12px);background:#0d354e;color:#f5fbff;padding:13px 20px;border-radius:7px;box-shadow:0 15px 32px -17px #082439;font-size:12px;font-weight:670}
+.digital-services-page .p28-acquire-stamp>span{color:#65dfb6;margin-right:9px}
+.digital-services-page .p28-scene-foot{display:grid;grid-template-columns:94px 1fr;gap:17px;align-items:start;border-top:1px solid #d3dfe5;padding-top:18px;margin-top:15px}
+.digital-services-page .p28-scene-foot>span{font-size:10px;letter-spacing:.08em;color:#a34250;font-weight:770}
+.digital-services-page .p28-scene-foot p{font-size:12px;color:#586e80;line-height:1.63;margin:0}
+.digital-services-page .p28-team-art{display:flex;flex-direction:column;justify-content:center;gap:0}
+.digital-services-page .p28-team-heading{background:#0e324e;color:#f1f7fc;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;border-radius:10px 10px 0 0}
+.digital-services-page .p28-team-heading span{font-size:10px;font-weight:730;letter-spacing:.08em;color:#aac6db}
+.digital-services-page .p28-team-heading strong{font-size:13px}
+.digital-services-page .p28-team-row{display:grid;grid-template-columns:51px 1fr 30px 75px;gap:10px;align-items:center;background:#fff;border-bottom:1px solid #e3eaee;padding:21px 17px;min-width:0}
+.digital-services-page .p28-team-row.current{background:#f9fbff;border-left:3px solid #cc4052;padding-left:14px}
+.digital-services-page .p28-day{font-size:9px;font-weight:730;color:#6b8295;letter-spacing:.07em}
+.digital-services-page .p28-day b{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:26px;font-weight:600;letter-spacing:-.04em;color:#0d334e}
+.digital-services-page .p28-team-row>div strong{font-size:13px;font-weight:670;color:#153751;display:block}
+.digital-services-page .p28-team-row small{font-size:10px;color:#7e90a0;display:block;margin-top:4px}
+.digital-services-page .p28-assignee{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#e6eef3;color:#254b65;font-size:9px;font-weight:760}
+.digital-services-page .p28-team-state{font-size:10px;color:#75889a;text-align:center;border-radius:20px;background:#eff3f6;padding:6px 4px}
+.digital-services-page .p28-team-state.working{color:#1e67a8;background:#e8f2fb}
+.digital-services-page .p28-team-state.done{color:#147454;background:#e3f4ed}
+.digital-services-page .p28-team-end{background:#fff;padding:16px 20px;border-radius:0 0 10px 10px;font-size:12px;color:#375a70;font-weight:590}
+.digital-services-page .p28-ok{color:#139a70;font-weight:800;margin-right:7px}
+.digital-services-page .p28-sync-art{display:flex;flex-direction:column;justify-content:center;max-width:640px;width:100%;margin:0 auto}
+.digital-services-page .p28-sync-highlight{background:#103550;border-radius:12px;color:#fff;padding:24px 27px;display:flex;align-items:center;gap:19px}
+.digital-services-page .p28-sync-pulse{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#d8f7e8;color:#09764e;font-size:27px;font-weight:650;flex-shrink:0}
+.digital-services-page .p28-sync-highlight small{font-size:9px;color:#9fc7db;letter-spacing:.09em;display:block;margin-bottom:6px}
+.digital-services-page .p28-sync-highlight strong{display:block;font-family:'Source Serif 4',Georgia,serif;font-size:31px;font-weight:500;letter-spacing:-.035em}
+.digital-services-page .p28-sync-highlight p{color:#a9c4d8;font-size:12px;margin:4px 0 0}
+.digital-services-page .p28-sync-rows{background:#fff;padding:8px 20px;margin:0 16px;border:1px solid #dbe5ea;border-top:0;border-radius:0 0 11px 11px;box-shadow:0 22px 47px -38px rgba(11,56,85,.5)}
+.digital-services-page .p28-sync-rows>div{display:flex;align-items:center;gap:14px;padding:17px 5px;border-bottom:1px solid #e8eef2}
+.digital-services-page .p28-sync-rows>div:last-child{border-bottom:0}
+.digital-services-page .p28-sync-symbol{font-weight:720;font-size:10px;color:#8da4b5;border:1px solid #dce8ec;padding:6px;border-radius:5px}
+.digital-services-page .p28-sync-rows strong{color:#1f465f;font-size:13px;font-weight:650}
+.digital-services-page .p28-sync-ready{margin-left:auto;color:#14835d;background:#e7f6ee;border-radius:20px;padding:6px 10px;font-size:10px;white-space:nowrap}
+.digital-services-page .p28-sync-small{align-self:center;margin-top:14px;font-size:11px;color:#637f90}
+.digital-services-page .p28-lab-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:23px}
+.digital-services-page .p28-lab-bottom>span{font-size:10px;letter-spacing:.025em;color:#7896ac}
+.digital-services-page .p28-lab-bottom a{font-size:13px;color:#f1f7fb!important;text-decoration:none;border-bottom:1px solid rgba(177,212,232,.3);padding-bottom:8px;font-weight:640;transition:border-color .2s}
+.digital-services-page .p28-lab-bottom a:hover{border-color:#e46a72}
+.digital-services-page .p28-lab-bottom a span{color:#f36a73;padding-left:12px}
+.digital-services-page .p28-lab-bottom a:focus-visible{outline:3px solid #9cddff;outline-offset:4px}
+
+@media(max-width:1160px){
+ .digital-services-page .ev-showcase-inner,.digital-services-page .ev-showcase-management .ev-showcase-inner{min-height:495px}
+ .digital-services-page .ev-showcase .ev-showcase-copy{padding-right:7%}
+ .digital-services-page .ev-showcase-management .ev-showcase-copy{padding-left:7%}
+ .digital-services-page .ev-showcase h3{font-size:clamp(38px,4.1vw,50px)}
+ .digital-services-page .p28-lab-stage{grid-template-columns:minmax(260px,36%) minmax(0,1fr)}
+ .digital-services-page .p28-choice button{padding:22px 19px;min-height:119px}
+ .digital-services-page .p28-scene{padding:27px 25px}
+}
+@media(max-width:850px){
+ .digital-services-page .ev-bridge{padding:104px 0 61px}
+ .digital-services-page .ev-bridge-lead{grid-template-columns:1fr}
+ .digital-services-page .ev-bridge-aside{max-width:540px;margin-top:17px}
+ .digital-services-page .ev-benefits{margin-top:47px}
+ .digital-services-page .ev-benefit{display:block}
+ .digital-services-page .ev-benefit-icon{margin-bottom:12px}
+ .digital-services-page .ev-benefit h3{font-size:19px}
+ .digital-services-page .ev-benefit+.ev-benefit{padding-left:18px}
+ .digital-services-page .ev-showcase-inner,.digital-services-page .ev-showcase-management .ev-showcase-inner{grid-template-columns:44% 56%;min-height:0}
+ .digital-services-page .ev-showcase-management .ev-showcase-inner{grid-template-columns:56% 44%}
+ .digital-services-page .ev-showcase .ev-showcase-copy{padding-top:39px;padding-bottom:39px}
+ .digital-services-page .ev-showcase-management .ev-showcase-copy{padding-left:6%}
+ .digital-services-page .ev-showcase .ev-showcase-visual{padding:8px 0 16px 2px}
+ .digital-services-page .ev-showcase-management .ev-showcase-visual{padding:12px 9px 16px 0}
+ .digital-services-page .ev-showcase h3{font-size:clamp(31px,4.8vw,43px)}
+ .digital-services-page .p28-lab-intro{grid-template-columns:1fr;gap:16px}
+ .digital-services-page .p28-lab-intro>p{max-width:620px}
+ .digital-services-page .p28-lab-stage{grid-template-columns:1fr;min-height:0}
+ .digital-services-page .p28-choice{padding:21px 0 0;border-right:0}
+ .digital-services-page .p28-choice-intro{margin:0 25px 14px}
+ .digital-services-page .p28-choice button{min-height:0;padding:18px 25px;grid-template-columns:32px 1fr 15px;align-items:center}
+ .digital-services-page .p28-choice button strong{font-size:16px;max-width:none}
+ .digital-services-page .p28-choice-foot{display:none}
+ .digital-services-page .p28-scene{min-height:0;padding:27px 29px}
+ .digital-services-page .p28-scene-head{margin-bottom:20px}
+ .digital-services-page .p28-acquire-art,.digital-services-page .p28-team-art,.digital-services-page .p28-sync-art{min-height:315px}
+}
+@media(max-width:700px){
+ .digital-services-page .ev-bridge{padding:99px 0 52px;background:#f7f6f3}
+ .digital-services-page .ev-bridge::before{height:104px;background:linear-gradient(180deg,#081e35 0%,#577086 38%,#f7f6f3 100%)}
+ .digital-services-page .ev-bridge-atmosphere{opacity:.24}
+ .digital-services-page .ev-bridge-atmosphere::before{top:170px;right:-123%}
+ .digital-services-page .ev-bridge .ev-section-label{margin-bottom:23px}
+ .digital-services-page .ev-bridge h2{font-size:clamp(38px,10.3vw,52px);line-height:1.055}
+ .digital-services-page .ev-bridge h2 br{display:none}
+ .digital-services-page .ev-bridge-aside{margin-top:23px;padding-top:19px}
+ .digital-services-page .ev-bridge-aside p{line-height:1.7}
+ .digital-services-page .ev-benefits{margin-top:27px;padding-top:0;border-top:1px solid rgba(33,67,93,.17)}
+ .digital-services-page .ev-benefit,.digital-services-page .ev-benefit+.ev-benefit{display:grid;grid-template-columns:38px 1fr;gap:13px;padding:16px 0;border-left:0}
+ .digital-services-page .ev-benefit-icon{width:36px;height:36px;margin:0}
+ .digital-services-page .ev-benefit-icon svg{width:20px;height:20px}
+ .digital-services-page .ev-benefit h3{font-size:20px;margin-bottom:4px}
+ .digital-services-page .ev-benefit h3 span{display:inline}
+ .digital-services-page .ev-benefit p{font-size:12px}
+ .digital-services-page .ev-solutions{padding-top:74px}
+ .digital-services-page .ev-solutions-header{padding-bottom:34px}
+ .digital-services-page .ev-solutions h2{font-size:clamp(41px,10vw,57px)}
+ .digital-services-page .ev-showcase .ev-showcase-inner,.digital-services-page .ev-showcase-management .ev-showcase-inner{display:flex;flex-direction:column;min-height:0;width:100%;}
+ .digital-services-page .ev-showcase .ev-showcase-copy,.digital-services-page .ev-showcase-management .ev-showcase-copy{width:100%;display:flex;order:0;padding:38px 0 23px;max-width:none}
+ .digital-services-page .ev-showcase h3{font-size:clamp(37px,9vw,48px);margin-bottom:13px}
+ .digital-services-page .ev-showcase-copy>p{font-size:14px;line-height:1.65;margin-bottom:18px}
+ .digital-services-page .ev-showcase-copy ul{display:grid;grid-template-columns:1fr 1fr;gap:8px 13px;margin-bottom:18px}
+ .digital-services-page .ev-showcase-copy li{font-size:11px}
+ .digital-services-page .ev-showcase .ev-showcase-visual,.digital-services-page .ev-showcase-management .ev-showcase-visual,.digital-services-page .ev-showcase-automation .ev-showcase-visual{display:flex;order:1;align-self:stretch;margin:0 0 25px;padding:0 0 15px;max-height:none;aspect-ratio:auto;width:100%}
+ .digital-services-page .ev-showcase-visual img{height:auto;aspect-ratio:4 / 3;max-width:100%;width:100%;object-fit:contain;object-position:center}
+ .digital-services-page .ev-showcase-visual figcaption{font-size:10px;margin:10px 0 0}
+ .digital-services-page .ev-solutions-foot{padding:21px 0 31px}
+ .digital-services-page .p28-lab{padding:78px 0 77px}
+ .digital-services-page .p28-lab .nx-index{margin-bottom:17px}
+ .digital-services-page .p28-lab h2{font-size:clamp(39px,9.1vw,57px);line-height:1.075}
+ .digital-services-page .p28-lab-intro{margin-bottom:28px}
+ .digital-services-page .p28-lab-intro>p{font-size:13px;line-height:1.7}
+ .digital-services-page .p28-lab-stage{border-radius:10px}
+ .digital-services-page .p28-choice{padding:19px 0 0}
+ .digital-services-page .p28-choice-intro{font-size:9px;margin:0 17px 11px}
+ .digital-services-page .p28-choice button{padding:15px 17px;grid-template-columns:24px 1fr 15px;gap:10px}
+ .digital-services-page .p28-choice button strong{font-size:14px;line-height:1.35}
+ .digital-services-page .p28-scene{padding:20px 17px 23px}
+ .digital-services-page .p28-scene-head{display:flex;flex-direction:column;gap:5px}
+ .digital-services-page .p28-scene-head span{font-size:9px}
+ .digital-services-page .p28-scene-head strong{text-align:left;font-size:12px}
+ .digital-services-page .p28-acquire-art,.digital-services-page .p28-team-art,.digital-services-page .p28-sync-art{min-height:0}
+ .digital-services-page .p28-acquire-main{padding:21px 17px 11px}
+ .digital-services-page .p28-acquire-main h3{font-size:35px;margin-top:18px}
+ .digital-services-page .p28-acquire-main>p{font-size:12px}
+ .digital-services-page .p28-request-line{grid-template-columns:70px 1fr;font-size:11px;gap:8px}
+ .digital-services-page .p28-acquire-stamp{transform:translate(4px,-9px);font-size:11px;padding:10px 11px}
+ .digital-services-page .p28-scene-foot{grid-template-columns:1fr;gap:6px;margin-top:18px}
+ .digital-services-page .p28-team-heading{padding:13px 10px}
+ .digital-services-page .p28-team-heading span{font-size:9px}
+ .digital-services-page .p28-team-heading strong{font-size:11px}
+ .digital-services-page .p28-team-row{grid-template-columns:38px 1fr 26px;gap:7px;padding:15px 10px}
+ .digital-services-page .p28-team-row.current{padding-left:7px}
+ .digital-services-page .p28-team-row>div strong{font-size:11px}
+ .digital-services-page .p28-team-row small{font-size:9px}
+ .digital-services-page .p28-team-state{grid-column:2 / 4;justify-self:start;padding:4px 9px;font-size:9px}
+ .digital-services-page .p28-assignee{width:25px;height:25px;font-size:8px}
+ .digital-services-page .p28-team-end{font-size:10px;padding:13px 10px}
+ .digital-services-page .p28-sync-highlight{gap:12px;padding:19px 13px}
+ .digital-services-page .p28-sync-pulse{width:37px;height:37px;flex-basis:37px;font-size:20px}
+ .digital-services-page .p28-sync-highlight strong{font-size:24px}
+ .digital-services-page .p28-sync-rows{margin:0 7px;padding:4px 7px}
+ .digital-services-page .p28-sync-rows>div{gap:9px;padding:13px 2px}
+ .digital-services-page .p28-sync-rows strong{font-size:11px}
+ .digital-services-page .p28-sync-ready{font-size:9px;padding:4px 7px}
+ .digital-services-page .p28-lab-bottom{flex-direction:column;align-items:flex-start;gap:14px}
+}
+@media(max-width:365px){
+ .digital-services-page .p28-lab h2{font-size:36px}
+ .digital-services-page .p28-acquire-main h3{font-size:31px}
+ .digital-services-page .p28-choice button strong{font-size:13px}
+ .digital-services-page .ev-showcase-copy ul{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+ .digital-services-page .p28-scene.is-visible{animation:none}
+ .digital-services-page .ev-showcase-visual img{transition:none!important}
+}
+/* Preserve the intentional line break even though the older mobile lab hid all <br>. */
+@media(max-width:700px){.digital-services-page .p28-lab h2 br{display:inline!important}}
+
+/* Real affordance: the screenshot itself is openable at full resolution on a phone. */
+.digital-services-page .p28-showcase-open{display:block;width:100%;min-width:0;line-height:0;border-radius:6px;cursor:zoom-in}
+.digital-services-page .p28-showcase-open:focus-visible{outline:3px solid #d44b59;outline-offset:6px}
+.digital-services-page .p28-showcase-open img{display:block;width:100%;height:auto}

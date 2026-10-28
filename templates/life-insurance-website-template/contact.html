@@ -3,36 +3,11 @@
 
     <head>
         <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'wait_for_update': 500
-  });
-  try {
-    if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
-      gtag('consent', 'update', {
-        'ad_storage': 'granted',
-        'analytics_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted'
-      });
-    }
-  } catch(e) {}
-</script>
+
 
 <!-- Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-67D2BL58Y9');
-        </script>
+        
+        
         <meta charset="utf-8">
         <title> Energelia</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -67,26 +42,7 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 
     </head>
-       <style>
-
-      @media (max-width: 575.98px) {
-          .nav-bar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            transition: transform 0.4s cubic-bezier(.25,.8,.25,1), opacity 0.4s ease-in-out;
-            z-index: 999;
-          }
-          .nav-bar.hidden {
-            transform: translateY(-100%);
-            opacity: 0;
-          }
-          .nav-bar.visible {
-            transform: translateY(0);
-            opacity: 1;
-          }
-        }
-      </style>
+       
 
   
 
@@ -102,135 +58,7 @@
 
         {% include 'life-insurance-website-template/partials/navbar.html' %}
 
-        <style>
-
-          @media (max-width: 991.98px) {
-            .navbar-collapse {
-              background: #fff;
-              box-shadow: 0 8px 36px 0 rgba(22,91,133,0.10);
-              border-radius: 0 0 22px 22px;
-              margin-top: 8px;
-              padding: 18px 0 12px 0;
-              z-index: 1000;
-            }
-            .main-navbar-desktop {
-              flex-direction: column !important;
-              align-items: stretch !important;
-              gap: 0 !important;
-            }
-            .main-navbar-desktop .nav-link {
-              color: #155f8d !important;
-              font-size: 1.16rem !important;
-              font-weight: 500 !important;
-              padding: 16px 18px 14px 24px !important;
-              border-radius: 0 !important;
-              margin: 0 !important;
-              border-bottom: 1px solid #e8f1fa;
-              background: none;
-              box-shadow: none;
-              position: relative;
-              transition: background 0.15s, color 0.18s;
-            }
-            .main-navbar-desktop .nav-link:last-child {
-              border-bottom: none;
-            }
-            .main-navbar-desktop .nav-link.active,
-            .main-navbar-desktop .nav-link:focus {
-              color: #fff !important;
-              background: linear-gradient(90deg,#0072ce 0%,#2290e6 100%) !important;
-              font-weight: 700 !important;
-              border-radius: 12px !important;
-              box-shadow: 0 4px 16px rgba(0,80,181,0.09);
-            }
-            .main-navbar-desktop .nav-link:hover {
-              color: #0050b5 !important;
-              background: #f0f6ff !important;
-            }
-          }
-
-
-
-          .nav-bar {
-            position: fixed !important;
-            top: 0; left: 0; width: 100vw;
-            z-index: 1050;
-            background: #fff !important;
-            box-shadow: 0 4px 16px 0 rgba(22,91,133,0.06);
-          }
-          .navbar-logo { height: 40px !important; width: auto; transition: height 0.3s; }
-          .btn-area-clienti { display: none !important; }
-          .cta-telefono-navbar {
-            border-radius: 16px !important;
-            box-shadow: 0 2px 18px rgba(29,98,174,0.10);
-            transition: border 0.2s;
-          }
-          .cta-telefono-navbar:hover {
-            border-color: #a8d2ef;
-            box-shadow: 0 6px 22px rgba(29,98,174,0.14);
-          }
-          .cta-phone-number:hover {
-            color: #0d4167 !important;
-            text-decoration: underline !important;
-          }
-          .hero-no-overlap { margin-top: 80px; }
-          @media (min-width: 992px) {
-            .nav-bar { padding-top: 10px !important; padding-bottom: 10px !important; }
-            .navbar-logo { height: 80px !important; }
-            .cta-telefono-navbar { min-width:220px; font-size:1.11rem; padding: 14px 32px !important;}
-            .hero-no-overlap { margin-top: 100px; }
-            .main-navbar-desktop {
-              gap: 22px !important;
-              font-size: 1.13rem;
-              font-weight: 500;
-              letter-spacing: 0.01em;
-            }
-            .main-navbar-desktop .nav-link {
-              padding: 10px 0 6px 0 !important;
-              color: #185b85 !important;
-              border-radius: 0 !important;
-              position: relative;
-              transition: background 0.17s, color 0.18s;
-              background: transparent;
-              font-size: 1.08rem;
-              box-shadow: none;
-            }
-            .main-navbar-desktop .nav-link.active,
-            .main-navbar-desktop .nav-link:focus {
-              color: #0050b5 !important;
-              font-weight: 700;
-              background: transparent;
-            }
-            .main-navbar-desktop .nav-link::after {
-              content: "";
-              display: block;
-              height: 2.5px;
-              width: 0%;
-              background: linear-gradient(90deg,#199af3 0%,#155f8d 100%);
-              border-radius: 2px;
-              position: absolute;
-              left: 0; bottom: 0;
-              transition: width 0.27s cubic-bezier(.4,.86,.6,1);
-            }
-            .main-navbar-desktop .nav-link.active::after,
-            .main-navbar-desktop .nav-link:hover::after {
-              width: 100%;
-            }
-            .main-navbar-desktop .nav-link:hover,
-            .main-navbar-desktop .nav-link:focus {
-              color: #00397f !important;
-              background: #f2f7fd;
-              box-shadow: 0 2px 8px rgba(22,91,133,0.06);
-              z-index:2;
-            }
-          }
-          @media (max-width: 991.98px) {
-            .main-navbar-desktop .nav-link::after { display:none; }
-            .main-navbar-desktop { gap: 0 !important; font-size:1rem;}
-            .navbar-logo { height: 40px !important; }
-            .cta-telefono-navbar { min-width:120px; font-size:.97rem;}
-            .hero-no-overlap { margin-top: 80px; }
-          }
-        </style>
+        
 
 
 
@@ -240,7 +68,7 @@
 
 
 
-    <section class="sezione-domanda-epica py-5 position-relative overflow-hidden hero-no-overlap">
+    <section class="sezione-domanda-epica py-5 position-relative overflow-hidden">
       <div class="container-xl">
         <div class="row g-5 align-items-center">
           <!-- TESTO A SINISTRA -->
@@ -260,19 +88,7 @@
           <div class="col-lg-6 position-relative z-2">
             <div class="box-form-domanda p-5 rounded-4 bg-white shadow-lg">
               <h5 class="mb-3 text-primary fw-bold">Raccontaci la tua idea</h5>
-              <form id="domandaForm">
-                <div class="form-floating mb-3">
-                  <textarea class="form-control fs-6" placeholder="Scrivi la tua domanda..." id="textareaDomanda" style="height: 180px;" required></textarea>
-                  <label for="textareaDomanda">Scrivi qui la tua domanda o dubbio...</label>
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="email" class="form-control fs-6" id="emailDomanda" placeholder="La tua email" required>
-                  <label for="emailDomanda">Inserisci la tua email (per ricevere il report)</label>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 fw-bold py-3 fs-5">
-                  Invia richiesta gratuita <i class="fas fa-paper-plane ms-2"></i>
-                </button>
-              </form>
+              <div class="contact-direct"><p>Per inviare la tua richiesta scrivi a <a href="mailto:info@energelia.it">info@energelia.it</a> oppure chiama <a href="tel:+390107776530">010 777 65 30</a>.</p><p>Il contatto avviene tramite email o telefono. Questo riquadro non invia richieste né prenotazioni.</p><a href="/privacy-policy#richieste">Come trattiamo i tuoi dati</a></div>
               <div class="mt-3 text-center text-muted small">
                 Nessun vincolo. Nessuna newsletter. Solo una risposta utile.
               </div>
@@ -286,21 +102,7 @@
     </section>
 
     <!-- MODALE SUCCESSO DOMANDA EPICA -->
-    <div id="domandaModal" class="custom-modal-overlay" tabindex="-1" style="display:none;">
-      <div class="custom-modal-dialog animate__animated animate__fadeInDown">
-        <button type="button" class="btn-close custom-modal-close" aria-label="Chiudi" onclick="closeDomandaModal()"></button>
-        <div class="text-center px-3 py-5">
-          <div class="mb-3">
-            <i class="fa fa-message-check fa-3x" style="color:#2595ff;"></i>
-          </div>
-          <h2 style="font-weight:800; color:#2595ff;" class="mb-2">Grazie per averci contattato!</h2>
-          <div class="fs-5 mb-1" style="color:#18477d;">
-            Un consulente Energelia risponderà alla tua richiesta il prima possibile.
-          </div>
-          <button class="btn btn-primary mt-4" onclick="closeDomandaModal()" style="min-width:150px;">Chiudi</button>
-        </div>
-      </div>
-    </div>
+    
 
     <!-- CSS MODALE -->
     <style>
@@ -346,24 +148,7 @@
     </style>
 
     <!-- JS MODALE -->
-    <script>
-    document.getElementById('domandaForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      document.getElementById('domandaModal').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      this.reset();
-    });
-    function closeDomandaModal() {
-      document.getElementById('domandaModal').style.display = 'none';
-      document.body.style.overflow = '';
-    }
-    document.addEventListener('keydown', function(e){
-      if(e.key==="Escape") closeDomandaModal();
-    });
-    document.getElementById('domandaModal').addEventListener('click', function(e){
-      if(e.target===this) closeDomandaModal();
-    });
-    </script>
+    
 
 
 <style>
@@ -443,38 +228,21 @@
         <!-- SEZIONE NEWSLETTER + MODALE COMPLETA -->
         <div class="col-md-6 cta-left">
           <h4>Resta sempre aggiornato</h4>
-          <h2>Newsletter Giornaliera</h2>
+          <h2>Notizie sui bandi</h2>
           <p class="subheading">
-            Ricevi ogni mattina nella tua inbox i bandi più vantaggiosi: non perdere nessuna opportunità per la tua impresa.
+            Consulta le notizie e gli approfondimenti disponibili sul sito.
           </p>
           <ul class="benefits-list">
             <li><i class="fa fa-check-circle"></i> Selezione quotidiana di bandi</li>
-            <li><i class="fa fa-check-circle"></i> Alert su scadenze imminenti</li>
+            <li><i class="fa fa-check-circle"></i> Scadenze e requisiti dei bandi</li>
             <li><i class="fa fa-check-circle"></i> Consigli pratici per la candidatura</li>
           </ul>
-          <form id="newsletterForm" class="newsletter-form d-flex flex-column flex-sm-row justify-content-center align-items-center">
-            <input type="email" class="form-control" placeholder="La tua email" required>
-            <button type="submit" class="btn btn-newsletter ms-sm-3 mt-3 mt-sm-0">
-              Iscriviti Ora
-            </button>
-          </form>
-          <p class="fine-print">Nessun costo, nessun impegno. Annulla quando vuoi.</p>
+          <div class="newsletter-unavailable"><p>La newsletter non è attiva. Non raccogliamo iscrizioni.</p><a href="/italbandi-news">Consulta le notizie sui bandi</a></div>
+          <p class="fine-print">Nessuna iscrizione richiesta.</p>
         </div>
 
         <!-- MODALE NEWSLETTER -->
-        <div id="newsletterModal" class="custom-modal-overlay" tabindex="-1" style="display:none;">
-          <div class="custom-modal-dialog animate__animated animate__fadeInDown">
-            <button type="button" class="btn-close custom-modal-close" aria-label="Chiudi" onclick="closeNewsletterModal()"></button>
-            <div class="text-center px-3 py-5">
-              <div class="mb-3">
-                <i class="fa fa-envelope-open-text fa-3x" style="color:#ff9500;"></i>
-              </div>
-              <h2 style="font-weight:800; color:#ff9500;" class="mb-2">Sei iscritto!</h2>
-              <div class="fs-5 mb-1" style="color:#a36420;">Controlla la tua casella email per ricevere la nostra newsletter giornaliera.</div>
-              <button class="btn btn-secondary mt-4" onclick="closeNewsletterModal()" style="min-width:150px;">Chiudi</button>
-            </div>
-          </div>
-        </div>
+        
 
         <!-- CSS MODALE -->
         <style>
@@ -515,24 +283,7 @@
         </style>
 
         <!-- JS MODALE -->
-        <script>
-        document.getElementById('newsletterForm').addEventListener('submit', function(e){
-          e.preventDefault();
-          document.getElementById('newsletterModal').style.display = 'flex';
-          document.body.style.overflow = 'hidden';
-          this.reset();
-        });
-        function closeNewsletterModal() {
-          document.getElementById('newsletterModal').style.display = 'none';
-          document.body.style.overflow = '';
-        }
-        document.addEventListener('keydown', function(e){
-          if(e.key==="Escape") closeNewsletterModal();
-        });
-        document.getElementById('newsletterModal').addEventListener('click', function(e){
-          if(e.target===this) closeNewsletterModal();
-        });
-        </script>
+        
 
 
 
@@ -547,7 +298,7 @@
               <div class="d-flex justify-content-center">
                 <a href="#" class="btn btn-call"
                    onclick="openCallModal();return false;">
-                   <i class="fa fa-phone-alt me-2"></i> Prenota la tua call
+                   <i class="fa fa-phone-alt me-2"></i> Contattaci per una call
                 </a>
 
               </div>
@@ -576,87 +327,11 @@
 
                 <!-- Form Container -->
                 <div class="call-modal-body">
-                  <form id="callBookingForm">
-                    <!-- Sezione: Informazioni di Contatto -->
-                    <div class="form-section">
-                      <div class="form-section-header">
-                        <i class="fas fa-user me-2"></i> Informazioni di Contatto
-                      </div>
-                      <div class="row g-3">
-                        <div class="col-md-6">
-                          <label class="form-label">Nome e Cognome *</label>
-                          <input type="text" class="form-control" id="callNome" placeholder="Mario Rossi" required>
-                        </div>
-                        <div class="col-md-6">
-                          <label class="form-label">Email *</label>
-                          <input type="email" class="form-control" id="callEmail" placeholder="mario.rossi@azienda.it" required>
-                        </div>
-                        <div class="col-md-6">
-                          <label class="form-label">Telefono</label>
-                          <input type="tel" class="form-control" id="callTelefono" placeholder="+39 123 456 7890">
-                        </div>
-                        <div class="col-md-6">
-                          <label class="form-label">Ruolo in Azienda</label>
-                          <input type="text" class="form-control" id="callRuolo" placeholder="Es. Amministratore, CFO, Project Manager">
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Sezione: Informazioni Aziendali -->
-                    <div class="form-section">
-                      <div class="form-section-header">
-                        <i class="fas fa-building me-2"></i> Informazioni Aziendali
-                      </div>
-                      <div class="row g-3">
-                        <div class="col-md-6">
-                          <label class="form-label">Nome Azienda</label>
-                          <input type="text" class="form-control" id="callAzienda" placeholder="Azienda S.r.l.">
-                        </div>
-                        <div class="col-md-6">
-                          <label class="form-label">Dimensione Azienda</label>
-                          <select class="form-select" id="callDimensione">
-                            <option value="" selected>Seleziona dimensione</option>
-                            <option value="micro">Micro (1-9 dipendenti)</option>
-                            <option value="piccola">Piccola (10-49 dipendenti)</option>
-                            <option value="media">Media (50-249 dipendenti)</option>
-                            <option value="grande">Grande (250+ dipendenti)</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div class="form-check mt-3">
-                        <input class="form-check-input" type="checkbox" id="callFinanziamenti">
-                        <label class="form-check-label" for="callFinanziamenti">
-                          <strong>Hai già ricevuto finanziamenti pubblici in passato?</strong>
-                          <br><small class="text-muted">Questa informazione ci aiuta a valutare meglio le opportunità disponibili.</small>
-                        </label>
-                      </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-call-submit w-100">
-                      <i class="fas fa-calendar-check me-2"></i> Prenota la tua consulenza gratuita
-                    </button>
-                    
-                    <p class="text-center text-muted small mt-3 mb-0">
-                      <i class="fas fa-shield-alt me-1"></i> I tuoi dati sono al sicuro. Non condividiamo le tue informazioni con terze parti.
-                    </p>
-                  </form>
+                  <div class="contact-direct"><p>Per inviare la tua richiesta scrivi a <a href="mailto:info@energelia.it">info@energelia.it</a> oppure chiama <a href="tel:+390107776530">010 777 65 30</a>.</p><p>Il contatto avviene tramite email o telefono. Questo riquadro non invia richieste né prenotazioni.</p><a href="/privacy-policy#richieste">Come trattiamo i tuoi dati</a></div>
                 </div>
 
                 <!-- Success Message (nascosto inizialmente) -->
-                <div id="callSuccessMessage" class="call-success-message" style="display:none;">
-                  <div class="text-center py-4">
-                    <div class="success-icon mb-3">
-                      <i class="fas fa-check-circle"></i>
-                    </div>
-                    <h3>Richiesta Inviata!</h3>
-                    <p>Ti contatteremo entro 48 ore lavorative per fissare la tua consulenza gratuita.</p>
-                    <button type="button" class="btn btn-outline-primary mt-3" onclick="closeCallModal()">
-                      Chiudi
-                    </button>
-                  </div>
-                </div>
+                
               </div>
             </div>
 
@@ -826,17 +501,6 @@
 
             <!-- Script per gestire il form -->
             <script>
-            document.getElementById('callBookingForm').addEventListener('submit', function(e) {
-              e.preventDefault();
-              
-              // Nascondi il form e mostra il messaggio di successo
-              document.querySelector('.call-modal-header').style.display = 'none';
-              document.querySelector('.call-modal-body').style.display = 'none';
-              document.getElementById('callSuccessMessage').style.display = 'block';
-              
-              // Reset del form
-              this.reset();
-            });
 
             function openCallModal() {
               document.getElementById('callModal').style.display = 'flex';
@@ -851,7 +515,7 @@
               setTimeout(function() {
                 document.querySelector('.call-modal-header').style.display = 'block';
                 document.querySelector('.call-modal-body').style.display = 'block';
-                document.getElementById('callSuccessMessage').style.display = 'none';
+                
               }, 300);
             }
 
@@ -1006,27 +670,7 @@
         }
         </style>
 
-    <script>
-    document.getElementById('newsletterForm').addEventListener('submit', function(e){
-      e.preventDefault(); // Blocca invio classico
-      // Qui potresti aggiungere validazione personalizzata se vuoi (opzionale)
-      document.getElementById('newsletterModal').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      document.getElementById('newsletterForm').reset(); // Pulisci la mail (opzionale)
-    });
-    function closeNewsletterModal() {
-      document.getElementById('newsletterModal').style.display = 'none';
-      document.body.style.overflow = '';
-    }
-    // Chiudi con ESC
-    document.addEventListener('keydown', function(e){
-      if(e.key==="Escape") closeNewsletterModal();
-    });
-    // Chiudi cliccando fuori dal box
-    document.getElementById('newsletterModal').addEventListener('click', function(e){
-      if(e.target===this) closeNewsletterModal();
-    });
-    </script>
+    
 
 
 
@@ -1112,33 +756,5 @@ function filterBandi() {
 }
 </script>
 
-    <script>
-      if (window.matchMedia("(max-width: 575.98px)").matches) {
-        let lastScroll = window.scrollY;
-        const navbar   = document.querySelector('.nav-bar');
-        navbar.classList.add('visible');
-
-        window.addEventListener('scroll', () => {
-          const current = window.scrollY;
-
-          // Se siamo vicini al top (< 10px), mostrala sempre
-          if (current <= 10) {
-            navbar.classList.remove('hidden');
-            navbar.classList.add('visible');
-          }
-          else if (current > lastScroll + 5) {
-            // scroll verso il basso
-            navbar.classList.remove('visible');
-            navbar.classList.add('hidden');
-          }
-          else if (current < lastScroll - 5) {
-            // scroll verso l'alto
-            navbar.classList.remove('hidden');
-            navbar.classList.add('visible');
-          }
-
-          lastScroll = current;
-        });
-      }
-    </script>
+    
 

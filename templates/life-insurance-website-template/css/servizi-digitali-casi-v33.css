@@ -1,0 +1,26 @@
+/* Energelia v33: sezione 03, scelta rapida dei laboratori e ingresso immediato al catalogo. */
+.sd-cases.s3-demo{padding:clamp(68px,7vw,100px) 0 90px;background:#f5f7f8;color:#0d2032;}
+.s3-wrap{width:min(1210px,calc(100% - 40px));margin:auto;}
+.s3-top{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:50px;align-items:end;margin-bottom:48px;}
+.s3-kicker{font:600 11px/1.4 Inter,system-ui,sans-serif;letter-spacing:.14em;color:#6e7b85;margin:0 0 22px;}
+.s3-top h2{font:400 clamp(35px,4.15vw,56px)/1.08 'Source Serif 4',Georgia,serif;letter-spacing:-.05em;margin:0 0 15px;color:#0e1d29;}
+.s3-intro{font:400 16px/1.65 Inter,system-ui,sans-serif;color:#53616d;max-width:590px;margin:0;}
+.s3-cta{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:20px 24px;background:#e5103c;color:white!important;border-radius:7px;font:700 14px/1.3 Inter,system-ui,sans-serif;text-decoration:none!important;box-shadow:0 15px 40px rgba(229,16,60,.12);}
+.s3-label{font:600 12px/1.4 Inter,system-ui,sans-serif;letter-spacing:.07em;color:#566875;margin:0 0 14px;}
+.s3-picks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:17px;}
+.s3-pick{display:block;overflow:hidden;background:white;border:1px solid #e2e8ec;border-radius:11px;color:#0e2030!important;text-decoration:none!important;box-shadow:0 7px 20px rgba(9,34,54,.035);transition:transform .2s ease,box-shadow .2s ease;}
+.s3-pick:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(9,34,54,.09)}
+.s3-cover{display:block;overflow:hidden;background:#0d2435;aspect-ratio:960/500}.s3-cover img{display:block;width:100%;height:100%;object-fit:cover;}
+.s3-pick-body{display:flex;flex-direction:column;padding:18px 18px 20px;gap:7px;min-height:145px;}
+.s3-pick strong{font:400 23px/1.13 'Source Serif 4',Georgia,serif;letter-spacing:-.02em;}
+.s3-pick small{font:400 13px/1.4 Inter,system-ui,sans-serif;color:#61727b;}
+.s3-open{font:700 12px/1.3 Inter,system-ui,sans-serif;color:#df123b;margin-top:auto;padding-top:13px;}
+@media(max-width:850px){.s3-top{grid-template-columns:1fr;gap:25px;margin-bottom:26px}.s3-picks{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+@media(max-width:540px){.sd-cases.s3-demo{padding:57px 0 60px}.s3-wrap{width:calc(100% - 36px)}.s3-top{gap:22px;margin-bottom:31px}.s3-kicker{font-size:10px;margin-bottom:15px}.s3-top h2{font-size:36px;line-height:1.11;letter-spacing:-.04em;max-width:340px}.s3-intro{font-size:14px;line-height:1.6}.s3-cta{padding:16px 17px;font-size:13px}.s3-picks{display:flex;flex-direction:column;gap:10px}.s3-label{font-size:11px;margin-bottom:12px}.s3-pick{display:grid;grid-template-columns:128px minmax(0,1fr);min-height:109px;border-radius:9px;}.s3-cover{height:100%;min-height:109px;aspect-ratio:auto}.s3-cover img{height:100%;object-position:100% center}.s3-pick-body{min-height:0;padding:12px 12px 10px;gap:4px}.s3-pick strong{font-size:19px;line-height:1.12}.s3-pick small{font-size:11px;line-height:1.3}.s3-open{font-size:10px;padding-top:5px;}}
+@media(prefers-reduced-motion:reduce){.s3-pick{transition:none}}
+.sd-cases.s3-demo{scroll-margin-top:90px}
+.s3-cta:hover{background:#c90e34;color:white!important}
+.s3-pick:focus-visible,.s3-cta:focus-visible{outline:3px solid #f3204d;outline-offset:5px}
+/* Prevent pre-existing .sd-cases styles from changing the approved standalone composition. */
+.sd-cases.s3-demo .s3-picks img{display:block}
+@media(max-width:540px){.sd-cases.s3-demo{scroll-margin-top:80px}}

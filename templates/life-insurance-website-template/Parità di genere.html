@@ -3,36 +3,11 @@
 
     <head>
         <!-- Cookie Consent Default (GDPR) - DEVE essere PRIMA di Google Analytics -->
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied',
-    'ad_user_data': 'denied',
-    'ad_personalization': 'denied',
-    'wait_for_update': 500
-  });
-  try {
-    if (localStorage.getItem('energelia_cookie_consent') === 'accepted') {
-      gtag('consent', 'update', {
-        'ad_storage': 'granted',
-        'analytics_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted'
-      });
-    }
-  } catch(e) {}
-</script>
+
 
 <!-- Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-67D2BL58Y9"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-67D2BL58Y9');
-        </script>
+        
+        
         <meta charset="utf-8">
         <title>LifeSure - Life Insurance Website Template</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -81,150 +56,16 @@
         
 
         <!-- Navbar & Hero Start -->
-<div class="container-fluid nav-bar px-0 px-lg-4 py-2 sticky-top" style="background-color: #F7F7F7;">
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light">
-
-      <!-- BRAND / LOGO -->
-      <a href="#" class="navbar-brand p-0 d-flex align-items-center">
-        <!-- Aggiunto class "navbar-logo" e tolto inline height per delegare al CSS -->
-        <img src="{{ url_for('static', filename='img/loggo.jpg') }}" alt="Logo Energelia" class="navbar-logo" style="margin-right:10px;">
-      </a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="fa fa-bars"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav mx-0 mx-lg-auto gap-3">
-          <a href="index.html" class="nav-item nav-link active">Home</a>
-          <a href="finanza.html" class="nav-item nav-link">Finanza agevolata</a>
-          <a href="bandi.html" class="nav-item nav-link">Cerca i bandi</a>
-          <div class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Certificazioni</a>
-            <ul class="dropdown-menu shadow-sm rounded-3 mt-2">
-              <li><a href="EGE.html" class="dropdown-item">Certificazioni EGE</a></li>
-              <li><a href="Parità di genere.html" class="dropdown-item">Parità di genere</a></li>
-              <li><a href="Certificazione RLS.html" class="dropdown-item">Certificazione RLS</a></li>
-              <li><a href="Appalto.html" class="dropdown-item">Contenzioso gare appalto</a></li>
-            </ul>
-          </div>
-          <a href="contact.html" class="nav-item nav-link">Contact</a>
-        </div>
-      </div>
-
-      <!-- AREA CLIENTI + CALL -->
-      <div class="d-none d-xl-flex align-items-center ps-4">
-        <a href="area-clienti.html" class="btn btn-area-clienti me-3">Area Clienti</a>
-        <a href="#" class="btn btn-light btn-lg-square rounded-circle position-relative wow tada" data-wow-delay=".9s">
-          <i class="fa fa-phone-alt fa-2x"></i>
-          <div class="position-absolute" style="top: 7px; right: 12px;">
-            <span><i class="fa fa-comment-dots text-secondary"></i></span>
-          </div>
-        </a>
-        <div class="d-flex flex-column ms-3">
-          <span class="small">Call to Our Experts</span>
-          <a href="tel:+390107776530"><span class="text-dark">Tel: 010 7776530</span></a>
-        </div>
-      </div>
-
-    </nav>
-  </div>
-</div>
+{% include 'life-insurance-website-template/partials/navbar.html' %}
 <!-- Navbar & Hero End -->
 
-<style>
-  /* Logo ingrandito */
-  .navbar-logo {
-    height: 120px !important;
-    width: auto;
-  }
-
-  /* Area Clienti button */
-  .btn-area-clienti {
-    background-color: #0050b5;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 0.6rem 1.2rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
-    transition: background 0.3s, transform 0.3s;
-  }
-  .btn-area-clienti:hover {
-    background-color: #00397f;
-    transform: translateY(-2px);
-  }
-</style>
 
 
-<style>
-  /* Area Clienti button */
-  .btn-area-clienti {
-    background-color: #0050b5;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 0.6rem 1.2rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    box-shadow: 0 4px 12px rgba(0,80,181,0.25);
-    transition: background 0.3s, transform 0.3s;
-  }
-  .btn-area-clienti:hover {
-    background-color: #00397f;
-    transform: translateY(-2px);
-  }
 
-  /* Adjust spacing for call icon area */
-  .nav-bar .btn-light {
-    padding: 0.5rem;
-  }
-</style>
+        
 
 
         <style>
-  .navbar-logo {
-    height: 80px !important;
-    width: auto;
-  }
-</style>
-
-
-        <style>
-.navbar-nav .nav-link {
-  position: relative;
-  font-weight: 500;
-  color: #222 !important;
-  padding: 8px 10px;
-  transition: color 0.2s ease;
-}
-
-.navbar-nav .nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 4px;
-  width: 0%;
-  height: 2px;
-  background-color: #0050b5;
-  transition: width 0.3s ease;
-}
-
-.navbar-nav .nav-link:hover::after,
-.navbar-nav .nav-link.active::after {
-  width: 100%;
-}
-
-.navbar-nav .nav-link:hover {
-  color: #0050b5 !important;
-}
-
-.navbar {
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  font-size: 0.95rem;
-}
 
 .dropdown-menu {
   border: none;
@@ -242,10 +83,6 @@
 .dropdown-item:hover {
   background-color: #f0f6ff;
   color: #0050b5;
-}
-
-.nav-bar {
-  z-index: 999;
 }
 
 @keyframes fadeIn {
@@ -517,19 +354,7 @@
       <div class="col-lg-6 position-relative z-2">
         <div class="box-form-domanda p-5 rounded-4 bg-white shadow-lg">
           <h5 class="mb-3 text-primary fw-bold">Invia la tua richiesta</h5>
-          <form>
-            <div class="form-floating mb-3">
-              <textarea class="form-control fs-6" placeholder="Scrivi la tua domanda..." id="textareaDomanda" style="height: 180px;"></textarea>
-              <label for="textareaDomanda">Scrivi qui la tua domanda o dubbio...</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input type="email" class="form-control fs-6" id="emailDomanda" placeholder="La tua email">
-              <label for="emailDomanda">Inserisci la tua email (per ricevere il report)</label>
-            </div>
-            <button type="submit" class="btn btn-primary w-100 fw-bold py-3 fs-5">
-              Invia richiesta gratuita <i class="fas fa-paper-plane ms-2"></i>
-            </button>
-          </form>
+          <div class="contact-direct"><p>Per inviare la tua richiesta scrivi a <a href="mailto:info@energelia.it">info@energelia.it</a> oppure chiama <a href="tel:+390107776530">010 777 65 30</a>.</p><p>Il contatto avviene tramite email o telefono. Questo riquadro non invia richieste né prenotazioni.</p><a href="/privacy-policy#richieste">Come trattiamo i tuoi dati</a></div>
           <div class="mt-3 text-center text-muted small">
             Nessun vincolo. Nessuna newsletter. Solo una risposta utile.
           </div>
@@ -621,22 +446,17 @@
     <!-- SINISTRA: Newsletter (arancione) -->
     <div class="col-md-6 cta-left">
       <h4>Resta sempre aggiornato</h4>
-      <h2>Newsletter Giornaliera</h2>
+      <h2>Notizie sui bandi</h2>
       <p class="subheading">
-        Ricevi ogni mattina nella tua inbox i bandi più vantaggiosi: non perdere nessuna opportunità per la tua impresa.
+        Consulta le notizie e gli approfondimenti disponibili sul sito.
       </p>
       <ul class="benefits-list">
         <li><i class="fa fa-check-circle"></i> Selezione quotidiana di bandi</li>
-        <li><i class="fa fa-check-circle"></i> Alert su scadenze imminenti</li>
+        <li><i class="fa fa-check-circle"></i> Scadenze e requisiti dei bandi</li>
         <li><i class="fa fa-check-circle"></i> Consigli pratici per la candidatura</li>
       </ul>
-      <form class="newsletter-form d-flex flex-column flex-sm-row justify-content-center align-items-center">
-        <input type="email" class="form-control" placeholder="La tua email">
-        <button type="submit" class="btn btn-newsletter ms-sm-3 mt-3 mt-sm-0">
-          Iscriviti Ora
-        </button>
-      </form>
-      <p class="fine-print">Nessun costo, nessun impegno. Annulla quando vuoi.</p>
+      <div class="newsletter-unavailable"><p>La newsletter non è attiva. Non raccogliamo iscrizioni.</p><a href="/italbandi-news">Consulta le notizie sui bandi</a></div>
+      <p class="fine-print">Nessuna iscrizione richiesta.</p>
     </div>
 
     <!-- DESTRA: Call conoscitiva (blu) -->
@@ -648,7 +468,7 @@
       </p>
       <div class="d-flex justify-content-center">
         <a href="contact.html" class="btn btn-call">
-          <i class="fa fa-phone-alt me-2"></i> Prenota la tua call
+          <i class="fa fa-phone-alt me-2"></i> Contattaci per una call
         </a>
       </div>
       <p class="fine-print">Disponibile 9–18 dal lunedì al venerdì.</p>
@@ -795,85 +615,9 @@
   }
 </style>
 
-<!-- Footer Start -->
-<div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
-  <div class="container">
-    <!-- Top del Footer: 4 colonne -->
-    <div class="row footer-top">
-      <!-- Colonna 1: Logo + Descrizione -->
-      <div class="col-md-6 col-lg-3 footer-logo">
-        <a href="index.html" class="p-0 text-white"><h3><i class="fas fa-rocket me-2"></i>Energelia</h3></a>
-        <p>Esperti in finanza agevolata dal 2006, accompagniamo la tua impresa dal bando fino alla rendicontazione.</p>
-        <div class="social-icons mt-3">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-      </div>
-      <!-- Colonna 2: Servizi -->
-      <div class="col-md-6 col-lg-3 footer-links">
-        <h5>Servizi</h5>
-        <ul>
-          <li><i class="fas fa-angle-right me-2"></i><a href="service.html">Ricerca Bandi</a></li>
-          <li><i class="fas fa-angle-right me-2"></i><a href="service.html#gestione">Gestione Pratiche</a></li>
-          <li><i class="fas fa-angle-right me-2"></i><a href="service.html#strategia">Consulenza Strategica</a></li>
-          <li><i class="fas fa-angle-right me-2"></i><a href="service.html#rendicontazione">Rendicontazione</a></li>
-        </ul>
-      </div>
-      <!-- Colonna 3: Risorse -->
-      <div class="col-md-6 col-lg-3 footer-links">
-        <h5>Risorse</h5>
-        <ul>
-          <li><i class="fas fa-angle-right me-2"></i><a href="bids.html">Elenco Bandi</a></li>
-          <li><i class="fas fa-angle-right me-2"></i><a href="FAQ.html">FAQ</a></li>
-          <li><i class="fas fa-angle-right me-2"></i><a href="blog.html">Blog & News</a></li>
-          <li><i class="fas fa-angle-right me-2"></i><a href="case-studies.html">Case Studies</a></li>
-        </ul>
-      </div>
-      <!-- Colonna 4: Contatti + Newsletter -->
-      <div class="col-md-6 col-lg-3">
-        <h5>Contatti</h5>
-        <div class="contact-info mb-4">
-          <p><i class="fas fa-map-marker-alt me-2"></i>Via XII Ottobre 1/6, Genova (GE)</p>
-          <p><i class="fas fa-envelope me-2"></i><a href="mailto:info@energelia.it">info@energelia.it</a></p>
-          <p><i class="fas fa-phone-alt me-2"></i><a href="tel:+390107776530">010 7776530</a></p>
-        </div>
-        <div class="newsletter">
-          <h5>Newsletter</h5>
-          <form class="d-flex">
-            <input type="email" class="form-control me-2" placeholder="La tua email">
-            <button type="submit" class="btn text-white">Iscriviti</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- Bottom del Footer: copyright -->
-    <div class="row bottom-bar">
-      <div class="col-12">
-        <p class="mb-0">&copy; 2025 Energelia S.r.l. – All rights reserved | P.IVA 02959030996 | <a href="privacy.html">Privacy Policy</a> | <a href="cookie.html">Cookie Policy</a></p>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Footer End -->
+{% include 'life-insurance-website-template/partials/footer.html' %}
         
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright py-4">
-            <div class="container">
-                <div class="row g-4 align-items-center">
-                    <div class="col-md-6 text-center text-md-end mb-md-0">
-                        <span class="text-body"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-                    </div>
-                    <div class="col-md-6 text-center text-md-start text-body">
-                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                        Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Copyright End -->
+        
 
 
         <!-- Back to Top -->
@@ -926,185 +670,9 @@ function filterBandi() {
 </script>
 
 
-        <!-- Footer Start -->
-        <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
-            <div class="container py-5">
-                <div class="row g-5">
-                    <div class="col-xl-9">
-                        <div class="mb-5">
-                            <div class="row g-4">
-                                <div class="col-md-6 col-lg-6 col-xl-5">
-                                    <div class="footer-item">
-                                        <a href="index.html" class="p-0">
-                                            <h3 class="text-white"><i class="fab fa-slack me-3"></i> LifeSure</h3>
-                                            <!-- <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo"> -->
-                                        </a>
-                                        <p class="text-white mb-4">Dolor amet sit justo amet elitr clita ipsum elitr est.Lorem ipsum dolor sit amet, consectetur adipiscing...</p>
-                                        <div class="footer-btn d-flex">
-                                            <a class="btn btn-md-square rounded-circle me-3" href="#"><i class="fab fa-facebook-f"></i></a>
-                                            <a class="btn btn-md-square rounded-circle me-3" href="#"><i class="fab fa-twitter"></i></a>
-                                            <a class="btn btn-md-square rounded-circle me-3" href="#"><i class="fab fa-instagram"></i></a>
-                                            <a class="btn btn-md-square rounded-circle me-0" href="#"><i class="fab fa-linkedin-in"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-3">
-                                    <div class="footer-item">
-                                        <h4 class="text-white mb-4">Useful Links</h4>
-                                        <a href="#"><i class="fas fa-angle-right me-2"></i> About Us</a>
-                                        <a href="#"><i class="fas fa-angle-right me-2"></i> Features</a>
-                                        <a href="#"><i class="fas fa-angle-right me-2"></i> Services</a>
-                                        <a href="#"><i class="fas fa-angle-right me-2"></i> FAQ's</a>
-                                        <a href="#"><i class="fas fa-angle-right me-2"></i> Blogs</a>
-                                        <a href="#"><i class="fas fa-angle-right me-2"></i> Contact</a>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <div class="footer-item">
-                                        <h4 class="mb-4 text-white">Instagram</h4>
-                                        <div class="row g-3">
-                                            <div class="col-4">
-                                                <div class="footer-instagram rounded">
-                                                    <img src="{{ url_for('static', filename='img/instagram-footer-1.jpg') }}" class="img-fluid w-100" alt="">
-                                                    <div class="footer-search-icon">
-                                                        <a href="{{ url_for('static', filename='img/instagram-footer-1.jpg') }}" data-lightbox="footerInstagram-1" class="my-auto"><i class="fas fa-link text-white"></i></a>
-                                                    </div>
-                                                </div>
-                                           </div>
-                                           <div class="col-4">
-                                                <div class="footer-instagram rounded">
-                                                    <img src="{{ url_for('static', filename='img/instagram-footer-2.jpg') }}" class="img-fluid w-100" alt="">
-                                                    <div class="footer-search-icon">
-                                                        <a href="{{ url_for('static', filename='img/instagram-footer-2.jpg') }}" data-lightbox="footerInstagram-2" class="my-auto"><i class="fas fa-link text-white"></i></a>
-                                                    </div>
-                                                </div>
-                                           </div>
-                                            <div class="col-4">
-                                                <div class="footer-instagram rounded">
-                                                    <img src="{{ url_for('static', filename='img/instagram-footer-3.jpg') }}" class="img-fluid w-100" alt="">
-                                                    <div class="footer-search-icon">
-                                                        <a href="{{ url_for('static', filename='img/instagram-footer-3.jpg') }}" data-lightbox="footerInstagram-3" class="my-auto"><i class="fas fa-link text-white"></i></a>
-                                                    </div>
-                                                </div>
-                                           </div>
-                                            <div class="col-4">
-                                                <div class="footer-instagram rounded">
-                                                    <img src="{{ url_for('static', filename='img/instagram-footer-4.jpg') }}" class="img-fluid w-100" alt="">
-                                                    <div class="footer-search-icon">
-                                                        <a href="{{ url_for('static', filename='img/instagram-footer-4.jpg') }}" data-lightbox="footerInstagram-4" class="my-auto"><i class="fas fa-link text-white"></i></a>
-                                                    </div>
-                                                </div>
-                                           </div>
-                                            <div class="col-4">
-                                                <div class="footer-instagram rounded">
-                                                    <img src="{{ url_for('static', filename='img/instagram-footer-5.jpg') }}" class="img-fluid w-100" alt="">
-                                                    <div class="footer-search-icon">
-                                                        <a href="{{ url_for('static', filename='img/instagram-footer-5.jpg') }}" data-lightbox="footerInstagram-5" class="my-auto"><i class="fas fa-link text-white"></i></a>
-                                                    </div>
-                                                </div>
-                                           </div>
-                                           <div class="col-4">
-                                                <div class="footer-instagram rounded">
-                                                    <img src="{{ url_for('static', filename='img/instagram-footer-6.jpg') }}" class="img-fluid w-100" alt="">
-                                                    <div class="footer-search-icon">
-                                                        <a href="{{ url_for('static', filename='img/instagram-footer-6.jpg') }}" data-lightbox="footerInstagram-6" class="my-auto"><i class="fas fa-link text-white"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pt-5" style="border-top: 1px solid rgba(255, 255, 255, 0.08);">
-                            <div class="row g-0">
-                                <div class="col-12">
-                                    <div class="row g-4">
-                                        <div class="col-lg-6 col-xl-4">
-                                            <div class="d-flex">
-                                                <div class="btn-xl-square bg-primary text-white rounded p-4 me-4">
-                                                    <i class="fas fa-map-marker-alt fa-2x"></i>
-                                                </div>
-                                                <div>
-                                                    <h4 class="text-white">Address</h4>
-                                                    <p class="mb-0">123 Street New York.USA</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-xl-4">
-                                            <div class="d-flex">
-                                                <div class="btn-xl-square bg-primary text-white rounded p-4 me-4">
-                                                    <i class="fas fa-envelope fa-2x"></i>
-                                                </div>
-                                                <div>
-                                                    <h4 class="text-white">Mail Us</h4>
-                                                    <p class="mb-0">info@example.com</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-xl-4">
-                                            <div class="d-flex">
-                                                <div class="btn-xl-square bg-primary text-white rounded p-4 me-4">
-                                                    <i class="fa fa-phone-alt fa-2x"></i>
-                                                </div>
-                                                <div>
-                                                    <h4 class="text-white">Telephone</h4>
-                                                    <p class="mb-0">(+012) 3456 7890</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-xl-3">
-                        <div class="footer-item">
-                            <h4 class="text-white mb-4">Newsletter</h4>
-                            <p class="text-white mb-3">Dolor amet sit justo amet elitr clita ipsum elitr est.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            <div class="position-relative rounded-pill mb-4">
-                                <input class="form-control rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Enter your email">
-                                <button type="button" class="btn btn-primary rounded-pill position-absolute top-0 end-0 py-2 mt-2 me-2">SignUp</button>
-                            </div>
-                            <div class="d-flex flex-shrink-0">
-                                <div class="footer-btn">
-                                    <a href="#" class="btn btn-lg-square rounded-circle position-relative wow tada" data-wow-delay=".9s">
-                                        <i class="fa fa-phone-alt fa-2x"></i>
-                                        <div class="position-absolute" style="top: 2px; right: 12px;">
-                                            <span><i class="fa fa-comment-dots text-secondary"></i></span>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="d-flex flex-column ms-3 flex-shrink-0">
-                                    <span>Call to Our Experts</span>
-                                    <a href="tel:+390107776530"><span class="text-white">Tel: 010 7776530</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End -->
+        <!-- Rimosso footer legacy duplicato -->
         
-        <!-- Copyright Start -->
-        <div class="container-fluid copyright py-4">
-            <div class="container">
-                <div class="row g-4 align-items-center">
-                    <div class="col-md-6 text-center text-md-end mb-md-0">
-                        <span class="text-body"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right reserved.</span>
-                    </div>
-                    <div class="col-md-6 text-center text-md-start text-body">
-                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                        Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Copyright End -->
+        
 
 
         <!-- Back to Top -->

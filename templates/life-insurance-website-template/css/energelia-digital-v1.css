@@ -1,0 +1,199 @@
+/* Booking UI extracted from reviewed V4.1 concept; actual production scene is interactive animation. */
+.app-stage{perspective:1100px}.app-floating-spark{position:absolute;width:7px;height:7px;background:#97d4ee;border-radius:50%;box-shadow:0 0 19px #a6e5fd;top:23%;left:10%}.spark-two{left:auto;right:5%;top:75%;width:4px;height:4px}.app-glass-sheet{position:absolute;left:9%;top:15%;width:58%;height:63%;border:1px solid #6aaad349;background:#1a46602a;backdrop-filter:blur(2px);border-radius:23px;transform:rotate(-11deg);opacity:.4}.sheet-two{left:16%;top:21%;transform:rotate(7deg);background:#4378980b}.app-device{position:absolute;left:11%;top:4%;width:45%;min-width:245px;max-width:322px;height:92%;max-height:620px;color:#11384b;border:8px solid #162e42;border-radius:37px;background:linear-gradient(160deg,#fff,#edf5fa 90%);padding:23px 20px 20px;box-shadow:0 36px 65px #00121dbb,0 0 0 1px #80adc37a;transform:rotate(-5deg);overflow:hidden;z-index:5;will-change:transform,opacity}.device-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:80px;height:16px;border-radius:0 0 13px 13px;background:#162e42}.device-status{display:flex;justify-content:space-between;color:#456374;font-size:9px;margin-bottom:23px;font-weight:700}.device-brand{font-size:12px;font-weight:800;letter-spacing:.09em;display:flex;justify-content:space-between}.device-brand span{color:#1a7caa}.device-divider{height:1px;background:#d6e5ed;margin:14px 0 22px}.device-eyebrow{font-weight:700;font-size:9px;letter-spacing:.1em;color:#7190a2}.app-device h3{font:400 clamp(23px,2.25vw,33px)/1.05 'Source Serif 4',Georgia,serif;letter-spacing:-.04em;margin:8px 0 10px}.app-device p{font-size:10px;line-height:1.5;color:#738a99;margin:0 0 26px}.device-month{display:flex;justify-content:space-between;font-size:10px;color:#4e6e81;font-weight:700;letter-spacing:.06em;margin-bottom:14px}.device-month b{font-size:15px;color:#5c90aa}.device-days{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.device-days span{border:1px solid #d4e3ec;border-radius:7px;background:#fff;text-align:center;font-size:9px;font-weight:650;padding:10px 1px;color:#49677b}.device-days b{display:block;font-size:15px;margin-top:6px}.device-days .chosen{background:#d4edfa;border-color:#3989b2;color:#0d5b7c}.device-times{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:16px}.device-times span{border:1px solid #d4e3ec;background:#fff;text-align:center;padding:12px 0;border-radius:7px;font-size:10px}.device-times .chosen{background:#d8edf9;border-color:#3989b2;color:#0d5b7c;font-weight:700}.device-button{display:flex;justify-content:space-between;background:#d91c42;border-radius:7px;margin-top:19px;padding:12px;color:#fff;font-size:11px;font-weight:700}.device-confirm{display:flex;align-items:center;justify-content:center;background:#dfefe9;color:#1e7466;border:1px solid #a4d3c6;border-radius:6px;font-size:10px;font-weight:700;padding:10px;margin-top:11px;opacity:0;transform:translateY(8px)}
+.app-dashboard{position:absolute;right:0;top:26%;width:58%;max-width:480px;min-width:325px;border-radius:15px;background:#f3f8fb;color:#163648;border:1px solid #a9c4d6;box-shadow:0 31px 62px #001425b9;overflow:hidden;z-index:6;transform:translateX(55px) scale(.94);opacity:0;will-change:transform,opacity}.dashboard-mini-top{display:flex;align-items:center;gap:10px;background:#0f374f;color:#f5fbff;padding:13px 15px}.dash-mini-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:#dc2149;font:400 21px 'Source Serif 4',Georgia,serif}.dashboard-mini-top>div{display:grid;gap:3px}.dashboard-mini-top b{font-size:11px;letter-spacing:.08em}.dashboard-mini-top small{font-size:9px;color:#b7d2df}.dash-mini-status{color:#94d8c3;font-size:8px;margin-left:auto;white-space:nowrap}.dash-mini-content{padding:22px}.dash-mini-content>small{font-size:9px;font-weight:800;color:#6f8da2;letter-spacing:.09em}.dash-mini-content h3{font:400 27px 'Source Serif 4',Georgia,serif;margin:9px 0 17px}.dash-mini-schedule{display:grid;gap:7px}.dash-mini-schedule>div{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:9px;align-items:center;background:#fff;padding:15px 12px;border-radius:7px;border:1px solid #d7e5ee}.dash-mini-schedule span{font-size:10px;color:#648496}.dash-mini-schedule b{font-size:11px}.dash-mini-schedule i{font-style:normal;font-size:8px;background:#dcefe7;color:#167f6f;padding:5px;border-radius:4px}.dash-mini-schedule .dash-new{border-color:#47a693;background:#edf8f5;opacity:.25;transform:translateY(8px)}.dash-bottom-summary{margin-top:14px;padding:11px;display:flex;justify-content:space-between;color:#44728a;font-size:10px}.app-data-trail{position:absolute;left:53%;top:45%;height:3px;width:26%;background:linear-gradient(90deg,#87d6f0,#d1eefa);box-shadow:0 0 14px #b4eaff;transform:rotate(-10deg);opacity:0;z-index:4}.app-data-trail i{display:inline-block;width:6px;height:6px;background:#dcfaff;border-radius:100%;box-shadow:0 0 8px #c9f4fd;position:absolute;top:-1.5px;left:calc(var(--t,0) * 100%)}
+
+/* V4: app scene refined without replacing existing site and management assets. */
+.digital-services-page .ds-imm-app .ds-app-stage{isolation:isolate;background:radial-gradient(ellipse at 51% 54%,rgba(58,134,180,.19),transparent 63%)}
+.v4-grid{position:absolute;inset:7% 0 9%;opacity:.23;z-index:0;pointer-events:none;background-image:linear-gradient(90deg,rgba(123,181,211,.14) 1px,transparent 1px),linear-gradient(rgba(123,181,211,.12) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse at 54% 55%,black,transparent 79%)}
+.v4-orbit{position:absolute;width:67%;aspect-ratio:1;top:-4%;right:3%;border:1px solid #79c7f12a;border-radius:50%;box-shadow:0 0 0 43px #74aee309,0 0 0 86px #77aed505;z-index:0;pointer-events:none}
+.v4-orbit-inner{position:absolute;width:37%;aspect-ratio:1;top:24%;right:21%;border:1px dashed #b0e0f62b;border-radius:50%;z-index:0;pointer-events:none;transform:rotate(-19deg)}
+.v4-booking-label{position:absolute;right:1%;top:1%;font:700 9px Inter,sans-serif;letter-spacing:.17em;color:#8eb9d1;z-index:1}
+.app-device{background:linear-gradient(157deg,#fff 24%,#edf6f9);border:8px solid #0d2a40;box-shadow:0 32px 76px #001321db,0 0 0 1px #7ab6d390, inset 0 0 0 1px #fff;z-index:6}
+.app-dashboard{border-radius:15px;box-shadow:0 30px 75px #00131f9e,0 0 0 1px #9ac5df35;z-index:5}
+.device-brand,.device-eyebrow,.device-days,.device-times,.device-button{will-change:transform,opacity}
+.v4-booking-progress{display:flex;align-items:center;gap:5px;justify-content:space-between;margin-top:13px;color:#6b8fa3;font:700 7px Inter,sans-serif;white-space:nowrap}
+.v4-booking-progress i{height:1px;flex:1;background:#9ac3d5}
+.device-confirm{background:#e2f4ed;border:1px solid #8dcbab;color:#276e59;box-shadow:0 4px 16px #1d83641a}
+.device-days .chosen,.device-times .chosen{transition:box-shadow .4s,background .4s}.device-days.v4-is-selected .chosen,.device-times.v4-is-selected .chosen{box-shadow:0 0 0 2px #8ad0e8,0 6px 18px #00517323}
+.v4-booking-confirmed .device-button{background:#1a6e62!important;color:#fff!important}
+.v4-booking-confirmed .device-button>span{visibility:hidden}
+.story-scene[data-scene="4"] .flow-card{border-radius:17px;box-shadow:0 23px 68px #00111bc7,inset 0 1px 0 #cde7ff18;border:1px solid #719cb055;background:linear-gradient(145deg,rgba(24,65,91,.95),rgba(9,31,49,.94));backdrop-filter:blur(10px)}
+.story-scene[data-scene="4"] .flow-card.ai-card{border-color:#6f9cb69a;background:linear-gradient(145deg,#24536eec,#132f4cec)}
+.story-scene[data-scene="4"] .flow-card.outcome-card{border-color:#4d9e9f9a;background:linear-gradient(145deg,#205c65ed,#092a3dec)}
+.story-scene[data-scene="4"] .flow-tag{border:1px solid #86b8bf4d;border-radius:99px;padding:6px 10px}
+/* Existing site/management screen is divided into interface regions rather than equal tiles. */
+.assembly-fragment[data-fragment="0"]{clip-path:polygon(0 0,100% 0,100% 10%,0 10%)}
+.assembly-fragment[data-fragment="1"]{clip-path:polygon(0 10%,36% 10%,36% 56%,0 56%)}
+.assembly-fragment[data-fragment="2"]{clip-path:polygon(36% 10%,100% 10%,100% 57%,36% 57%)}
+.assembly-fragment[data-fragment="3"]{clip-path:polygon(0 56%,36% 56%,36% 100%,0 100%)}
+.assembly-fragment[data-fragment="4"]{clip-path:polygon(36% 57%,100% 57%,100% 77%,36% 77%)}
+.assembly-fragment[data-fragment="5"]{clip-path:polygon(36% 77%,100% 77%,100% 100%,36% 100%)}
+
+/* V4.1: Correct the approved booking scene layout only. Not a new animation. */
+
+/* Energelia Digital V1: implementation of V3/V4 approved structure; scoped, loaded after base. */
+.digital-services-page .ds-imm-app{width:min(1180px,92vw);height:min(70vh,640px);aspect-ratio:1.8;max-height:640px}
+.digital-services-page .ds-imm-app .ds-app-stage{position:relative;width:100%;height:100%;isolation:isolate;perspective:1200px;background:radial-gradient(ellipse at 50% 50%,#214e713b,transparent 71%)}
+.digital-services-page .ds-imm-app .app-device{left:2%;width:38%;max-width:295px;min-width:240px;top:2%;height:94%;max-height:610px;z-index:5;padding-inline:18px}
+.digital-services-page .ds-imm-app .app-dashboard{right:0;top:23%;width:59%;max-width:505px;min-width:300px;z-index:6}
+.digital-services-page .ds-imm-app .app-data-trail{left:37%;width:23%;top:47%;transform:none;z-index:4}
+.digital-services-page .ds-imm-app .device-button{background:#d91c42;color:white}
+.digital-services-page .ds-imm-app .dash-new{opacity:.15}
+.digital-services-page .ds-imm-app .ds-app-stage h3{color:#193e51}
+.digital-services-page .ds-imm-app .app-glass-sheet{pointer-events:none}
+.digital-services-page .ds-imm-app .app-floating-spark{pointer-events:none}
+.digital-services-page .ds-imm-app .v4-booking-label{pointer-events:none}
+.digital-services-page .ds-imm-copy-app{z-index:12}
+.digital-services-page .ds-imm-progress>b{font-size:12px}
+/* Distinct closing frame, concise to avoid repeating the services section. */
+.digital-services-page .ds-finale-title{width:min(1100px,calc(100% - 88px));margin:auto;position:relative;z-index:2;display:grid;gap:22px;color:#fff}
+.digital-services-page .ds-finale-title>span{font:700 11px/1.4 Inter,sans-serif;letter-spacing:.18em;color:#9fc8df}
+.digital-services-page .ds-finale-title strong{font:400 clamp(45px,5.8vw,85px)/1.04 'Source Serif 4',Georgia,serif;letter-spacing:-.04em;color:#fff}
+.digital-services-page .ds-finale-title em{color:#c6e4f0;font-weight:400}
+.digital-services-page .ds-finale-title>i{font:normal 34px Inter;color:#d35669}
+/* Section 01: editorial navigation, no badge tiles. */
+.digital-services-page .el-orient{position:relative;background:linear-gradient(103deg,rgba(4,17,29,.98) 0%,rgba(5,25,39,.96) 59%,rgba(5,30,47,.91) 100%),url('../img/servizi-digitali/sd-finale-corridor.webp') 70% center/cover;color:#f4f7f9;padding:clamp(74px,8vw,126px) 0 clamp(70px,7vw,108px);font:400 16px/1.6 Inter,Arial,sans-serif;isolation:isolate}
+.digital-services-page .el-orient *{box-sizing:border-box}
+.digital-services-page .el-orient-wrap{width:min(1240px,calc(100% - 104px));margin-inline:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8%;align-items:center}
+.digital-services-page .el-eyebrow{display:flex;align-items:center;gap:11px;font:700 10px/1.4 Inter,sans-serif;letter-spacing:.13em;color:#9fc6dc}
+.digital-services-page .el-eyebrow i{width:28px;height:1px;background:#de5876;display:block}
+.digital-services-page .el-orient-intro h2{font:400 clamp(43px,4.4vw,65px)/1.075 'Source Serif 4',Georgia,serif;letter-spacing:-.045em;color:white;margin:24px 0 21px}
+.digital-services-page .el-orient-intro h2 em{font-weight:400;color:#aed7ec}
+.digital-services-page .el-orient-intro>p{font-size:15px;line-height:1.73;color:#b7cbd8;max-width:470px;margin:0}
+.digital-services-page .el-orient-link{display:grid;gap:9px;margin-top:44px;padding-top:21px;border-top:1px solid #4e687a;color:white!important;text-decoration:none;max-width:460px}
+.digital-services-page .el-orient-link>span{font-size:12px;color:#9fbccf}
+.digital-services-page .el-orient-link strong{font-size:14px;display:flex;justify-content:space-between;align-items:center;font-weight:650;gap:14px}
+.digital-services-page .el-orient-link b{font-size:19px;color:#ed647c}
+.digital-services-page .el-orient-nav{border-top:1px solid #7897aa;display:grid;align-self:stretch;align-content:center}
+.digital-services-page .el-orient-nav>a{display:grid;grid-template-columns:28px minmax(0,1fr) 24px;align-items:center;gap:16px;min-height:105px;padding:17px 5px;border-bottom:1px solid rgba(153,186,204,.25);color:#f4f7f9!important;text-decoration:none;transition:background-color .2s,padding .2s}
+.digital-services-page .el-orient-nav>a:hover{background:#2a4b6040;padding-inline:14px}
+.digital-services-page .el-orient-nav>a>span{align-self:start;padding-top:8px;font-size:11px;color:#83aabd;font-weight:650}
+.digital-services-page .el-orient-nav a>div{display:grid;gap:5px;min-width:0}
+.digital-services-page .el-orient-nav strong{font:400 clamp(25px,2.4vw,34px)/1.13 'Source Serif 4',Georgia,serif;letter-spacing:-.03em}
+.digital-services-page .el-orient-nav small{font:400 12px/1.5 Inter,sans-serif;color:#a6c2d3}
+.digital-services-page .el-orient-nav b{align-self:start;justify-self:end;font:400 21px Inter;color:#bbdbe8}
+/* Section 02: keep exact site and management visual blocks. */
+.digital-services-page .sd-solutions{padding-bottom:90px}
+.digital-services-page .sd-solutions>.sd-section-head{padding-bottom:50px}
+.digital-services-page .sd-service{scroll-margin-top:85px}
+.digital-services-page .sd-service-copy{min-width:0}
+.digital-services-page .sd-service-copy p:not(.sd-service-label){max-width:430px;line-height:1.65}
+.digital-services-page .el-service-app{background:linear-gradient(140deg,#f3f1ed,#e8ecee);color:#102d41;padding-block:clamp(36px,5vw,74px)}
+.digital-services-page .el-service-app .sd-service-copy{color:#102d41}
+.digital-services-page .el-service-app .sd-service-copy h3{color:#102d41}
+.digital-services-page .el-service-app .sd-service-copy>p{color:#465f70}
+.digital-services-page .el-service-app .sd-service-label{color:#bd2e46}
+.digital-services-page .el-service-app .sd-more{color:#b82c44!important}
+.digital-services-page .el-app-visual{margin:0!important;width:100%;min-width:0;align-self:center;position:relative}
+.digital-services-page .el-app-visual img{display:block;width:100%;height:auto;max-height:590px;object-fit:contain;filter:drop-shadow(0 25px 32px rgba(24,55,71,.16))}
+.digital-services-page .el-app-visual figcaption{color:#718795;font:400 10px Inter,sans-serif;text-align:right;margin-top:-9px;position:relative}
+/* Section 02/04: abstract, light visual system without another web-app dashboard. */
+.digital-services-page .el-service-auto{background:linear-gradient(135deg,#061727,#0b2539);color:#f5f9fc;padding-block:clamp(48px,5vw,80px)}
+.digital-services-page .el-service-auto .sd-more{color:#dcecf4!important}
+.digital-services-page .el-flow{height:420px;margin:0 0 12px 12px!important;position:relative;min-width:0;overflow:hidden;border-radius:20px;isolation:isolate;background:radial-gradient(ellipse at 47% 48%,rgba(32,104,146,.18),transparent 65%)}
+.digital-services-page .el-flow::before{content:'';position:absolute;inset:0;opacity:.3;background-image:radial-gradient(#80b5d047 .7px,transparent .7px);background-size:21px 21px;mask-image:radial-gradient(ellipse,black 32%,transparent 73%);pointer-events:none}
+.digital-services-page .el-flow-traces{position:absolute;inset:0;pointer-events:none;z-index:0}
+.digital-services-page .el-flow-traces svg{width:100%;height:100%;overflow:visible;fill:none;stroke:#477d9d;stroke-width:1.5;stroke-linecap:round;opacity:.64}
+.digital-services-page .el-flow-traces .el-flow-energy{stroke:url(#elFlowLight);stroke-width:2.5;stroke-dasharray:9 15;animation:el-flow-pulse 7s linear infinite}
+@keyframes el-flow-pulse{to{stroke-dashoffset:-195}}
+.digital-services-page .el-flow-caption-top{position:absolute;top:20px;left:25px;display:flex;align-items:center;gap:9px;color:#83afc5;font:700 10px/1.3 Inter,sans-serif;letter-spacing:.12em}
+.digital-services-page .el-flow-glow-dot{width:6px;height:6px;background:#8ce0e9;box-shadow:0 0 11px #7bcced;border-radius:50%;display:block}
+.digital-services-page .el-flow-stack{position:absolute;top:74px;display:grid;gap:17px;z-index:2;align-content:center}
+.digital-services-page .el-flow-in{left:1%;width:20%}.digital-services-page .el-flow-out{right:0;width:24%;top:114px;gap:27px}
+.digital-services-page .el-flow-label{color:#72a4c0;font:700 9px/1.3 Inter,sans-serif;letter-spacing:.13em;margin:0 0 2px 8px}
+.digital-services-page .el-flow-stack>div{display:flex;align-items:center;gap:9px;padding:10px 9px;color:#d6ebf6;font:550 11px/1.3 Inter,sans-serif;border:1px solid rgba(118,172,204,.22);background:rgba(15,45,68,.58);border-radius:8px;min-height:50px;backdrop-filter:blur(8px)}
+.digital-services-page .el-flow-stack i{display:grid;place-items:center;flex:none;width:27px;height:27px;border-radius:6px;background:#244f6d;color:#b8e9f8;font:normal 17px Inter}
+.digital-services-page .el-flow-out i{background:#174f57;color:#99e5da}
+.digital-services-page .el-flow-core{position:absolute;left:42%;top:48%;transform:translate(-50%,-50%);width:240px;height:240px;z-index:2;display:grid;place-items:center}
+.digital-services-page .el-flow-rings{position:absolute;inset:0;display:grid;place-items:center}
+.digital-services-page .el-flow-rings i{position:absolute;display:block;border:1px solid rgba(127,196,222,.23);border-radius:50%;width:100%;height:100%;transform:rotate(-30deg)}
+.digital-services-page .el-flow-rings i:nth-child(2){width:79%;height:79%;border-style:dashed;border-color:rgba(107,186,226,.46);animation:el-flow-turn 48s linear infinite}
+.digital-services-page .el-flow-rings i:nth-child(3){width:54%;height:54%;border-color:rgba(106,196,216,.38);box-shadow:0 0 32px rgba(74,143,183,.12)}
+@keyframes el-flow-turn{to{transform:rotate(330deg)}}
+.digital-services-page .el-flow-core-content{position:relative;text-align:center;display:grid;justify-items:center;gap:9px;max-width:165px}
+.digital-services-page .el-flow-core-mark{display:grid;place-items:center;color:#a9dbef;font-size:35px;line-height:1;width:61px;height:61px;border-radius:50%;background:#143d59;border:1px solid #4383a3;box-shadow:0 0 22px rgba(61,155,195,.18)}
+.digital-services-page .el-flow-core-content strong{font:600 15px/1.25 Inter,sans-serif;color:#e5f5fc}
+.digital-services-page .el-flow-core-content small{font:450 11px Inter;color:#99bcd0}
+.digital-services-page .el-flow-foot{position:absolute;left:2%;right:2%;bottom:38px;display:flex;justify-content:center;align-items:center;gap:10px;letter-spacing:.08em;font:650 9px/1.4 Inter;color:#8baabd}
+.digital-services-page .el-flow-foot b{width:22px;height:1px;background:#48788f}
+.digital-services-page .el-flow figcaption{position:absolute;bottom:8px;right:12px;color:#7296a9;font:400 9px/1.4 Inter}
+/* form cards: retain original API service values, new four-category nomenclature */
+.digital-services-page .ed-service-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.digital-services-page .ed-service-choices .ed-service-choice{min-width:0}
+.digital-services-page .ed-service-choice>span{grid-template-columns:minmax(0,1fr)!important;padding:14px 34px 14px 14px!important;min-height:80px!important}
+.digital-services-page .ed-service-choice>span :is(strong,small){grid-column:1;min-width:0}
+.digital-services-page .ed-service-choice i{border:1px solid #8a9fac;border-radius:50%;width:16px;height:16px;position:absolute;right:12px;top:12px}
+.digital-services-page .ed-service-choice input:checked+span i{background:#c72d48;box-shadow:inset 0 0 0 4px #fff}
+@media(max-width:1100px) and (min-width:992px){.digital-services-page .ds-imm-app{width:94vw;height:560px}.digital-services-page .ds-imm-app .app-device{min-width:220px;left:1%}.digital-services-page .ds-imm-app .app-dashboard{max-width:410px;min-width:290px}.digital-services-page .el-flow-in{width:22%}.digital-services-page .el-flow-out{width:25%}.digital-services-page .el-flow-core{left:46%;width:200px;height:200px}}
+@media(max-width:991.98px){
+ .digital-services-page .el-orient-wrap{width:calc(100% - 58px);grid-template-columns:1fr;gap:35px}
+ .digital-services-page .el-orient-intro h2{max-width:740px;font-size:clamp(40px,6vw,58px)}
+ .digital-services-page .el-orient-link{margin-top:28px}
+ .digital-services-page .el-orient-nav>a{min-height:86px}
+ .digital-services-page .ds-finale-title{display:none}
+ .digital-services-page .ds-imm-app{display:none}
+ .digital-services-page .ds-imm-final{display:none!important}
+ .digital-services-page .ds-mobile-shortcut-links{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;width:100%}
+ .digital-services-page .ds-mobile-shortcut-links>a{min-width:0!important;padding:9px!important;margin:0!important;border:1px solid #3d6077;border-radius:8px;background:#12324a55;text-align:left;display:flex;align-items:center;gap:8px;line-height:1.3}
+ .digital-services-page .ds-mobile-shortcut-links a>span:last-child{font-size:11px}
+ .digital-services-page .ds-mobile-shortcuts{display:block!important}
+ .digital-services-page .el-app-visual img{max-height:500px}
+ .digital-services-page .sd-service-automation .el-flow{display:block!important}
+ .digital-services-page .sd-service-automation .sd-automation-mobile{display:none!important}
+ .digital-services-page .el-flow{margin:18px 0 4px!important;height:370px}
+ .digital-services-page .el-flow-core{left:44%;width:190px;height:190px}
+ .digital-services-page .el-flow-stack>div{font-size:10px}
+}
+@media(max-width:650px){
+ .digital-services-page .el-orient{padding:59px 0 53px}
+ .digital-services-page .el-orient-wrap{width:calc(100% - 36px);gap:26px}
+ .digital-services-page .el-orient-intro h2{font-size:clamp(35px,9.8vw,46px);line-height:1.1;margin:16px 0}
+ .digital-services-page .el-orient-intro>p{font-size:13px;line-height:1.65}
+ .digital-services-page .el-orient-link{margin-top:24px;padding-top:15px}
+ .digital-services-page .el-orient-nav>a{min-height:77px;grid-template-columns:22px minmax(0,1fr) 17px;gap:11px;padding:12px 4px}
+ .digital-services-page .el-orient-nav strong{font-size:clamp(23px,6.2vw,27px)}
+ .digital-services-page .el-orient-nav small{font-size:11px}
+ .digital-services-page .sd-solutions{padding-bottom:58px}
+ .digital-services-page .sd-solutions>.sd-section-head{padding-bottom:26px}
+ .digital-services-page .el-service-app{padding-block:0 15px}
+ .digital-services-page .el-app-visual{margin:18px 0 7px!important;width:100%;overflow:visible}
+ .digital-services-page .el-app-visual img{width:100%;max-height:none;filter:drop-shadow(0 9px 13px rgba(29,58,74,.12))}
+ .digital-services-page .el-app-visual figcaption{margin-top:0;margin-right:7px}
+ .digital-services-page .el-service-auto{padding:2px 0 20px}
+ .digital-services-page .el-flow{height:420px;margin:16px 0 4px!important;background:radial-gradient(ellipse at 50% 45%,rgba(32,104,146,.20),transparent 70%)}
+ .digital-services-page .el-flow-caption-top{top:7px;left:8px;font-size:8px;letter-spacing:.08em}
+ .digital-services-page .el-flow-traces svg{display:none}
+ .digital-services-page .el-flow-in{top:35px;left:0;width:100%;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+ .digital-services-page .el-flow-in .el-flow-label{flex-basis:100%;text-align:center;margin:0}
+ .digital-services-page .el-flow-in>div{min-height:38px;padding:5px 7px;font-size:10px;gap:6px;flex:1 1 auto;max-width:125px}
+ .digital-services-page .el-flow-in i{width:21px;height:21px;font-size:13px}
+ .digital-services-page .el-flow-core{left:50%;top:51%;height:185px;width:185px}
+ .digital-services-page .el-flow-out{top:auto;bottom:44px;left:0;right:0;width:100%;display:flex;gap:7px;justify-content:center}
+ .digital-services-page .el-flow-out .el-flow-label{display:none}
+ .digital-services-page .el-flow-out>div{flex:1 1 auto;max-width:154px;min-height:40px;gap:6px;padding:6px;font-size:10px}
+ .digital-services-page .el-flow-out i{width:22px;height:22px;font-size:13px}
+ .digital-services-page .el-flow-foot{bottom:12px;left:0;right:0;font-size:7px;gap:4px}
+ .digital-services-page .el-flow-foot b{width:9px}
+ .digital-services-page .el-flow figcaption{display:none}
+ .digital-services-page .ed-service-choices{grid-template-columns:1fr}
+ .digital-services-page .ed-service-choice>span{min-height:71px!important}
+ .digital-services-page .ds-mobile-shortcut-links>a{min-height:43px}
+}
+@media(max-width:360px){.digital-services-page .el-orient-nav strong{font-size:22px}.digital-services-page .el-flow{height:415px}.digital-services-page .el-flow-foot{letter-spacing:0}.digital-services-page .el-flow-in>div{font-size:9px;gap:4px;padding:5px}.digital-services-page .el-flow-out>div{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.digital-services-page .el-flow-traces .el-flow-energy,.digital-services-page .el-flow-rings i:nth-child(2){animation:none!important}.digital-services-page .el-orient-nav>a{transition:none}}
+/* FINAL VISUAL QA: give the appointment its own right-hand stage, without covering the narrative. */
+@media(min-width:1201px){
+ .digital-services-page .ds-imm-app{left:71%;width:min(840px,59vw);height:min(70vh,630px)}
+ .digital-services-page .ds-imm-app .app-device{width:37%;left:0;min-width:245px;max-width:290px}
+ .digital-services-page .ds-imm-app .app-dashboard{width:55%;right:0;max-width:465px;min-width:300px}
+ .digital-services-page .ds-imm-app .app-data-trail{left:35%;width:25%}
+ .digital-services-page .ds-imm-copy-app{max-width:465px}
+ .digital-services-page .ds-imm-copy-app h2{font-size:clamp(38px,4vw,58px);line-height:1.07}
+}
+@media(min-width:992px) and (max-width:1200px){
+ .digital-services-page .ds-imm-app{left:71%;width:740px;height:570px}
+ .digital-services-page .ds-imm-app .app-device{width:37%;left:0;min-width:240px;max-width:280px}
+ .digital-services-page .ds-imm-app .app-dashboard{width:53%;right:0;max-width:400px;min-width:280px}
+ .digital-services-page .ds-imm-copy-app{max-width:410px}
+ .digital-services-page .ds-imm-copy-app h2{font-size:clamp(35px,4vw,52px)}
+}

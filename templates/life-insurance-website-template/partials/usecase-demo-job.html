@@ -1,0 +1,45 @@
+<div class="uc-demo ua-app ua-job ua-document-import" data-uc-automation="job" data-ua-mobile-view="document">
+  <header class="ua-appbar"><span class="ua-logo">L</span><div><strong>LINEA IMPIANTI</strong><small>Acquisizione documenti e pratiche</small></div><span class="ua-appbar-tag">Ambiente dimostrativo</span></header>
+  <div class="ua-status-strip"><span class="ua-strip-dot"></span><span data-ua-job-status>Documento pronto per la lettura</span><span class="ua-strip-count" data-ua-job-count>0 pratiche create</span></div>
+  <nav class="ua-view-tabs ua-import-tabs" role="group" aria-label="Fasi del laboratorio documenti">
+    <button type="button" data-ua-job-tab="document" aria-controls="ua-import-document" aria-pressed="true">1 · Documento</button>
+    <button type="button" data-ua-job-tab="fields" aria-controls="ua-import-fields" aria-pressed="false" disabled>2 · Dati</button>
+    <button type="button" data-ua-job-tab="created" aria-controls="ua-import-created" aria-pressed="false" disabled>3 · Pratica</button>
+  </nav>
+  <div class="ua-job-grid ua-import-grid">
+    <section class="ua-surface ua-job-document" id="ua-import-document" aria-label="Documento sorgente">
+      <div class="ua-section-head"><div><small>DOCUMENTO RICEVUTO</small><h2>Da un testo ai dati</h2></div><span class="ua-chip ua-chip-blue">Lettura locale</span></div>
+      <p class="ua-import-lead">Prova uno dei due documenti oppure incolla un testo: il laboratorio riconosce i campi indicati e li propone per la verifica.</p>
+      <div class="ua-import-choices" role="group" aria-label="Scegli un documento di esempio">
+        <button type="button" data-ua-job-example="order" aria-pressed="true"><span aria-hidden="true">▤</span> Ordine lavori</button>
+        <button type="button" data-ua-job-example="quote" aria-pressed="false"><span aria-hidden="true">▤</span> Preventivo accettato</button>
+      </div>
+      <div class="ua-import-paper" aria-label="Anteprima del documento di esempio"><div class="ua-import-paper-top"><span>DOCUMENTO DI ESEMPIO</span><strong data-ua-job-paper-type>ORDINE LAVORI</strong></div><div class="ua-import-paper-body"><strong data-ua-job-paper-title>Ordine lavori ricevuto</strong><pre data-ua-job-paper-text></pre></div><div class="ua-import-paper-foot">Contenuto dimostrativo · modificabile qui sotto</div></div>
+      <label class="ua-import-input-label" for="ua-import-content">Testo da analizzare<textarea id="ua-import-content" data-ua-job-content rows="5" maxlength="3500" spellcheck="false" aria-describedby="ua-import-help"></textarea></label>
+      <div class="ua-import-file-row"><label for="ua-import-file">Importa un file TXT<input id="ua-import-file" type="file" accept=".txt,text/plain" data-ua-job-file></label><small data-ua-job-file-name>Facoltativo · max 150 KB e 3.500 caratteri</small></div>
+      <p id="ua-import-help" class="ua-import-hint">In questa demo la lettura è reale ma limitata al testo strutturato, senza OCR né API AI. Per i PDF e le scansioni servirebbe un motore dedicato.</p>
+      <p class="ua-error" data-ua-job-error role="alert" hidden></p>
+      <button type="button" class="ua-primary" data-ua-job-analyze>Riconosci i dati del testo <span aria-hidden="true">↗</span></button>
+    </section>
+    <section class="ua-surface ua-job-fields" id="ua-import-fields" aria-label="Dati riconosciuti e pratica">
+      <div class="ua-section-head"><div><small>DAL DOCUMENTO AL GESTIONALE</small><h2 data-ua-job-side-heading>Dati da verificare</h2></div><span class="ua-chip" data-ua-job-chip>In attesa</span></div>
+      <div class="ua-job-placeholder" data-ua-job-empty><span class="ua-placeholder-art" aria-hidden="true">▤</span><strong>Qui appariranno i campi riconosciuti</strong><p>La lettura distingue i valori presenti nel testo. Prima di creare la pratica potrai correggerli.</p></div>
+      <form data-ua-job-form data-ua-job-extracted hidden novalidate>
+        <p class="ua-import-extract-status"><span aria-hidden="true">✓</span> <strong data-ua-job-found>0 di 5 campi individuati</strong><small>Verifica e completa i dati prima di importarli.</small></p>
+        <label>Cliente o azienda<input data-ua-job-field="client" maxlength="80" required placeholder="Nome cliente"></label>
+        <label>Intervento o oggetto<input data-ua-job-field="activity" maxlength="110" required placeholder="Attività richiesta"></label>
+        <label>Indirizzo del lavoro<input data-ua-job-field="address" maxlength="120" placeholder="Indirizzo"></label>
+        <div class="ua-import-dual"><label>Importo in euro<input data-ua-job-field="amount" type="number" min="0" max="10000000" step="0.01" inputmode="decimal" required></label><label>Data prevista<input data-ua-job-field="date" type="date" required></label></div>
+        <label>Note interne<textarea data-ua-job-field="notes" maxlength="280" rows="2" placeholder="Facoltative"></textarea></label>
+        <p class="ua-error" data-ua-job-field-error role="alert" hidden>Controlla cliente, intervento, importo e data: sono necessari per creare la pratica.</p>
+        <button type="submit" class="ua-primary">Conferma dati e crea pratica <span aria-hidden="true">↗</span></button>
+      </form>
+      <div class="ua-job-created" id="ua-import-created" data-ua-job-created hidden>
+        <div class="ua-import-success"><span aria-hidden="true">✓</span><div><small>PRATICA DIMOSTRATIVA n. 4318</small><h3>Pratica creata</h3><p>I dati verificati sono stati riportati nella scheda di lavoro, senza ricopiarli.</p></div></div>
+        <dl class="ua-import-record"><div><dt>Cliente</dt><dd data-ua-job-result="client"></dd></div><div><dt>Intervento</dt><dd data-ua-job-result="activity"></dd></div><div><dt>Indirizzo</dt><dd data-ua-job-result="address"></dd></div><div><dt>Importo</dt><dd data-ua-job-result="amount"></dd></div><div><dt>Data</dt><dd data-ua-job-result="date"></dd></div><div><dt>Note</dt><dd data-ua-job-result="notes"></dd></div></dl>
+        <button type="button" class="ua-outline" data-ua-job-revise>← Correggi i dati importati</button>
+      </div>
+    </section>
+  </div>
+  <div class="ua-footer"><span data-ua-job-msg aria-live="polite">Scegli un esempio, riconosci i campi e crea una pratica dimostrativa.</span><button type="button" data-ua-job-reset>↻ Ricomincia demo</button></div>
+</div>

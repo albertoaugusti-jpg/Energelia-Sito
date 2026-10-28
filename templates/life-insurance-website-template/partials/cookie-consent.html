@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/privacy.css') }}">
+<div id="privacy-config" data-analytics="{{ '1' if privacy_analytics_enabled|default(false) else '0' }}" data-ga-id="{{ privacy_ga_id|default('') }}" data-version="{{ privacy_version|default('2026-10-27-v2') }}" hidden></div>
+{% if privacy_analytics_enabled|default(false) %}
+<section id="cookieConsentBanner" class="cookie-banner" aria-labelledby="cookieBannerTitle" hidden>
+  <button type="button" class="cookie-close" data-cookie-reject aria-label="Chiudi e continua con i soli strumenti necessari">×</button>
+  <div class="cookie-banner-inner">
+    <div class="cookie-banner-text">
+      <h2 id="cookieBannerTitle">La tua privacy, le tue scelte</h2>
+      <p>Usiamo strumenti tecnici per il sito. Solo con il tuo consenso carichiamo Google Analytics per misurare le visite. Puoi modificare o revocare la scelta in qualsiasi momento.</p>
+      <p><a href="/privacy-policy">Privacy Policy</a> · <a href="/cookie-policy">Cookie Policy</a></p>
+    </div>
+    <div class="cookie-banner-actions">
+      <button type="button" id="cookieRejectBtn" class="btn-cookie" data-cookie-reject>Rifiuta non necessari</button>
+      <button type="button" id="cookieAcceptBtn" class="btn-cookie" data-cookie-accept>Accetta tutti</button>
+      <button type="button" class="btn-cookie" data-cookie-preferences>Preferenze</button>
+    </div>
+  </div>
+</section>
+{% endif %}
+<dialog id="cookiePreferences" class="cookie-preferences" aria-labelledby="cookiePreferencesTitle">
+  {% if privacy_analytics_enabled|default(false) %}
+  <h2 id="cookiePreferencesTitle">Preferenze cookie</h2>
+  <p>Gli strumenti tecnici sono necessari. Gli altri restano spenti finché non li scegli.</p>
+  <p><strong>Necessari · sempre attivi</strong><br>Sessione e protezione delle aree riservate.</p>
+  <label class="cookie-option"><input type="checkbox" id="cookieAnalytics"> <span><strong>Statistiche · Google Analytics</strong><br>Misurazione delle visite. Facoltativo, disattivato per impostazione iniziale.</span></label>
+  {% else %}
+  <h2 id="cookiePreferencesTitle">Informazioni sui cookie</h2>
+  <p>Utilizziamo soltanto strumenti tecnici. Non sono attivi strumenti di analisi delle visite o profilazione pubblicitaria e non è richiesto il consenso al tracciamento.</p>
+  <p>Puoi azzerare le precedenti scelte privacy e rimuovere i cookie di misurazione ancora accessibili al sito. Gli strumenti necessari all’accesso alle aree riservate restano disponibili.</p>
+  {% endif %}
+  <p><a href="/cookie-policy">Cookie, durate e finalità</a> · <a href="/privacy-policy">Informativa privacy</a></p>
+  <div class="cookie-banner-actions">
+    {% if privacy_analytics_enabled|default(false) %}
+    <button type="button" class="btn-cookie" data-cookie-reject>Revoca / solo necessari</button>
+    <button type="button" class="btn-cookie" id="cookieSaveBtn">Salva preferenze</button>
+    {% else %}
+    <button type="button" class="btn-cookie" id="cookieResetBtn">Azzera le precedenti scelte</button>
+    {% endif %}
+    <button type="button" class="btn-cookie" id="cookieCloseBtn">Chiudi</button>
+  </div>
+</dialog>
+<noscript><p class="privacy-noscript">Consulta la <a href="/cookie-policy">Cookie Policy</a> e la <a href="/privacy-policy">Privacy Policy</a>.</p></noscript>
+<script defer src="{{ url_for('static', filename='js/privacy-consent.js') }}"></script>

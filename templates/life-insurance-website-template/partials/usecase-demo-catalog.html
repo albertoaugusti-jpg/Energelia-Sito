@@ -1,0 +1,44 @@
+<div class="uc-demo" data-uc-demo="catalog">
+<div class="uc-demo-panels">
+<section class="uc-demo-panel uc-demo-editor" aria-labelledby="uc-catalog-panel-title">
+<header class="uc-panel-header uc-editor-panel-header"><span class="uc-editor-panel-intro"><span class="uc-panel-mark">1</span><span><b id="uc-catalog-panel-title">Dove modifichi il catalogo</b><small>Scegli un prodotto e aggiorna i dati.</small></span></span><span class="uc-panel-muted" data-uc-editor-status>Pronto per modificare</span></header>
+<div class="uc-catalog-workspace">
+<div class="uc-catalog-toolbar"><strong>Catalogo biciclette</strong><span>Ultimo aggiornamento: oggi</span></div>
+<div class="uc-catalog-grid">
+<div class="uc-catalog-product-picker" role="group" aria-label="Scegli il prodotto da modificare">
+<button type="button" class="is-selected" data-uc-product-select="finestra" aria-pressed="true"><span>Bici City 7V</span><small>In evidenza</small></button>
+<button type="button" data-uc-product-select="porta" aria-pressed="false"><span>Bici Trekking 21V</span><small>Trekking</small></button>
+<button type="button" data-uc-product-select="vetrata" aria-pressed="false"><span>E-bike Urban</span><small>Elettrica</small></button>
+</div>
+<div class="uc-catalog-editor-card is-featured">
+<small data-uc-selected-product-kind>Prodotto in evidenza</small>
+<h3 data-uc-selected-product-name>Bici City 7V</h3>
+<label for="uc-product-price">Prezzo</label>
+<div class="uc-price-field"><span aria-hidden="true">€</span><input id="uc-product-price" type="number" min="0" max="999999" step="0.01" inputmode="decimal" required value="480" aria-describedby="uc-price-help" data-uc-product-price></div><small class="uc-price-help" id="uc-price-help" data-uc-price-help>Importo valido da 0 a 999.999 €, massimo 2 decimali.</small>
+<label for="uc-product-status">Disponibilità</label>
+<select id="uc-product-status" data-uc-product-status>
+<option value="Disponibile" selected>Disponibile</option>
+<option value="Su richiesta">Su richiesta</option>
+<option value="In arrivo">In arrivo</option>
+</select>
+<label for="uc-product-note">Nota in evidenza</label>
+<input id="uc-product-note" type="text" maxlength="90" value="Pronta per il ritiro" aria-describedby="uc-note-count" data-uc-product-note><div class="uc-field-counter" id="uc-note-count"><span>Nota breve</span><output data-uc-counter-for="uc-product-note">0 / 90</output></div>
+<div class="uc-editor-actions"><button type="button" class="uc-button-reset" data-uc-reset>Ripristina</button><button type="button" class="uc-button-primary" data-uc-preview>Controlla l'anteprima ↗</button></div>
+</div>
+</div>
+</div>
+</section>
+<section class="uc-demo-panel uc-demo-site" aria-labelledby="uc-catalog-public-title"><header class="uc-panel-header uc-editor-panel-header"><span class="uc-editor-panel-intro"><span class="uc-panel-mark uc-panel-mark-teal">2</span><span><b id="uc-catalog-public-title">Come appare il catalogo</b><small>Qui vedrai i prodotti aggiornati.</small></span></span><span class="uc-panel-online" data-uc-site-status>● Sito attuale</span></header>
+<div class="uc-catalog-public">
+<div class="uc-catalog-public-hero"><strong>Ciclo Urbano</strong><span>Prodotti selezionati</span></div>
+<div class="uc-catalog-public-grid">
+<article class="uc-catalog-public-card is-main" data-uc-public-product="finestra"><small>Prodotto in evidenza</small><h3>Bici City 7V</h3><p class="uc-price" data-uc-public-price>€ 480</p><p class="uc-status" data-uc-public-status>Disponibile</p><p class="uc-note" data-uc-public-note>Pronta per il ritiro</p></article>
+<article class="uc-catalog-public-card" data-uc-public-product="porta"><small>Trekking</small><h3>Bici Trekking 21V</h3><p class="uc-price" data-uc-public-price>€ 690</p><p class="uc-status" data-uc-public-status>Disponibile</p><p class="uc-note" data-uc-public-note>Telaio leggero, uso quotidiano.</p></article>
+<article class="uc-catalog-public-card" data-uc-public-product="vetrata"><small>Elettrica</small><h3>E-bike Urban</h3><p class="uc-price" data-uc-public-price>€ 1.250</p><p class="uc-status" data-uc-public-status>Su richiesta</p><p class="uc-note" data-uc-public-note>Autonomia indicativa di 60 km.</p></article>
+</div>
+</div>
+<div class="uc-public-pending" data-uc-pending hidden>Hai modifiche nuove nel catalogo: aggiorna l’anteprima per rivederle qui.</div>
+</section>
+</div>
+<div class="uc-demo-toolbar"><div role="status" aria-live="polite" data-uc-demo-message>Aggiorna il prezzo, la disponibilità o la nota. Poi controlla il risultato nel catalogo pubblico.</div><button type="button" class="uc-demo-publish" data-uc-publish disabled>Pubblica l'aggiornamento <span aria-hidden="true">↗</span></button></div>
+</div>

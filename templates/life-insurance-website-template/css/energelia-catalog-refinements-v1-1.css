@@ -1,0 +1,14 @@
+/* V1.1 preview: original visual background and compact reset toolbar. */
+.uc-page.uc-catalog .el-cat-hero{position:relative;isolation:isolate;background:#061b2d!important;overflow:hidden}
+.uc-page.uc-catalog .el-cat-hero::before{content:'';position:absolute;inset:0;z-index:-1;background-image:linear-gradient(90deg,rgba(3,17,30,.96) 0%,rgba(4,19,32,.84) 43%,rgba(4,19,34,.59) 73%,rgba(3,17,30,.43) 100%),url("../img/casi-uso/catalogo-hero.webp");background-size:cover;background-position:center 50%;}
+.uc-page.uc-catalog .el-cat-steps{backdrop-filter:blur(13px);background:rgba(8,32,49,.79)!important;border-color:rgba(130,185,215,.35)!important;}
+.uc-page.uc-catalog .v11-filter-tools{display:flex;align-items:center;gap:14px;justify-content:flex-end;flex-wrap:wrap}
+.uc-page.uc-catalog .v11-filter-tools button{cursor:pointer;display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:9px 13px;background:#fff;border:1px solid #c5d5df;border-radius:6px;color:#244b62;font:650 12px Inter,sans-serif;white-space:nowrap;transition:border-color .2s,color .2s}
+.uc-page.uc-catalog .v11-filter-tools button:hover{border-color:#ce2646;color:#c41b3e}
+.uc-page.uc-catalog .el-cat-filter-note{display:none!important}
+@media(max-width:650px){
+.uc-page.uc-catalog .el-cat-hero::before{background-image:linear-gradient(180deg,rgba(3,17,30,.86),rgba(4,19,32,.80) 53%,rgba(3,17,30,.91)),url("../img/casi-uso/catalogo-hero.webp");background-position:64% center;}
+.uc-page.uc-catalog .el-filter-top{align-items:flex-start;gap:9px}
+.uc-page.uc-catalog .v11-filter-tools{gap:8px;justify-content:flex-start}
+.uc-page.uc-catalog .v11-filter-tools button{min-height:32px;padding:7px 10px;font-size:11px}
+}

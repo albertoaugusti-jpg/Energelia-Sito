@@ -1,0 +1,40 @@
+{% from 'life-insurance-website-template/partials/digital-concept-ui.html' import icon, photo %}
+<section class="sd-cases s3-demo" id="casi-uso" aria-labelledby="sd-cases-title">
+  <div class="s3-wrap">
+    <div class="s3-top">
+      <div><p class="s3-kicker">03 — VALORE NELLA PRATICA</p><h2 id="sd-cases-title">Prova le funzioni, non solo le descrizioni.</h2><p class="s3-intro">Qui puoi provare alcune funzionalità, senza registrazione e con dati dimostrativi. Scegli un esempio oppure apri il catalogo completo.</p></div>
+      <a class="s3-cta" href="/casi-uso">Esplora i 15 casi d’uso <span aria-hidden="true">↗</span></a>
+    </div>
+    <p class="s3-label">INIZIA DA UN ESEMPIO</p>
+    <div class="s3-picks">
+      <a class="s3-pick" href="/caso-modificare-sito" aria-label="Prova: Aggiornare il sito"><span class="s3-cover"><img src="{{ url_for('static', filename='img/casi-uso/covers/editor.webp') }}" alt="" loading="lazy" width="960" height="500"></span><span class="s3-pick-body"><strong>Aggiornare il sito</strong><small>Modifica testi e immagini</small><span class="s3-open">Apri il laboratorio <span aria-hidden="true">↗</span></span></span></a>
+      <a class="s3-pick" href="/caso-gestire-richieste" aria-label="Prova: Gestire le richieste"><span class="s3-cover"><img src="{{ url_for('static', filename='img/casi-uso/covers/inbox.webp') }}" alt="" loading="lazy" width="960" height="500"></span><span class="s3-pick-body"><strong>Gestire le richieste</strong><small>Tieni tutto sotto controllo</small><span class="s3-open">Apri il laboratorio <span aria-hidden="true">↗</span></span></span></a>
+      <a class="s3-pick" href="/caso-prenotare-appuntamento" aria-label="Prova: Prenotare appuntamenti"><span class="s3-cover"><img src="{{ url_for('static', filename='img/casi-uso/covers/calendar.webp') }}" alt="" loading="lazy" width="960" height="500"></span><span class="s3-pick-body"><strong>Prenotare appuntamenti</strong><small>Organizza disponibilità e incontri</small><span class="s3-open">Apri il laboratorio <span aria-hidden="true">↗</span></span></span></a>
+      <a class="s3-pick" href="/caso-promemoria-scadenza" aria-label="Prova: Preparare promemoria"><span class="s3-cover"><img src="{{ url_for('static', filename='img/casi-uso/covers/reminder.webp') }}" alt="" loading="lazy" width="960" height="500"></span><span class="s3-pick-body"><strong>Preparare promemoria</strong><small>Scadenze e messaggi automatici</small><span class="s3-open">Apri il laboratorio <span aria-hidden="true">↗</span></span></span></a>
+    </div>
+  </div>
+</section>
+<section class="sd-method sd-concept" id="approccio" aria-labelledby="sd-method-title">
+  <div class="sd-wrap">
+    <header class="sd-section-head sd-method-head">
+      <div><p class="sd-eyebrow">04 — IL NOSTRO METODO</p><h2 id="sd-method-title">Vedi una prima idea.<br> Decidi con più <span class="sd-method-emphasis">sicurezza.</span></h2></div>
+      <p>Ci racconti le tue esigenze e i tuoi obiettivi, poi ti prepariamo una prima proposta visiva personalizzata per il tuo sito, pannello o progetto digitale, <strong>gratuitamente e senza impegno.</strong> Così puoi valutare con calma lo stile e la direzione prima di decidere se proseguire.</p>
+    </header>
+    <ol class="sd-method-steps">
+      <li><span class="sd-method-icon">{{ icon('chat') }}</span><div class="sd-method-copy"><span class="sd-method-number">01.</span><h3>Ascolto</h3><p>Ci racconti la tua realtà, i tuoi obiettivi e le tue esigenze.</p></div></li>
+      <li class="sd-method-highlight"><span class="sd-method-icon">{{ icon('file') }}</span><div class="sd-method-copy"><span class="sd-method-number">02.</span><h3>Prima proposta visiva</h3><strong class="sd-method-badge">Gratuita · senza impegno</strong><p>Ti prepariamo una prima proposta grafica personalizzata per il tuo progetto, così puoi vedere concretamente la direzione.</p></div></li>
+      <li><span class="sd-method-icon">{{ icon('gear') }}</span><div class="sd-method-copy"><span class="sd-method-number">03.</span><h3>Proposta e definizione</h3><p>Affiniamo insieme la proposta, definiamo le funzionalità e pianifichiamo ogni dettaglio.</p></div></li>
+      <li><span class="sd-method-icon">{{ icon('check') }}</span><div class="sd-method-copy"><span class="sd-method-number">04.</span><h3>Realizzazione</h3><p>Sviluppiamo il progetto con cura, tenendoti sempre aggiornato.</p></div></li>
+    </ol>
+  </div>
+</section>
+<section class="sd-faq sd-concept" id="domande" aria-labelledby="sd-faq-title"><div class="sd-wrap"><header class="sd-section-head"><div><p class="sd-eyebrow">05 — RISPOSTE CHIARE</p><h2 id="sd-faq-title">Domande frequenti.</h2></div><div class="sd-faq-contact"><p>Hai altre domande?<br>Scrivici, ne parliamo insieme.</p><a class="sd-button" href="#contatto">Contattaci {{ icon('arrow') }}</a></div></header><div class="sd-faq-columns"><div>
+<details name="digital-faq"><summary>Posso vedere una proposta visiva gratuita prima di decidere?<span aria-hidden="true">+</span></summary><p>Sì. Dopo un primo confronto possiamo preparare gratuitamente una prima direzione grafica personalizzata, senza obbligo di acquisto. È un'anteprima illustrativa, non un sito o un gestionale già funzionante: se vuoi proseguire, definiamo funzionalità e preventivo prima dello sviluppo.</p></details>
+<details name="digital-faq"><summary>Quanto costa un sito web o un gestionale?<span aria-hidden="true">+</span></summary><p>Il costo dipende dalle funzioni, dai contenuti e dalle integrazioni necessarie. Dopo aver chiarito le esigenze, definiamo il perimetro e una proposta economica da valutare prima dello sviluppo. Costi iniziali ed eventuali voci ricorrenti, come servizi esterni, manutenzione e assistenza, vanno chiariti nella proposta. Gli ampliamenti vengono concordati separatamente.</p></details>
+<details name="digital-faq"><summary>Posso aggiornare autonomamente i contenuti del sito?<span aria-hidden="true">+</span></summary><p>Possiamo prevedere un pannello per gestire testi, immagini e pagine. Quali contenuti modificare, con quali permessi e con quali indicazioni d’uso si definisce in base al progetto, prima dello sviluppo.</p></details>
+<details name="digital-faq"><summary>Come vengono definite la proprietà del sito e dei dati?<span aria-hidden="true">+</span></summary><p>Proprietà, accessi, consegna del sito e gestione dei dati vanno chiariti nella proposta e negli accordi del progetto, insieme alle eventuali licenze e ai servizi esterni coinvolti. Non diamo per scontate condizioni identiche per ogni soluzione.</p></details>
+</div><div>
+<details name="digital-faq"><summary>In quanto tempo si realizza un progetto?<span aria-hidden="true">+</span></summary><p>Dipende dalla complessità e dalla disponibilità di materiali e riscontri. Prima di iniziare concordiamo fasi e tempi previsti, insieme a ciò che serve da parte tua. Se cambiano le esigenze o emergono vincoli, rivediamo il percorso insieme.</p></details>
+<details name="digital-faq"><summary>È possibile integrare il gestionale con i nostri strumenti esistenti?<span aria-hidden="true">+</span></summary><p>Li valutiamo prima di proporre cambiamenti. Quando sono disponibili accessi e collegamenti adeguati, possiamo considerarne l’integrazione. Compatibilità, limiti tecnici ed eventuali costi di servizi esterni vanno verificati per il singolo progetto.</p></details>
+<details name="digital-faq"><summary>Offrite supporto anche dopo la consegna?<span aria-hidden="true">+</span></summary><p>Definiamo il passaggio operativo e le indicazioni per usare lo strumento. Assistenza, manutenzione e aggiornamenti successivi dipendono dal progetto e dal supporto concordato. Ambito e modalità vanno chiariti nella proposta, senza dare per scontata una copertura illimitata.</p></details>
+</div></div></div></section>

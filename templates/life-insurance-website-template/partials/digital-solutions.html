@@ -1,0 +1,68 @@
+{% from 'life-insurance-website-template/partials/digital-concept-ui.html' import icon, website, photo %}
+<section class="sd-solutions sd-concept" id="servizi" aria-labelledby="sd-solutions-title">
+<header class="sd-section-head sd-wrap"><div><p class="sd-eyebrow">02 / COSA REALIZZIAMO</p><h2 id="sd-solutions-title">Soluzioni digitali per la tua attività.</h2><p class="sd-deck">Quattro servizi, progettati sulle esigenze di ogni impresa.</p></div><p>Dalla presenza online agli strumenti di lavoro: possiamo sviluppare un singolo progetto o collegare più soluzioni tra loro.</p></header>
+  <article class="sd-service sd-service-site" id="soluzione-sito" aria-labelledby="sd-site-title"><div class="sd-service-inner sd-wrap">
+    <div class="sd-service-copy"><span class="sd-service-number">01</span><p class="sd-service-label">SITI WEB</p><h3 id="sd-site-title">Un sito che ti rappresenta.</h3><p>Realizziamo siti web professionali, curati nel design e facili da utilizzare. Dal sito vetrina ai progetti più articolati, costruiamo una presenza online credibile, pensata per presentare i tuoi servizi e generare contatti.</p><a class="sd-more" href="/casi-uso#gruppo-sito">Esempi di siti web {{ icon('arrow') }}</a></div>
+    <figure class="sd-site-scene"><div class="sd-site-visual"><div class="sd-laptop">{{ website() }}<div class="sd-laptop-base"></div></div><div class="sd-phone"><div class="sd-phone-status"><span>9:41</span><span>••• ▰</span></div>{{ website(true) }}</div></div></figure>
+  </div></article>
+  <article class="sd-service el-service-app" id="soluzione-app" aria-labelledby="el-app-title"><div class="sd-service-inner sd-wrap">
+    <div class="sd-service-copy"><span class="sd-service-number">02</span><p class="sd-service-label">APP E SOFTWARE</p><h3 id="el-app-title">Servizi online, su misura.</h3><p>Progettiamo applicazioni web e software per clienti e collaboratori: portali riservati, prenotazioni, iscrizioni e strumenti che rendono più semplici le operazioni quotidiane.</p><a class="sd-more" href="/casi-uso?servizio=app#catalogo-filtri">Esempi di app e software {{ icon('arrow') }}</a></div>
+    <figure class="el-app-visual"><picture><img src="{{ url_for('static', filename='img/servizi-digitali/energelia-app-software-desktop.webp') }}" alt="Esempio illustrativo di portale clienti consultabile da computer e smartphone, con stato progetto e documenti" width="2560" height="1540" loading="lazy" decoding="async"></picture></figure>
+  </div></article>
+  <article class="sd-service sd-service-management" id="soluzione-gestionale" aria-labelledby="sd-management-title"><div class="sd-service-inner sd-wrap">
+    <div class="sd-service-copy"><span class="sd-service-number">03</span><p class="sd-service-label">GESTIONALI SU MISURA</p><h3 id="sd-management-title">Tutto il lavoro, sotto controllo.</h3><p>Gestionali progettati intorno ai processi della tua azienda: clienti, interventi, preventivi, documenti e scadenze in un unico ambiente, accessibile anche in mobilità.</p><a class="sd-more" href="/casi-uso#gruppo-lavoro">Esempi di gestionali {{ icon('arrow') }}</a></div>
+    <figure class="sd-dashboard-scene"><div class="sd-dashboard" role="img" aria-label="Dashboard illustrativa: 12 nuove richieste, 8 appuntamenti, 5 preventivi e 284 clienti. Grafico delle richieste e attività recenti."><aside class="sd-dash-sidebar"><strong>energelia</strong><span class="is-selected">{{ icon('grid') }}Dashboard</span><span>{{ icon('user') }}Clienti</span><span>{{ icon('mail') }}Richieste</span><span>{{ icon('calendar') }}Appuntamenti</span><span>{{ icon('file') }}Preventivi</span><span>{{ icon('file') }}Fatture</span><span>{{ icon('file') }}Documenti</span><span>{{ icon('gear') }}Impostazioni</span></aside><div class="sd-dash-workspace"><div class="sd-dash-toolbar"><span>{{ icon('search') }} Cerca…</span><span class="sd-dash-account"><b>MB</b><span>Marco Bianchi<small>Amministratore · demo</small></span></span></div><div class="sd-dash-main"><div class="sd-dash-heading"><strong>Dashboard</strong><span>Panoramica attività</span></div><div class="sd-dash-stats">{% for label, value, change, symbol in [('Nuove richieste','12','+20%','file'),('Appuntamenti','8','+15%','calendar'),('Preventivi','5','+10%','file'),('Clienti attivi','284','+12%','user')] %}<div><span>{{ icon(symbol) }}{{ label }}</span><strong>{{ value }}<small>{{ change }}</small></strong></div>{% endfor %}</div><div class="sd-dash-bottom"><div class="sd-chart"><strong>Richieste degli ultimi 30 giorni</strong><div class="sd-chart-key"><span>Richieste</span><span>Conversioni</span></div><div class="sd-chart-plot"><div class="sd-chart-axis"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div><div class="sd-bars">{% for height in [21,34,29,45,37,59,32,65,43,84,38,60,49,77,58,92,31,63,42,52,33,48] %}<div><i style="--bar:{{ height }}%"></i><i style="--bar:{{ (height * 0.57)|int }}%"></i></div>{% endfor %}</div></div><div class="sd-chart-dates"><span>01</span><span>05</span><span>10</span><span>15</span><span>20</span><span>25</span><span>30</span></div></div><div class="sd-activity"><strong>Attività recenti</strong>{% for title,subtitle,symbol in [('Nuova richiesta ricevuta','Sopralluogo · 5 min fa','user'),('Appuntamento confermato','Domani, ore 10:30','calendar'),('Preventivo inviato','Fornitura serramenti','file'),('Intervento completato','Documenti aggiornati','check')] %}<div>{{ icon(symbol) }}<span><b>{{ title }}</b><small>{{ subtitle }}</small></span></div>{% endfor %}</div></div></div></div></div></figure>
+    <figure class="sd-management-mobile" aria-label="Esempio illustrativo di gestionale per richieste, appuntamenti e preventivi">
+      <div class="sd-mob-app-top"><span class="sd-mob-app-brand">B <span>Bianchi · Gestionale</span></span><span class="sd-mob-app-indicator"><i aria-hidden="true"></i> Demo operativa</span></div>
+      <div class="sd-mob-app-content">
+        <div class="sd-mob-app-heading"><div><small>Panoramica di oggi</small><strong>Il lavoro, sotto controllo.</strong></div><span class="sd-mob-app-date">OGGI</span></div>
+        <div class="sd-mob-app-stats"><div><span>Da gestire</span><strong>12</strong><small>Richieste</small></div><div><span>In agenda</span><strong>8</strong><small>Appuntamenti</small></div><div><span>Da inviare</span><strong>5</strong><small>Preventivi</small></div></div>
+        <div class="sd-mob-app-list"><div class="sd-mob-app-list-title"><strong>Attività recenti</strong><span>Stato aggiornato</span></div>
+          <div class="sd-mob-app-row"><span class="sd-mob-app-row-icon">{{ icon('mail') }}</span><div><strong>Richiesta di preventivo</strong><small>Nuovo contatto dal sito</small></div><span class="sd-mob-app-state is-attention">Da gestire</span></div>
+          <div class="sd-mob-app-row"><span class="sd-mob-app-row-icon">{{ icon('calendar') }}</span><div><strong>Sopralluogo infissi</strong><small>Domani · 10:30</small></div><span class="sd-mob-app-state is-planned">In agenda</span></div>
+          <div class="sd-mob-app-row"><span class="sd-mob-app-row-icon">{{ icon('check') }}</span><div><strong>Preventivo serramenti</strong><small>Cliente avvisato</small></div><span class="sd-mob-app-state is-done">Inviato</span></div>
+        </div>
+      </div><figcaption>Interfaccia e dati illustrativi</figcaption>
+    </figure>
+  </div></article>
+  <article class="sd-service el-service-auto" id="soluzione-automazioni" aria-labelledby="el-auto-title"><div class="sd-service-inner sd-wrap">
+    <div class="sd-service-copy"><span class="sd-service-number">04</span><p class="sd-service-label">AUTOMAZIONI E AI</p><h3 id="el-auto-title">Meno passaggi manuali.</h3><p>Colleghiamo moduli, email e strumenti aziendali per automatizzare attività ripetitive. Quando serve interpretare richieste o documenti, integriamo funzioni AI con controlli e verifiche definiti.</p><a class="sd-more" href="/casi-uso?servizio=automazioni#catalogo-filtri">Esempi di automazioni {{ icon('arrow') }}</a></div>
+    <figure class="el-orchestra" role="img" aria-label="Una richiesta ricevuta attraverso email o modulo viene smistata dalle automazioni, interpretata dall'intelligenza artificiale quando necessario e trasformata in un'attività assegnata e notificata.">
+      <div class="el-orchestra-topline"><span class="el-orchestra-red-dot" aria-hidden="true"></span><span>DAL SEGNALE ALL’AZIONE</span><i aria-hidden="true"></i></div>
+      <div class="el-orchestra-rail" aria-hidden="true">
+        <svg viewBox="0 0 900 360" preserveAspectRatio="none" focusable="false">
+          <defs>
+            <linearGradient id="elOrchStream" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#679cbf" stop-opacity=".05"/><stop offset=".42" stop-color="#aad6e7" stop-opacity=".85"/><stop offset=".55" stop-color="#e1f5ff" stop-opacity="1"/><stop offset="1" stop-color="#51c7af" stop-opacity=".55"/></linearGradient>
+            <linearGradient id="elOrchPulse" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d2f1ff" stop-opacity="0"/><stop offset=".5" stop-color="#e7ffff"/><stop offset="1" stop-color="#97e9ca" stop-opacity="0"/></linearGradient>
+            <filter id="elOrchSoftGlow"><feGaussianBlur stdDeviation="9"/></filter>
+          </defs>
+          <path class="el-orchestra-halo" d="M48 184 C195 184 276 184 370 184 S560 184 641 184 S766 184 853 184" stroke="url(#elOrchStream)" stroke-width="23" fill="none" filter="url(#elOrchSoftGlow)" />
+          <path class="el-orchestra-basepath" d="M48 184 C195 184 276 184 370 184 S560 184 641 184 S766 184 853 184" stroke="url(#elOrchStream)" stroke-width="2" fill="none" />
+          <path class="el-orchestra-energy" d="M48 184 C195 184 276 184 370 184 S560 184 641 184 S766 184 853 184" stroke="url(#elOrchPulse)" stroke-width="3" fill="none" />
+          <path d="M312 184 L336 168 M587 184 L610 168" stroke="#acdce8" stroke-opacity=".45" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div class="el-orchestra-steps">
+        <div class="el-orchestra-step el-orchestra-request">
+          <div class="el-orchestra-symbol el-orchestra-symbol-in" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="8" y="13" width="32" height="23" rx="5"/><path d="m10 17 14 11 14-11"/><path d="M17 8h14"/></svg></div>
+          <span class="el-orchestra-stepnum">01 / RICEZIONE</span>
+          <strong>Arriva una richiesta.</strong>
+          <small>Da un modulo, un’email o un documento.</small>
+        </div>
+        <div class="el-orchestra-step el-orchestra-process">
+          <div class="el-orchestra-engine" aria-hidden="true"><div class="el-orchestra-engine-disc"><svg viewBox="0 0 72 72" fill="none"><path d="M21 18h30M21 36h30M21 54h30"/><circle cx="27" cy="18" r="4"/><circle cx="45" cy="36" r="4"/><circle cx="32" cy="54" r="4"/></svg></div></div>
+          <span class="el-orchestra-stepnum">02 / ELABORAZIONE</span>
+          <strong>Regole e AI.</strong>
+          <small>Il sistema riconosce e instrada ciò che serve.</small>
+        </div>
+        <div class="el-orchestra-step el-orchestra-done">
+          <div class="el-orchestra-symbol el-orchestra-symbol-out" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="15"/><path d="m16 24 6 6 11-12"/></svg></div>
+          <span class="el-orchestra-stepnum">03 / RISULTATO</span>
+          <strong>Il lavoro procede.</strong>
+          <small>Attività assegnata, informazioni aggiornate.</small>
+        </div>
+      </div>
+      <div class="el-orchestra-baseline" aria-hidden="true"><span>UN SOLO FLUSSO</span><i></i><span>PERSONE SEMPRE IN CONTROLLO</span></div>
+    </figure>
+  </div></article>
+</section>

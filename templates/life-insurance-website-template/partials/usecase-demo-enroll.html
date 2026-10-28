@@ -1,0 +1,33 @@
+<div class="uc-demo uc-process" data-uc-process="enroll" data-pc-view-left="Iscrizione" data-pc-view-right="Organizzazione">
+  <div class="uc-process-context"><span class="uc-process-context-dot"></span><span>LABORATORIO FORMA</span><span class="uc-process-context-note">Corso di ceramica · posti limitati</span></div>
+  <div class="uc-demo-panels">
+    <section class="uc-demo-panel uc-demo-editor" aria-labelledby="pc-enroll-customer-title">
+      <header class="uc-panel-header"><span><span class="uc-panel-mark">◌</span><b id="pc-enroll-customer-title">Iscriviti al corso</b></span><span class="uc-panel-muted">Partecipante</span></header>
+      <form class="uc-process-body" data-pc-enroll-form>
+        <div class="uc-process-intro"><span class="uc-process-overline">LABORATORIO FORMA</span><h2>Prenota il tuo posto.</h2><p>Un esempio semplice di iscrizione a un evento, con posti disponibili e conferma visibile all’organizzazione.</p></div>
+        <div class="uc-process-event-card"><div><small>CORSO DEL SABATO</small><strong data-pc-enroll-event-date>Ceramica base · data in aggiornamento</strong><p>17:30 – 19:30 · durata 2 ore · tutti i materiali inclusi.</p></div><span class="uc-process-tag" data-pc-enroll-course-count>8 / 12 posti occupati</span></div>
+        <div class="uc-process-field-grid"><label>Nome e cognome<input name="name" type="text" minlength="2" maxlength="65" value="Chiara Milani" required></label><label>Email<input name="email" type="email" maxlength="100" value="chiara@example.com" required></label></div>
+        <label>Nota facoltativa<textarea name="note" rows="3" maxlength="160" placeholder="Ad esempio: preferisco il turno vicino all’ingresso."></textarea></label>
+        <p class="uc-process-helper">I dati sono dimostrativi e restano in questa pagina.</p>
+        <button class="uc-process-primary" type="submit" data-pc-enroll-submit>Conferma iscrizione <span aria-hidden="true">↗</span></button>
+      </form>
+    </section>
+    <section class="uc-demo-panel uc-demo-site" aria-labelledby="pc-enroll-staff-title">
+      <header class="uc-panel-header"><span><span class="uc-panel-mark uc-panel-mark-teal">▤</span><b id="pc-enroll-staff-title">Elenco iscritti</b></span><span class="uc-panel-online" data-pc-enroll-badge>8 / 12 posti</span></header>
+      <div class="uc-process-body uc-process-staff">
+        <div class="uc-process-topline"><span>GESTIONE PARTECIPANTI</span><strong>Corso di ceramica</strong></div>
+        <div class="uc-process-event-summary"><strong data-pc-enroll-event-date>Ceramica base · data in aggiornamento</strong><small>Capienza massima 12 posti · check-in in sede</small><small data-pc-enroll-checkin-count>1 presenza registrata</small><small>Iscrizione ≠ presenza: il check-in si registra il giorno del corso.</small></div>
+        <div class="uc-process-attendees" aria-label="Iscritti attuali">
+          <div class="uc-process-attendee"><div><strong>Alessia F.</strong><small>Iscrizione confermata</small></div><span class="uc-process-tag is-present">Presente</span></div>
+          <div class="uc-process-attendee" data-pc-demo-person="paolo"><div><strong>Paolo M.</strong><small>Iscrizione confermata · check-in mancante</small></div><span class="uc-process-tag is-enrolled" data-pc-demo-person-status>Iscritto</span><button class="uc-attendee-checkin" type="button" data-pc-demo-checkin="paolo">Segna presente</button></div>
+          <div class="uc-process-attendee" data-pc-demo-person="valentina"><div><strong>Valentina B.</strong><small>Iscrizione confermata · check-in mancante</small></div><span class="uc-process-tag is-enrolled" data-pc-demo-person-status>Iscritto</span><button class="uc-attendee-checkin" type="button" data-pc-demo-checkin="valentina">Segna presente</button></div>
+          <div class="uc-process-attendee"><div><strong>Altri 5 iscritti</strong><small>Elenco abbreviato nella dimostrazione</small></div><span class="uc-process-tag is-enrolled">Iscritti</span></div>
+          <div class="uc-process-attendee is-new" data-pc-enroll-row hidden><div><strong data-pc-enroll-person>Chiara Milani</strong><small data-pc-enroll-email>chiara@example.com</small></div><span class="uc-process-tag is-alert" data-pc-enroll-state>Iscritto</span></div>
+        </div>
+        <div class="uc-process-actions" data-pc-enroll-action hidden><button class="uc-process-primary" type="button" data-pc-enroll-checkin>Segna presente →</button></div>
+        <div class="uc-process-outcome" data-pc-enroll-outcome hidden><span class="uc-process-outcome-icon">✓</span><strong>Presenza registrata</strong><p data-pc-enroll-summary></p></div>
+      </div>
+    </section>
+  </div>
+  <div class="uc-demo-toolbar"><div role="status" aria-live="polite" data-pc-message>Compila l’iscrizione e verifica come compare nel pannello organizzativo.</div><button class="uc-process-reset" type="button" data-pc-reset>↻ Ricomincia demo</button></div>
+</div>

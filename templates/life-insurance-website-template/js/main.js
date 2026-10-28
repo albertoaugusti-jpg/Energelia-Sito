@@ -14,10 +14,10 @@
     spinner(0);
 
     // Inizializza WOW.js
-    new WOW().init();
+    if (typeof WOW !== 'undefined') new WOW().init();
 
     // Header carousel (UNA sola slide: no autoplay, no nav, no dots, no loop)
-    $(".header-carousel").owlCarousel({
+    if ($.fn.owlCarousel && $(".header-carousel").length) $(".header-carousel").owlCarousel({
         items: 1,
         margin: 0,
         stagePadding: 0,
@@ -32,7 +32,7 @@
     });
 
     // Testimonial carousel
-    $(".testimonial-carousel").owlCarousel({
+    if ($.fn.owlCarousel && $(".testimonial-carousel").length) $(".testimonial-carousel").owlCarousel({
         autoplay: true,
         smartSpeed: 1500,
         center: false,
@@ -55,11 +55,30 @@
     });
 
     // Facts counter
-    $('[data-toggle="counter-up"]').counterUp({
+    if ($.fn.counterUp && $('[data-toggle="counter-up"]').length) $('[data-toggle="counter-up"]').counterUp({
         delay: 5,
         time: 2000
     });
 
     // --- Sticky Navbar rimosso ---
+
+
+    // ENERGELIA_BACK_TO_TOP_SCROLL_V1
+    // Visibile solo dopo 220px di scroll, anche dopo ritorno alla pagina.
+    var backToTopButtons = document.querySelectorAll('.back-to-top');
+    if (backToTopButtons.length) {
+        var updateBackToTop = function () {
+            var visible = (window.scrollY || document.documentElement.scrollTop) > 220;
+            backToTopButtons.forEach(function (button) {
+                button.classList.toggle('is-visible', visible);
+                if (!button.hasAttribute('aria-label')) {
+                    button.setAttribute('aria-label', 'Torna all’inizio della pagina');
+                }
+            });
+        };
+        window.addEventListener('scroll', updateBackToTop, {passive: true});
+        window.addEventListener('pageshow', updateBackToTop);
+        updateBackToTop();
+    }
 
 })(jQuery);

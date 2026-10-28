@@ -1,0 +1,20 @@
+{% set case = {
+'number':'12',
+'category':'ORGANIZZARE IL LAVORO',
+'title':'Controllare materiali e scorte.',
+'description':'Apri un materiale del magazzino, registra un consumo o un rifornimento e verifica subito la nuova disponibilità. La demo segnala anche quando si scende sotto la scorta minima.',
+'benefits': [
+  'Meno interruzioni per materiali esauriti.',
+  'Acquisti più facili da programmare.',
+  'Meno sprechi e scorte inutilmente elevate.',
+],
+'group_anchor':'gruppo-lavoro',
+'demo_type':'stock',
+'demo':'life-insurance-website-template/partials/usecase-demo-stock.html',
+'steps':[('01','Seleziona il materiale'),('02','Registra un movimento'),('03','Controlla le scorte')],
+'short_steps':['Materiale','Movimento','Giacenza'],
+'related':[
+ {'href':'/caso-assegnare-interventi','kind':'tasks','title':'Assegnare interventi al team','text':'Organizza incarichi e avanzamento del lavoro.'},
+ {'href':'/caso-storico-cliente','kind':'customer','title':'Consultare lo storico di un cliente','text':'Attività e documenti sempre disponibili.'}]
+} %}
+{% include 'life-insurance-website-template/partials/usecase-detail-shell.html' %}

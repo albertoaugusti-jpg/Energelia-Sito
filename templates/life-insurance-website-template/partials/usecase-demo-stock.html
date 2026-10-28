@@ -1,0 +1,42 @@
+<div class="uc-demo uc-work ux-stock" data-uc-work="stock" data-ux-stock-view="list">
+  <header class="ux-app-bar">
+    <div class="ux-app-identity"><span class="ux-app-monogram ux-stock-brand">F</span><span><strong>FORNO LEVANTE</strong><small>Gestione laboratorio e scorte</small></span></div>
+    <span class="ux-app-mode"><span class="ux-live-dot"></span> MAGAZZINO DIMOSTRATIVO</span>
+  </header>
+  <div class="ux-stock-overview" aria-label="Riepilogo magazzino">
+    <div><small>MATERIALI MONITORATI</small><strong data-ux-stock-total>4</strong></div>
+    <div><small>SOTTO LA SOGLIA MINIMA</small><strong data-ux-stock-low-count>0</strong></div>
+    <div><small>ULTIMO AGGIORNAMENTO</small><strong data-ux-stock-updated>—</strong></div>
+  </div>
+  <div class="ux-stock-layout">
+    <section class="ux-stock-rail" aria-label="Elenco materiali">
+      <div class="ux-stock-heading"><div><small>SCORTE ATTUALI</small><h2>Materiali</h2></div><span class="ux-stock-count">4 prodotti</span></div>
+      <div class="ux-stock-filters" role="group" aria-label="Filtra materiali"><button type="button" data-ux-stock-filter="all" aria-pressed="true">Tutti</button><button type="button" data-ux-stock-filter="low" aria-pressed="false">Scorte basse <span data-ux-stock-low-filter>0</span></button></div>
+      <div class="ux-stock-list" data-ux-stock-list></div>
+      <p class="ux-stock-filter-empty" data-ux-stock-filter-empty hidden>Nessun materiale sotto la scorta minima.</p>
+    </section>
+    <section class="ux-stock-main" aria-label="Scheda materiale">
+      <button type="button" class="ux-mobile-back ux-stock-mobile-back" data-ux-stock-back>← Torna ai materiali</button>
+      <div class="ux-stock-heading"><div><small>GESTIONE GIACENZE</small><h2>Scheda materiale</h2></div><span class="ux-stock-badge" data-ux-stock-badge>Disponibile</span></div>
+      <div class="ux-stock-material-card">
+        <div class="ux-stock-material-icon" data-ux-stock-icon>◈</div>
+        <div><small>MATERIALE SELEZIONATO</small><h3 data-ux-stock-name>Mozzarella</h3><p data-ux-stock-description>Fornitura giornaliera per il laboratorio.</p></div>
+      </div>
+      <div class="ux-stock-numbers">
+        <div><small>DISPONIBILI</small><strong data-ux-stock-available>10 kg</strong></div>
+        <div><small>SCORTA MINIMA</small><strong data-ux-stock-minimum>8 kg</strong></div>
+      </div>
+      <div class="ux-stock-alert" data-ux-stock-warning hidden role="status"><span aria-hidden="true">!</span><div><strong>Scorta sotto il minimo</strong><p>È il momento di programmare un rifornimento.</p></div></div>
+      <form data-ux-stock-form class="ux-stock-form" novalidate>
+        <div class="ux-stock-form-heading"><h3>Registra un movimento</h3><small>Consumo o rifornimento</small></div>
+        <div class="ux-stock-action-picker" role="group" aria-label="Tipo di movimento"><button type="button" data-ux-stock-action="out" aria-pressed="true">− Consumo</button><button type="button" data-ux-stock-action="in" aria-pressed="false">+ Rifornimento</button></div>
+        <label for="ux-stock-quantity">Quantità in chilogrammi<input id="ux-stock-quantity" data-ux-stock-quantity type="number" inputmode="decimal" min="0.5" max="100" step="0.5" value="3" required></label>
+        <p class="ux-stock-tip" data-ux-stock-tip>Prova a registrare 3 kg di consumo: la scorta passerà sotto il minimo.</p>
+        <p class="ux-form-error" data-ux-stock-error hidden role="alert">Controlla la quantità. Non puoi consumare più di quanto disponibile.</p>
+        <button type="submit" class="ux-action-primary" data-ux-stock-submit>Registra consumo ↗</button>
+      </form>
+      <div class="ux-stock-movements"><div class="ux-stock-form-heading"><h3>Ultimi movimenti</h3><small>Registrati nella prova</small></div><div data-ux-stock-movements><p class="ux-stock-no-movements">Nessun movimento registrato per questo materiale.</p></div></div>
+    </section>
+  </div>
+  <div class="ux-work-footer"><span class="ux-footer-status" data-ux-stock-status role="status" aria-live="polite">Scegli un materiale e registra un movimento per vedere cambiare le scorte.</span><button type="button" class="ux-footer-reset" data-ux-stock-reset>↻ Ricomincia demo</button></div>
+</div>

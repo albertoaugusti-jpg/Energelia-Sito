@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="it"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ case.title }} | Casi d'uso Energelia</title>
+<meta name="description" content="Esplora un caso d'uso illustrativo di Energelia con una mini dimostrazione interattiva.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/casi-uso.css') }}">
+<script defer src="{{ url_for('static', filename='js/casi-uso.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/casi-uso-operations.css') }}">
+<script defer src="{{ url_for('static', filename='js/casi-uso-operations.js') }}"></script>
+{% if case.demo_type in ['history', 'dispatch', 'portal', 'stock'] %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/casi-uso-work.css') }}">
+<script defer src="{{ url_for('static', filename='js/casi-uso-work.js') }}"></script>
+{% endif %}
+{% if case.demo_type in ['job', 'reminder', 'report'] %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/casi-uso-automations.css') }}">
+<script defer src="{{ url_for('static', filename='js/casi-uso-automations.js') }}"></script>
+{% endif %}
+</head><body class="uc-page uc-detail-page{% if case.demo_type == 'editor' %} uc-editor-guided{% else %} uc-standardized{% endif %}">
+{% include 'life-insurance-website-template/partials/usecase-header.html' %}
+<main id="contenuto" class="uc-detail">
+<div class="uc-detail-back uc-shell"><a href="/casi-uso#{{ case.group_anchor|default('gruppo-sito') }}">← Torna a tutti i casi d'uso</a><span>{{ case.number }} / 15</span></div>
+<section class="uc-detail-main uc-shell" aria-labelledby="uc-detail-title">
+<div class="uc-detail-heading"><div><p class="uc-kicker uc-kicker-light"><span>{{ case.number }}</span> {{ case.category }}</p><h1 id="uc-detail-title">{{ case.title }}</h1><p class="uc-detail-desc">{{ case.description }}</p></div>
+</div>
+{% if case.demo_type == 'editor' %}
+<p class="uc-try-notice">
+  <svg class="uc-try-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 10.8V16.5M12 7.5h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  <span><strong>È una simulazione.</strong> Nessun sito reale verrà modificato; nessun dato inserito viene salvato.</span>
+</p>
+{% else %}
+<p class="uc-try-notice">
+  <svg class="uc-try-icon" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 10.8V16.5M12 7.5h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  <span><strong>È una simulazione.</strong> {% if case.demo_type in ['catalog', 'reviews'] %}Nessun sito reale verrà modificato; nessun dato inserito viene salvato.{% elif case.demo_type == 'inbox' %}Nessuna richiesta reale verrà inviata; nessun dato inserito viene salvato.{% elif case.demo_type == 'quote' %}Nessun preventivo reale verrà inviato; nessun dato inserito viene salvato.{% elif case.demo_type == 'orders' %}Nessun ordine reale verrà inviato; nessun dato inserito viene salvato.{% elif case.demo_type == 'enroll' %}Nessuna iscrizione reale verrà effettuata; nessun dato inserito viene salvato.{% elif case.demo_type == 'history' %}Nessuna scheda cliente reale verrà modificata; nessun dato inserito viene salvato.{% elif case.demo_type == 'dispatch' %}Nessun intervento reale verrà assegnato; nessun dato inserito viene salvato.{% elif case.demo_type == 'job' %}Nessuna pratica reale verrà creata; i documenti e i dati della prova non vengono inviati a server né salvati.{% elif case.demo_type == 'reminder' %}Nessun promemoria reale verrà inviato; nessun dato inserito viene salvato.{% elif case.demo_type == 'report' %}Nessun rapporto reale verrà archiviato; nessun dato inserito viene salvato.{% elif case.demo_type == 'portal' %}Nessun progetto reale verrà modificato e nessun messaggio verrà inviato. I dati inseriti non vengono salvati.{% elif case.demo_type == 'stock' %}Nessuna giacenza reale verrà modificata; nessun dato inserito viene salvato.{% else %}Nessun appuntamento reale verrà prenotato; nessun dato inserito viene salvato.{% endif %}</span>
+</p>
+{% endif %}
+<ol class="uc-stage-progress" data-uc-progress aria-label="Percorso della dimostrazione">
+{% for num, label in case.steps %}
+<li data-uc-step="{{ loop.index }}" class="{% if loop.first %}is-current{% endif %}"><span class="uc-stage-dot" aria-hidden="true"></span><small>{{ num }}</small><b><span class="uc-step-full">{{ label }}</span><span class="uc-step-short">{{ case.short_steps[loop.index0] if case.short_steps is defined else (('Modifica', 'Anteprima', 'Pubblica')[loop.index0] if case.demo_type in ['editor', 'catalog', 'reviews'] else label) }}</span></b></li>
+{% endfor %}
+</ol>
+<div class="uc-demo-backdrop"><div class="uc-demo-glow" aria-hidden="true"></div>
+{% include case.demo %}
+</div>
+
+
+{% if case.benefits is defined and case.benefits|length == 3 %}
+<section class="uc-benefits" aria-labelledby="uc-benefits-title">
+  <div class="uc-benefits-heading">
+    <p class="uc-benefits-kicker">IL VANTAGGIO CONCRETO</p>
+    <h2 id="uc-benefits-title">Cosa cambia per la tua attività</h2>
+  </div>
+  <ul class="uc-benefits-list">
+    {% for benefit in case.benefits %}
+    <li><span class="uc-benefits-check" aria-hidden="true">✓</span><span>{{ benefit }}</span></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+<section class="uc-related" aria-labelledby="uc-related-title"><div class="uc-related-heading"><h2 id="uc-related-title">Altri casi della stessa categoria</h2><a href="/casi-uso#{{ case.group_anchor|default('gruppo-sito') }}">Tutti i casi di {{ case.category|lower }} <span aria-hidden="true">↗</span></a></div><div class="uc-related-grid">{% for item in case.related %}<a class="uc-related-card" href="{{ item.href }}"><div class="uc-related-mini"><img class="uc-case-cover" src="{{ url_for('static', filename='img/casi-uso/covers/' ~ item.kind ~ '.webp') }}" alt="" loading="eager" decoding="async" width="960" height="500"></div><div><h3>{{ item.title }}</h3><p>{{ item.text }}</p></div></a>{% endfor %}</div></section>
+</section>
+<section class="uc-footer-cta uc-footer-detail" aria-labelledby="uc-final-title"><div class="uc-shell uc-footer-inner"><div class="uc-footer-copy"><p class="uc-kicker uc-kicker-light">IL PROSSIMO PASSO</p><h2 id="uc-final-title">Vuoi una soluzione simile per la tua attività?</h2><p>Raccontaci cosa ti serve. Prepariamo una prima proposta visiva, gratuita e senza impegno, per aiutarti a capire la direzione giusta.</p><p class="uc-no-obligation">✓ Gratuita · Senza impegno</p></div><a class="uc-button uc-button-red" href="/servizi-digitali#contatto">Richiedi una proposta <span aria-hidden="true">↗</span></a></div></section>
+</main>
+{% include 'life-insurance-website-template/partials/usecase-footer.html' %}
+</body></html>

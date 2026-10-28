@@ -1,0 +1,26 @@
+<div class="uc-demo uc-process" data-uc-process="booking" data-pc-view-left="Prenotazione" data-pc-view-right="Agenda">
+  <div class="uc-demo-panels">
+    <section class="uc-demo-panel uc-demo-editor" aria-labelledby="pc-book-client-title">
+      <header class="uc-panel-header uc-editor-panel-header"><span class="uc-editor-panel-intro"><span class="uc-panel-mark">1</span><span><b id="pc-book-client-title">Prenota una consulenza</b><small>Seleziona giorno e orario.</small></span></span><span class="uc-panel-muted">Cliente</span></header>
+      <div class="uc-process-body">
+        <div class="uc-process-intro"><span class="uc-process-overline">STUDIO ARCO</span><h2>Trova il momento giusto.</h2><p>Seleziona un giorno e uno slot realmente libero nella demo.</p></div>
+        <div class="uc-process-subheading">Giorni disponibili <small data-pc-book-month></small></div>
+        <div class="uc-process-days" role="group" aria-label="Scegli il giorno" data-pc-book-days></div>
+        <div class="uc-process-subheading">Orari <small>Durata 45 minuti</small></div>
+        <div class="uc-process-times" role="group" aria-label="Scegli l'orario" data-pc-book-times></div>
+        <form data-pc-book-form><div class="uc-process-field-grid"><label>Nome e cognome<input name="name" maxlength="65" minlength="2" value="Elena Conti" required></label><label>Email<input name="email" type="email" maxlength="100" value="elena@example.com" required></label></div><div class="uc-process-review" data-pc-book-review hidden><small>CONTROLLA L'APPUNTAMENTO</small><strong data-pc-book-review-date></strong><p data-pc-book-review-person></p><p>Questo passaggio è solo un riepilogo: lo slot sarà occupato quando confermi.</p></div><button type="submit" class="uc-process-primary" data-pc-book-submit disabled>Controlla la prenotazione →</button></form>
+        <div class="uc-process-outcome" data-pc-book-outcome hidden><span class="uc-process-outcome-icon">✓</span><strong>Prenotazione confermata nella demo</strong><p data-pc-book-confirmation></p></div>
+      </div>
+    </section>
+    <section class="uc-demo-panel uc-demo-site" aria-labelledby="pc-book-admin-title">
+      <header class="uc-panel-header uc-editor-panel-header"><span class="uc-editor-panel-intro"><span class="uc-panel-mark uc-panel-mark-teal">2</span><span><b id="pc-book-admin-title">Come appare nell’agenda</b><small>Controlla la disponibilità aggiornata.</small></span></span><span class="uc-panel-online" data-pc-book-badge>In attesa</span></header>
+      <div class="uc-process-body uc-process-staff">
+        <div class="uc-process-topline"><span>GESTIONE APPUNTAMENTI</span><strong>Agenda</strong></div><div class="uc-process-agenda-date" data-pc-book-agenda-date></div>
+        <div class="uc-process-agenda" data-pc-book-agenda></div>
+        <div class="uc-process-empty uc-process-agenda-hint" data-pc-book-agenda-hint><icon aria-hidden="true">▦</icon><strong>Agenda sincronizzata nella demo</strong><p>Dopo aver confermato una prenotazione, lo slot selezionato passerà da libero a occupato.</p></div>
+        <div class="uc-process-outcome" data-pc-book-agenda-outcome hidden><span class="uc-process-outcome-icon">✓</span><strong>Nuovo appuntamento inserito</strong><p data-pc-book-agenda-summary></p><small>Prenotazione n. 2066 · Non è una prenotazione reale.</small></div>
+      </div>
+    </section>
+  </div>
+  <div class="uc-demo-toolbar"><div role="status" aria-live="polite" data-pc-message>Scegli una data e un orario disponibili. La conferma aggiornerà l'agenda dello studio.</div><button class="uc-process-reset" type="button" data-pc-reset>↻ Ricomincia demo</button></div>
+</div>

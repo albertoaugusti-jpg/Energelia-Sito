@@ -1,0 +1,14 @@
+<!-- News Ticker (Google Alerts) -->
+<div class="news-ticker" id="newsTicker" aria-label="Ultime notizie sui bandi">
+  <div class="news-ticker-label">
+    <i class="fas fa-bolt"></i><span>BANDI &amp; NEWS</span>
+  </div>
+  <div class="news-ticker-wrap">
+    <div class="news-ticker-track" id="newsTickerTrack">
+      <span class="news-ticker-item news-ticker-loading">Caricamento ultime notizie&hellip;</span>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/news-ticker.css') }}">
+<script defer src="{{ url_for('static', filename='js/news-ticker.js') }}"></script>

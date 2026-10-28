@@ -1,0 +1,329 @@
+/* Energelia · QA preview V1.3 — all changes are scoped to approved correction list. */
+.digital-services-page .v4-booking-label,.digital-services-page .app-floating-spark{display:none!important}
+.digital-services-page .ds-imm-site .ds-scene-label,.digital-services-page .ds-imm-management .ds-scene-label{display:none!important}
+.digital-services-page .el-app-visual figcaption,.digital-services-page .sd-dashboard-scene figcaption,.digital-services-page .sd-management-mobile figcaption{display:none!important}
+@media(min-width:992px){
+ .digital-services-page .ds-imm-app{width:min(1320px,97vw)!important;height:min(79vh,705px)!important}
+ .digital-services-page .ds-imm-app .ds-app-stage{height:100%;width:100%;}
+ .digital-services-page .ds-imm-app .app-device{
+   box-sizing:border-box!important;left:10.5%!important;top:50%!important;translate:0 -50%;
+   width:clamp(222px,20.4vw,296px)!important;min-width:0!important;max-width:none!important;
+   height:min(94%,643px)!important;max-height:none!important;
+   padding:clamp(12px,1.5vh,18px) clamp(13px,1.35vw,19px) 12px!important;
+   overflow:hidden!important;display:flex;flex-direction:column;gap:0;border-width:7px!important;
+ }
+ .digital-services-page .ds-imm-app .app-dashboard{
+  left:auto!important;right:10.5%!important;top:50%!important;translate:0 -50%;margin:0;
+  width:clamp(330px,37vw,470px)!important;min-width:0!important;max-width:none!important;
+ }
+ .digital-services-page .ds-imm-app .app-data-trail{left:37%!important;top:49.5%!important;width:27%!important;transform:none!important;z-index:3!important}
+ .digital-services-page .ds-imm-app .device-status{flex:none;margin-bottom:clamp(8px,1.4vh,18px)!important}
+ .digital-services-page .ds-imm-app .device-brand{flex:none}
+ .digital-services-page .ds-imm-app .device-divider{flex:none;margin:clamp(7px,1.1vh,13px) 0 clamp(11px,1.7vh,19px)!important}
+ .digital-services-page .ds-imm-app .device-eyebrow{flex:none}
+ .digital-services-page .ds-imm-app .app-device h3{flex:none;font-size:clamp(20px,2.2vw,29px)!important;line-height:1.05!important;margin:7px 0 7px!important}
+ .digital-services-page .ds-imm-app .app-device p{flex:none;margin:0 0 clamp(7px,1.6vh,17px)!important;font-size:clamp(9px,.8vw,11px)!important;line-height:1.35!important}
+ .digital-services-page .ds-imm-app .device-month{flex:none;margin-bottom:clamp(5px,1.0vh,10px)!important;font-size:9px!important}
+ .digital-services-page .ds-imm-app .device-days{flex:none;gap:4px}
+ .digital-services-page .ds-imm-app .device-days span{padding:clamp(5px,.8vh,9px) 1px!important}
+ .digital-services-page .ds-imm-app .device-days b{font-size:13px!important;margin-top:2px!important}
+ .digital-services-page .ds-imm-app .device-times{flex:none;margin-top:clamp(7px,1.2vh,13px)!important;gap:4px}
+ .digital-services-page .ds-imm-app .device-times span{padding:clamp(6px,.95vh,10px) 1px!important}
+ .digital-services-page .ds-imm-app .device-button{flex:none;margin-top:clamp(7px,1.3vh,13px)!important;padding:clamp(7px,1vh,11px) 8px!important;font-size:clamp(9px,.85vw,11px)!important;min-height:0!important}
+ .digital-services-page .ds-imm-app .device-confirm{flex:none;margin-top:clamp(5px,.75vh,9px)!important;padding:clamp(6px,.75vh,8px) 4px!important;font-size:clamp(8px,.7vw,10px)!important;min-height:0!important}
+ .digital-services-page .ds-imm-app .v4-booking-progress{flex:none;margin-top:auto!important;padding-top:clamp(5px,.9vh,9px)!important;font-size:clamp(6px,.58vw,8px)!important}
+ .digital-services-page .ds-imm-app .app-data-trail{height:2px!important;background:rgba(110,186,221,.15)!important;box-shadow:none!important;opacity:1}
+ .digital-services-page .ds-imm-app .app-data-trail:after{content:"";position:absolute;left:0;top:0;height:100%;width:var(--trail-fill,0%);background:linear-gradient(90deg,#58a9d6,#baf4ff);box-shadow:0 0 15px #71c9ef;transition:width .06s linear}
+ .digital-services-page .ds-imm-app .app-data-trail i{display:none}
+}
+@media(min-width:992px) and (max-height:760px){
+ .digital-services-page .ds-imm-app .app-device{height:96%!important;padding-top:10px!important;padding-bottom:10px!important}
+ .digital-services-page .ds-imm-app .device-divider{margin:6px 0 10px!important}
+ .digital-services-page .ds-imm-app .app-device p{margin-bottom:8px!important}
+ .digital-services-page .ds-imm-app .device-confirm{padding:5px 4px!important;margin-top:5px!important}
+ .digital-services-page .ds-imm-app .app-device h3{font-size:clamp(19px,2vw,26px)!important}
+}
+@media(min-width:992px) and (max-width:1170px){
+ .digital-services-page .ds-imm-app .app-device{left:7.5%!important;width:clamp(218px,23vw,255px)!important}
+ .digital-services-page .ds-imm-app .app-dashboard{right:6.5%!important;width:clamp(325px,39vw,425px)!important}
+}
+/* In the fourth cinematic scene the three outcome cards share an exact column and grid rhythm. */
+@media(min-width:992px){
+ .digital-services-page .ds-orch-result-main,.digital-services-page .ds-orch-result-data,.digital-services-page .ds-orch-result-team{left:73.0%!important;width:25%!important;min-height:0!important;height:16.4%!important;display:flex;align-items:center;padding:16px 25px 16px 14px!important;gap:12px!important}
+ .digital-services-page .ds-orch-result-main{top:25%!important}
+ .digital-services-page .ds-orch-result-data{top:47.5%!important}
+ .digital-services-page .ds-orch-result-team{top:70%!important}
+ .digital-services-page .ds-orch-result-symbol,.digital-services-page .ds-orch-result-main .ds-orch-result-symbol{width:44px!important;height:44px!important;flex-basis:44px!important}
+ .digital-services-page .ds-orch-result h4,.digital-services-page .ds-orch-result-main h4{font-size:clamp(13px,1.35vw,18px)!important;margin:0 0 4px!important}
+ .digital-services-page .ds-orch-result p{font-size:clamp(10px,.78vw,12px)!important;line-height:1.4}
+}
+/* Section 02/04: keep optical art, give it tangible narrative without overlaying web-app cards. */
+.digital-services-page .v12b-field{position:relative}
+.digital-services-page .v13-message{position:absolute;z-index:5;width:190px;display:grid;gap:6px;pointer-events:none;transform:translateY(0);animation:v13-float 7s ease-in-out infinite alternate}
+.digital-services-page .v13-tick{font:700 9px/1.3 Inter,sans-serif;color:#80b9d1;letter-spacing:.14em}
+.digital-services-page .v13-message strong{font:500 clamp(15px,1.38vw,19px)/1.16 'Source Serif 4',Georgia,serif;letter-spacing:-.015em;color:#effaff}
+.digital-services-page .v13-message small{font:400 10px/1.4 Inter,sans-serif;color:#9cbfd0}
+.digital-services-page .v13-message-in{left:5%;top:28%;}
+.digital-services-page .v13-message-brain{left:41%;top:27%;text-align:center;width:180px}
+.digital-services-page .v13-message-out{right:1%;top:31%;text-align:right}
+.digital-services-page .v12b-caption{bottom:2%}
+@keyframes v13-float{to{transform:translateY(5px)}}
+@media(max-width:991px){.digital-services-page .v13-message{width:165px}}
+@media(max-width:600px){
+ .digital-services-page .v12b-field{height:475px!important}
+ .digital-services-page .v12b-mobile{top:84px!important;height:300px!important;opacity:.87}
+ .digital-services-page .v13-message{animation:none;gap:3px;width:auto}
+ .digital-services-page .v13-message-in{left:6%;top:49px;text-align:left}
+ .digital-services-page .v13-message-brain{left:50%;top:194px;width:156px;transform:translateX(-50%);text-align:center}
+ .digital-services-page .v13-message-out{right:6%;top:330px;text-align:right}
+ .digital-services-page .v13-message strong{font-size:16px}
+ .digital-services-page .v13-message small{font-size:9px}
+ .digital-services-page .v13-tick{font-size:8px}
+ .digital-services-page .v12b-caption{bottom:2px!important}
+ .digital-services-page .v12b-caption>div{padding-top:8px}
+}
+@media(prefers-reduced-motion:reduce){.digital-services-page .v13-message{animation:none!important}}
+
+.digital-services-page .v13-message-brain{position:relative;isolation:isolate}
+.digital-services-page .v13-message-brain::before{
+  content:"";position:absolute;inset:-16px -18px -14px;z-index:-1;
+  border-radius:28px;
+  background:radial-gradient(circle at 50% 50%, rgba(9,30,47,.84) 0%, rgba(9,30,47,.66) 44%, rgba(9,30,47,.22) 78%, rgba(9,30,47,0) 100%);
+  box-shadow:0 0 0 1px rgba(153,214,238,.08) inset, 0 12px 34px rgba(1,10,18,.28);
+  backdrop-filter:blur(7px);
+  -webkit-backdrop-filter:blur(7px);
+}
+.digital-services-page .v13-message-brain strong,
+.digital-services-page .v13-message-brain small,
+.digital-services-page .v13-message-brain .v13-tick{position:relative;z-index:1}
+@media(max-width:600px){
+  .digital-services-page .v13-message-brain::before{inset:-12px -14px -11px;border-radius:24px;box-shadow:0 0 0 1px rgba(153,214,238,.08) inset, 0 10px 26px rgba(1,10,18,.24)}
+}
+
+/* Last optical QA: the three operational labels already explain the illustration; no second legend. */
+.digital-services-page .v12b-caption{display:none!important}
+@media(min-width:992px){
+ .digital-services-page .v13-message-in{top:24%!important}
+ .digital-services-page .v13-message-out{top:24%!important}
+ .digital-services-page .v13-message-brain{top:61%!important;left:40.5%!important;width:190px!important}
+ .digital-services-page .ds-imm-app .device-month{margin-top:auto!important}
+}
+@media(max-width:600px){
+ .digital-services-page .v12b-field{height:425px!important}
+ .digital-services-page .v12b-mobile{top:65px!important;height:310px!important}
+ .digital-services-page .v13-message-in{top:34px!important}
+ .digital-services-page .v13-message-brain{top:183px!important}
+ .digital-services-page .v13-message-out{top:345px!important}
+}
+/* Short desktop viewports: keep the entire device, including its progress indicator, within the cinematic viewport. */
+@media(min-width:992px) and (max-height:800px){
+ .digital-services-page .ds-imm-app{margin-top:-min(12vh,96px)!important}
+}
+/* Let the scene read as one purposeful movement instead of leaving a large empty optical tail. */
+@media(min-width:992px){.digital-services-page .v12b-field{height:455px!important}}
+/* Root-cause fix: legacy <=1199px breakpoint imposed 980px sticky canvas even on 720px-tall screens. */
+@media(min-width:992px){
+ .digital-services-page .ds-imm-sticky{height:100vh!important;height:100svh!important;min-height:0!important}
+ .digital-services-page .ds-imm-app{margin-top:0!important}
+}
+
+
+/* Final V1.3.1 fixes: 02/04 label repositioned, no glass card; scene 02 busy slot; desktop full-screen overflow tuning. */
+.digital-services-page .v13-message-brain::before{display:none!important}
+.digital-services-page .v13-message-brain .v13-tick,.digital-services-page .v13-message-brain strong,.digital-services-page .v13-message-brain small{text-shadow:0 2px 16px rgba(5,18,30,.58),0 1px 2px rgba(2,10,16,.72)}
+@media(min-width:992px){
+ .digital-services-page .v13-message-brain{top:72.6%!important;left:40.5%!important;width:192px!important;transform:none!important;text-align:center}
+ .digital-services-page .ds-imm-site .ds-chapter-image,.digital-services-page .ds-imm-site .ds-chapter-pieces,.digital-services-page .ds-imm-management .ds-chapter-image,.digital-services-page .ds-imm-management .ds-chapter-pieces{transform:scale(.972)!important;transform-origin:center center!important}
+}
+@media(max-width:991px){
+ .digital-services-page .v13-message-brain{left:50%!important;top:250px!important;width:156px!important;transform:translateX(-50%)!important;text-align:center}
+}
+@media(max-width:600px){
+ .digital-services-page .v13-message-brain{top:248px!important;width:150px!important}
+}
+@media(max-width:360px){
+ .digital-services-page .v13-message-brain{top:232px!important;width:142px!important}
+}
+.digital-services-page .ds-imm-app .device-times .is-busy{
+ opacity:.58!important;color:#6f8798!important;border-color:rgba(148,169,182,.42)!important;
+ background:linear-gradient(180deg,rgba(238,242,245,.92),rgba(228,235,240,.96))!important;
+ text-decoration:line-through;text-decoration-thickness:1.5px;text-decoration-color:rgba(92,117,132,.72);
+}
+
+
+/* Visual recheck 2026-10-24: reserve adequate full-screen margins for BOTH
+   screenshot chapters by sizing their shared frame, not the image alone.
+   All image fragments and the resolved screenshot keep the same geometry. */
+@media (min-width:992px){
+  .digital-services-page .ds-imm-site .ds-chapter-frame,
+  .digital-services-page .ds-imm-management .ds-chapter-frame{
+    width:min(1510px,91vw,130svh)!important;
+  }
+  .digital-services-page .ds-imm-site .ds-chapter-image,
+  .digital-services-page .ds-imm-site .ds-chapter-pieces,
+  .digital-services-page .ds-imm-management .ds-chapter-image,
+  .digital-services-page .ds-imm-management .ds-chapter-pieces{
+    transform:none!important;
+  }
+  /* Place step two visibly below the lens rather than over its lower tip. */
+  .digital-services-page .v13-message-brain{
+    top:82.5%!important;left:40.5%!important;width:192px!important;
+    text-align:center;transform:none!important;
+  }
+}
+@media (max-width:991px){
+  .digital-services-page .v12b-field{height:492px!important}
+  .digital-services-page .v12b-mobile{top:54px!important;height:295px!important}
+  .digital-services-page .v13-message-in{top:39px!important}
+  .digital-services-page .v13-message-brain{
+    top:310px!important;left:50%!important;transform:translateX(-50%)!important;
+    width:156px!important;text-align:center;
+  }
+  .digital-services-page .v13-message-out{top:408px!important}
+}
+@media (max-width:360px){
+  .digital-services-page .v12b-field{height:475px!important}
+  .digital-services-page .v12b-mobile{top:53px!important;height:278px!important}
+  .digital-services-page .v13-message-brain{top:296px!important;width:150px!important}
+  .digital-services-page .v13-message-out{top:392px!important}
+}
+
+
+/* ---- Energelia: mobile flow continuity + orchestrated processes (no dashboard, no optical tangle). ---- */
+@media (max-width:991.98px){
+ .digital-services-page .ds-immersive,.digital-services-page .ds-imm-sticky{background:#071a2c!important}
+ .digital-services-page .ds-imm-sticky::after{content:"";position:absolute;bottom:0;left:0;right:0;height:92px;background:linear-gradient(180deg,transparent,#0a2434);pointer-events:none}
+ .digital-services-page .el-orient{background:radial-gradient(ellipse 75% 46% at 87% 22%,rgba(45,99,124,.22),transparent 90%),linear-gradient(180deg,#0a2434 0%,#0e2b3d 48%,#0a2334 100%)!important;padding-top:clamp(45px,7vw,64px)!important;padding-bottom:clamp(54px,7vw,74px)!important}
+ .digital-services-page .el-orient::before{content:"";position:absolute;inset:0;pointer-events:none;background:url('../img/servizi-digitali/sd-finale-corridor.webp') center 70%/cover no-repeat;opacity:.075;mask-image:linear-gradient(transparent,black 45%,black 82%,transparent)}
+ .digital-services-page .el-orient-wrap{position:relative;z-index:1}
+ .digital-services-page .el-orient-nav{border-top-color:rgba(174,218,231,.27)!important}
+ .digital-services-page .el-orient-nav>a{border-bottom-color:rgba(174,218,231,.19)!important}
+ .digital-services-page .sd-solutions{background:#0a2334!important;padding-top:0!important}
+ .digital-services-page .sd-solutions>.sd-section-head{position:relative;background:linear-gradient(180deg,#0a2334 0%,#071b2b 100%);padding-top:53px!important;margin-bottom:0}
+ .digital-services-page .ds-btn-ghost{color:#cfe6f0!important}
+ .digital-services-page .ds-btn-ghost span{margin-left:8px;color:#ed6480;font-size:18px}
+}
+@media(max-width:540px){
+ .digital-services-page .s3-pick:first-child .s3-cover img{object-fit:cover;object-position:center center}
+ .digital-services-page .s3-pick:first-child .s3-cover{background:#102e43}
+}
+/* 02/04: a focused, legible process instead of a field of decorative geometry. */
+.digital-services-page .el-orchestra{position:relative;isolation:isolate;overflow:hidden;margin:0!important;min-width:0;width:100%;height:438px;background:radial-gradient(ellipse 70% 66% at 49% 49%,rgba(43,125,150,.20),transparent 76%);color:#ecf6fc;font-family:Inter,system-ui,sans-serif}
+.digital-services-page .el-orchestra::before{content:"";position:absolute;inset:12% 8%;opacity:.33;pointer-events:none;background-image:radial-gradient(circle,rgba(137,194,216,.31) .6px,transparent .9px);background-size:22px 22px;mask-image:radial-gradient(ellipse,black,transparent 72%)}
+.digital-services-page .el-orchestra-topline{position:absolute;z-index:4;top:11%;left:5%;right:5%;display:flex;align-items:center;gap:9px;font:700 9px Inter,sans-serif;letter-spacing:.14em;color:#aad5e5}
+.digital-services-page .el-orchestra-red-dot{width:5px;height:5px;border-radius:50%;background:#ef607c;box-shadow:0 0 12px rgba(238,97,122,.4)}
+.digital-services-page .el-orchestra-topline i{height:1px;flex:1;background:linear-gradient(90deg,rgba(157,203,218,.3),transparent)}
+.digital-services-page .el-orchestra-rail{position:absolute;inset:0;pointer-events:none;opacity:.87}
+.digital-services-page .el-orchestra-rail svg{width:100%;height:100%}
+.digital-services-page .el-orchestra-energy{stroke-dasharray:42 760;animation:elOrchSignal 7s linear infinite;filter:drop-shadow(0 0 5px rgba(172,234,245,.85))}
+@keyframes elOrchSignal{from{stroke-dashoffset:770}to{stroke-dashoffset:-800}}
+.digital-services-page .el-orchestra-steps{height:100%;padding:0 4%;position:relative;z-index:2;display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:2%;align-items:center}
+.digital-services-page .el-orchestra-step{height:245px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:9px;text-align:center;min-width:0}
+.digital-services-page .el-orchestra-stepnum{font:700 9px Inter,sans-serif;letter-spacing:.13em;color:#80bad2}
+.digital-services-page .el-orchestra-step strong{font:500 clamp(18px,1.55vw,23px)/1.14 'Source Serif 4',Georgia,serif;letter-spacing:-.025em;color:#f6fbff;white-space:normal}
+.digital-services-page .el-orchestra-step small{font:400 10px/1.5 Inter,sans-serif;color:#9abecf;max-width:175px}
+.digital-services-page .el-orchestra-symbol{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;color:#a4d8e6;background:radial-gradient(circle,rgba(38,111,148,.29),rgba(7,33,50,.25));border:1px solid rgba(139,201,222,.3);box-shadow:0 0 30px rgba(27,118,148,.1);margin-bottom:16px}
+.digital-services-page .el-orchestra-symbol svg{width:34px;height:34px;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.digital-services-page .el-orchestra-symbol-out{color:#a4e4cb;border-color:rgba(97,205,163,.35);background:radial-gradient(circle,rgba(24,105,99,.32),rgba(7,33,50,.2))}
+.digital-services-page .el-orchestra-process{justify-content:flex-end}
+.digital-services-page .el-orchestra-engine{width:114px;height:114px;border-radius:50%;border:1px solid rgba(138,211,226,.49);display:grid;place-items:center;background:radial-gradient(circle at 40% 35%,rgba(85,173,202,.31),rgba(13,64,82,.45) 52%,rgba(6,32,50,.2));box-shadow:0 0 0 14px rgba(55,115,143,.065),0 0 55px rgba(86,194,224,.18);margin-bottom:0;position:relative;animation:elOrchBreathe 6s ease-in-out infinite alternate}
+.digital-services-page .el-orchestra-engine::before{content:"";position:absolute;inset:7px;border-radius:50%;border:1px dashed rgba(143,209,227,.22)}
+.digital-services-page .el-orchestra-engine-disc{width:72px;height:72px;display:grid;place-items:center}
+.digital-services-page .el-orchestra-engine svg{width:72px;height:72px;stroke:#b8e9f6;stroke-width:2.1;stroke-linecap:round}
+.digital-services-page .el-orchestra-engine circle{fill:#b8e9f6;stroke:none}
+@keyframes elOrchBreathe{to{box-shadow:0 0 0 17px rgba(55,115,143,.075),0 0 70px rgba(86,194,224,.24)}}
+.digital-services-page .el-orchestra-baseline{position:absolute;bottom:14px;left:5%;right:5%;display:flex;align-items:center;gap:14px;font:700 8px/1.3 Inter,sans-serif;letter-spacing:.14em;color:#83b0c4}
+.digital-services-page .el-orchestra-baseline i{height:1px;flex:1;background:linear-gradient(90deg,rgba(120,179,198,.3),rgba(118,181,160,.35))}
+@media(max-width:991px){
+ .digital-services-page .el-orchestra{height:420px;max-width:680px;margin:auto!important}
+ .digital-services-page .el-orchestra-steps{grid-template-columns:1fr 1.15fr 1fr;gap:1%;padding-inline:0}
+ .digital-services-page .el-orchestra-step strong{font-size:17px}
+ .digital-services-page .el-orchestra-step small{font-size:9px}
+}
+@media(max-width:600px){
+ .digital-services-page .el-orchestra{height:478px!important;width:calc(100% + 16px);max-width:none;margin-left:-8px!important;margin-right:-8px!important}
+ .digital-services-page .el-orchestra-topline{top:12px;font-size:8px;letter-spacing:.09em}
+ .digital-services-page .el-orchestra-rail{inset:26px 0 14px;transform:rotate(90deg) scale(.73,1.05);transform-origin:center;opacity:.55}
+ .digital-services-page .el-orchestra-steps{display:flex;flex-direction:column;align-items:stretch;justify-content:space-around;gap:0;padding:30px 11px 35px}
+ .digital-services-page .el-orchestra-step{height:auto;min-height:126px;display:grid;grid-template-columns:64px minmax(0,1fr);grid-template-rows:auto auto auto;align-items:center;align-content:center;justify-items:start;text-align:left;gap:4px 13px;padding:0 4px}
+ .digital-services-page .el-orchestra-stepnum{grid-column:2;font-size:8px}
+ .digital-services-page .el-orchestra-step strong{grid-column:2;font-size:20px}
+ .digital-services-page .el-orchestra-step small{grid-column:2;font-size:10px;max-width:245px}
+ .digital-services-page .el-orchestra-symbol,.digital-services-page .el-orchestra-engine{grid-column:1;grid-row:1/4;margin:0;width:53px;height:53px;justify-self:center}
+ .digital-services-page .el-orchestra-engine{width:67px;height:67px;box-shadow:0 0 0 9px rgba(55,115,143,.065),0 0 35px rgba(86,194,224,.18)}
+ .digital-services-page .el-orchestra-engine-disc,.digital-services-page .el-orchestra-engine svg{width:47px;height:47px}
+ .digital-services-page .el-orchestra-symbol svg{width:28px;height:28px}
+ .digital-services-page .el-orchestra-baseline{bottom:8px;left:5%;right:5%;gap:6px;font-size:7px;letter-spacing:.08em}
+}
+@media(max-width:360px){
+ .digital-services-page .el-orchestra{height:482px!important}
+ .digital-services-page .el-orchestra-step strong{font-size:18px}
+ .digital-services-page .el-orchestra-step small{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.digital-services-page .el-orchestra-energy,.digital-services-page .el-orchestra-engine{animation:none!important}}
+
+/* Optical discipline: one continuous, animated signal instead of disconnected icons. */
+.digital-services-page .el-orchestra-steps::before{
+  content:"";position:absolute;z-index:-1;left:16%;right:16%;top:calc(50% - 18px);height:2px;
+  background:linear-gradient(90deg,rgba(101,173,210,.12),rgba(132,217,240,.67) 37%,rgba(172,232,225,.72) 63%,rgba(85,204,158,.25));
+  box-shadow:0 0 15px rgba(119,209,230,.3),0 0 28px rgba(57,153,183,.16);
+}
+.digital-services-page .el-orchestra-steps::after{
+  content:"";position:absolute;z-index:-1;width:48px;height:3px;top:calc(50% - 19px);left:15%;border-radius:4px;
+  background:linear-gradient(90deg,transparent,#e2faff,transparent);box-shadow:0 0 17px rgba(176,237,255,.8);
+  animation:elOrchTransit 6s ease-in-out infinite;
+}
+@keyframes elOrchTransit{0%{left:15%;opacity:0}16%{opacity:1}70%{opacity:1}90%,100%{left:82%;opacity:0}}
+@media(max-width:600px){
+ .digital-services-page .el-orchestra-rail{display:none}
+ .digital-services-page .el-orchestra-steps::before{left:47px;right:auto;top:89px;bottom:102px;width:2px;height:auto;
+  background:linear-gradient(180deg,rgba(101,173,210,.1),rgba(129,216,240,.6) 35%,rgba(169,231,228,.75) 70%,rgba(67,182,147,.22));
+  box-shadow:0 0 15px rgba(119,209,230,.37)}
+ .digital-services-page .el-orchestra-steps::after{left:46px;top:87px;right:auto;width:4px;height:38px;
+  background:linear-gradient(180deg,transparent,#e0faff,transparent);animation:elOrchDown 6s ease-in-out infinite}
+}
+@keyframes elOrchDown{0%{top:83px;opacity:0}15%{opacity:1}80%{opacity:1}95%,100%{top:343px;opacity:0}}
+@media(prefers-reduced-motion:reduce){.digital-services-page .el-orchestra-steps::after{animation:none!important;opacity:0!important}}
+
+
+/* Follow-up polish: first service landing + restored editor cover + more refined site demo. */
+.digital-services-page #soluzione-sito{scroll-margin-top:clamp(14px,6vh,64px)}
+.digital-services-page .s3-pick:first-child .s3-cover{display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#09263a,#133a50)}
+.digital-services-page .s3-pick:first-child .s3-cover picture{display:flex;width:100%;height:100%;align-items:center;justify-content:center}
+.digital-services-page .s3-pick:first-child .s3-cover img{object-fit:contain;object-position:center center}
+@media(max-width:540px){.digital-services-page .s3-pick:first-child .s3-cover img{object-fit:contain;object-position:center center}}
+@media(max-width:991.98px){.digital-services-page #soluzione-sito{scroll-margin-top:12px}}
+
+/* Four quick-use case cards: consistent mobile image framing. Catalog covers are untouched. */
+@media(max-width:540px){
+ .digital-services-page .s3-pick .s3-cover{position:relative;align-self:stretch;min-height:0;aspect-ratio:auto;overflow:hidden}
+ .digital-services-page .s3-pick .s3-cover picture{display:block;width:100%;height:100%}
+ .digital-services-page .s3-pick .s3-cover img,
+ .digital-services-page .s3-pick:first-child .s3-cover img{display:block;width:100%;height:100%;object-fit:cover!important;object-position:center center!important}
+ .digital-services-page .s3-pick .s3-pick-body{justify-content:center;min-width:0}
+ .digital-services-page .s3-pick .s3-open{margin-top:auto}
+ .digital-services-page .s3-pick:nth-child(4) .s3-cover{background:#eef1f2}
+}
+
+
+/* 2026-10-25 | Quick cases: no crops, no upscaled thumbnails, original 960×500 covers.
+   Layout deliberately switches to image-above-title only on narrow mobile. */
+@media(max-width:540px){
+ .digital-services-page .s3-picks{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+ .digital-services-page .s3-pick{display:flex;flex-direction:column;min-height:0;border-radius:13px;overflow:hidden}
+ .digital-services-page .s3-pick .s3-cover,
+ .digital-services-page .s3-pick:first-child .s3-cover{display:block;width:100%;height:auto;min-height:0;aspect-ratio:960/500;align-self:auto;background:#09283b;overflow:hidden}
+ .digital-services-page .s3-pick .s3-cover>img,
+ .digital-services-page .s3-pick .s3-cover picture,
+ .digital-services-page .s3-pick .s3-cover picture>img,
+ .digital-services-page .s3-pick:first-child .s3-cover img{display:block;width:100%;height:100%;aspect-ratio:960/500;object-fit:contain!important;object-position:center!important;max-width:100%}
+ .digital-services-page .s3-pick .s3-pick-body{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;min-height:0;padding:14px 17px 16px}
+ .digital-services-page .s3-pick .s3-pick-body strong{grid-column:1;font-size:clamp(21px,6vw,25px);line-height:1.15}
+ .digital-services-page .s3-pick .s3-pick-body small{grid-column:1;font-size:12px;line-height:1.35}
+ .digital-services-page .s3-pick .s3-pick-body .s3-open{grid-column:2;grid-row:1 / span 2;align-self:center;margin:0;padding:0;max-width:95px;text-align:right;font-size:11px;line-height:1.3}
+}
+@media(max-width:355px){
+ .digital-services-page .s3-pick .s3-pick-body{padding:12px 13px 14px;gap:4px 9px}
+ .digital-services-page .s3-pick .s3-pick-body strong{font-size:20px}
+ .digital-services-page .s3-pick .s3-pick-body .s3-open{font-size:10px;max-width:80px}
+}

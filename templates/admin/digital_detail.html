@@ -1,0 +1,44 @@
+{% extends 'digital_admin_base.html' %}
+{% block contenuto %}
+{% include 'admin/digital_assets.html' %}
+<div class="dr-admin">
+<a class="dr-back" href="{{ url_for('digital_requests.listing') }}">← Tutte le richieste digitali</a>
+<div class="dr-heading"><div><p class="etichetta">Richiesta #{{ row.id }} · {{ row.created_at|digital_date }}</p><h1>{{ row.name }}</h1><p class="sottotitolo">{{ services.get(row.category, row.category) }}</p></div><span class="dr-badge">{{ statuses.get(row.status, row.status) }}</span></div>
+{% if saved %}<p class="dr-notice" role="status">Modifiche salvate.</p>{% endif %}
+{% for error in errors.values() %}<p class="dr-notice dr-error" role="alert">{{ error }}</p>{% endfor %}
+<div class="dr-detail-grid">
+<section class="dr-panel"><h2>Il progetto</h2>
+  {% if row.category.startswith('legacy-') %}<p class="dr-notice">Categoria storica non univoca: consulta il messaggio originale prima di qualificare il progetto.</p>{% endif %}
+  <h3>Obiettivo raccontato dal cliente</h3><p class="dr-text">{{ row.message }}</p>
+  <h3>Obiettivi selezionati</h3><ul>{% for goal in row.goals %}<li>{{ goals_map.get(row.category, {}).get(goal, goal) }}</li>{% else %}<li>Non indicati</li>{% endfor %}</ul>
+  <h3>Contesto del progetto</h3><p class="dr-text">{{ row.project_context or 'Non indicato' }}</p>
+  <h3>Soluzione già esistente</h3><p class="dr-text">{{ row.existing_solution or 'Non indicata' }}</p>
+  <h3>Tempistica indicativa</h3><p>{{ timelines.get(row.timeline, row.timeline) }}</p>
+  <h3>Recapiti</h3><p><a href="mailto:{{ row.email }}">{{ row.email }}</a></p><p>{% if phone %}<a href="tel:{{ phone }}">{{ row.phone }}</a>{% else %}Telefono non indicato{% endif %}</p>
+  <h3>Informativa e richiesta di contatto</h3><p>{{ row.contact_ack_at|digital_date }} · {{ row.privacy_version or 'Modulo precedente (versione non registrata)' }}</p>
+</section>
+<div>
+<section class="dr-panel"><h2>Gestione commerciale</h2>
+{% if errors.conflict %}<details><summary>Dati attualmente salvati</summary><p>{{ statuses.get(row.status) }} · {{ outcomes.get(row.outcome) }}</p><p class="dr-text">{{ row.internal_notes or 'Nessuna nota' }}</p></details>{% endif %}
+<form method="post" class="dr-manage">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="version" value="{{ row.version }}">
+<label>Stato<select name="status">{% for value, label in statuses.items() %}<option value="{{ value }}" {{ 'selected' if form_values.status == value }}>{{ label }}</option>{% endfor %}</select></label>
+<label>Esito commerciale<select name="outcome">{% for value, label in outcomes.items() %}<option value="{{ value }}" {{ 'selected' if form_values.outcome == value }}>{{ label }}</option>{% endfor %}</select></label>
+<p class="dr-help">Per chiudere indica l’esito. “Acquisita” e “Non acquisita” richiedono lo stato “Chiusa”.</p>
+<label>Note interne<textarea name="internal_notes" rows="8" maxlength="10000" placeholder="Contesto del confronto, prossimi passi, appunti per il team…">{{ form_values.internal_notes }}</textarea></label><p class="dr-help">Visibili solo agli amministratori. Non vengono inviate al cliente.</p>
+<h3>Conservazione della richiesta</h3>
+<p class="dr-help">{% if retention and retention.last_interaction_at %}Ultima interazione significativa: {{ retention.last_interaction_at|digital_date }}.{% else %}Storico da verificare: nessuna data affidabile registrata.{% endif %} {% if retention %}Classificazione: {{ retention.classification }}.{% endif %}</p>
+<label><input type="checkbox" name="significant_interaction" value="1"> Ho avuto oggi un’interazione significativa con il contatto</label>
+<p class="dr-help">Seleziona solo per un effettivo scambio sulla richiesta. Modificare note, stato o notifiche non rinnova il termine. L’esito “Acquisita” esclude la richiesta dalla revisione prospect a 24 mesi. Nessuna cancellazione automatica.</p>
+<button type="submit">Salva modifiche</button>
+</form>
+{% if row.updated_at %}<p class="dr-help">Aggiornata il {{ row.updated_at|digital_date }} · operatore #{{ row.updated_by }} · versione {{ row.version }}</p>{% endif %}
+</section>
+<section class="dr-panel"><h2>Notifica al team</h2><p>{{ notifications.get(row.notification_status, row.notification_status) }}</p><p class="dr-help">La richiesta è salvata anche se l’email non arriva. Le notifiche in attesa vengono recuperate automaticamente quando l’app è attiva.</p>
+{% if row.notification_updated_at %}<p class="dr-help">Ultima verifica: {{ row.notification_updated_at|digital_date }}</p>{% endif %}
+{% if row.notification_attempts %}<p class="dr-help">Tentativi: {{ row.notification_attempts }}{% if row.notification_next_attempt_at %} · Prossimo tentativo dal {{ row.notification_next_attempt_at|digital_date }}{% endif %}</p>{% endif %}
+{% if row.notification_status == 'da-verificare' %}<p class="dr-help">Controlla l’esito nel pannello Resend prima di un eventuale invio manuale: il reinvio automatico è sospeso per evitare duplicati.</p>{% endif %}
+{% if row.notification_status not in ('inviata', 'da-verificare') %}<form method="post" action="{{ url_for('digital_requests.retry_notification', record_id=row.id) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="dr-secondary" type="submit">Riprova notifica</button></form>{% endif %}
+</section>
+</div></div></div>
+{% endblock %}

@@ -62,7 +62,7 @@ if DB_URL.startswith("postgres://"):          # Render fornisce ancora il vecchi
     DB_URL = DB_URL.replace("postgres://", "postgresql://", 1)
 
 ADMIN_EMAIL = os.environ.get("CRM_ADMIN_EMAIL", "a.augusti@energelia.it")
-ADMIN_PASSWORD = os.environ.get("CRM_ADMIN_PASSWORD", "energelia2026")
+ADMIN_PASSWORD = os.environ.get("CRM_ADMIN_PASSWORD", "")
 
 # Google Drive: i clienti caricano documenti tramite un link pubblico, i file
 # finiscono nel Drive di Energelia (non del cliente), una cartella per cliente.
@@ -1164,6 +1164,7 @@ body.guida-aperta #guida-tab{right:310px}
     <a href="/crm/documenti" class="{{ 'attivo' if pagina=='documenti' }}">Documenti</a>
     <a href="/crm/bandi" class="{{ 'attivo' if pagina=='bandi' }}">Bandi</a>
     <a href="/crm/trattative" class="{{ 'attivo' if pagina=='trattative' }}">Trattative</a>
+    {% if utente.is_admin %}<a href="/crm/richieste-digitali" class="{{ 'attivo' if pagina=='richieste-digitali' }}">Richieste digitali</a>{% endif %}
     {% if utente.is_admin %}<a href="/crm/impostazioni" class="{{ 'attivo' if pagina=='impostazioni' }}">Impostazioni</a>{% endif %}
   </nav>
   <div class="utente">{{ utente.nome }} · <a href="/crm/esci">Esci</a></div>
@@ -2881,7 +2882,7 @@ env = Environment(loader=DictLoader({
     "documenti": T_DOCUMENTI, "bandi": T_BANDI, "bando_form": T_BANDO_FORM, "bando": T_BANDO,
     "trattative": T_TRATTATIVE, "trattativa_form": T_TRATTATIVA_FORM, "trattativa": T_TRATTATIVA,
     "trattativa_modifica": T_TRATTATIVA_MODIFICA,
-}), autoescape=select_autoescape(["html"]))
+}), autoescape=select_autoescape(["html"], default=True))
 
 
 def classe_fase(fase):
@@ -5625,6 +5626,8 @@ def prepara_database():
     Base.metadata.create_all(engine)
     _allinea_colonne()
     if SessionLocale.query(func.count(Utente.id)).scalar() == 0:
+        if not ADMIN_PASSWORD:
+            raise RuntimeError("CRM_ADMIN_PASSWORD obbligatoria per creare il primo amministratore.")
         SessionLocale.add(Utente(nome="Alberto Augusti", email=ADMIN_EMAIL.lower(),
                                  password_hash=hash_pw(ADMIN_PASSWORD), ruolo="admin"))
         SessionLocale.commit()

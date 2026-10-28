@@ -1,0 +1,27 @@
+{% extends 'digital_admin_base.html' %}
+{% block contenuto %}
+{% include 'admin/digital_assets.html' %}
+<div class="dr-admin">
+  <div class="dr-heading"><div><p class="etichetta">Area riservata · Servizi digitali</p><h1>Richieste digitali</h1><p class="sottotitolo">{{ total }} richieste trovate · dal primo contatto all’esito commerciale.</p></div><a href="/servizi-digitali#contatto">Apri il modulo pubblico ↗</a></div>
+  <details class="dr-filter-panel" open><summary>Filtra richieste <span>Nome, servizio, stato e periodo</span></summary>
+  <form class="dr-filters" method="get">
+    <label>Cerca nominativo o email<input name="q" maxlength="100" value="{{ filters.q }}" placeholder="Nome o email"></label>
+    <label>Servizio<select name="service"><option value="">Tutti i servizi</option>{% for value, label in services.items() %}<option value="{{ value }}" {{ 'selected' if filters.service == value }}>{{ label }}</option>{% endfor %}</select></label>
+    <label>Stato<select name="status"><option value="">Tutti gli stati</option>{% for value, label in statuses.items() %}<option value="{{ value }}" {{ 'selected' if filters.status == value }}>{{ label }}</option>{% endfor %}</select></label>
+    <label>Esito<select name="outcome"><option value="">Tutti gli esiti</option>{% for value, label in outcomes.items() %}<option value="{{ value }}" {{ 'selected' if filters.outcome == value }}>{{ label }}</option>{% endfor %}</select></label>
+    <label>Dal<input type="date" name="from" value="{{ filters['from'] }}"></label><label>Al<input type="date" name="to" value="{{ filters.to }}"></label>
+    <div class="dr-filter-actions"><button type="submit">Applica filtri</button><a href="{{ url_for('digital_requests.listing') }}">Azzera</a></div>
+  </form></details>
+  {% if not filters_active %}<script>if(window.matchMedia("(max-width:600px)").matches)document.querySelector(".dr-filter-panel").open=false;</script>{% endif %}
+  {% if rows %}
+  <div class="dr-table-wrap"><table class="dr-table"><caption class="dr-sr">Elenco delle richieste digitali, dalla più recente</caption><thead><tr><th>Data</th><th>Nominativo</th><th>Servizio</th><th>Stato</th><th>Esito</th><th><span class="dr-sr">Dettaglio</span></th></tr></thead><tbody>
+  {% for row in rows %}<tr>
+    <td data-label="Data">{{ row.created_at|digital_date }}</td><td data-label="Nominativo"><strong>{{ row.name }}</strong><a href="mailto:{{ row.email }}">{{ row.email }}</a></td>
+    <td data-label="Servizio">{{ services.get(row.category, row.category) }}</td><td data-label="Stato"><span class="dr-badge">{{ statuses.get(row.status, row.status) }}</span></td><td data-label="Esito">{{ outcomes.get(row.outcome, row.outcome) }}</td>
+    <td><a class="dr-open" href="{{ url_for('digital_requests.detail', record_id=row.id) }}" aria-label="Apri richiesta {{ row.id }} di {{ row.name }}">Apri #{{ row.id }} ↗</a></td>
+  </tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="dr-empty"><h2>Nessuna richiesta trovata</h2><p>Le richieste inviate dal modulo compariranno qui. Se hai applicato filtri, prova ad azzerarli.</p></div>{% endif %}
+  <nav class="dr-pagination" aria-label="Pagine delle richieste">{% if page > 1 %}<a href="{{ previous }}">← Precedente</a>{% endif %}<span>Pagina {{ page }}</span>{% if page * 30 < total %}<a href="{{ following }}">Successiva →</a>{% endif %}</nav>
+</div>
+{% endblock %}

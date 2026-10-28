@@ -1,0 +1,8 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/digital-admin.css') }}">
+<script>
+if (window.matchMedia('(max-width:600px)').matches) {
+  const nav = document.querySelector('header nav');
+  const active = nav && nav.querySelector('.attivo');
+  if (active) nav.scrollLeft = active.offsetLeft - nav.offsetLeft - (nav.clientWidth - active.offsetWidth) / 2;
+}
+</script>

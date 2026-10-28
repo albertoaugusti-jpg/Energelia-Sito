@@ -1,0 +1,37 @@
+<div class="uc-demo uc-process" data-uc-process="order" data-pc-view-left="Cliente" data-pc-view-right="Laboratorio">
+  <div class="uc-process-context"><span class="uc-process-context-dot"></span><span>TAVOLA PRONTA</span><span class="uc-process-context-note">Gastronomia da asporto · ritiro in negozio</span></div>
+  <div class="uc-demo-panels">
+    <section class="uc-demo-panel uc-demo-editor" aria-labelledby="pc-order-customer-title">
+      <header class="uc-panel-header"><span><span class="uc-panel-mark">◫</span><b id="pc-order-customer-title">Ordina per il ritiro</b></span><span class="uc-panel-muted">Cliente</span></header>
+      <form class="uc-process-body" data-pc-order-form>
+        <div class="uc-process-intro"><span class="uc-process-overline">TAVOLA PRONTA</span><h2>Scegli cosa ritirare.</h2><p>Seleziona i piatti, indica il tuo nome e scegli l’orario di ritiro. Il totale si aggiorna subito.</p></div>
+        <div class="uc-order-products" aria-label="Prodotti ordinabili">
+          <article class="uc-order-product"><div><strong>Lasagne della casa</strong><small>Porzione singola · € 9</small></div><label>Quantità<input data-pc-order-qty="lasagne" data-pc-price="9" type="number" min="0" max="9" inputmode="numeric" value="1"></label></article>
+          <article class="uc-order-product"><div><strong>Parmigiana di melanzane</strong><small>Vaschetta pronta · € 8</small></div><label>Quantità<input data-pc-order-qty="parmigiana" data-pc-price="8" type="number" min="0" max="9" inputmode="numeric" value="0"></label></article>
+          <article class="uc-order-product"><div><strong>Tiramisù artigianale</strong><small>Monoporzione · € 5</small></div><label>Quantità<input data-pc-order-qty="tiramisu" data-pc-price="5" type="number" min="0" max="9" inputmode="numeric" value="1"></label></article>
+        </div>
+        <div class="uc-process-field-grid"><label>Nome e cognome<input name="name" type="text" minlength="2" maxlength="65" value="Elisa Gori" required></label><label>Orario di ritiro<select name="pickup" required><option value="12:30" selected>12:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option><option value="19:00">19:00</option></select></label></div>
+        <p class="uc-process-helper" data-pc-order-helper>I dati sono dimostrativi e restano in questa pagina.</p>
+        <div class="uc-process-total"><span>Totale ordine<small>Pagamento non incluso nella demo</small></span><strong data-pc-order-total>€ 14</strong></div>
+        <p class="uc-process-error" data-pc-order-error hidden>Seleziona almeno un prodotto prima di inviare l’ordine.</p>
+        <button class="uc-process-primary" type="submit" data-pc-order-submit>Invia ordine <span aria-hidden="true">↗</span></button>
+      </form>
+    </section>
+    <section class="uc-demo-panel uc-demo-site" aria-labelledby="pc-order-staff-title">
+      <header class="uc-panel-header"><span><span class="uc-panel-mark uc-panel-mark-teal">▤</span><b id="pc-order-staff-title">Pannello ordini</b></span><span class="uc-panel-online" data-pc-order-badge>In attesa</span></header>
+      <div class="uc-process-body uc-process-staff">
+        <div class="uc-process-topline"><span>ORDINI DA PREPARARE</span><strong>Ritiro in negozio</strong></div>
+        <div class="uc-process-empty" data-pc-order-empty><icon aria-hidden="true">◫</icon><strong>Nessun nuovo ordine nella demo</strong><p>Quando il cliente invia l’ordine, qui compare subito il riepilogo con prodotti, totale e orario di ritiro.</p></div>
+        <div class="uc-process-case" data-pc-order-case hidden>
+          <div class="uc-process-case-head"><div><small>ORDINE DIMOSTRATIVO</small><strong>Ordine n. 3077</strong></div><span class="uc-process-tag is-alert" data-pc-order-state>Ricevuto</span></div>
+          <dl class="uc-process-facts"><div><dt>Cliente</dt><dd data-pc-order-person>Elisa Gori</dd></div><div><dt>Ritiro previsto</dt><dd data-pc-order-pickup>12:30</dd></div><div><dt>Canale</dt><dd>Sito web</dd></div><div><dt>Totale</dt><dd data-pc-order-total-right>€ 14</dd></div></dl>
+          <ul class="uc-process-line-list" data-pc-order-lines></ul>
+          <div class="uc-process-actions" data-pc-order-start-wrap><button class="uc-process-primary" type="button" data-pc-order-start>Inizia preparazione →</button></div>
+          <div class="uc-process-actions" data-pc-order-ready-wrap hidden><button class="uc-process-primary" type="button" data-pc-order-ready>Segna come pronto →</button></div>
+          <div class="uc-process-outcome" data-pc-order-outcome hidden><span class="uc-process-outcome-icon">✓</span><strong>Ordine pronto per il ritiro</strong><p data-pc-order-summary></p></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="uc-demo-toolbar"><div role="status" aria-live="polite" data-pc-message>Componi un ordine e osserva come viene preso in carico dalla gastronomia.</div><button class="uc-process-reset" type="button" data-pc-reset>↻ Ricomincia demo</button></div>
+</div>

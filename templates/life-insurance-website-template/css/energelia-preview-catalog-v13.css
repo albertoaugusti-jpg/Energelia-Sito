@@ -1,0 +1,70 @@
+/* Catalog hero explanation: light editorial rail, not a second heavy dashboard panel. */
+.uc-page.uc-catalog .el-cat-steps{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;max-width:470px!important;position:relative;padding:13px 0 13px 28px!important;border-left:1px solid rgba(174,207,228,.40)!important;gap:0!important}
+.uc-page.uc-catalog .el-cat-steps-label{color:#9dbdd3!important;border:0!important;padding:0 0 22px!important;font-size:10px!important}
+.uc-page.uc-catalog .el-cat-steps>div{grid-template-columns:39px 1fr 15px!important;min-height:79px!important;gap:13px!important;border:0!important;position:relative;}
+.uc-page.uc-catalog .el-cat-steps>div:not(:last-child):after{content:"";height:1px;position:absolute;bottom:0;left:52px;right:0;background:linear-gradient(90deg,#86b6ce56,transparent)}
+.uc-page.uc-catalog .el-cat-steps div>b{width:35px!important;height:35px!important;border:1px solid #5f94b3!important;border-radius:50%!important;background:#0e344c!important;color:#d4ecf6!important;font-size:10px!important}
+.uc-page.uc-catalog .el-cat-steps strong{font-size:clamp(22px,2vw,27px)!important;letter-spacing:-.03em!important}
+.uc-page.uc-catalog .el-cat-steps small{font-size:11px!important;color:#a5bdcd!important}
+.uc-page.uc-catalog .el-cat-steps i{font-size:17px!important;color:#72bad7!important}
+@media(max-width:820px){.uc-page.uc-catalog .el-cat-steps{padding:5px 0 5px 20px!important;margin-left:3px}}
+@media(max-width:540px){.uc-page.uc-catalog .el-cat-steps-label{padding-bottom:13px!important;font-size:9px!important}.uc-page.uc-catalog .el-cat-steps>div{min-height:65px!important;grid-template-columns:31px 1fr 14px!important}.uc-page.uc-catalog .el-cat-steps div>b{width:29px!important;height:29px!important}.uc-page.uc-catalog .el-cat-steps strong{font-size:21px!important}.uc-page.uc-catalog .el-cat-steps>div:not(:last-child):after{left:44px}}
+
+/* 2026-10-25 | Catalog hero desktop: remove the residual glass blur from V1.1.
+   The editorial step rail, borders, text and mobile layout remain unchanged. */
+@media (min-width:821px) {
+  .uc-page.uc-catalog .el-cat-steps {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* 2026-10-25 | Remove decorative right-edge icons from the three catalog steps.
+   Keep the numbered circles and editorial dividers. */
+.uc-page.uc-catalog .el-cat-steps>div{grid-template-columns:39px minmax(0,1fr)!important}
+.uc-page.uc-catalog .el-cat-steps>div>i{display:none!important}
+@media(max-width:540px){
+ .uc-page.uc-catalog .el-cat-steps>div{grid-template-columns:31px minmax(0,1fr)!important}
+}
+
+/* 2026-10-28: Mobile hero stays editorial, without the three-step glass rail. */
+@media (max-width:820px){
+  .uc-page.uc-catalog .el-cat-steps{display:grid!important;background:transparent!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important}
+  .uc-page.uc-catalog .el-cat-layout{grid-template-columns:minmax(0,1fr);gap:20px}
+}
+/* Two compact native, keyboard-accessible controls replace ten separate filter buttons. */
+.uc-page.uc-catalog .el-filter-select-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:15px;max-width:880px;margin:0 0 6px;
+}
+.uc-page.uc-catalog .el-filter-select-field{display:grid;gap:8px;min-width:0}
+.uc-page.uc-catalog .el-filter-select-field label{
+  color:#31546a;font:650 12px/1.4 Inter,system-ui,sans-serif;
+}
+.uc-page.uc-catalog .el-filter-select-wrap{position:relative;min-width:0}
+.uc-page.uc-catalog .el-filter-select-wrap:after{
+  content:'';position:absolute;right:19px;top:50%;width:9px;height:9px;
+  border-right:2px solid #395b70;border-bottom:2px solid #395b70;
+  transform:translateY(-72%) rotate(45deg);pointer-events:none;
+}
+.uc-page.uc-catalog .el-filter-select-wrap select{
+  box-sizing:border-box;display:block;width:100%;min-width:0;min-height:49px;
+  padding:11px 41px 11px 15px;border:1px solid #bfcfda;border-radius:9px;
+  background:#fff;color:#16394d;box-shadow:0 3px 12px #1138500d;
+  font:600 13px/1.4 Inter,system-ui,sans-serif;
+  -webkit-appearance:none;appearance:none;cursor:pointer;
+  text-overflow:ellipsis;white-space:nowrap;overflow:hidden;
+}
+.uc-page.uc-catalog .el-filter-select-wrap select:hover{border-color:#6998b4}
+.uc-page.uc-catalog .el-filter-select-wrap select:focus-visible{
+  outline:3px solid #2c90c9;outline-offset:2px;border-color:#2c90c9;
+}
+@media(max-width:620px){
+  .uc-page.uc-catalog .el-filter-select-grid{gap:10px}
+  .uc-page.uc-catalog .el-filter-select-field label{font-size:11px}
+  .uc-page.uc-catalog .el-filter-select-wrap select{font-size:12px;padding:10px 30px 10px 10px;min-height:46px}
+  .uc-page.uc-catalog .el-filter-select-wrap:after{right:13px;width:7px;height:7px}
+}
+@media(max-width:350px){
+  .uc-page.uc-catalog .el-filter-select-grid{grid-template-columns:minmax(0,1fr)}
+}

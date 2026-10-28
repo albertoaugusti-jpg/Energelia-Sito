@@ -1,0 +1,20 @@
+{% set case = {
+'number':'11',
+'category':'ORGANIZZARE IL LAVORO',
+'title':'Offrire un’area clienti riservata.',
+'description':'Entra nella versione dimostrativa di un portale cliente: segui il progetto, consulta un documento e invia un messaggio al responsabile. Tutto senza registrazione o accessi reali.',
+'benefits': [
+  'Meno telefonate per chiedere aggiornamenti.',
+  'Clienti più informati e autonomi.',
+  'Meno documenti e comunicazioni dispersi.',
+],
+'group_anchor':'gruppo-lavoro',
+'demo_type':'portal',
+'demo':'life-insurance-website-template/partials/usecase-demo-portal.html',
+'steps':[('01','Consulta il progetto'),('02','Apri un documento'),('03','Scrivi al responsabile')],
+'short_steps':['Progetto','Documento','Messaggio'],
+'related':[
+ {'href':'/caso-storico-cliente','kind':'customer','title':'Consultare lo storico di un cliente','text':'Interventi, documenti e note in una scheda.'},
+ {'href':'/caso-assegnare-interventi','kind':'tasks','title':'Assegnare interventi al team','text':'Lavori organizzati e aggiornati fino al completamento.'}]
+} %}
+{% include 'life-insurance-website-template/partials/usecase-detail-shell.html' %}

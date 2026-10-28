@@ -557,7 +557,7 @@ def analizza():
         try:
             testo = testo_da_pdf(file_bolletta)
         except Exception as e:
-            return jsonify({'success': False, 'error': f'PDF non leggibile: {e}'}), 400
+            return jsonify({'success': False, 'error': 'PDF non leggibile. Prova un altro file o inserisci i dati manualmente.'}), 400
 
         if len(testo) < 200:
             return jsonify({
@@ -654,6 +654,8 @@ def salva_lead_simulatore():
             (email, phone, VALID_BANDO_TAG)
         )
         lead_id = cur.fetchone()[0]
+        from retention import record_new_contact
+        record_new_contact(cur, 'leads', lead_id)
 
         cur.execute("""
             INSERT INTO simulazioni_fv
@@ -679,8 +681,8 @@ def salva_lead_simulatore():
         cur.close()
         conn.close()
     except Exception as e:
-        print(f"Errore salva_lead_simulatore: {e}")
-        return jsonify({'success': False, 'error': f'Errore: {e}'}), 500
+        print(f"Errore salva_lead_simulatore: {type(e).__name__}")
+        return jsonify({'success': False, 'error': 'Servizio temporaneamente non disponibile.'}), 500
 
     # Notifica email in background, riusando la funzione già definita in main2.py
     # (import ritardato qui dentro per evitare un import circolare con main2.py,

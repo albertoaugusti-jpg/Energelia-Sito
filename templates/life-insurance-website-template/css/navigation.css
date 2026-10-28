@@ -1,0 +1,62 @@
+/* Shared Energelia navigation. Page styles do not own header positioning. */
+.site-header{position:relative;z-index:1050;background:#fff;border-bottom:2px solid #c72932;color:#102b4c}
+.site-header-inner{display:flex;align-items:center;justify-content:space-between;gap:28px;width:calc(100% - 48px);max-width:1296px;min-height:104px;margin:0 auto;padding:18px 0;flex-wrap:nowrap;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.site-header .navbar-brand.energelia-brand{display:flex;align-items:center;flex:0 0 auto;margin:0;padding:0;line-height:1;text-decoration:none}
+.site-header .energelia-brand-logo{display:block;width:58px;height:58px;object-fit:contain;border-radius:8px}
+.site-header :is(a,button):focus-visible,.site-menu-floating:focus-visible,.site-menu :is(a,button):focus-visible{outline:2px solid #175b85;outline-offset:4px;border-radius:4px}
+.site-menu{position:static;display:flex;align-items:center;flex:1;gap:24px;width:auto;max-width:none;max-height:none;margin:0;padding:0;border:0;color:#102b4c;background:#fff;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.site-navigation{display:flex;align-items:center;justify-content:center;gap:26px;flex:1}
+.site-nav-link{position:relative;display:block;padding:12px 0;color:#102b4c;font-size:14px;font-weight:700;line-height:1.4;letter-spacing:.015em;text-decoration:none;white-space:nowrap}
+.site-nav-link::after{content:'';position:absolute;bottom:4px;left:0;right:0;height:2px;background:#c72932;transform:scaleX(0);transform-origin:left;transition:transform 160ms ease-out}
+.site-nav-link:hover,.site-nav-link[aria-current]{color:#175b85}
+.site-nav-link:is(:hover,:focus-visible,[aria-current])::after{transform:scaleX(1)}
+.site-nav-phone{flex:0 0 auto;padding:9px 14px;border:1px solid #dce3e9;border-radius:6px;color:#102b4c;text-decoration:none;line-height:1.4}
+.site-nav-phone>span{display:block;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:#586b7f}
+.site-nav-phone strong{display:block;font-size:15px;font-weight:700}
+.site-nav-phone :is(span,strong){font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.site-nav-phone strong span{margin-left:12px;color:#175b85}
+.site-menu-heading,.site-menu-toggle{display:none}
+@media(min-width:992px) and (max-width:1199.98px){.site-navigation{gap:20px}.site-nav-phone{display:none}}
+@media(max-width:991.98px){
+ .site-header-inner{width:calc(100% - 40px);min-height:78px;padding:14px 0;gap:20px}
+ .site-header .energelia-brand-logo{width:46px;height:46px}
+ .navigation-ready .site-menu-toggle,.navigation-ready.site-menu-floating{display:inline-flex}
+ .site-menu-toggle,.site-menu-close{align-items:center;justify-content:center;flex:0 0 auto;width:48px;height:48px;padding:12px;border:1px solid #cbd7e1;border-radius:10px;background:#fff;color:#153b60;cursor:pointer;touch-action:manipulation}
+ .site-menu-toggle svg,.site-menu-close svg{display:block;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+ .site-menu-toggle:active,.site-menu-close:active{background:#edf3f7}
+ .site-menu-floating{position:fixed;top:max(14px,env(safe-area-inset-top));right:max(16px,env(safe-area-inset-right));z-index:1100;visibility:hidden;opacity:0;transform:translateY(-6px);box-shadow:0 4px 18px #102b4c1c;transition:opacity 160ms ease-out,transform 160ms ease-out,visibility 0s 160ms}
+ .site-menu-floating.is-visible{visibility:visible;opacity:1;transform:none;transition-delay:0s}
+ .site-menu:not([open]){display:none}
+ .site-menu{position:fixed;display:none;inset:0 0 0 auto;width:min(420px,100%);height:100%;height:100dvh;max-height:100dvh;margin:0;padding:max(20px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) 24px;overflow-y:auto;overscroll-behavior:contain;box-shadow:-8px 0 40px #03162c26}
+ .site-menu::backdrop{background:#071a2c80}
+ .navigation-ready .site-menu[open]{display:block;animation:site-menu-enter 200ms ease-out}
+ .navigation-ready .site-menu.is-closing{animation:site-menu-exit 140ms ease-in forwards}
+ .site-menu-heading{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;background:#fff;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#586b7f}
+ .site-menu-close{display:inline-flex;width:44px;height:44px;padding:11px}
+ .site-navigation{display:block}
+ .site-nav-link{padding:17px 0;border-top:1px solid #e0e7ec;font-size:21px;letter-spacing:-.02em;line-height:1.3;white-space:normal}
+ .site-nav-link:last-child{border-bottom:1px solid #e0e7ec}
+ .site-nav-link::after{display:none}
+ .site-nav-link[aria-current]{color:#b32635}
+ .site-nav-phone{display:block;margin-top:36px;padding:16px 18px;background:#f4f7f9;border:0}
+ .site-nav-phone>span{font-size:11px}.site-nav-phone strong{font-size:20px;margin-top:4px}
+
+}
+@keyframes site-menu-enter{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+@keyframes site-menu-exit{to{opacity:0;transform:translateX(12px)}}
+@media(prefers-reduced-motion:reduce){.navigation-ready .site-menu[open],.navigation-ready .site-menu.is-closing{animation:none}.site-menu-floating,.site-nav-link::after{transition:none}}
+
+/* Navigation polish — retained shared markup and mobile dialog controller. */
+@media(min-width:992px){
+ .site-header-inner{max-width:1350px;min-height:94px;padding:12px 0;gap:22px}
+ .site-navigation{gap:clamp(16px,1.7vw,25px)}
+ .site-nav-phone{border-radius:8px;padding:10px 13px;box-shadow:0 2px 10px rgba(9,33,58,.025)}
+}
+@media(max-width:991.98px){
+ .site-header-inner{min-height:68px;padding:9px 0;width:calc(100% - 40px);gap:16px}
+ .site-header .energelia-brand-logo{width:53px;height:53px;border-radius:9px}
+ .site-menu-toggle{width:43px;height:43px;padding:10px;border:1px solid #d5e0e8;border-radius:11px;background:#f8fafb;color:#123a58}
+ .site-menu-toggle svg{width:21px;height:21px;stroke-width:1.9}
+ .site-menu-floating{background:#fff;box-shadow:0 5px 22px #102b4c26}
+}
+@media(max-width:360px){.site-header-inner{width:calc(100% - 32px)}.site-header .energelia-brand-logo{width:49px;height:49px}}

@@ -1,0 +1,31 @@
+<div class="uc-demo uc-process" data-uc-process="quote" data-pc-view-left="Cliente" data-pc-view-right="Preventivo">
+  <div class="uc-demo-panels">
+    <section class="uc-demo-panel uc-demo-editor" aria-labelledby="pc-quote-customer-title">
+      <header class="uc-panel-header uc-editor-panel-header"><span class="uc-editor-panel-intro"><span class="uc-panel-mark">1</span><span><b id="pc-quote-customer-title">Richiedi un preventivo</b><small>Inserisci prodotto e misure.</small></span></span><span class="uc-panel-muted">Cliente</span></header>
+      <form class="uc-process-body" data-pc-quote-form>
+        <div class="uc-process-intro"><span class="uc-process-overline">ATELIER LEGNO</span><h2>Parlaci del tuo progetto.</h2><p>Inserisci i dati essenziali: il pannello li utilizzerà per preparare il preventivo.</p></div>
+        <div class="uc-process-field-grid"><label>Nome e cognome<input name="name" type="text" minlength="2" maxlength="65" value="Lucia Pellegrini" required></label><label>Email<input name="email" type="email" maxlength="100" value="lucia@example.com" required></label></div>
+        <label>Prodotto<select name="product" required><option value="Libreria su misura" selected>Libreria su misura</option><option value="Mobile da ingresso">Mobile da ingresso</option><option value="Mensole in rovere">Mensole in rovere</option></select></label>
+        <div class="uc-process-field-grid uc-quote-measures"><label>Larghezza (cm)<input name="width" type="number" min="40" max="350" step="1" value="120" inputmode="numeric" required></label><label>Altezza (cm)<input name="height" type="number" min="40" max="350" step="1" value="140" inputmode="numeric" required></label></div>
+        <label>Quantità<input name="quantity" type="number" min="1" max="10" step="1" value="2" inputmode="numeric" required></label>
+        <label class="uc-process-file-label">Fotografia dello spazio <span>(facoltativa · JPG/PNG/WebP, max 2 MB)</span><input name="photo" type="file" accept="image/jpeg,image/png,image/webp" data-pc-quote-photo></label><div class="uc-process-file-preview" data-pc-quote-photo-preview hidden><img alt="Fotografia selezionata" data-pc-quote-photo-img><small data-pc-quote-photo-label></small></div>
+        <p class="uc-process-error" role="alert" data-pc-quote-error hidden></p>
+        <button class="uc-process-primary" type="submit">Invia i dati →</button>
+      </form>
+    </section>
+    <section class="uc-demo-panel uc-demo-site" aria-labelledby="pc-quote-staff-title">
+      <header class="uc-panel-header uc-editor-panel-header"><span class="uc-editor-panel-intro"><span class="uc-panel-mark uc-panel-mark-teal">2</span><span><b id="pc-quote-staff-title">Prepara il preventivo</b><small>Imposta i prezzi e crea il documento.</small></span></span><span class="uc-panel-online" data-pc-quote-badge>In attesa</span></header>
+      <div class="uc-process-body uc-process-staff">
+        <div class="uc-process-topline"><span>AREA AZIENDALE</span><strong>Preventivi</strong></div>
+        <div class="uc-process-empty" data-pc-quote-empty><icon aria-hidden="true">▤</icon><strong>Nessuna richiesta da elaborare</strong><p>Completa la scheda cliente per creare la bozza Preventivo n. 1042.</p></div>
+        <div class="uc-process-case" data-pc-quote-case hidden>
+          <div class="uc-process-case-head"><div><small>BOZZA PREVENTIVO</small><strong>Preventivo n. 1042</strong></div><span class="uc-process-tag" data-pc-quote-state>Da preparare</span></div>
+          <dl class="uc-process-facts"><div><dt>Cliente</dt><dd data-pc-quote-person></dd></div><div><dt>Prodotto</dt><dd data-pc-quote-product></dd></div><div><dt>Misure</dt><dd data-pc-quote-dimensions></dd></div><div><dt>Quantità</dt><dd data-pc-quote-quantity></dd></div><div><dt>Fotografia</dt><dd data-pc-quote-attachment>Nessuna</dd></div></dl>
+          <div data-pc-quote-editor><div class="uc-process-subheading">Voci economiche <small>Importi illustrativi, modificabili</small></div><div class="uc-process-field-grid"><label>Prezzo unitario (€)<input type="number" min="0" max="99999" step="0.01" value="480" inputmode="decimal" data-pc-quote-unit required></label><label>Montaggio per pezzo (€)<input type="number" min="0" max="99999" step="0.01" value="160" inputmode="decimal" data-pc-quote-install required></label></div><label>Note (facoltative)<textarea maxlength="180" rows="2" data-pc-quote-notes placeholder="Dettagli da inserire nel documento">Misure definitive e finiture da confermare.</textarea></label><div class="uc-process-total"><span>Totale illustrativo <small>IVA esclusa</small></span><strong data-pc-quote-total>€ 1.280,00</strong></div><p class="uc-process-error" role="alert" data-pc-quote-fin-error hidden></p><button class="uc-process-primary" type="button" data-pc-quote-generate>Genera preventivo PDF →</button></div>
+          <div class="uc-process-outcome" data-pc-quote-outcome hidden><span class="uc-process-outcome-icon">✓</span><strong>Documento PDF pronto</strong><p>Preventivo n. 1042 · <span data-pc-quote-result-total></span> · IVA esclusa.</p><div class="uc-process-paper"><strong>ATELIER LEGNO</strong><small>Preventivo dimostrativo · Preventivo n. 1042</small><span data-pc-quote-paper-product></span><span data-pc-quote-paper-measures></span><b data-pc-quote-paper-total></b></div><a class="uc-process-primary uc-process-download" href="#" data-pc-quote-download download="preventivo-Preventivo n. 1042.pdf">Scarica PDF <span aria-hidden="true">↓</span></a><button type="button" class="uc-process-secondary" data-pc-quote-revise>Modifica il preventivo</button><small>Il PDF contiene i dati inseriti e viene salvato sul tuo dispositivo soltanto se lo scarichi.</small></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="uc-demo-toolbar"><div role="status" aria-live="polite" data-pc-message>Compila la richiesta cliente per preparare un preventivo realistico e scaricabile.</div><button class="uc-process-reset" type="button" data-pc-reset>↻ Ricomincia demo</button></div>
+</div>

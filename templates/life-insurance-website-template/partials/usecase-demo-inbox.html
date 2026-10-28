@@ -1,0 +1,37 @@
+<div class="uc-demo uc-process" data-uc-process="inbox" data-pc-view-left="Cliente" data-pc-view-right="Azienda">
+  <div class="uc-demo-panels">
+    <section class="uc-demo-panel uc-demo-editor" aria-labelledby="pc-inbox-customer-title">
+      <header class="uc-panel-header uc-editor-panel-header"><span class="uc-editor-panel-intro"><span class="uc-panel-mark">1</span><span><b id="pc-inbox-customer-title">Invia una richiesta</b><small>Compila il modulo sul sito.</small></span></span><span class="uc-panel-muted">Cliente</span></header>
+      <form class="uc-process-body" data-pc-inbox-form>
+        <div class="uc-process-intro"><span class="uc-process-overline">ASSISTENZA DELTA IMPIANTI</span><h2>Come possiamo aiutarti?</h2><p>Compila una richiesta: vedrai come arriva direttamente nel pannello dell'azienda.</p></div>
+        <div class="uc-process-field-grid"><label>Nome e cognome<input name="name" type="text" minlength="2" maxlength="65" value="Giulia Riva" autocomplete="name" required></label><label>Email<input name="email" type="email" maxlength="100" value="giulia@example.com" autocomplete="email" required></label></div>
+        <label>Categoria della richiesta<select name="category" required><option value="Assistenza climatizzatore" selected>Assistenza climatizzatore</option><option value="Manutenzione impianto">Manutenzione impianto</option><option value="Informazioni tecniche">Informazioni tecniche</option></select></label>
+        <label>Oggetto<input name="subject" type="text" maxlength="90" minlength="5" value="Climatizzatore non funzionante" required></label>
+        <label>Descrizione<textarea name="description" maxlength="320" minlength="12" rows="4" required>Il climatizzatore non raffredda più. Vorrei organizzare una verifica.</textarea></label>
+        
+        <button class="uc-process-primary" type="submit" data-pc-inbox-send>Invia richiesta <span aria-hidden="true">↗</span></button>
+      </form>
+    </section>
+    <section class="uc-demo-panel uc-demo-site" aria-labelledby="pc-inbox-staff-title">
+      <header class="uc-panel-header uc-editor-panel-header"><span class="uc-editor-panel-intro"><span class="uc-panel-mark uc-panel-mark-teal">2</span><span><b id="pc-inbox-staff-title">Come la gestisce l’azienda</b><small>Assegna un tecnico e avvia il lavoro.</small></span></span><span class="uc-panel-online" data-pc-inbox-badge>In attesa</span></header>
+      <div class="uc-process-body uc-process-staff">
+        <div class="uc-process-topline"><span>INBOX OPERATIVA</span><strong>Richieste clienti</strong></div>
+        <div class="uc-process-inbox-list" aria-label="Elenco richieste dimostrative">
+          <div class="uc-process-inbox-item uc-process-inbox-static"><span class="uc-process-avatar">LF</span><div><strong>Laura F.</strong><small>Preventivo climatizzazione</small></div><span class="uc-process-tag">In carico</span></div>
+          <div class="uc-process-inbox-item uc-process-inbox-static"><span class="uc-process-avatar">MR</span><div><strong>Marco R.</strong><small>Manutenzione ordinaria</small></div><span class="uc-process-tag">Chiusa</span></div>
+          <div class="uc-process-inbox-item is-new" data-pc-inbox-row hidden><span class="uc-process-avatar">GR</span><div><strong data-pc-inbox-person>Giulia Riva</strong><small data-pc-inbox-subject>Climatizzatore non funzionante</small></div><span class="uc-process-tag is-alert" data-pc-inbox-row-status>Nuova</span></div>
+        </div>
+        <div class="uc-process-empty" data-pc-inbox-empty><icon aria-hidden="true">✉</icon><strong>In attesa di una nuova richiesta</strong><p>Compila il modulo cliente: la pratica apparirà qui senza ricaricare la pagina.</p></div>
+        <div class="uc-process-case" data-pc-inbox-case hidden>
+          <div class="uc-process-case-head"><div><small>PRATICA DIMOSTRATIVA</small><strong>Richiesta n. 1042</strong></div><span class="uc-process-tag is-alert" data-pc-inbox-state>Nuova</span></div>
+          <dl class="uc-process-facts"><div><dt>Cliente</dt><dd data-pc-inbox-client>Giulia Riva</dd></div><div><dt>Origine</dt><dd>Modulo sito web</dd></div><div><dt>Categoria</dt><dd data-pc-inbox-category>Assistenza climatizzatore</dd></div><div><dt>Email</dt><dd data-pc-inbox-email>giulia@example.com</dd></div></dl>
+          <p class="uc-process-description" data-pc-inbox-description></p><div class="uc-process-internal-note" data-pc-inbox-note-preview hidden><strong>Nota interna per il tecnico</strong><p data-pc-inbox-note-content></p></div>
+          <div data-pc-inbox-assignment><label>Assegna a un tecnico<select data-pc-inbox-assignee><option value="">Seleziona un responsabile</option><option value="Marco Ferri">Marco Ferri</option><option value="Sara Rossi">Sara Rossi</option></select></label><label>Nota interna (facoltativa)<textarea rows="2" maxlength="150" data-pc-inbox-note placeholder="Indicazioni per il tecnico"></textarea></label><button class="uc-process-primary" type="button" data-pc-inbox-assign disabled>Assegna richiesta →</button></div>
+          <div class="uc-process-assigned" data-pc-inbox-assigned hidden><span class="uc-process-success-small">✓ Responsabile assegnato: <strong data-pc-inbox-assigned-name></strong></span><button class="uc-process-primary" type="button" data-pc-inbox-start>Avvia lavorazione →</button></div>
+          <div class="uc-process-outcome" data-pc-inbox-outcome hidden><span class="uc-process-outcome-icon">✓</span><strong>Richiesta in lavorazione</strong><p>Il tecnico <b data-pc-inbox-outcome-tech></b> ora è responsabile della richiesta n. 1042.</p><ol><li>Richiesta ricevuta</li><li>Tecnico assegnato</li><li>Lavorazione avviata</li></ol></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="uc-demo-toolbar"><div role="status" aria-live="polite" data-pc-message>Compila il modulo, invia una richiesta e verifica come viene gestita dall'azienda.</div><button class="uc-process-reset" type="button" data-pc-reset>↻ Ricomincia demo</button></div>
+</div>
