@@ -1,13 +1,9 @@
+{# Shared public navigation, including the approved horizontal logo, mobile menu and privacy controls. #}
+{# All 15 demo pages and the /casi-uso catalog use this partial. #}
 <a class="uc-skip" href="#contenuto">Vai al contenuto</a>
-<header class="uc-header"><div class="uc-shell uc-header-inner">
-<a class="uc-brand" href="/" aria-label="Energelia — torna alla home"><img class="uc-brand-logo" src="{{ url_for('static', filename='img/logo-hq.png') }}" alt="Energelia" width="48" height="48" decoding="async"></a>
-<button type="button" class="uc-menu-trigger" data-uc-menu-trigger aria-controls="uc-site-nav" aria-expanded="false" aria-label="Apri navigazione"><span></span><span></span><span></span></button>
-<nav class="uc-site-nav" id="uc-site-nav" aria-label="Navigazione principale"><a href="/">Home</a><a href="/chi-siamo">Chi siamo</a><a href="/servizi-digitali">Servizi digitali</a><a href="/casi-uso" aria-current="page">Casi d'uso</a><a href="/servizi-digitali#contatti-diretti">Contatti</a></nav>
-<a class="uc-header-contact" href="/servizi-digitali#contatto">Richiedi una proposta <span aria-hidden="true">↗</span></a>
-</div></header>
+{% include 'life-insurance-website-template/partials/navbar.html' %}
 
-{% include 'life-insurance-website-template/partials/cookie-consent.html' %}
-
+{# Demo safety remains specific to catalog/use-case pages. #}
 <script>
 // A demo must never submit its sample contacts to the server, even if its UI script fails.
 document.addEventListener('submit', function (event) {

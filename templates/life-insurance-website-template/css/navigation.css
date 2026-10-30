@@ -60,3 +60,20 @@
  .site-menu-floating{background:#fff;box-shadow:0 5px 22px #102b4c26}
 }
 @media(max-width:360px){.site-header-inner{width:calc(100% - 32px)}.site-header .energelia-brand-logo{width:49px;height:49px}}
+
+/* Energelia compact horizontal brand: same navbar height, larger legible name. */
+.site-header .navbar-brand.energelia-brand{display:flex;align-items:center;gap:10px;flex:0 0 auto;min-width:0}
+.site-header .energelia-brand-logo{flex:0 0 auto;object-fit:cover}
+.site-header .energelia-brand-copy{display:flex;flex-direction:column;justify-content:center;gap:3px;white-space:nowrap;line-height:1}
+.site-header .energelia-brand-name{display:block;color:#102b4c;font:500 25px/1 Georgia,'Times New Roman',serif;letter-spacing:-.045em}
+.site-header .energelia-brand-caption{display:block;color:#3a5268;font:600 8px/1.25 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;letter-spacing:.16em}
+@media(max-width:991.98px){
+  .site-header .navbar-brand.energelia-brand{gap:9px}
+  .site-header .energelia-brand-name{font-size:23px}
+  .site-header .energelia-brand-caption{font-size:7.5px;letter-spacing:.14em}
+}
+@media(max-width:360px){
+  .site-header .navbar-brand.energelia-brand{gap:7px}
+  .site-header .energelia-brand-name{font-size:21px}
+  .site-header .energelia-brand-caption{font-size:7px;letter-spacing:.12em}
+}
