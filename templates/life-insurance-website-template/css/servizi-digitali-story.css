@@ -616,3 +616,31 @@
   .digital-services-page .ds-shortcut-icon{display:grid;place-items:center;flex:none;width:31px;height:31px;border:1px solid #355770;border-radius:50%;background:#0a2b43;color:#cce7f6}
   .digital-services-page .ds-shortcut-icon svg{width:16px;height:16px}
 }
+
+/* Commercial offer and FAQ categories. Scoped to the digital services page. */
+.digital-services-page .sd-site-offer{display:grid;gap:9px;margin-top:22px;padding-top:17px;border-top:1px solid var(--sd-line);max-width:430px}
+.digital-services-page .sd-site-offer-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 9px}
+.digital-services-page .sd-site-offer-price span,.digital-services-page .sd-site-offer-price small{font-size:13px;color:var(--sd-muted)}
+.digital-services-page .sd-site-offer-price strong{font-size:28px;font-weight:600;line-height:1.1;letter-spacing:-.035em;color:var(--sd-white)}
+.digital-services-page .sd-site-offer .sd-site-offer-preview{font-size:14px;line-height:1.5;color:var(--sd-muted)}
+.digital-services-page .sd-site-offer .sd-button{justify-self:start;max-width:100%;font-size:14px;padding-inline:16px}
+.digital-services-page .sd-faq-filter{position:relative;min-inline-size:0;border:0;padding:0;margin:0}
+.digital-services-page .sd-faq-choice{position:absolute;width:1px;height:1px;opacity:0;margin:0;padding:0;clip-path:inset(50%)}
+.digital-services-page .sd-faq-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px}
+.digital-services-page .sd-faq-tabs label{display:flex;align-items:center;min-height:44px;padding:10px 16px;border:1px solid var(--sd-line);border-radius:5px;color:var(--sd-muted);font:500 14px/1.4 Inter,sans-serif;cursor:pointer;margin:0;transition:background-color 160ms,color 160ms,border-color 160ms}
+.digital-services-page .sd-faq-tabs label:hover{border-color:var(--sd-blue);color:var(--sd-white)}
+.digital-services-page .sd-faq-panel{display:none}
+.digital-services-page #sd-faq-costi:checked ~ .sd-faq-tabs label[for="sd-faq-costi"]{background:#15354d;color:var(--sd-white);border-color:var(--sd-blue)}
+.digital-services-page #sd-faq-costi:focus-visible ~ .sd-faq-tabs label[for="sd-faq-costi"]{outline:2px solid var(--sd-blue);outline-offset:3px}
+.digital-services-page #sd-faq-costi:checked ~ #sd-faq-panel-costi{display:grid}
+.digital-services-page #sd-faq-realizzazione:checked ~ .sd-faq-tabs label[for="sd-faq-realizzazione"]{background:#15354d;color:var(--sd-white);border-color:var(--sd-blue)}
+.digital-services-page #sd-faq-realizzazione:focus-visible ~ .sd-faq-tabs label[for="sd-faq-realizzazione"]{outline:2px solid var(--sd-blue);outline-offset:3px}
+.digital-services-page #sd-faq-realizzazione:checked ~ #sd-faq-panel-realizzazione{display:grid}
+.digital-services-page #sd-faq-gestione:checked ~ .sd-faq-tabs label[for="sd-faq-gestione"]{background:#15354d;color:var(--sd-white);border-color:var(--sd-blue)}
+.digital-services-page #sd-faq-gestione:focus-visible ~ .sd-faq-tabs label[for="sd-faq-gestione"]{outline:2px solid var(--sd-blue);outline-offset:3px}
+.digital-services-page #sd-faq-gestione:checked ~ #sd-faq-panel-gestione{display:grid}
+@media(max-width:575px){
+ .digital-services-page .sd-faq-tabs{gap:6px;margin-bottom:18px}
+ .digital-services-page .sd-faq-tabs label{padding:8px 10px;font-size:12px;min-height:44px;flex:1 1 auto;justify-content:center;text-align:center}
+ .digital-services-page .sd-site-offer{margin-top:18px;padding-top:14px}
+}
